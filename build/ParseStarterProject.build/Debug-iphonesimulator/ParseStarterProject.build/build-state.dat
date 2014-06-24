@@ -1,0 +1,931 @@
+TParseStarterProject
+v6
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist
+cProcessPCH /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch ParseStarterProject/ParseStarterProject-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cLd /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject normal i386
+cGenerateDSYMFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject
+cCopyStringsFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings ParseStarterProject/en.lproj/InfoPlist.strings
+cCompileXIB /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib
+cCompileXIB /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib
+cCopyPlistFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist ParseStarterProject/Entitlements.plist
+cCpResource ParseStarterProject/Default.png build/Debug-iphonesimulator/ParseStarterProject.app/Default.png
+cCpResource ParseStarterProject/Default-568h@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png
+cCpResource ParseStarterProject/Default@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png
+cTouch /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk
+c00000000521BCCE50000000000000176
+t1377553637
+s374
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/SDKSettings.plist
+c00000000522ACC8F00000000000003B5
+t1378536591
+s949
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/CoreServices/SystemVersion.plist
+c00000000522ACCD2000000000000019E
+t1378536658
+s414
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox
+c00000000522ACCE70000000000902E30
+t1378536679
+s9449008
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CFNetwork.framework/CFNetwork
+c00000000522ACCEC0000000000583810
+t1378536684
+s5781520
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+c00000000522ACCED00000000005B82A0
+t1378536685
+s5997216
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c00000000522ACCEE0000000000445830
+t1378536686
+s4479024
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+c00000000522ACCEF00000000000EC820
+t1378536687
+s968736
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c00000000522ACCFA000000000088B570
+t1378536698
+s8959344
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices
+c00000000522ACD0F00000000001BA500
+t1378536719
+s1811712
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
+c00000000522ACD120000000000484860
+t1378536722
+s4737120
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/Security.framework/Security
+c00000000522ACD140000000000127E10
+t1378536724
+s1211920
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/StoreKit.framework/StoreKit
+c00000000522ACD1A000000000006A870
+t1378536730
+s436336
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration
+c00000000522ACD1B00000000001081B0
+t1378536731
+s1081776
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c00000000522ACD200000000001DB1C90
+t1378536736
+s31136912
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
+c00000000522ACDC800000000002B9E80
+t1378536904
+s2858624
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o
+c00000000522ACE2E0000000000002338
+t1378537006
+s9016
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libSystem.dylib
+c00000000522ACE30000000000008D300
+t1378537008
+s578304
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libobjc.dylib
+c00000000522ACE32000000000038ACB0
+t1378537010
+s3714224
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libz.1.1.3.dylib
+c00000000522ACE33000000000002B700
+t1378537011
+s177920
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/host/libdyld.dylib
+c00000000508116AC00000000000121D0
+t1350637228
+s74192
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcache_sim.dylib
+c00000000522ACE330000000000013500
+t1378537011
+s79104
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcommonCrypto_sim.dylib
+c00000000522ACE330000000000033BA0
+t1378537011
+s211872
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcompiler_rt_sim.dylib
+c00000000522ACE33000000000001CFB0
+t1378537011
+s118704
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcopyfile_sim.dylib
+c00000000522ACE33000000000001B2B0
+t1378537011
+s111280
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libdispatch.dylib
+c00000000522ACE3300000000000632B0
+t1378537011
+s406192
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libdyld_sim.dylib
+c00000000522ACE330000000000008880
+t1378537011
+s34944
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libmacho_sim.dylib
+c00000000522ACE340000000000015080
+t1378537012
+s86144
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libnotify_sim.dylib
+c00000000522ACE3400000000000230E0
+t1378537012
+s143584
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libremovefile_sim.dylib
+c00000000522ACE34000000000000E380
+t1378537012
+s58240
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_network.dylib
+c00000000522ACE340000000000087200
+t1378537012
+s553472
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_override.dylib
+c00000000522ACE3400000000000171A0
+t1378537012
+s94624
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_asl.dylib
+c00000000522ACE340000000000039C10
+t1378537012
+s236560
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_blocks.dylib
+c00000000522ACE34000000000000B0B0
+t1378537012
+s45232
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_c.dylib
+c00000000522ACE340000000000167FE0
+t1378537012
+s1474528
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_configuration.dylib
+c00000000522ACE3400000000000106A0
+t1378537012
+s67232
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_dnssd.dylib
+c00000000522ACE34000000000001CE40
+t1378537012
+s118336
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_info.dylib
+c00000000522ACE340000000000071040
+t1378537012
+s462912
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_m.dylib
+c00000000522ACE340000000000067A10
+t1378537012
+s424464
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libunwind_sim.dylib
+c00000000522ACE34000000000001BAD0
+t1378537012
+s113360
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libxpc.dylib
+c00000000522ACE340000000000088BA0
+t1378537012
+s560032
+
+N/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_iphonesimulator.a
+c00000000522ACBCA000000000000B870
+t1378536394
+s47216
+
+N/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.0/lib/darwin/libclang_rt.ios.a
+c00000000522ACBD30000000000005004
+t1378536403
+s20484
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFACL.h
+c0000000052AA304B00000000000019F8
+t1386885195
+s6648
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnalytics.h
+c0000000052AA304B0000000000000ABC
+t1386885195
+s2748
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnonymousUtils.h
+c0000000052AA304B000000000000094B
+t1386885195
+s2379
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFCloud.h
+c0000000052AA304B0000000000000847
+t1386885195
+s2119
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFConstants.h
+c0000000052AA304B0000000000001EE5
+t1386885195
+s7909
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFFile.h
+c0000000052AA304B0000000000001C46
+t1386885195
+s7238
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFGeoPoint.h
+c0000000052AA304B0000000000000A3E
+t1386885195
+s2622
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFImageView.h
+c0000000052AA304B0000000000000366
+t1386885195
+s870
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFInstallation.h
+c0000000052AA304B0000000000000B43
+t1386885195
+s2883
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInView.h
+c0000000052AA304B0000000000000B75
+t1386885195
+s2933
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInViewController.h
+c0000000052AA304B0000000000000E55
+t1386885195
+s3669
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFObject.h
+c0000000052AA304B00000000000053D4
+t1386885195
+s21460
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProduct.h
+c0000000052AA304B000000000000068E
+t1386885195
+s1678
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProductTableViewController.h
+c0000000052AA304B000000000000023A
+t1386885195
+s570
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPurchase.h
+c0000000052AA304B0000000000000A6A
+t1386885195
+s2666
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPush.h
+c0000000052AA304B0000000000004591
+t1386885195
+s17809
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQuery.h
+c0000000052AA304B000000000000526A
+t1386885195
+s21098
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQueryTableViewController.h
+c0000000052AA304B000000000000153A
+t1386885195
+s5434
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRelation.h
+c0000000052AA304B00000000000003A0
+t1386885195
+s928
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRole.h
+c0000000052AA304B0000000000000AE4
+t1386885195
+s2788
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpView.h
+c0000000052AA304B00000000000008C6
+t1386885195
+s2246
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpViewController.h
+c0000000052AA304B0000000000000B96
+t1386885195
+s2966
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSubclassing.h
+c0000000052AA304B00000000000007EE
+t1386885195
+s2030
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTableViewCell.h
+c0000000052AA304B0000000000000299
+t1386885195
+s665
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTwitterUtils.h
+c0000000052AA304B0000000000001FBC
+t1386885195
+s8124
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFUser.h
+c0000000052AA304B0000000000003354
+t1386885195
+s13140
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_EGORefreshTableHeaderView.h
+c0000000052AA304B00000000000008B0
+t1386885195
+s2224
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_Twitter.h
+c0000000052AA304B00000000000005E1
+t1386885195
+s1505
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/Parse.h
+c0000000052AA304B000000000000081A
+t1386885195
+s2074
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Parse
+c0000000052AA304C0000000001D591EC
+t1386885196
+s30773740
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default-568h@2x.png
+c0000000051927E6800000000000042C3
+t1368555112
+s17091
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default.png
+c0000000051927E680000000000001681
+t1368555112
+s5761
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default@2x.png
+c0000000051927E680000000000002FF8
+t1368555112
+s12280
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Entitlements.plist
+c0000000051927E6800000000000000E0
+t1368555112
+s224
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist
+c0000000052AA304C00000000000004AF
+t1386885196
+s1199
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Prefix.pch
+c0000000051927E680000000000000158
+t1368555112
+s344
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.h
+c0000000051927E680000000000000118
+t1368555112
+s280
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m
+c0000000052AA304C000000000000181C
+t1386885196
+s6172
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.h
+c0000000051927E680000000000000046
+t1368555112
+s70
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m
+c0000000051927E6800000000000002CE
+t1368555112
+s718
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/InfoPlist.strings
+c0000000051927E68000000000000002D
+t1368555112
+s45
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib
+c0000000051927E680000000000004EA9
+t1368555112
+s20137
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib
+c0000000051927E680000000000001FF2
+t1368555112
+s8178
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m
+c0000000051927E68000000000000012D
+t1368555112
+s301
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app
+t1386892358
+s340
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM
+t1386892355
+s102
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png
+t1386892355
+s17091
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default.png
+t1386892355
+s5761
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png
+t1386892355
+s12280
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist
+t1386892355
+s62
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist
+t1386892353
+s816
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject
+t1386892355
+s2271460
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/PkgInfo
+t1386892353
+s8
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings
+t1386892355
+s42
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/MainWindow.nib
+t1386892358
+s1828
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/ParseStarterProjectViewController.nib
+t1386892358
+s2707
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProject.LinkFileList
+c0000000052AA4C410000000000000220
+t1386892353
+s544
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o
+t1386892354
+s76672
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o
+t1386892354
+s41740
+
+N/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o
+t1386892354
+s3504
+
+N/usr/lib/libSystem.B.dylib
+c00000000508116A1000000000000D2A0
+t1350637217
+s53920
+
+N/usr/lib/system/libcache.dylib
+c00000000508116AC0000000000013870
+t1350637228
+s79984
+
+N/usr/lib/system/libcommonCrypto.dylib
+c00000000518C1AED0000000000030250
+t1368136429
+s197200
+
+N/usr/lib/system/libcompiler_rt.dylib
+c00000000508116A10000000000017910
+t1350637217
+s96528
+
+N/usr/lib/system/libcopyfile.dylib
+c00000000508116AB000000000001A130
+t1350637227
+s106800
+
+N/usr/lib/system/libdnsinfo.dylib
+c00000000518C1AED000000000000C2A0
+t1368136429
+s49824
+
+N/usr/lib/system/libkeymgr.dylib
+c00000000508116AC0000000000008CE0
+t1350637228
+s36064
+
+N/usr/lib/system/liblaunch.dylib
+c00000000508116AC000000000001D350
+t1350637228
+s119632
+
+N/usr/lib/system/libmacho.dylib
+c00000000508116AB0000000000014F90
+t1350637227
+s85904
+
+N/usr/lib/system/libquarantine.dylib
+c0000000051E87672000000000000D790
+t1374189170
+s55184
+
+N/usr/lib/system/libremovefile.dylib
+c00000000518C1AED000000000000C330
+t1368136429
+s49968
+
+N/usr/lib/system/libsystem_blocks.dylib
+c00000000508116AC000000000000A080
+t1350637228
+s41088
+
+N/usr/lib/system/libsystem_c.dylib
+c0000000052530EE800000000001F91C0
+t1381175016
+s2068928
+
+N/usr/lib/system/libsystem_dnssd.dylib
+c0000000051E87670000000000001BC00
+t1374189168
+s113664
+
+N/usr/lib/system/libsystem_info.dylib
+c00000000508116A1000000000008B570
+t1350637217
+s570736
+
+N/usr/lib/system/libsystem_kernel.dylib
+c0000000052530EE800000000000569B0
+t1381175016
+s354736
+
+N/usr/lib/system/libsystem_m.dylib
+c00000000508116A10000000000070540
+t1350637217
+s460096
+
+N/usr/lib/system/libsystem_notify.dylib
+c00000000508116A10000000000025620
+t1350637217
+s153120
+
+N/usr/lib/system/libsystem_sandbox.dylib
+c0000000051E87666000000000000C780
+t1374189158
+s51072
+
+N/usr/lib/system/libunc.dylib
+c00000000508116A8000000000000D430
+t1350637224
+s54320
+
+N/usr/lib/system/libunwind.dylib
+c00000000508116AC000000000001BAA0
+t1350637228
+s113312
+
+N/var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch
+t1386892354
+s5343840
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies55be2f6e8e5bb841^925c626e8e5bb841^---0#1#1#--18"Check dependencies36"C7DC0753-E80E-48DD-AE9E-3D1DE479F91B-
+
+CCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s408585154.602639
+e408585154.773037
+r1
+xCompileC
+xbuild/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/Parse.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFACL.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnalytics.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnonymousUtils.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFUser.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFConstants.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFObject.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSubclassing.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFCloud.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFFile.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFGeoPoint.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQuery.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRelation.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRole.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFImageView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFInstallation.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProduct.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProductTableViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQueryTableViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTableViewCell.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_EGORefreshTableHeaderView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPurchase.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPush.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTwitterUtils.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_Twitter.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection116"Compile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m278"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o [1mParseStarterProject/ParseStarterProjectAppDelegate.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilereb6e9ac2835ab841^04e6c5c2835ab841^---0#0#1#-19%DVTDocumentLocation2@124"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m0000000000000000^4509"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o [1mParseStarterProject/ParseStarterProjectAppDelegate.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=184 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=4.3 -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-generated-files.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-own-target-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-all-target-headers.hmap -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-project-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources/i386 -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject -include /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch -MMD -MT dependencies -MF /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.d --serialize-diagnostics /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.dia -c /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.m -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o36"4FA613E1-8E5F-475B-88F7-7B734C5B3B84-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s408585154.602855
+e408585154.757157
+r1
+xCompileC
+xbuild/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/Parse.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFACL.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnalytics.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFAnonymousUtils.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFUser.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFConstants.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFObject.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSubclassing.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFCloud.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFFile.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFGeoPoint.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQuery.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRelation.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFRole.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFImageView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFInstallation.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFLogInView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFSignUpView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProduct.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFProductTableViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFQueryTableViewController.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTableViewCell.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_EGORefreshTableHeaderView.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPurchase.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFPush.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PFTwitterUtils.h
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Headers/PF_Twitter.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection119"Compile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m284"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o [1mParseStarterProject/ParseStarterProjectViewController.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilerdf6d9ac2835ab841^c3d5c1c2835ab841^---0#0#1#-19%DVTDocumentLocation2@127"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m0000000000000000^4527"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o [1mParseStarterProject/ParseStarterProjectViewController.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=184 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=4.3 -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-generated-files.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-own-target-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-all-target-headers.hmap -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-project-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources/i386 -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject -include /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch -MMD -MT dependencies -MF /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.d --serialize-diagnostics /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.dia -c /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectViewController.m -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o36"7834BEBB-D396-483C-BCC1-6E4AAF882061-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCompileC build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s408585154.602588
+e408585154.724628
+r1
+xCompileC
+xbuild/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProjectAppDelegate.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m226"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o [1mParseStarterProject/main.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler09709ac2835ab841^6f80b9c2835ab841^---0#0#1#-19%DVTDocumentLocation2@98"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m0000000000000000^4353"[1mCompileC[0m build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o [1mParseStarterProject/main.m[0m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=184 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=4.3 -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-generated-files.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-own-target-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-all-target-headers.hmap -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-project-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources/i386 -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject -include /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch -MMD -MT dependencies -MF /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.d --serialize-diagnostics /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.dia -c /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/main.m -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o36"260214C2-9D61-46A2-A1D2-F35ABE7B9E18-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCompileXIB /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib
+s408585155.192384
+e408585158.347696
+r1
+xCompileXIB
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib
+o2013-12-12 15:52:37.668 Interface Builder Cocoa Touch Tool[74945:303] CFPreferences: user home directory at file:///Users/bklimt/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compiling /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib70"[1mCompileXIB[0m [1mParseStarterProject/en.lproj/MainWindow.xib[0m736431c3835ab841^7d0559c6835ab841^-231"2013-12-12 15:52:37.668 Interface Builder Cocoa Touch Tool[74945:303] CFPreferences: user home directory at file:///Users/bklimt/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.-0#0#1#-19%DVTDocumentLocation2@115"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib0000000000000000^1259"[1mCompileXIB[0m [1mParseStarterProject/en.lproj/MainWindow.xib[0m    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    setenv XCODE_DEVELOPER_USR_PATH /Applications/Xcode.app/Contents/Developer/usr/bin/..    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/ibtool --errors --warnings --notices --minimum-deployment-target 4.3 --output-format human-readable-text --compile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/MainWindow.nib /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/MainWindow.xib36"5499E7D0-2040-4709-ADE0-4028C6040BB6-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCompileXIB /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib
+s408585155.192401
+e408585158.347693
+r1
+xCompileXIB
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib
+o2013-12-12 15:52:37.668 Interface Builder Cocoa Touch Tool[74944:303] CFPreferences: user home directory at file:///Users/bklimt/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection132"Compiling /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib93"[1mCompileXIB[0m [1mParseStarterProject/en.lproj/ParseStarterProjectViewController.xib[0m136331c3835ab841^810859c6835ab841^-231"2013-12-12 15:52:37.668 Interface Builder Cocoa Touch Tool[74944:303] CFPreferences: user home directory at file:///Users/bklimt/Library/Application%20Support/iPhone%20Simulator/User/ is unavailable. User domains will be volatile.-0#0#1#-19%DVTDocumentLocation2@138"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib0000000000000000^1328"[1mCompileXIB[0m [1mParseStarterProject/en.lproj/ParseStarterProjectViewController.xib[0m    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    setenv XCODE_DEVELOPER_USR_PATH /Applications/Xcode.app/Contents/Developer/usr/bin/..    /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/ibtool --errors --warnings --notices --minimum-deployment-target 4.3 --output-format human-readable-text --compile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/ParseStarterProjectViewController.nib /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/ParseStarterProjectViewController.xib36"C822C19F-A948-429E-B87E-41B9F786736D-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCopyPlistFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist ParseStarterProject/Entitlements.plist
+s408585155.192919
+e408585155.199289
+r1
+xCopyPlistFile
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist
+xParseStarterProject/Entitlements.plist
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection43"Copy ParseStarterProject/Entitlements.plist131"[1mCopyPlistFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist ParseStarterProject/Entitlements.plist927831c3835ab841^d10733c3835ab841^---0#0#1#-19%DVTDocumentLocation2@110"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Entitlements.plist0000000000000000^982"[1mCopyPlistFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/Entitlements.plist ParseStarterProject/Entitlements.plist    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-copyPlist --convert binary1 --outdir /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app -- ParseStarterProject/Entitlements.plist36"399D8F29-5E26-4EBA-BCFD-8C22AC78BAB9-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCopyStringsFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings ParseStarterProject/en.lproj/InfoPlist.strings
+s408585155.192237
+e408585155.195174
+r1
+xCopyStringsFile
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings
+xParseStarterProject/en.lproj/InfoPlist.strings
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection51"Copy ParseStarterProject/en.lproj/InfoPlist.strings149"[1mCopyStringsFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings ParseStarterProject/en.lproj/InfoPlist.strings535831c3835ab841^2ff731c3835ab841^---0#0#1#-19%DVTDocumentLocation2@118"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/en.lproj/InfoPlist.strings0000000000000000^1058"[1mCopyStringsFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj/InfoPlist.strings ParseStarterProject/en.lproj/InfoPlist.strings    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-copyStrings --validate --inputencoding utf-8 --outputencoding binary --outdir /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/en.lproj -- ParseStarterProject/en.lproj/InfoPlist.strings36"1D552420-49F9-4675-9AE2-FD0E06370493-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCpResource ParseStarterProject/Default-568h@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png
+s408585155.200493
+e408585155.205192
+r1
+xCpResource
+xParseStarterProject/Default-568h@2x.png
+xbuild/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection76"Copy build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png130"[1mCpResource[0m ParseStarterProject/Default-568h@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.pnga89033c3835ab841^948834c3835ab841^---0#0#1#-19%DVTDocumentLocation2@143"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png0038885bdcffdf42^1098"[1mCpResource[0m ParseStarterProject/Default-568h@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default-568h@2x.png    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default-568h@2x.png /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app36"51C2C7E2-22BA-4F3E-9D28-2C06CFF49682-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCpResource ParseStarterProject/Default.png build/Debug-iphonesimulator/ParseStarterProject.app/Default.png
+s408585155.196464
+e408585155.200870
+r1
+xCpResource
+xParseStarterProject/Default.png
+xbuild/Debug-iphonesimulator/ParseStarterProject.app/Default.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection68"Copy build/Debug-iphonesimulator/ParseStarterProject.app/Default.png114"[1mCpResource[0m ParseStarterProject/Default.png build/Debug-iphonesimulator/ParseStarterProject.app/Default.png656e32c3835ab841^f58233c3835ab841^---0#0#1#-19%DVTDocumentLocation2@135"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default.png0038885bdcffdf42^1074"[1mCpResource[0m ParseStarterProject/Default.png build/Debug-iphonesimulator/ParseStarterProject.app/Default.png    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default.png /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app36"078EC532-537B-446D-870F-5AF54ABB13C3-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CCpResource ParseStarterProject/Default@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png
+s408585155.202473
+e408585155.205933
+r1
+xCpResource
+xParseStarterProject/Default@2x.png
+xbuild/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection71"Copy build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png120"[1mCpResource[0m ParseStarterProject/Default@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png7cef33c3835ab841^30ba34c3835ab841^---0#0#1#-19%DVTDocumentLocation2@138"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png0038885bdcffdf42^1083"[1mCpResource[0m ParseStarterProject/Default@2x.png build/Debug-iphonesimulator/ParseStarterProject.app/Default@2x.png    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/Default@2x.png /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app36"3BCE96FD-92CB-49B6-AD5E-B9CB6484E458-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CGenerateDSYMFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject
+s408585155.072531
+e408585155.183855
+r1
+xGenerateDSYMFile
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection121"Generate /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM161"[1mGenerateDSYMFile[0m [1mbuild/Debug-iphonesimulator/ParseStarterProject.app.dSYM[0m build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProjectb0aa12c3835ab841^90122fc3835ab841^---0#0#1#-19%DVTDocumentLocation2@128"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM0038885bdcffdf42^1157"[1mGenerateDSYMFile[0m [1mbuild/Debug-iphonesimulator/ParseStarterProject.app.dSYM[0m build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app.dSYM36"F3A6EA5F-A7A7-4929-A6A3-04B14F521671-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CLd /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject normal i386
+s408585154.790780
+e408585155.064070
+r1
+xLd
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject
+xnormal
+xi386
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProject.LinkFileList
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/crt1.o
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/main.o
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectAppDelegate.o
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProjectViewController.o
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreLocation.framework/CoreLocation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/StoreKit.framework/StoreKit
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libz.1.1.3.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/Security.framework/Security
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CFNetwork.framework/CFNetwork
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/Parse.framework/Parse
+d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/arc/libarclite_iphonesimulator.a
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libobjc.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/libSystem.dylib
+d/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.0/lib/darwin/libclang_rt.ios.a
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/System/Library/PrivateFrameworks/UIFoundation.framework/UIFoundation
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_override.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcache_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcommonCrypto_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcompiler_rt_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libcopyfile_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libdispatch.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libdyld_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libmacho_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libnotify_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libremovefile_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_blocks.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_c.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_dnssd.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_info.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_m.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_network.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libunwind_sim.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libxpc.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_configuration.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/libsystem_sim_asl.dylib
+d/usr/lib/libSystem.B.dylib
+d/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk/usr/lib/system/host/libdyld.dylib
+d/usr/lib/system/libcache.dylib
+d/usr/lib/system/libcommonCrypto.dylib
+d/usr/lib/system/libcompiler_rt.dylib
+d/usr/lib/system/libcopyfile.dylib
+d/usr/lib/system/libdnsinfo.dylib
+d/usr/lib/system/libkeymgr.dylib
+d/usr/lib/system/liblaunch.dylib
+d/usr/lib/system/libmacho.dylib
+d/usr/lib/system/libquarantine.dylib
+d/usr/lib/system/libremovefile.dylib
+d/usr/lib/system/libsystem_blocks.dylib
+d/usr/lib/system/libsystem_c.dylib
+d/usr/lib/system/libsystem_dnssd.dylib
+d/usr/lib/system/libsystem_info.dylib
+d/usr/lib/system/libsystem_kernel.dylib
+d/usr/lib/system/libsystem_m.dylib
+d/usr/lib/system/libsystem_notify.dylib
+d/usr/lib/system/libsystem_sandbox.dylib
+d/usr/lib/system/libunc.dylib
+d/usr/lib/system/libunwind.dylib
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection132"Link /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject94"[1mLd[0m build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject normal i386508ecac2835ab841^126810c3835ab841^---0#0#1#--2225"[1mLd[0m build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject normal i386    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv IPHONEOS_DEPLOYMENT_TARGET 4.3    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -arch i386 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -L/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject -filelist /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProject.LinkFileList -Xlinker -objc_abi_version -Xlinker 2 -fobjc-arc -fobjc-link-runtime -Xlinker -no_implicit_dylibs -mios-simulator-version-min=4.3 -framework CoreLocation -framework StoreKit -framework CoreGraphics -framework QuartzCore -lz.1.1.3 -framework Security -framework AudioToolbox -framework MobileCoreServices -framework SystemConfiguration -framework CFNetwork -framework UIKit -framework Foundation -framework Parse -Xlinker -dependency_info -Xlinker /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/Objects-normal/i386/ParseStarterProject_dependency_info.dat -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/ParseStarterProject36"84432E39-E298-4DF2-B162-C0392720DC16-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CProcessInfoPlistFile /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist
+s408585153.853698
+e408585153.858081
+r1
+xProcessInfoPlistFile
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection114"Process /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist150"[1mProcessInfoPlistFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist [1mParseStarterProject/ParseStarterProject-Info.plist[0m72c4dac1835ab841^22abdbc1835ab841^---0#0#1#-19%DVTDocumentLocation2@122"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist0000000000000000^1250"[1mProcessInfoPlistFile[0m build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist [1mParseStarterProject/ParseStarterProject-Info.plist[0m    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    builtin-infoPlistUtility /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Info.plist -genpkginfo /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app/Info.plist36"A0C7E57B-C751-4D94-96F2-60B8AC00E8ED-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CProcessPCH /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch ParseStarterProject/ParseStarterProject-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s408585153.867954
+e408585154.594496
+r1
+xProcessPCH
+x/var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch
+xParseStarterProject/ParseStarterProject-Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection61"Precompile ParseStarterProject/ParseStarterProject-Prefix.pch344"[1mProcessPCH[0m /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch ParseStarterProject/ParseStarterProject-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compileref56dec1835ab841^0e2f98c2835ab841^---0#0#1#-19%DVTDocumentLocation2@122"file://localhost/Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Prefix.pch0000000000000000^4418"[1mProcessPCH[0m /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch ParseStarterProject/ParseStarterProject-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=184 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -fcolor-diagnostics -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator7.0.sdk -fexceptions -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch -mios-simulator-version-min=4.3 -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-generated-files.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-own-target-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-all-target-headers.hmap -iquote /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/ParseStarterProject-project-headers.hmap -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources/i386 -I/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/ParseStarterProject.build/Debug-iphonesimulator/ParseStarterProject.build/DerivedSources -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator -F/Users/bklimt/src/hungry/ios-client/ParseStarterProject --serialize-diagnostics /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.dia -MMD -MT dependencies -MF /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.d -c /Users/bklimt/src/hungry/ios-client/ParseStarterProject/ParseStarterProject/ParseStarterProject-Prefix.pch -o /var/folders/zq/r3tydcbd6570b8yqdjrzzjwxyz0gbs/C/com.apple.DeveloperTools/5.0-5A1412/Xcode/SharedPrecompiledHeaders/ParseStarterProject-Prefix-azuvmzyznfxaeaeoolbtmlwucdns/ParseStarterProject-Prefix.pch.pch36"B0EF3B5B-9EAC-4BC1-A8E1-4421E1A62962-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
+CTouch /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app
+s408585158.356689
+e408585158.364029
+r1
+xTouch
+x/Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection113"Touch /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app65"[1mTouch[0m build/Debug-iphonesimulator/ParseStarterProject.app88655bc6835ab841^23315dc6835ab841^---0#0#1#--847"[1mTouch[0m build/Debug-iphonesimulator/ParseStarterProject.app    cd /Users/bklimt/src/hungry/ios-client/ParseStarterProject    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Users/bklimt/src/hungry/go/bin:/Users/bklimt/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/gems/ruby-1.9.3-p327@global/bin:/Users/bklimt/.rvm/rubies/ruby-1.9.3-p327/bin:/Users/bklimt/.rvm/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/opt/android-sdk/platform-tools:/usr/local/opt/android-sdk/tools:/Users/bklimt/.rvm/bin:/Users/bklimt/src/arcanist/bin/:/usr/local/bin"    /usr/bin/touch -c /Users/bklimt/src/hungry/ios-client/ParseStarterProject/build/Debug-iphonesimulator/ParseStarterProject.app36"ACC0C618-CB4C-4FA4-B546-0BF34561180A-
+b17854A65-E6FC-4C4D-8B43-9E89823AA949
+
