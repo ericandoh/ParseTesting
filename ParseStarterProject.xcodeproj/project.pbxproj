@@ -28,11 +28,14 @@
 		C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B551613CE0800959FDC /* Default-568h@2x.png */; };
 		C4C51B591613CE0800959FDC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B561613CE0800959FDC /* Default@2x.png */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
+		D96402511953554100C48191 /* old_main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D96402501953554100C48191 /* old_main.storyboard */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
 		D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FCEBB1954E60A007D5EE6 /* Main.storyboard */; };
 		D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */; };
 		D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */; };
 		D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC31954E63E007D5EE6 /* CameraViewController.m */; };
+		D97FCECB1954E63E007D5EE6 /* FeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC51954E63E007D5EE6 /* FeedController.m */; };
+		D97FCECC1954E63E007D5EE6 /* FeedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC71954E63E007D5EE6 /* FeedCell.m */; };
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
 		D97FCED81954E67D007D5EE6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED61954E67D007D5EE6 /* User.m */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
@@ -70,6 +73,7 @@
 		C4C51B551613CE0800959FDC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C4C51B561613CE0800959FDC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
+		D96402501953554100C48191 /* old_main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = old_main.storyboard; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D97FCEBB1954E60A007D5EE6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D97FCEBE1954E63E007D5EE6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -78,6 +82,10 @@
 		D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		D97FCEC21954E63E007D5EE6 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		D97FCEC31954E63E007D5EE6 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		D97FCEC41954E63E007D5EE6 /* FeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedController.h; sourceTree = "<group>"; };
+		D97FCEC51954E63E007D5EE6 /* FeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedController.m; sourceTree = "<group>"; };
+		D97FCEC61954E63E007D5EE6 /* FeedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedCell.h; sourceTree = "<group>"; };
+		D97FCEC71954E63E007D5EE6 /* FeedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedCell.m; sourceTree = "<group>"; };
 		D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplePFObjectOverride.h; sourceTree = "<group>"; };
 		D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamplePFObjectOverride.m; sourceTree = "<group>"; };
 		D97FCED51954E67D007D5EE6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -158,6 +166,7 @@
 				09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */,
 				09ABC08613A1D52E009C3FCF /* ParseStarterProjectViewController.h */,
 				09ABC08713A1D52E009C3FCF /* ParseStarterProjectViewController.m */,
+				D96402501953554100C48191 /* old_main.storyboard */,
 				D97FCEBB1954E60A007D5EE6 /* Main.storyboard */,
 				09ABC07813A1D52D009C3FCF /* Supporting Files */,
 				D96401F219533AA200C48191 /* UnassignedCode */,
@@ -190,6 +199,10 @@
 				D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */,
 				D97FCEC21954E63E007D5EE6 /* CameraViewController.h */,
 				D97FCEC31954E63E007D5EE6 /* CameraViewController.m */,
+				D97FCEC41954E63E007D5EE6 /* FeedController.h */,
+				D97FCEC51954E63E007D5EE6 /* FeedController.m */,
+				D97FCEC61954E63E007D5EE6 /* FeedCell.h */,
+				D97FCEC71954E63E007D5EE6 /* FeedCell.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -260,6 +273,7 @@
 				D96401F319533AA200C48191 /* UnassignedCode in Resources */,
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,
 				C4C51B571613CE0800959FDC /* Default.png in Resources */,
+				D96402511953554100C48191 /* old_main.storyboard in Resources */,
 				D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,
 				C4C51B591613CE0800959FDC /* Default@2x.png in Resources */,
@@ -275,7 +289,9 @@
 			files = (
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
+				D97FCECC1954E63E007D5EE6 /* FeedCell.m in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
+				D97FCECB1954E63E007D5EE6 /* FeedController.m in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97FCED81954E67D007D5EE6 /* User.m in Sources */,
 				D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */,
