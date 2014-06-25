@@ -14,6 +14,7 @@
 @interface User : NSObject
 
 //stupid comment
+//stupid comment 2
 
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) int userID;
