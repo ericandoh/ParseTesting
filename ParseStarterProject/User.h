@@ -13,6 +13,8 @@
 
 @interface User : NSObject
 
+//stupid comment
+
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) int userID;
 

@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>CD59B4E9-DFC6-4EFA-9255-8A70F16953B5</string>
+	<string>A0B13F3A-278B-44E2-898F-6D1A1A478E8A</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ParseStarterProject</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>7CDF8957-3F5D-40BD-8A73-E782D8605D0D</key>
-		<string>ssh://github.com/hungrylabs/hungry.git</string>
+		<key>C364FE36-9D14-4724-8677-0C8525563310</key>
+		<string>ssh://github.com/ericandoh/ParseTesting.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>ios-client/ParseStarterProject/ParseStarterProject.xcodeproj/project.xcworkspace</string>
+	<string>ParseStarterProject.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>7CDF8957-3F5D-40BD-8A73-E782D8605D0D</key>
-		<string>../../../..</string>
+		<key>C364FE36-9D14-4724-8677-0C8525563310</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/hungrylabs/hungry.git</string>
+	<string>ssh://github.com/ericandoh/ParseTesting.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>7CDF8957-3F5D-40BD-8A73-E782D8605D0D</string>
+	<string>C364FE36-9D14-4724-8677-0C8525563310</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>7CDF8957-3F5D-40BD-8A73-E782D8605D0D</string>
+			<string>C364FE36-9D14-4724-8677-0C8525563310</string>
 			<key>IDESourceControlWCCName</key>
-			<string>hungry</string>
+			<string>ParseTesting</string>
 		</dict>
 	</array>
 </dict>
