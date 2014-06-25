@@ -14,7 +14,8 @@
 @interface CameraViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property BOOL usingCamera;
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+//@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) UIImage *pickedImage;
 - (IBAction)useCamera:(id)sender;
 - (IBAction)useGallery:(id)sender;
 

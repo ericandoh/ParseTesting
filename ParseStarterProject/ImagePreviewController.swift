@@ -10,15 +10,23 @@ import UIKit
 
 class ImagePreviewController: UIViewController {
 
+    @IBOutlet var imageView: UIImageView;
+    
+    weak var receivedImage: UIImage?;
+    
+    /*
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
-    }
-
+        //imageView = UIImageView();
+    }*/
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if receivedImage {
+            imageView.image = receivedImage;
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +34,10 @@ class ImagePreviewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @objc
+    func receiveImage(imageValue: UIImage) {
+        receivedImage = imageValue
+    }
 
     /*
     // #pragma mark - Navigation

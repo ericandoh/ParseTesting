@@ -7,6 +7,9 @@
 //
 
 #import "CameraViewController.h"
+//#import "ImagePreviewController-Swift.h"
+#import "ParseStarterProject-Swift.h"
+
 
 @implementation CameraViewController
 
@@ -31,7 +34,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -39,8 +42,14 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    ImagePreviewController* nextController = ((ImagePreviewController*)(segue.destinationViewController));
+    
+    //if (_pickedImage != nil) {
+    [nextController receiveImage:_pickedImage];
+    //}
+    
 }
-*/
+
 
 - (IBAction)useCamera:(id)sender {
     //when camera button is pressed
@@ -79,7 +88,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     NSString *mediaType = info[UIImagePickerControllerMediaType];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:NO completion:^{
     
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage]) {
         UIImage *image = info[UIImagePickerControllerOriginalImage];
@@ -87,17 +96,23 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         
         //add code here to do something with image I just picked
         
-        _imageView.image = image;
+        _pickedImage = image;
+        
         if (_usingCamera)
             UIImageWriteToSavedPhotosAlbum(image,
                                            self,
                                            @selector(image:finishedSavingWithError:contextInfo:),
                                            nil);
+        
+        //start segue
+        [self performSegueWithIdentifier:@"ImagePreview" sender:self];
+        
+        
     }
     else if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])
     {
         // Code here to support video if enabled
-    }
+    }}];
 }
 
 -(void)image:(UIImage *)image
