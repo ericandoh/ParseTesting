@@ -16,6 +16,4 @@
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic) int userID;
 
-//eric was here
-
 @end
