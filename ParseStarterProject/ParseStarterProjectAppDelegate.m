@@ -1,6 +1,6 @@
 #import <Parse/Parse.h>
 #import "ParseStarterProjectAppDelegate.h"
-#import "ParseStarterProjectViewController.h"
+//#import "ParseStarterProjectViewController.h"
 
 @implementation ParseStarterProjectAppDelegate
 
@@ -16,8 +16,12 @@
     
     // ****************************************************************************
     // Uncomment and fill in with your Parse credentials:
-    [Parse setApplicationId:@"KdJujqIAaEuNW9YvsAQhnOOHUGsMMDhFJeOrlz6h"
-                  clientKey:@"I0VPBQaCngaQFzfpgu0c13OpvbPOZfWxAx4UiVvG"];
+    //[Parse setApplicationId:@"KdJujqIAaEuNW9YvsAQhnOOHUGsMMDhFJeOrlz6h" <----- old credentials, where did you get them?
+    //              clientKey:@"I0VPBQaCngaQFzfpgu0c13OpvbPOZfWxAx4UiVvG"];
+    
+    [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
+                  clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
+    
     //
     // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
     // described here: https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/
@@ -25,6 +29,8 @@
     // ****************************************************************************
 
     [PFUser enableAutomaticUser];
+    [[PFUser currentUser] incrementKey:@"RunCount"];
+    [[PFUser currentUser] saveInBackground];
     
     PFACL *defaultACL = [PFACL ACL];
 

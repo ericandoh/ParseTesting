@@ -2,6 +2,8 @@
 //  NotifViewController.swift
 //  ParseStarterProject
 //
+//  View your notifications when prompted
+//
 //  Created by Eric Oh on 6/26/14.
 //
 //

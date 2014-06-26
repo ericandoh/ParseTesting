@@ -1,3 +1,5 @@
+//STARTING POINT OF APPLICATION (pretty much)
+
 #import <UIKit/UIKit.h>
 
 bool DEBUG_FLAG;

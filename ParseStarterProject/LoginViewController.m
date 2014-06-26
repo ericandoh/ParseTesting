@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "ParseStarterProjectAppDelegate.h"
+#import "ParseStarterProject-Swift.h"
 
 @implementation LoginViewController
 
@@ -43,14 +44,26 @@
 }
 */
 
+- (IBAction)immediateBrowsing:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"JumpIn" sender:self];
+}
+
 - (IBAction)loginPress {
     //authenticate into user with
     NSString* username = self.userTextField.text;
     NSString* password = self.passwordTextField.text;
     //connect to server + authenticate here (BACKEND)
+    [ServerInteractor loginUser:username password:password sender:self];
     if (DEBUG_FLAG) {
         NSLog(@"Logging in %@", username);
     }
-    
 }
+
+- (void) successfulLogin {
+    [self performSegueWithIdentifier:@"JumpIn" sender:self];
+}
+- (void) failedLogin: (NSString*) msg {
+    [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:msg delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+}
+
 @end

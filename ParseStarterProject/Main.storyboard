@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M7Q-3C-sKb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
     </dependencies>
     <scenes>
@@ -59,6 +60,12 @@
                                 <connections>
                                     <segue destination="KLW-Kf-YUh" kind="push" id="jIk-hi-xTh"/>
                                 </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vC2-Hh-ItC">
+                                <rect key="frame" x="132" y="293" width="51" height="30"/>
+                                <state key="normal" title="Log Off">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -222,6 +229,28 @@
             </objects>
             <point key="canvasLocation" x="1212" y="744"/>
         </scene>
+        <!--Start Controller-->
+        <scene sceneID="zwv-W1-UcF">
+            <objects>
+                <viewController id="cfa-MP-8Gc" customClass="StartController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="khr-7U-bds"/>
+                        <viewControllerLayoutGuide type="bottom" id="xXP-rf-Bv1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fBC-Qh-i7V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="Zmy-er-sYr" kind="modal" identifier="SignIn" id="QwV-m7-Asq"/>
+                        <segue destination="M7Q-3C-sKb" kind="modal" identifier="JumpIn" id="Mum-TH-bLG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oXe-hZ-1Ih" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="222" y="730"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="PA9-ak-5Ps">
             <objects>
@@ -293,7 +322,7 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuC-K4-2wg">
-                                <rect key="frame" x="86" y="297" width="143" height="30"/>
+                                <rect key="frame" x="89" y="335" width="143" height="30"/>
                                 <state key="normal" title="Login with Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -302,7 +331,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLe-AF-DLT">
-                                <rect key="frame" x="127" y="335" width="57" height="30"/>
+                                <rect key="frame" x="132" y="297" width="57" height="30"/>
                                 <state key="normal" title="Register">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -310,8 +339,17 @@
                                     <segue destination="vp5-wb-cPq" kind="push" id="V0h-26-Daa"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
+                                <rect key="frame" x="38" y="373" width="245" height="30"/>
+                                <state key="normal" title="Don't sign me in - I want to browse!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="immediateBrowsing:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="r5U-7a-YTm"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URl-MG-9o6">
-                                <rect key="frame" x="134" y="259" width="43" height="30"/>
+                                <rect key="frame" x="139" y="259" width="43" height="30"/>
                                 <state key="normal" title="Login!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -326,11 +364,12 @@
                     <connections>
                         <outlet property="passwordTextField" destination="lCD-Hm-x7k" id="alE-G6-mM2"/>
                         <outlet property="userTextField" destination="nWM-np-dhM" id="Gha-t0-Bfh"/>
+                        <segue destination="M7Q-3C-sKb" kind="modal" identifier="JumpIn" id="yZk-AU-KGY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cb2-gP-iZL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="752" y="130"/>
+            <point key="canvasLocation" x="756" y="130"/>
         </scene>
         <!--Camera View Controller - Upload-->
         <scene sceneID="GWN-jX-G5j">
@@ -494,11 +533,12 @@
                         <outlet property="emailTextField" destination="aaT-tM-w4u" id="urv-WT-ZQl"/>
                         <outlet property="passwordTextField" destination="4NY-eO-D54" id="JmL-xC-7iY"/>
                         <outlet property="userTextField" destination="IjE-rg-ihq" id="Uhg-zi-UpD"/>
+                        <segue destination="M7Q-3C-sKb" kind="modal" identifier="JumpIn" id="Z3C-cF-les"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L4Z-6G-Aq5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1213" y="130"/>
+            <point key="canvasLocation" x="1203" y="130"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -507,6 +547,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="yZk-AU-KGY"/>
         <segue reference="sL6-S5-evr"/>
     </inferredMetricsTieBreakers>
 </document>

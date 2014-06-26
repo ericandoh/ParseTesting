@@ -1,40 +1,34 @@
 //
-//  ImagePreviewController.swift
+//  StartController.swift
 //  ParseStarterProject
 //
-//  Previews the image before user submission, after image selection
-//
-//  Created by Eric Oh on 6/25/14.
+//  Created by Eric Oh on 6/26/14.
 //
 //
 
 import UIKit
 
-@objc
-class ImagePreviewController: UIViewController {
+class StartController: UIViewController {
 
-    @IBOutlet var imageView: UIImageView;
-    
-    weak var receivedImage: UIImage?;
-    
-    /*
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
-        //imageView = UIImageView();
     }*/
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if receivedImage {
-            imageView.image = receivedImage;
-        }
+        
     }
-    
-    //function triggered by pushing check button
-    @IBAction func acceptImage(sender: UIButton) {
-        //store image and submit (BACKEND)
+    override func viewDidAppear(animated: Bool) {
+        if (ServerInteractor.isUserLogged()) {
+            //user logged in from last session
+            self.performSegueWithIdentifier("JumpIn", sender: self);
+        }
+        else {
+            self.performSegueWithIdentifier("SignIn", sender: self);
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,10 +36,6 @@ class ImagePreviewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc
-    func receiveImage(imageValue: UIImage) {
-        receivedImage = imageValue
-    }
 
     /*
     // #pragma mark - Navigation

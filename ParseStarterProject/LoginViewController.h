@@ -14,5 +14,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *userTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 
+- (IBAction)immediateBrowsing:(UIButton *)sender;
 - (IBAction)loginPress;
+
+- (void) successfulLogin;
+
+- (void) failedLogin: (NSString*) msg;
+
 @end

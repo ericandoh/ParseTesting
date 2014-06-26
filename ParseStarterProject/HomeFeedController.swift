@@ -2,6 +2,8 @@
 //  HomeFeedController.swift
 //  ParseStarterProject
 //
+//  Displays images on your home feed with voting options
+//
 //  Created by Eric Oh on 6/25/14.
 //
 //
@@ -48,16 +50,17 @@ class HomeFeedController: UIViewController {
         var location: CGPoint = sender.locationInView(self.view);
         location.x -= 220;
         
-        animateImageMotion(location);
+        animateImageMotion(location, vote: false);
     }
     
-    func animateImageMotion(towardPoint: CGPoint) {
+    func animateImageMotion(towardPoint: CGPoint, vote: Bool) {
         if let frontView = frontImageView {
             UIView.animateWithDuration(0.5, animations: {
                 frontView.alpha = 0.0;
                 frontView.center = towardPoint;
                 }
                 , completion: { completed in
+                    //register vote to backend (BACKEND)
                     //set frontView's image to backView's image
                     if let backView = self.backImageView {
                         frontView.image = backView.image;
@@ -77,7 +80,7 @@ class HomeFeedController: UIViewController {
         var location: CGPoint = sender.locationInView(self.view);
         location.x += 220;
         
-        animateImageMotion(location);
+        animateImageMotion(location, vote: true);
     }
 
     /*

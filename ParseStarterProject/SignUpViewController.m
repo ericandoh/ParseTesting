@@ -8,6 +8,7 @@
 
 #import "ParseStarterProjectAppDelegate.h"
 #import "SignUpViewController.h"
+#import "ParseStarterProject-Swift.h"
 
 @implementation SignUpViewController
 
@@ -48,8 +49,16 @@
     NSString* email = self.emailTextField.text;
     NSString* password = self.passwordTextField.text;
     //register user with server here (BACKEND)
+    [ServerInteractor registerUser:username email:email password:password sender:self];
     if (DEBUG_FLAG) {
         NSLog(@"registering user %@", username);
     }
 }
+- (void) successfulSignUp {
+    [self performSegueWithIdentifier:@"JumpIn" sender:self];
+}
+- (void) failedSignUp: (NSString*) msg {
+    [[[UIAlertView alloc] initWithTitle:@"Signup Failed" message:msg delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+}
+
 @end

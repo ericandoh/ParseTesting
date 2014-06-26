@@ -16,4 +16,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 - (IBAction)signUpPressed:(id)sender;
 
+- (void) successfulSignUp;
+- (void) failedSignUp: (NSString*) msg;
+
 @end
