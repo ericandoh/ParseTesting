@@ -14,9 +14,14 @@
 @property (strong, nonatomic) IBOutlet UITextField *userTextField;
 @property (strong, nonatomic) IBOutlet UITextField *emailTextField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
+
+@property NSString* prevUserName;
+@property NSString* prevPassWord;
+
 - (IBAction)signUpPressed:(id)sender;
 
 - (void) successfulSignUp;
 - (void) failedSignUp: (NSString*) msg;
+- (void) updateUserFields:(NSString*)userfield withPassword: (NSString*) password;
 
 @end

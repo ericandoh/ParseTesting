@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "ParseStarterProjectAppDelegate.h"
 #import "ParseStarterProject-Swift.h"
+#import "SignUpViewController.h"
 
 @implementation LoginViewController
 
@@ -33,7 +34,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -41,8 +42,12 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqual: @"RegisterSegue"]) {
+        SignUpViewController* next = ((SignUpViewController*)([segue destinationViewController]));
+        [next updateUserFields:self.userTextField.text withPassword:self.passwordTextField.text];
+    }
 }
-*/
+
 
 - (IBAction)immediateBrowsing:(UIButton *)sender {
     [self performSegueWithIdentifier:@"JumpIn" sender:self];

@@ -25,6 +25,12 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    if (_prevPassWord != nil) {
+        self.passwordTextField.text =_prevPassWord;
+    }
+    if (_prevUserName != nil) {
+        self.userTextField.text = _prevUserName;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -59,6 +65,11 @@
 }
 - (void) failedSignUp: (NSString*) msg {
     [[[UIAlertView alloc] initWithTitle:@"Signup Failed" message:msg delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
+}
+- (void) updateUserFields:(NSString*)userfield withPassword: (NSString*) password
+{
+    _prevUserName = userfield;
+    _prevPassWord = password;
 }
 
 @end
