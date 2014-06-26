@@ -47,7 +47,7 @@
     //authenticate into user with
     NSString* username = self.userTextField.text;
     NSString* password = self.passwordTextField.text;
-    
+    //connect to server + authenticate here (BACKEND)
     if (DEBUG_FLAG) {
         NSLog(@"Logging in %@", username);
     }

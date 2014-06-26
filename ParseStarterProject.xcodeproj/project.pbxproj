@@ -38,6 +38,9 @@
 		D97FCED81954E67D007D5EE6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED61954E67D007D5EE6 /* User.m */; };
 		D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */; };
 		D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AD195C8D98009E97B0 /* test image 3.jpg */; };
+		D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6AF195C937A009E97B0 /* NotifViewController.swift */; };
+		D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6B1195C9A0E009E97B0 /* Constants.swift */; };
+		D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */; };
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
 		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
@@ -90,6 +93,9 @@
 		D97FCED61954E67D007D5EE6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daniel-craig.jpg"; sourceTree = "<group>"; };
 		D996F6AD195C8D98009E97B0 /* test image 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test image 3.jpg"; sourceTree = "<group>"; };
+		D996F6AF195C937A009E97B0 /* NotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotifViewController.swift; sourceTree = "<group>"; };
+		D996F6B1195C9A0E009E97B0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppNotification.swift; sourceTree = "<group>"; };
 		D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
@@ -171,6 +177,7 @@
 				09ABC08613A1D52E009C3FCF /* ParseStarterProjectViewController.h */,
 				09ABC08713A1D52E009C3FCF /* ParseStarterProjectViewController.m */,
 				D97FCEBB1954E60A007D5EE6 /* Main.storyboard */,
+				D996F6B1195C9A0E009E97B0 /* Constants.swift */,
 				D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */,
 				09ABC07813A1D52D009C3FCF /* Supporting Files */,
 				D96401F219533AA200C48191 /* UnassignedCode */,
@@ -209,6 +216,7 @@
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
+				D996F6AF195C937A009E97B0 /* NotifViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -220,6 +228,7 @@
 				D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */,
 				D97FCED51954E67D007D5EE6 /* User.h */,
 				D97FCED61954E67D007D5EE6 /* User.m */,
+				D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -297,14 +306,17 @@
 			files = (
 				D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */,
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
+				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97FCED81954E67D007D5EE6 /* User.m in Sources */,
 				D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
+				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
 				09ABC08813A1D52E009C3FCF /* ParseStarterProjectViewController.m in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
+				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

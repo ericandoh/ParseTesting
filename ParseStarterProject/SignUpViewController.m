@@ -47,7 +47,7 @@
     NSString* username = self.userTextField.text;
     NSString* email = self.emailTextField.text;
     NSString* password = self.passwordTextField.text;
-    
+    //register user with server here (BACKEND)
     if (DEBUG_FLAG) {
         NSLog(@"registering user %@", username);
     }
