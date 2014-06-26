@@ -158,6 +158,7 @@
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="PZh-Be-jJe" appends="YES" id="IfI-bW-ehN"/>
+                            <outletCollection property="gestureRecognizers" destination="aE5-1P-ftA" appends="YES" id="Div-yE-2vX"/>
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home Feed" id="otN-m4-N78"/>
@@ -166,6 +167,11 @@
                 <swipeGestureRecognizer direction="right" id="PZh-Be-jJe">
                     <connections>
                         <action selector="swipeRight:" destination="pRL-aY-NaV" id="ZKk-JQ-Uyd"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="aE5-1P-ftA">
+                    <connections>
+                        <action selector="swipeLeft:" destination="pRL-aY-NaV" id="qts-Ma-Z1f"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

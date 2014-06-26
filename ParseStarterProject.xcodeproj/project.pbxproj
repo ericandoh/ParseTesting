@@ -36,6 +36,8 @@
 		D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC31954E63E007D5EE6 /* CameraViewController.m */; };
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
 		D97FCED81954E67D007D5EE6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED61954E67D007D5EE6 /* User.m */; };
+		D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */; };
+		D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AD195C8D98009E97B0 /* test image 3.jpg */; };
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
 		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
@@ -86,6 +88,8 @@
 		D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamplePFObjectOverride.m; sourceTree = "<group>"; };
 		D97FCED51954E67D007D5EE6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		D97FCED61954E67D007D5EE6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daniel-craig.jpg"; sourceTree = "<group>"; };
+		D996F6AD195C8D98009E97B0 /* test image 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test image 3.jpg"; sourceTree = "<group>"; };
 		D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D996F6AD195C8D98009E97B0 /* test image 3.jpg */,
+				D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */,
 				D9125D04195C7E090082F97B /* horned-logo.png */,
 				C4C51B541613CE0800959FDC /* Default.png */,
 				C4C51B561613CE0800959FDC /* Default@2x.png */,
@@ -275,8 +281,10 @@
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,
 				C4C51B571613CE0800959FDC /* Default.png in Resources */,
 				D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */,
+				D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,
 				C4C51B591613CE0800959FDC /* Default@2x.png in Resources */,
+				D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
