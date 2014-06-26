@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="1212" y="1814"/>
         </scene>
-        <!--View Controller - Home Feed-->
+        <!--Home Feed Controller - Home Feed-->
         <scene sceneID="yIV-MD-BT5">
             <objects>
-                <viewController id="pRL-aY-NaV" sceneMemberID="viewController">
+                <viewController id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aaZ-Tf-Ht1"/>
                         <viewControllerLayoutGuide type="bottom" id="bRx-XP-Gwl"/>
@@ -155,10 +155,19 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="PZh-Be-jJe" appends="YES" id="IfI-bW-ehN"/>
+                        </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home Feed" id="otN-m4-N78"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="93K-ue-lRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="PZh-Be-jJe">
+                    <connections>
+                        <action selector="swipeRight:" destination="pRL-aY-NaV" id="ZKk-JQ-Uyd"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1212" y="744"/>
         </scene>
