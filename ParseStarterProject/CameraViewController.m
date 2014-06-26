@@ -42,12 +42,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    ImagePreviewController* nextController = ((ImagePreviewController*)(segue.destinationViewController));
     
-    //if (_pickedImage != nil) {
-    [nextController receiveImage:_pickedImage];
-    //}
-    
+    if ([segue.destinationViewController isKindOfClass:[ImagePreviewController class]]) {
+        ImagePreviewController* nextController = ((ImagePreviewController*)(segue.destinationViewController));
+        [nextController receiveImage:_pickedImage];
+    }
+    else {
+        NSLog(@"Destination View Controller mismatch???");
+        NSLog(@"Id: %@", [segue identifier]);
+    }
 }
 
 

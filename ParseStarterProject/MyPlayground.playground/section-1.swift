@@ -23,3 +23,29 @@ func recursive(number: Int) -> Int {
 }
 
 recursive(numr)*/
+
+var head = 1.0
+var tail = 2.0
+var head2 = 4.0
+var tail2 = -4.0
+var headPos = 2.0
+var tailPos = 2.0
+
+var iterations = 10
+while(iterations > 0) {
+    iterations--;
+    if (headPos > tailPos) {
+        head -= 0.25
+        tail += 0.25
+    }
+    else {
+        head += 0.25
+        tail -= 0.25
+    }
+    head2 += head
+    tail2 += tail
+    headPos += head2
+    tailPos += tail2
+    headPos
+    tailPos
+}

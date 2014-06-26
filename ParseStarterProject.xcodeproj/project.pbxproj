@@ -36,6 +36,7 @@
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
 		D97FCED81954E67D007D5EE6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED61954E67D007D5EE6 /* User.m */; };
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
+		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +87,7 @@
 		D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeedController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 				D97FCEC31954E63E007D5EE6 /* CameraViewController.m */,
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */,
+				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */,
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
@@ -332,7 +336,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -361,7 +365,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};

@@ -1,5 +1,5 @@
 //
-//  ImagePreviewController.swift
+//  HomeFeedController.swift
 //  ParseStarterProject
 //
 //  Created by Eric Oh on 6/25/14.
@@ -8,26 +8,24 @@
 
 import UIKit
 
-@objc
-class ImagePreviewController: UIViewController {
+class HomeFeedController: UIViewController {
+    
+    weak var frontImageView: UIImageView?;
+    
+    weak var backImageView: UIImageView?;
+    
 
-    @IBOutlet var imageView: UIImageView;
-    
-    weak var receivedImage: UIImage?;
-    
-    /*
     init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
-        //imageView = UIImageView();
-    }*/
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if receivedImage {
-            imageView.image = receivedImage;
-        }
+        frontImageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 280, height: 320));
+        backImageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 280, height: 320));
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,10 +33,6 @@ class ImagePreviewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @objc
-    func receiveImage(imageValue: UIImage) {
-        receivedImage = imageValue
-    }
 
     /*
     // #pragma mark - Navigation
