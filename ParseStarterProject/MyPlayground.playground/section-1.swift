@@ -1,7 +1,7 @@
 // Playground - noun: a place where people can play
 
 import UIKit
-
+/*
 var str = "Hello, playground"
 "hello world"
 
@@ -12,6 +12,7 @@ while(false) {
     num = num + 1
     println(random())
 }
+*/
 /*
 var numr = 3;
 //lets cause stack overflow error for the lels
@@ -23,7 +24,7 @@ func recursive(number: Int) -> Int {
 }
 
 recursive(numr)*/
-
+/*
 var head = 1.0
 var tail = 2.0
 var head2 = 4.0
@@ -48,4 +49,18 @@ while(iterations > 0) {
     tailPos += tail2
     headPos
     tailPos
+}*/
+
+
+
+var someArray: Int[] = Int[](count: 3, repeatedValue: 0)
+someArray.insert(3, atIndex: 0)
+someArray.insert(5, atIndex: 1)
+someArray.insert(7, atIndex: 3)
+//someArray[3] = 5
+//someArray[0] = 4
+//someArray[1] = 3
+for a in someArray {
+    a
 }
+5+3

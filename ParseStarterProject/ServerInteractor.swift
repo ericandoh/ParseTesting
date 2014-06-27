@@ -107,6 +107,7 @@ class ServerInteractor: NSObject {
     }
     
     class func getUserName()->String {
+        //need to add check checking if I am anon
         return PFUser.currentUser().username;
     }
     
@@ -132,7 +133,9 @@ class ServerInteractor: NSObject {
     
     //return image, likes
     //counter = how many pages I've seen (used for pagination)
-    class func getPost(counter: Int)->Array<ImagePostStructure>? {
+    class func getPost(counter: Int)->Array<ImagePostStructure?> {
+        
+        var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
         
         var query = PFQuery(className:"ImagePost")
         query.skip = counter;
@@ -144,17 +147,14 @@ class ServerInteractor: NSObject {
                 // The find succeeded.
                 // NSLog("Successfully retrieved \(objects.count) scores.")
                 // Do something with the found objects
-                var returnList = Array<ImagePostStructure>();
                 var imgFile: PFFile;
-                /*for (index, object:PFObject!) in enumerate(objects) {
+                for (index, object:PFObject!) in enumerate(objects!) {
                     //NSLog("%@", object.objectId)
                     imgFile = object["imageFile"] as PFFile;
-                    returnList[index] = imgFile.getDataInBackgroundWithBlock({ (result: NSData!, error: NSError!) in
-                        returnList[index] =
-                        });
-                    
-                    returnList += ImagePostStructure(image: object["imageFile"] as UIImage);
-                }*/
+                    imgFile.getDataInBackgroundWithBlock({ (result: NSData!, error: NSError!) in
+                        returnList[index] = ImagePostStructure(image: UIImage(data:imgFile.getData()));
+                    });
+                }
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
@@ -165,7 +165,7 @@ class ServerInteractor: NSObject {
         
         
         //return (nil, 0);
-        return nil;
+        return returnList;
     }
     //return PFFile of image, likes (then pull in PFFile only if needed!)
     class func getMySubmissions()->(PFFile?, Int) {
