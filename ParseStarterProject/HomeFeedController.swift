@@ -19,9 +19,9 @@ class HomeFeedController: UIViewController {
     
     
     //first set has images to display, viewCounter tells me where in array I am currently viewing
-    var firstSet: Array<ImagePostStructure> = ImagePostStructure[]();
+    var firstSet: Array<ImagePostStructure?> = Array<ImagePostStructure?>();
     //second set should be loaded while viewing first set (load in background), switch to this when we run out in firstSet
-    var secondSet: Array<ImagePostStructure> = ImagePostStructure[]();
+    var secondSet: Array<ImagePostStructure?> = Array<ImagePostStructure?>();
     
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -44,6 +44,8 @@ class HomeFeedController: UIViewController {
         self.view.addSubview(backImageView);
         
         self.view.bringSubviewToFront(frontImageView);
+        //removeme
+        firstSet = ServerInteractor.getPost(0);
 
         
     }
@@ -76,7 +78,19 @@ class HomeFeedController: UIViewController {
                         frontView.alpha = 1.0;
                         //fetch new backView image for backView
                         //backView.image = METHOD FOR INSERTING NEW IMAGE HERE (BACKEND)
-                        backView.image = UIImage(named: "test image 3.jpg");
+                        //removeme commented below line
+                        //backView.image = UIImage(named: "test image 3.jpg");
+                        //removeme
+                        if (self.firstSet[self.viewCounter] == nil) {
+                            if (self.viewCounter == 0) {
+                                return;
+                            }
+                            self.viewCounter = 0
+                        }
+                        NSLog("Updating to image at \(self.viewCounter)")
+                        var img : UIImage = (self.firstSet[self.viewCounter])!.image
+                        backView.image = img;
+                        self.viewCounter = (self.viewCounter + 1)%(POST_LOAD_COUNT);
                         
                     }
                 });

@@ -119,40 +119,59 @@ class ServerInteractor: NSObject {
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage) {
         //upload file
+        NSLog("Uploading image...")
         let data = UIImagePNGRepresentation(image);
         let file = PFFile(name:"posted.png",data:data);
-        file.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) in
+        
+        
+        /*file.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) in
+            NSLog("Image is uploaded, now uploading data object")
             var imagePost = PFObject(className:"ImagePost");
             imagePost["imageFile"] = file;
             imagePost["author"] = PFUser.currentUser();
             imagePost["likes"] = 0;
             imagePost["passes"] = 0;
-            });
+            imagePost.saveInBackground()
+            });*/
+        
+        //upload - relational data is saved as well (no need for code above)
+        var imagePost = PFObject(className:"ImagePost");
+        imagePost["imageFile"] = file;
+        imagePost["author"] = PFUser.currentUser();
+        imagePost["likes"] = 0;
+        imagePost["passes"] = 0;
+        imagePost.saveInBackground()
+        
         //save rest of post info in a PFObject
     }
     
     //return image, likes
     //counter = how many pages I've seen (used for pagination)
     class func getPost(counter: Int)->Array<ImagePostStructure?> {
+        NSLog("Getting objects")
+        //download - relational data is NOT fetched!
         
         var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
         
         var query = PFQuery(className:"ImagePost")
-        query.skip = counter;
+        var tempQueryObjects = Array<PFFile>()
+        //query.skip = counter;
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
-                // NSLog("Successfully retrieved \(objects.count) scores.")
+                NSLog("Successfully retrieved \(objects.count) scores.")
                 // Do something with the found objects
                 var imgFile: PFFile;
                 for (index, object:PFObject!) in enumerate(objects!) {
-                    //NSLog("%@", object.objectId)
+                    NSLog("%@", object.objectId)
                     imgFile = object["imageFile"] as PFFile;
+                    tempQueryObjects.append(imgFile)
                     imgFile.getDataInBackgroundWithBlock({ (result: NSData!, error: NSError!) in
-                        returnList[index] = ImagePostStructure(image: UIImage(data:imgFile.getData()));
+                        NSLog("Getting datum for list index \(index)")
+                        returnList[index] = ImagePostStructure(image: UIImage(data:tempQueryObjects[index].getData()));
                     });
                 }
             } else {
