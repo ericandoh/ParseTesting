@@ -10,10 +10,11 @@
 //
 
 #import <Parse/Parse.h>
+#import <Parse/PFObject+Subclass.h>
 
 // <PFSubclassing>
 
-@interface SamplePFObjectOverride : PFObject
+@interface SamplePFObjectOverride : PFObject <PFSubclassing>
 
 +(NSString*)parseClassName;
 

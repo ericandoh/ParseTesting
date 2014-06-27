@@ -15,7 +15,14 @@ class HomeFeedController: UIViewController {
     var frontImageView: UIImageView?;
     var backImageView: UIImageView?;
     
-
+    var viewCounter = 0;
+    
+    
+    //first set has images to display, viewCounter tells me where in array I am currently viewing
+    var firstSet: Array<ImagePostStructure> = ImagePostStructure[]();
+    //second set should be loaded while viewing first set (load in background), switch to this when we run out in firstSet
+    var secondSet: Array<ImagePostStructure> = ImagePostStructure[]();
+    
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization

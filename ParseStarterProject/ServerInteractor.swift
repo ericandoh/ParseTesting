@@ -18,6 +18,11 @@ class ServerInteractor: NSObject {
     class func someTypeMethod() {
         
     }
+    
+    
+    //---------------User Login/Signup/Interaction Methods---------------------------------
+    
+    
     class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
         
         /*if (currentUser) {
@@ -101,11 +106,69 @@ class ServerInteractor: NSObject {
         PFUser.requestPasswordResetForEmailInBackground(email)
     }
     
+    class func getUserName()->String {
+        return PFUser.currentUser().username;
+    }
+    
     /*
     PFQuery *query = [PFUser query];
     [query whereKey:@"gender" equalTo:@"female"]; // find all the women
     NSArray *girls = [query findObjects];
-    
-    
     */
+    //------------------Image Post related methods---------------------------------------
+    class func uploadImage(image: UIImage) {
+        //upload file
+        let data = UIImagePNGRepresentation(image);
+        let file = PFFile(name:"posted.png",data:data);
+        file.saveInBackgroundWithBlock({ (succeeded: Bool, error: NSError!) in
+            var imagePost = PFObject(className:"ImagePost");
+            imagePost["imageFile"] = file;
+            imagePost["author"] = PFUser.currentUser();
+            imagePost["likes"] = 0;
+            imagePost["passes"] = 0;
+            });
+        //save rest of post info in a PFObject
+    }
+    
+    //return image, likes
+    //counter = how many pages I've seen (used for pagination)
+    class func getPost(counter: Int)->Array<ImagePostStructure>? {
+        
+        var query = PFQuery(className:"ImagePost")
+        query.skip = counter;
+        query.limit = POST_LOAD_COUNT;
+        query.orderByDescending("likes");
+        query.findObjectsInBackgroundWithBlock {
+            (objects: AnyObject[]!, error: NSError!) -> Void in
+            if !error {
+                // The find succeeded.
+                // NSLog("Successfully retrieved \(objects.count) scores.")
+                // Do something with the found objects
+                var returnList = Array<ImagePostStructure>();
+                var imgFile: PFFile;
+                /*for (index, object:PFObject!) in enumerate(objects) {
+                    //NSLog("%@", object.objectId)
+                    imgFile = object["imageFile"] as PFFile;
+                    returnList[index] = imgFile.getDataInBackgroundWithBlock({ (result: NSData!, error: NSError!) in
+                        returnList[index] =
+                        });
+                    
+                    returnList += ImagePostStructure(image: object["imageFile"] as UIImage);
+                }*/
+            } else {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+            }
+        }
+        
+        //query addAscending/DescendingOrder:
+        
+        
+        //return (nil, 0);
+        return nil;
+    }
+    //return PFFile of image, likes (then pull in PFFile only if needed!)
+    class func getMySubmissions()->(PFFile?, Int) {
+        return (nil, 0);
+    }
 }

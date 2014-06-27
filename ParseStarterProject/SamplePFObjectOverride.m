@@ -8,6 +8,8 @@
 
 #import "SamplePFObjectOverride.h"
 
+#import <Parse/PFObject+Subclass.h>
+
 @implementation SamplePFObjectOverride: PFObject
 
 +(NSString*)parseClassName
