@@ -11,7 +11,8 @@
 
 import UIKit
 
-class ImagePost: PFObject {
+class ImagePost //: PFObject, PFSubclassing
+{
     class func parseClassName() -> String! {
         return "ImagePost"
     }
