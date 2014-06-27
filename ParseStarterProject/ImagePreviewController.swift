@@ -35,6 +35,7 @@ class ImagePreviewController: UIViewController {
     //function triggered by pushing check button
     @IBAction func acceptImage(sender: UIButton) {
         //store image and submit (BACKEND)
+        ServerInteractor.uploadImage(receivedImage!)
     }
 
     override func didReceiveMemoryWarning() {
