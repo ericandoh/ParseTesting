@@ -88,7 +88,7 @@ class HomeFeedController: UIViewController {
                             self.viewCounter = 0
                         }
                         NSLog("Updating to image at \(self.viewCounter)")
-                        var img : UIImage = (self.firstSet[self.viewCounter])!.image
+                        var img : UIImage = (self.firstSet[self.viewCounter])!.image!
                         backView.image = img;
                         self.viewCounter = (self.viewCounter + 1)%(POST_LOAD_COUNT);
                         
@@ -103,7 +103,7 @@ class HomeFeedController: UIViewController {
         
         animateImageMotion(location, vote: true);
     }
-
+    
     /*
     // #pragma mark - Navigation
 

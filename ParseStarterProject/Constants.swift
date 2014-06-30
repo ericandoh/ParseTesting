@@ -20,3 +20,6 @@ let NOTIF_COUNT = 10
 
 //number of post-images to load at once
 let POST_LOAD_COUNT = 10
+
+//maximum number of my own posts to load (when i query for my last submitted posts)
+let MYPOST_LOAD_COUNT = 20

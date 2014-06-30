@@ -231,9 +231,7 @@
 			children = (
 				D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */,
 				D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */,
-				D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */,
 				D9F89B1C195CE30600849B1D /* ImagePost.swift */,
-				D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -241,6 +239,8 @@
 		D9F89B15195CBA7400849B1D /* ServerSide */ = {
 			isa = PBXGroup;
 			children = (
+				D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */,
+				D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */,
 				D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */,
 			);
 			name = ServerSide;
