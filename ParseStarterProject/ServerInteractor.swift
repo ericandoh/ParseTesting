@@ -117,10 +117,13 @@ import UIKit
         notifObj.saveInBackground()
         
         
+        
+        PFUser.currentUser().addObject(notifObj, forKey: "notifs");
         var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
-        notifArray.insert(notifObj, atIndex: 0)
         if (notifArray.count > 20) {
-            notifArray.removeLast()
+            let lastItem:PFObject = notifArray.removeAtIndex(0);
+            lastItem.deleteInBackground();
+            PFUser.currentUser()["notifs"] = notifArray;
         }
         PFUser.currentUser().saveInBackground()
     }
@@ -184,21 +187,20 @@ import UIKit
     //------------------Notification related methods---------------------------------------
     class func getNotifications()->Array<InAppNotification?> {
         //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil)
-        NSLog("Lets investigate this one")
+        NSLog("Getting notifs")
         var returnList = Array<InAppNotification?>()
         var currentNotifs: Array<PFObject>;
         if ( PFUser.currentUser()["notifs"] != nil) {
-            NSLog("Retrieving notif category for this user")
             currentNotifs = PFUser.currentUser()["notifs"] as Array<PFObject>;
         }
         else {
-            NSLog("No notif category???")
             currentNotifs = Array<PFObject>();
-            PFUser.currentUser().setValue(currentNotifs, forKey: "notifs")
+            PFUser.currentUser().addObjectsFromArray(currentNotifs, forKey: "notifs");
+            PFUser.currentUser().saveInBackground();    //is this needed?
             //PFUser.currentUser()["notifs"] = currentNotifs;
         }
-        NSLog("Fetched \(currentNotifs.count)")
         //how many post-notifications we need
+        NSLog("We have \(currentNotifs.count) notifications")
         for index in 0..(currentNotifs.count) {
             returnList.append(InAppNotification(dataObject: currentNotifs[index]));
         }
@@ -214,14 +216,12 @@ import UIKit
         notifObj["message"] = txt
         notifObj.saveInBackground()
         
-        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
-        //notifArray.insert(notifObj, atIndex: 0)
         PFUser.currentUser().addObject(notifObj, forKey: "notifs");
-        //this worked: PFUser.currentUser().addObjectsFromArray(notifArray, forKey: "notifs");
-        //^^ what the **** is going on
-        
+        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
         if (notifArray.count > 20) {
-            notifArray.removeLast()
+            let lastItem:PFObject = notifArray.removeAtIndex(0);
+            lastItem.deleteInBackground();
+            PFUser.currentUser()["notifs"] = notifArray;
         }
         PFUser.currentUser().saveInBackground()
     }
@@ -240,14 +240,16 @@ import UIKit
                     
                     var friend = objects[0] as PFUser;
                     
+                    friend.addObject(notifObj, forKey: "notifs");
                     var notifArray = friend["notifs"] as Array<PFObject>
-                    notifArray.insert(notifObj, atIndex: 0)
                     if (notifArray.count > 20) {
-                        notifArray.removeLast()
+                        let lastItem:PFObject = notifArray.removeAtIndex(0);
+                        lastItem.deleteInBackground();
+                        friend["notifs"] = notifArray;
                     }
                     friend.saveInBackground()
-                    
-                } else {
+                }
+                else {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
                 }
             });
@@ -261,12 +263,23 @@ import UIKit
         notifObj["friend"] = PFUser.currentUser();
         notifObj.saveInBackground();
         
+        
+        friend.addObject(notifObj, forKey: "notifs");
         var notifArray = friend["notifs"] as Array<PFObject>
+        if (notifArray.count > 20) {
+            let lastItem:PFObject = notifArray.removeAtIndex(0);
+            lastItem.deleteInBackground();
+            friend["notifs"] = notifArray;
+        }
+        friend.saveInBackground()
+        
+        
+        /*var notifArray = friend["notifs"] as Array<PFObject>
         notifArray.insert(notifObj, atIndex: 0)
         if (notifArray.count > 20) {
             notifArray.removeLast()
         }
-        friend.saveInBackground()
+        friend.saveInBackground()*/
         
         return nil;
     }

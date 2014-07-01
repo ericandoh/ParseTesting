@@ -86,7 +86,7 @@ class NotifViewController: UITableViewController {
         
         //member.assignMessage();
         //modify below line so this happens AFTER message is loaded
-        NSLog("Retrieving message with message \(member.messageString)")
+        NSLog("Retrieving message with message \(member.messageString) at row \(temp)")
         cell.textLabel.text = member.messageString;
         
         return cell

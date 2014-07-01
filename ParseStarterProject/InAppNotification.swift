@@ -32,8 +32,15 @@ class InAppNotification {
         //assignMessage(listener);
     }
     func assignMessage(listener: NotifViewController) {
+        NSLog("Assigning message");
         if (personalObj != nil) {
             personalObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                NSLog("Fetched")
+                
+                if(object == nil) {
+                    NSLog("Something is wrong");
+                    return;
+                }
                 
                 self.type = self.personalObj!["type"] as String;
                 
