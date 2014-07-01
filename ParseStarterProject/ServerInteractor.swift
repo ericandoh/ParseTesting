@@ -11,7 +11,7 @@
 
 import UIKit
 
-class ServerInteractor: NSObject {
+@objc class ServerInteractor: NSObject {
     class func someTypeMethod() {
         
     }
@@ -21,20 +21,24 @@ class ServerInteractor: NSObject {
         user.username = username;
         user.password = password;
         user.email = email;
-        //other user fields associated
-        
-        //other notification objects associated (array of other PFObjects which have ref to other datum)
-        //use PFRelation here instead (wait how do we do that?)
-        var emptyArray = Array<PFObject?>(count: NOTIF_COUNT, repeatedValue: nil);
-        //user.addObjectsFromArray(emptyArray, forKey: "notifs");
-        user["notifs"] = emptyArray;
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
+                
+                //other notification objects associated (array of other PFObjects which have ref to other datum)
+                //use PFRelation here instead (wait how do we do that?)
+                var emptyArray = Array<PFObject>();
+                user.addObjectsFromArray(emptyArray, forKey: "notifs");
+                //user["notifs"] = emptyArray;
+                
+                //user.relationForKey("notifs")
+                
+                
                 //success!
                 //sign in user
                 //send some sort of notif to bump screen?
+                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 signController.successfulSignUp();
                 
             } else {
@@ -111,9 +115,13 @@ class ServerInteractor: NSObject {
         notifObj["type"] = "ImagePost";
         notifObj["ImagePost"] = newPost.myObj;
         notifObj.saveInBackground()
-        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject?>
+        
+        
+        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
         notifArray.insert(notifObj, atIndex: 0)
-        notifArray.removeLast()
+        if (notifArray.count > 20) {
+            notifArray.removeLast()
+        }
         PFUser.currentUser().saveInBackground()
     }
     //return ImagePostStructure(image, likes)
@@ -124,7 +132,7 @@ class ServerInteractor: NSObject {
         var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
         //query
         var query = PFQuery(className:"ImagePost")
-        query.skip = skip;
+        query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
         //query addAscending/DescendingOrder for extra ordering:
@@ -155,7 +163,7 @@ class ServerInteractor: NSObject {
         var query = PFQuery(className:"ImagePost")
         query.whereKey("author", equalTo: PFUser.currentUser());
         query.limit = loadCount;
-        query.skip = skip;
+        query.skip = skip * loadCount;
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
@@ -175,11 +183,24 @@ class ServerInteractor: NSObject {
     }
     //------------------Notification related methods---------------------------------------
     class func getNotifications()->Array<InAppNotification?> {
-        var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil)
-        var currentNotifs: Array<PFObject?> = PFUser.currentUser()["other_notifs"] as Array<PFObject?>;
+        //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil)
+        NSLog("Lets investigate this one")
+        var returnList = Array<InAppNotification?>()
+        var currentNotifs: Array<PFObject>;
+        if ( PFUser.currentUser()["notifs"] != nil) {
+            NSLog("Retrieving notif category for this user")
+            currentNotifs = PFUser.currentUser()["notifs"] as Array<PFObject>;
+        }
+        else {
+            NSLog("No notif category???")
+            currentNotifs = Array<PFObject>();
+            PFUser.currentUser().setValue(currentNotifs, forKey: "notifs")
+            //PFUser.currentUser()["notifs"] = currentNotifs;
+        }
+        NSLog("Fetched \(currentNotifs.count)")
         //how many post-notifications we need
-        for index in 0..NOTIF_COUNT {
-            returnList[index] = InAppNotification(dataObject: currentNotifs[index])
+        for index in 0..(currentNotifs.count) {
+            returnList.append(InAppNotification(dataObject: currentNotifs[index]));
         }
         return returnList
     }
@@ -192,9 +213,16 @@ class ServerInteractor: NSObject {
         notifObj["type"] = "PlainText";
         notifObj["message"] = txt
         notifObj.saveInBackground()
-        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject?>
-        notifArray.insert(notifObj, atIndex: 0)
-        notifArray.removeLast()
+        
+        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
+        //notifArray.insert(notifObj, atIndex: 0)
+        PFUser.currentUser().addObject(notifObj, forKey: "notifs");
+        //this worked: PFUser.currentUser().addObjectsFromArray(notifArray, forKey: "notifs");
+        //^^ what the **** is going on
+        
+        if (notifArray.count > 20) {
+            notifArray.removeLast()
+        }
         PFUser.currentUser().saveInBackground()
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
@@ -211,26 +239,35 @@ class ServerInteractor: NSObject {
                     notifObj.saveInBackground();
                     
                     var friend = objects[0] as PFUser;
-                    var notifArray = friend["notifs"] as Array<PFObject?>;
-                    notifArray.insert(notifObj, atIndex: 0);
-                    notifArray.removeLast();
-                    friend.saveInBackground();
+                    
+                    var notifArray = friend["notifs"] as Array<PFObject>
+                    notifArray.insert(notifObj, atIndex: 0)
+                    if (notifArray.count > 20) {
+                        notifArray.removeLast()
+                    }
+                    friend.saveInBackground()
+                    
                 } else {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
                 }
             });
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
-    class func postFriendAccept(friend: PFUser) {
+    //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header
+    class func postFriendAccept(friend: PFUser)->Array<AnyObject?>? {
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = "FriendAccept";
         notifObj["friend"] = PFUser.currentUser();
         notifObj.saveInBackground();
         
-        var notifArray = friend["notifs"] as Array<PFObject?>;
-        notifArray.insert(notifObj, atIndex: 0);
-        notifArray.removeLast();
-        friend.saveInBackground();
+        var notifArray = friend["notifs"] as Array<PFObject>
+        notifArray.insert(notifObj, atIndex: 0)
+        if (notifArray.count > 20) {
+            notifArray.removeLast()
+        }
+        friend.saveInBackground()
+        
+        return nil;
     }
 }

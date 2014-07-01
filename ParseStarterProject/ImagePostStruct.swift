@@ -35,6 +35,8 @@ class ImagePostStructure
         myObj["author"] = PFUser.currentUser();
         myObj["likes"] = 0;
         myObj["passes"] = 0;
+        myObj.ACL.setPublicReadAccess(true);
+        myObj.ACL.setPublicWriteAccess(true);
         //add more attributes here
     }
     func save() {
@@ -43,10 +45,18 @@ class ImagePostStructure
     func like() {
         //increment like counter for this post
         myObj.incrementKey("likes")
+        myObj.saveInBackground()
+    }
+    func getLikes()->Int {
+        return myObj["likes"] as Int
+    }
+    func getPasses()->Int {
+        return myObj["passes"] as Int
     }
     func pass() {
         //increment pass counter for this post
         myObj.incrementKey("passes")
+        myObj.saveInBackground()
     }
     func loadImage() {
         var imgFile: PFFile = myObj["imageFile"] as PFFile;

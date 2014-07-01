@@ -6,8 +6,8 @@
 //
 //  Kinds of notifications:
 //  1. Plaintext ("Welcome to our app!")
-//  2. Friend notifs ("__ wants to add you? Accept?") ("___ accepted your friend inv")
-//  3. Post notifs ("____ liked your photo!")
+//  2. Friend notifications ("__ wants to add you? Accept?") ("___ accepted your friend inv")
+//  3. Post notifications ("____ liked your photo!")
 //
 //  Created by Eric Oh on 6/26/14.
 //
@@ -26,31 +26,37 @@ class InAppNotification {
         messageString = message;
         type = "PlainText"
     }
-    init(dataObject: PFObject?) {
-        if let dataPF = dataObject {
-            type = dataPF["type"] as String;
-            personalObj = dataPF
-            assignMessage();
-        }
+    init(dataObject: PFObject) {
+        //type = dataObject["type"] as String;
+        personalObj = dataObject
+        //assignMessage(listener);
     }
-    func assignMessage() {
-        switch type {
-        case "ImagePost":
-            var obj = personalObj!["ImagePost"] as PFObject
-            //wont we need to fetch it?
-            var numLikes: Int = obj["likes"] as Int
-            messageString = "Your picture has gotten \(numLikes) likes!"
-        case "FriendRequest":
-            var obj = personalObj!["friend"] as PFUser
-            var friendName: String = obj["username"] as String
-            messageString = "You have received a friend request from \(friendName)."
-        case "FriendAccept":
-            var obj = personalObj!["friend"] as PFUser
-            var friendName: String = obj["username"] as String
-            messageString = "\(friendName) has accepted your friend invitation! People love you now!"
-        default:
-            //this is to keep Xcode from complaining
-            messageString = messageString + ""
+    func assignMessage(listener: NotifViewController) {
+        if (personalObj != nil) {
+            personalObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                
+                self.type = self.personalObj!["type"] as String;
+                
+                switch self.type {
+                case "ImagePost":
+                    var obj = self.personalObj!["ImagePost"] as PFObject
+                    //wont we need to fetch it?
+                    var numLikes: Int = obj["likes"] as Int
+                    self.messageString = "Your picture has gotten \(numLikes) likes!"
+                case "FriendRequest":
+                    var obj = self.personalObj!["friend"] as PFUser
+                    var friendName: String = obj["username"] as String
+                    self.messageString = "You have received a friend request from \(friendName)."
+                case "FriendAccept":
+                    var obj = self.personalObj!["friend"] as PFUser
+                    var friendName: String = obj["username"] as String
+                    self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"
+                default:
+                    self.messageString = self.personalObj!["message"] as String
+                }
+                NSLog("Assigned message string \(self.messageString)")
+                listener.tableView.reloadData()
+                });
         }
     }
     func interact() {

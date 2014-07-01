@@ -174,6 +174,7 @@
 		09ABC07713A1D52D009C3FCF /* ParseStarterProject */ = {
 			isa = PBXGroup;
 			children = (
+				D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */,
 				D9F89B15195CBA7400849B1D /* ServerSide */,
 				D97FCED21954E66F007D5EE6 /* Models */,
 				D97FCEBD1954E629007D5EE6 /* Controllers */,
@@ -217,7 +218,6 @@
 				D97FCEC21954E63E007D5EE6 /* CameraViewController.h */,
 				D97FCEC31954E63E007D5EE6 /* CameraViewController.m */,
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
-				D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
 				D996F6AF195C937A009E97B0 /* NotifViewController.swift */,
 				D9F89B18195CCD9700849B1D /* StartController.swift */,

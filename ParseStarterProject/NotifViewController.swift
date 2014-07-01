@@ -13,7 +13,7 @@ import UIKit
 class NotifViewController: UITableViewController {
 
     //most recent notifications at start of array
-    var notifList: NSMutableArray?;
+    var notifList: Array<InAppNotification?> = Array<InAppNotification?>();
     
     /*
     init(style: UITableViewStyle) {
@@ -31,17 +31,26 @@ class NotifViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
         //notifList = Array<InAppNotification>();
-        notifList = NSMutableArray();
+        //populateNotifs();
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        notifList = Array<InAppNotification>();
         populateNotifs();
+        self.tableView.reloadData();
     }
     
     func populateNotifs() {
         //(BACKEND)
         //populate your notif list here
-        notifList!.addObject(InAppNotification(message: "Thank you for joining us!"));
-        notifList!.addObject(InAppNotification(message: "Your last picture got no likes! :D"));
-        notifList!.addObject(InAppNotification(message: "No one likes you :("));
-        NSLog("We have \(notifList!.count) things in our list now!");
+        //notifList.append(InAppNotification(message: "Thank you for joining us!"));
+        //notifList.append(InAppNotification(message: "Your last picture got no likes! :D"));
+        //notifList.append(InAppNotification(message: "No one likes you :("));
+        //NSLog("We have \(notifList.count) things in our list now!");
+        notifList = ServerInteractor.getNotifications();
+        for index in 0..notifList.count {
+            notifList[index]!.assignMessage(self)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,10 +70,7 @@ class NotifViewController: UITableViewController {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         //return NOTIF_COUNT;
-        if notifList {
-            return notifList!.count
-        }
-        return 0;
+        return notifList.count
     }
 
     
@@ -75,8 +81,12 @@ class NotifViewController: UITableViewController {
         
         var temp = indexPath!.row;
         
-        var member: InAppNotification = notifList![temp] as InAppNotification;
+        var member: InAppNotification = notifList[temp] as InAppNotification;
         
+        
+        //member.assignMessage();
+        //modify below line so this happens AFTER message is loaded
+        NSLog("Retrieving message with message \(member.messageString)")
         cell.textLabel.text = member.messageString;
         
         return cell

@@ -15,18 +15,16 @@ class HomeFeedController: UIViewController {
     var frontImageView: UIImageView?;
     var backImageView: UIImageView?;
     
+    //which image we are viewing currently in firstSet
     var viewCounter = 0;
-    
     
     //first set has images to display, viewCounter tells me where in array I am currently viewing
     var firstSet: Array<ImagePostStructure?> = Array<ImagePostStructure?>();
     //second set should be loaded while viewing first set (load in background), switch to this when we run out in firstSet
     var secondSet: Array<ImagePostStructure?> = Array<ImagePostStructure?>();
     
-    /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Custom initialization
-    }*/
+    //which set of images we are on (so we dont have to query all 2 million images at once)
+    var numSets = 0;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +44,9 @@ class HomeFeedController: UIViewController {
         self.view.bringSubviewToFront(frontImageView);
         //removeme
         firstSet = ServerInteractor.getPost(0);
-
-        
+    }
+    override func viewDidAppear(animated: Bool) {
+        //needs work - reload images back into feed
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,6 +75,7 @@ class HomeFeedController: UIViewController {
                         //reset frontView back to front
                         frontView.frame = CGRect(x: 20, y: 20, width: 280, height: 320);
                         frontView.alpha = 1.0;
+                        
                         //fetch new backView image for backView
                         //backView.image = METHOD FOR INSERTING NEW IMAGE HERE (BACKEND)
                         //removeme commented below line
@@ -83,11 +83,25 @@ class HomeFeedController: UIViewController {
                         //removeme
                         if (self.firstSet[self.viewCounter] == nil) {
                             if (self.viewCounter == 0) {
+                                //our firstSet is empty - our results have no pictures!
+                                //consider resetting numSets back to 0 and repeating our results
                                 return;
                             }
+                            //reset back to 0, increment set count
+                            //numSets++
                             self.viewCounter = 0
                         }
-                        NSLog("Updating to image at \(self.viewCounter)")
+                        else {
+                            //register vote back to server
+                            if (vote) {
+                                //these are causing the object not found for update error
+                                self.firstSet[self.viewCounter]!.like();
+                            }
+                            else {
+                                self.firstSet[self.viewCounter]!.pass();
+                            }
+                        }
+                        //NSLog("Updating to image at \(self.viewCounter)")
                         var img : UIImage = (self.firstSet[self.viewCounter])!.image!
                         backView.image = img;
                         self.viewCounter = (self.viewCounter + 1)%(POST_LOAD_COUNT);
