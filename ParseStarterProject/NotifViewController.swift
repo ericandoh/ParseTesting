@@ -76,8 +76,6 @@ class NotifViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        NSLog("showing cell \(indexPath!.row)")
-        NSLog("notif count: \(notifList.count)")
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...

@@ -24,6 +24,7 @@ class StartController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if (ServerInteractor.isUserLogged()) {
             //user logged in from last session
+            ServerInteractor.initialUserChecks();
             self.performSegueWithIdentifier("JumpIn", sender: self);
         }
         else {

@@ -51,15 +51,11 @@ class SettingsViewController: UIViewController {
     }
     @IBAction func debugPurposeButton(sender: UIButton) {
         //Test1: Tries posting a notification
-        ServerInteractor.postDefaultNotif("Lets post something for goodness sake!");
+        ServerInteractor.postDefaultNotif("Test submission post");
         //lets also try adding to user field
-        //PFUser.currentUser()["reallyrandom"]=5;
-        //PFUser.currentUser().setValue(5, forKey: "letstrythisinstead");
-        //PFUser.currentUser().setObject("for goodness sake", forKey: "holyshitdoesanythingwork")
     }
     @IBAction func addFriendTrigger(sender: UIButton) {
         //add friend named friendAddField
-        NSLog("Adding friend \(friendAddField.text)")
         ServerInteractor.postFriendRequest(friendAddField.text, controller: self);
     }
 }

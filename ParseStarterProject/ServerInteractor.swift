@@ -22,12 +22,15 @@ import UIKit
         user.password = password;
         user.email = email;
         
+        user["friends"] = Array<PFUser?>();
+        
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
                 //success!
                 //sign in user
                 //send some sort of notif to bump screen?
+                ServerInteractor.initialUserChecks();
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 signController.successfulSignUp();
                 
@@ -45,6 +48,7 @@ import UIKit
             var logController: LoginViewController = sender as LoginViewController;
             if (user) {
                 //successful log in
+                ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }
             else {
@@ -246,25 +250,33 @@ import UIKit
                 var object: PFObject;
                 for index:Int in 0..objects.count {
                     object = objects![index] as PFObject;
-                    if (index < NOTIF_COUNT) {
-                        NSLog("Fetching notification \(index)");
-                        //returnList[index] = InAppNotification(dataObject: object);
-                        if(index >= controller.notifList.count) {
-                            controller.notifList.append(InAppNotification(dataObject: object));
-                        }
-                        else {
-                            controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
-                        }
-                        controller.notifList[index]!.assignMessage(controller);
-                    }
-                    else {
-                        if (object["viewed"]) {
+                    if (index >= NOTIF_COUNT) {
+                        if(object["viewed"]) {
                             object.deleteInBackground();
                             continue;
                         }
                     }
-                    object["viewed"] = true;
-                    object.saveInBackground();
+                    
+                    if(!object["viewed"]) {
+                        if (object["type"] != nil) {
+                            if ((object["type"] as String) == "FriendAccept") {
+                                //accept the friend!
+                                ServerInteractor.addAsFriend(object["sender"] as PFUser);
+                            }
+                        }
+                        object["viewed"] = true;
+                        object.saveInBackground()
+                    }
+                    
+                    //NSLog("Fetching notification \(index)");
+                    //returnList[index] = InAppNotification(dataObject: object);
+                    if(index >= controller.notifList.count) {
+                        controller.notifList.append(InAppNotification(dataObject: object));
+                    }
+                    else {
+                        controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
+                    }
+                    controller.notifList[index]!.assignMessage(controller);
                 }
             } else {
                 // Log details of the failure
@@ -359,5 +371,52 @@ import UIKit
         friend.saveInBackground()*/
         
         return nil;
+    }
+    //call this method when either accepting a friend inv or receiving a confirmation notification
+    class func addAsFriend(friend: PFUser)->Array<NSObject?>? {
+        //user["friends"] = Array<PFUser?>();
+        PFUser.currentUser().addUniqueObject(friend, forKey: "friends");
+        PFUser.currentUser().saveInBackground();
+        return nil;
+    }
+    //call this method when either removing a friend inv directly or when u receive 
+    //a (hidden) removefriend notif
+    //isHeartBroken: if false, must send (hidden) notif obj to user I am unfriending
+    //isHeartBroken: if true, is the user who has just been broken up with. no need to notify friend
+    //reason this is NOT a Notification PFObject: I should NOT notify the friend that I broke up with them
+    //  (stealthy friend removal) => i.e. if I want to remove a creeper I got deceived into friending
+    //RECEIVING END HAS BEEN IMPLEMENTED
+    class func removeFriend(friend: PFUser, isHeartBroken: Bool)->Array<NSObject?>? {
+        PFUser.currentUser().removeObject(friend, forKey: "friends");
+        PFUser.currentUser().saveInBackground();
+        if (!isHeartBroken) {
+            var breakupObj = PFObject(className:"BreakupNotice")
+            breakupObj["sender"] = PFUser.currentUser();
+            breakupObj["recipient"] = friend;
+            breakupObj.saveInBackground();
+            //send notification object
+        }
+        return nil;
+    }
+    
+    //gets me a list of my friends! (maybe I should encapsulate in class like I did with notifications/imageposts?)
+    class func getFriends()->Array<PFUser?> {
+        var friendz = PFUser.currentUser()["friends"] as Array<PFUser?>
+        return friendz;
+    }
+    
+    //checks that user should do whenever starting to use app on account
+    class func initialUserChecks() {
+        //check and see if user has any notice for removal of friends
+        var query = PFQuery(className: "BreakupNotice");
+        query.whereKey("recipient", equalTo: PFUser.currentUser());
+        query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
+            var object: PFObject;
+            for index: Int in 0..objects.count {
+                object = objects[index] as PFObject;
+                ServerInteractor.removeFriend(object["sender"] as PFUser, isHeartBroken: true);
+                object.deleteInBackground();
+            }
+        });
     }
 }
