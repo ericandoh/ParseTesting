@@ -159,7 +159,7 @@ import UIKit
         var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
         
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("author", equalTo: PFUser.currentUser());
+        query.whereKey("author", equalTo: PFUser.currentUser().username);
         query.limit = loadCount;
         query.skip = skip * loadCount;
         query.orderByDescending("createdAt");
@@ -182,8 +182,11 @@ import UIKit
     //------------------Notification related methods---------------------------------------
     class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
         
-        targetObject.ACL.setPublicReadAccess(true);
-        targetObject.ACL.setPublicWriteAccess(true);
+        //targetObject.ACL.setPublicReadAccess(true);
+        //targetObject.ACL.setPublicWriteAccess(true);
+        
+        targetObject.ACL.setReadAccess(true, forUser: targetUser)
+        targetObject.ACL.setWriteAccess(true, forUser: targetUser)
         
         targetUser.addObject(targetObject, forKey: "notifs");
         var notifArray = targetUser["notifs"] as Array<PFObject>

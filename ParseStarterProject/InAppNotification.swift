@@ -48,6 +48,7 @@ class InAppNotification {
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var numLikes: Int = object["likes"] as Int
                         self.messageString = "Your picture has gotten \(numLikes) likes!"
+                        listener.tableView.reloadData()
                     });
                     //wont we need to fetch it?
                 case "FriendRequest":
@@ -55,18 +56,20 @@ class InAppNotification {
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String
                         self.messageString = "You have received a friend request from \(friendName)."
+                        listener.tableView.reloadData()
                     });
                 case "FriendAccept":
                     var obj = self.personalObj!["friend"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String
                         self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"
+                        listener.tableView.reloadData()
                     });
                 default:
                     self.messageString = self.personalObj!["message"] as String
+                    listener.tableView.reloadData()
                 }
                 //NSLog("Assigned message string \(self.messageString)")
-                listener.tableView.reloadData()
                 });
         }
     }

@@ -32,7 +32,9 @@ class ImagePostStructure
         //upload - relational data is saved as well
         myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = file;
+        //this causes a self-referential loop between PFUser, notifications, and ImagePosts(this)
         //myObj["author"] = PFUser.currentUser();
+        myObj["author"] = PFUser.currentUser().username;
         myObj["likes"] = 0;
         myObj["passes"] = 0;
         
