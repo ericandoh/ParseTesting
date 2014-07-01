@@ -32,10 +32,8 @@ class InAppNotification {
         //assignMessage(listener);
     }
     func assignMessage(listener: NotifViewController) {
-        NSLog("Assigning message");
         if (personalObj != nil) {
             personalObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                NSLog("Fetched")
                 
                 if(object == nil) {
                     NSLog("Something is wrong");
@@ -47,21 +45,27 @@ class InAppNotification {
                 switch self.type {
                 case "ImagePost":
                     var obj = self.personalObj!["ImagePost"] as PFObject
+                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                        var numLikes: Int = object["likes"] as Int
+                        self.messageString = "Your picture has gotten \(numLikes) likes!"
+                    });
                     //wont we need to fetch it?
-                    var numLikes: Int = obj["likes"] as Int
-                    self.messageString = "Your picture has gotten \(numLikes) likes!"
                 case "FriendRequest":
                     var obj = self.personalObj!["friend"] as PFUser
-                    var friendName: String = obj["username"] as String
-                    self.messageString = "You have received a friend request from \(friendName)."
+                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                        var friendName: String = object["username"] as String
+                        self.messageString = "You have received a friend request from \(friendName)."
+                    });
                 case "FriendAccept":
                     var obj = self.personalObj!["friend"] as PFUser
-                    var friendName: String = obj["username"] as String
-                    self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"
+                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                        var friendName: String = object["username"] as String
+                        self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"
+                    });
                 default:
                     self.messageString = self.personalObj!["message"] as String
                 }
-                NSLog("Assigned message string \(self.messageString)")
+                //NSLog("Assigned message string \(self.messageString)")
                 listener.tableView.reloadData()
                 });
         }

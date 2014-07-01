@@ -32,9 +32,12 @@ class ImagePostStructure
         //upload - relational data is saved as well
         myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = file;
-        myObj["author"] = PFUser.currentUser();
+        //myObj["author"] = PFUser.currentUser();
         myObj["likes"] = 0;
         myObj["passes"] = 0;
+        
+        //what happens when I comment these out
+        
         myObj.ACL.setPublicReadAccess(true);
         myObj.ACL.setPublicWriteAccess(true);
         //add more attributes here
@@ -63,7 +66,8 @@ class ImagePostStructure
         imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
             //get file objects
             self.imageLoaded = true
-            self.image = UIImage(data: imgFile.getData())
+            self.image = UIImage(data: result);
+            //self.image = UIImage(data: imgFile.getData())
         });
     }
 }

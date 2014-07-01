@@ -105,27 +105,22 @@ import UIKit
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage) {
         var newPost = ImagePostStructure(image: image);
-        newPost.save();
+        NSLog("Made new post")
+        newPost.myObj.saveInBackgroundWithBlock({
+            (succeeded: Bool, error: NSError!)->Void in
+            if (succeeded && !error) {
+                NSLog("Succeeded, now pushign other notif objects");
+                var notifObj = PFObject(className:"Notification");
+                //type of notification - in this case, a Image Post (how many #likes i've gotten)
+                notifObj["type"] = "ImagePost";
+                notifObj["ImagePost"] = newPost.myObj;
+                ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
+            }
+            else {
+                NSLog("Soem error of some sort")
+            }
+            });
         
-        //add notification here WORKNEED
-        
-        //upload - relational data is saved as well
-        var notifObj = PFObject(className:"Notification");
-        //type of notification - in this case, a Image Post (how many #likes i've gotten)
-        notifObj["type"] = "ImagePost";
-        notifObj["ImagePost"] = newPost.myObj;
-        notifObj.saveInBackground()
-        
-        
-        
-        PFUser.currentUser().addObject(notifObj, forKey: "notifs");
-        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
-        if (notifArray.count > 20) {
-            let lastItem:PFObject = notifArray.removeAtIndex(0);
-            lastItem.deleteInBackground();
-            PFUser.currentUser()["notifs"] = notifArray;
-        }
-        PFUser.currentUser().saveInBackground()
     }
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
@@ -185,9 +180,52 @@ import UIKit
         return returnList;
     }
     //------------------Notification related methods---------------------------------------
+    class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
+        
+        targetObject.ACL.setPublicReadAccess(true);
+        targetObject.ACL.setPublicWriteAccess(true);
+        
+        targetUser.addObject(targetObject, forKey: "notifs");
+        var notifArray = targetUser["notifs"] as Array<PFObject>
+        
+        NSLog("Notif size: \(notifArray.count)")
+        
+        if (notifArray.count > 20) {
+            
+            //find oldest item and delete it
+            var oldestDate: NSDate = notifArray[0].updatedAt;
+            var oldestItem: PFObject = notifArray[0];
+            var oldestIndex: Int = 0;
+            
+            var listItem: PFObject;
+            //had enumeration error: check this
+            for index: Int in 0..notifArray.count {
+                listItem = notifArray[index]
+                if (listItem.updatedAt != nil && listItem.updatedAt.compare(oldestDate) == NSComparisonResult.OrderedAscending) {
+                    //this is the oldest
+                    oldestItem = listItem;
+                    oldestDate = listItem.updatedAt;
+                    oldestIndex = index;
+                }
+            }
+            oldestItem.deleteInBackground();
+            notifArray.removeAtIndex(oldestIndex);
+            targetUser["notifs"] = notifArray;
+        }
+        targetUser.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)-> Void in
+            if (!error) {
+                //NSLog("Saved user successfully")
+            }
+            else {
+                NSLog("Soemthing is very very wrong")
+            }
+            });
+        return nil
+    }
+    
     class func getNotifications()->Array<InAppNotification?> {
         //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil)
-        NSLog("Getting notifs")
+        //NSLog("Getting notifs")
         var returnList = Array<InAppNotification?>()
         var currentNotifs: Array<PFObject>;
         if ( PFUser.currentUser()["notifs"] != nil) {
@@ -214,16 +252,10 @@ import UIKit
         //type of notification - in this case, a default text one
         notifObj["type"] = "PlainText";
         notifObj["message"] = txt
-        notifObj.saveInBackground()
+        //notifObj.saveInBackground()
         
-        PFUser.currentUser().addObject(notifObj, forKey: "notifs");
-        var notifArray = PFUser.currentUser()["notifs"] as Array<PFObject>
-        if (notifArray.count > 20) {
-            let lastItem:PFObject = notifArray.removeAtIndex(0);
-            lastItem.deleteInBackground();
-            PFUser.currentUser()["notifs"] = notifArray;
-        }
-        PFUser.currentUser().saveInBackground()
+        saveNotification(PFUser.currentUser(), targetObject: notifObj)
+        
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFriendRequest(friendName: String, controller: UIViewController) {
@@ -240,14 +272,8 @@ import UIKit
                     
                     var friend = objects[0] as PFUser;
                     
-                    friend.addObject(notifObj, forKey: "notifs");
-                    var notifArray = friend["notifs"] as Array<PFObject>
-                    if (notifArray.count > 20) {
-                        let lastItem:PFObject = notifArray.removeAtIndex(0);
-                        lastItem.deleteInBackground();
-                        friend["notifs"] = notifArray;
-                    }
-                    friend.saveInBackground()
+                    ServerInteractor.saveNotification(friend, targetObject: notifObj)
+                    
                 }
                 else {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
@@ -263,16 +289,7 @@ import UIKit
         notifObj["friend"] = PFUser.currentUser();
         notifObj.saveInBackground();
         
-        
-        friend.addObject(notifObj, forKey: "notifs");
-        var notifArray = friend["notifs"] as Array<PFObject>
-        if (notifArray.count > 20) {
-            let lastItem:PFObject = notifArray.removeAtIndex(0);
-            lastItem.deleteInBackground();
-            friend["notifs"] = notifArray;
-        }
-        friend.saveInBackground()
-        
+        saveNotification(friend, targetObject: notifObj)
         
         /*var notifArray = friend["notifs"] as Array<PFObject>
         notifArray.insert(notifObj, atIndex: 0)
