@@ -30,8 +30,10 @@ class SettingsViewController: UIViewController {
     }
     
     func notifyFailure(message: String) {
-        let viewDialogue = UIAlertView(title: "Could not find friend", message: message, delegate: nil, cancelButtonTitle: "Cancel");
-        viewDialogue.show();
+        
+        var alert = UIAlertController(title: "Friend?", message: message, preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil));
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     /*

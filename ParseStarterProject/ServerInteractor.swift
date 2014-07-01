@@ -331,7 +331,10 @@ import UIKit
                     //ServerInteractor.saveNotification(friend, targetObject: notifObj)
                     
                 }
-                else {
+                else if(objects.count == 0) {
+                    (controller as SettingsViewController).notifyFailure("No such user exists!");
+                }
+                else if (error) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
                     (controller as SettingsViewController).notifyFailure(error.userInfo["error"] as String);
                 }
