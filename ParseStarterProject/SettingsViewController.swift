@@ -10,6 +10,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     @IBOutlet var userNameLabel: UILabel
+    @IBOutlet var friendAddField: UITextField
 
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -28,6 +29,10 @@ class SettingsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func notifyFailure(message: String) {
+        let viewDialogue = UIAlertView(title: "Could not find friend", message: message, delegate: nil, cancelButtonTitle: "Cancel");
+        viewDialogue.show();
+    }
 
     /*
     // #pragma mark - Navigation
@@ -49,5 +54,10 @@ class SettingsViewController: UIViewController {
         //PFUser.currentUser()["reallyrandom"]=5;
         //PFUser.currentUser().setValue(5, forKey: "letstrythisinstead");
         //PFUser.currentUser().setObject("for goodness sake", forKey: "holyshitdoesanythingwork")
+    }
+    @IBAction func addFriendTrigger(sender: UIButton) {
+        //add friend named friendAddField
+        NSLog("Adding friend \(friendAddField.text)")
+        ServerInteractor.postFriendRequest(friendAddField.text, controller: self);
     }
 }

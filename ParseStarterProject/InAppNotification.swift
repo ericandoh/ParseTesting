@@ -31,6 +31,12 @@ class InAppNotification {
         personalObj = dataObject
         //assignMessage(listener);
     }
+    init(dataObject: PFObject, message: String) {
+        //type = dataObject["type"] as String;
+        messageString = message;
+        personalObj = dataObject
+        //assignMessage(listener);
+    }
     func assignMessage(listener: NotifViewController) {
         if (personalObj != nil) {
             personalObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
@@ -52,14 +58,14 @@ class InAppNotification {
                     });
                     //wont we need to fetch it?
                 case "FriendRequest":
-                    var obj = self.personalObj!["friend"] as PFUser
+                    var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String
                         self.messageString = "You have received a friend request from \(friendName)."
                         listener.tableView.reloadData()
                     });
                 case "FriendAccept":
-                    var obj = self.personalObj!["friend"] as PFUser
+                    var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String
                         self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"

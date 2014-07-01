@@ -30,12 +30,12 @@ class NotifViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        //notifList = Array<InAppNotification>();
+        notifList = Array<InAppNotification>();
         //populateNotifs();
     }
     
     override func viewDidAppear(animated: Bool) {
-        notifList = Array<InAppNotification>();
+        //notifList = Array<InAppNotification>();
         populateNotifs();
         self.tableView.reloadData();
     }
@@ -47,10 +47,10 @@ class NotifViewController: UITableViewController {
         //notifList.append(InAppNotification(message: "Your last picture got no likes! :D"));
         //notifList.append(InAppNotification(message: "No one likes you :("));
         //NSLog("We have \(notifList.count) things in our list now!");
-        notifList = ServerInteractor.getNotifications();
-        for index in 0..notifList.count {
+        ServerInteractor.getNotifications(self);
+        /*for index in 0..notifList.count {
             notifList[index]!.assignMessage(self)
-        }
+        }*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,18 +70,21 @@ class NotifViewController: UITableViewController {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         //return NOTIF_COUNT;
+        NSLog("we have \(notifList.count) notifications")
         return notifList.count
     }
 
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
+        NSLog("showing cell \(indexPath!.row)")
+        NSLog("notif count: \(notifList.count)")
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
         
         var temp = indexPath!.row;
         
-        temp = notifList.count - 1 - temp;
+        //temp = notifList.count - 1 - temp;
         
         var member: InAppNotification = notifList[temp] as InAppNotification;
         

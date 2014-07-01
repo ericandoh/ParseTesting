@@ -25,16 +25,6 @@ import UIKit
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
-                
-                //other notification objects associated (array of other PFObjects which have ref to other datum)
-                //use PFRelation here instead (wait how do we do that?)
-                var emptyArray = Array<PFObject>();
-                user.addObjectsFromArray(emptyArray, forKey: "notifs");
-                //user["notifs"] = emptyArray;
-                
-                //user.relationForKey("notifs")
-                
-                
                 //success!
                 //sign in user
                 //send some sort of notif to bump screen?
@@ -109,18 +99,19 @@ import UIKit
         newPost.myObj.saveInBackgroundWithBlock({
             (succeeded: Bool, error: NSError!)->Void in
             if (succeeded && !error) {
-                NSLog("Succeeded, now pushign other notif objects");
+                NSLog("Succeeded, now pushing other notif objects");
                 var notifObj = PFObject(className:"Notification");
                 //type of notification - in this case, a Image Post (how many #likes i've gotten)
                 notifObj["type"] = "ImagePost";
                 notifObj["ImagePost"] = newPost.myObj;
-                ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
+                
+                ServerInteractor.processNotification(PFUser.currentUser(), targetObject: notifObj);
+                //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
             }
             else {
                 NSLog("Soem error of some sort")
             }
-            });
-        
+        });
     }
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
@@ -180,7 +171,19 @@ import UIKit
         return returnList;
     }
     //------------------Notification related methods---------------------------------------
-    class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
+    class func processNotification(targetUser: PFUser, targetObject: PFObject)->Array<AnyObject?>? {
+        targetObject.ACL.setReadAccess(true, forUser: targetUser)
+        targetObject.ACL.setWriteAccess(true, forUser: targetUser)
+        
+        targetObject["sender"] = PFUser.currentUser();  //this is necessary for friends!
+        targetObject["recipient"] = targetUser;
+        targetObject["viewed"] = false;
+        
+        targetObject.saveInBackground();
+        
+        return nil; //useless statement to suppress useless stupid xcode thing
+    }
+    /*class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
         
         //targetObject.ACL.setPublicReadAccess(true);
         //targetObject.ACL.setPublicWriteAccess(true);
@@ -224,11 +227,57 @@ import UIKit
             }
             });
         return nil
-    }
+    }*/
     
-    class func getNotifications()->Array<InAppNotification?> {
-        //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil)
-        //NSLog("Getting notifs")
+    class func getNotifications(controller: NotifViewController) {
+        //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil);
+        //var returnList = Array<InAppNotification?>();
+        var query = PFQuery(className:"Notification")
+        query.whereKey("recipient", equalTo: PFUser.currentUser());
+        //query.limit = loadCount;
+        //query.skip = skip * loadCount;
+        //want most recent first
+        query.orderByDescending("createdAt");
+        query.findObjectsInBackgroundWithBlock {
+            (objects: AnyObject[]!, error: NSError!) -> Void in
+            if !error {
+                // The find succeeded.
+                // Do something with the found objects
+                var object: PFObject;
+                for index:Int in 0..objects.count {
+                    object = objects![index] as PFObject;
+                    if (index < NOTIF_COUNT) {
+                        NSLog("Fetching notification \(index)");
+                        //returnList[index] = InAppNotification(dataObject: object);
+                        if(index >= controller.notifList.count) {
+                            controller.notifList.append(InAppNotification(dataObject: object));
+                        }
+                        else {
+                            controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
+                        }
+                        controller.notifList[index]!.assignMessage(controller);
+                    }
+                    else {
+                        if (object["viewed"]) {
+                            object.deleteInBackground();
+                            continue;
+                        }
+                    }
+                    object["viewed"] = true;
+                    object.saveInBackground();
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+            }
+        }
+        
+        
+        
+        
+        
+        
+        /*
         var returnList = Array<InAppNotification?>()
         var currentNotifs: Array<PFObject>;
         if ( PFUser.currentUser()["notifs"] != nil) {
@@ -245,7 +294,7 @@ import UIKit
         for index in 0..(currentNotifs.count) {
             returnList.append(InAppNotification(dataObject: currentNotifs[index]));
         }
-        return returnList
+        return returnList*/
     }
     //used for default message notifications (i.e. "You have been banned for violating TOS" "Welcome to our app"
     //"Happy April Fool's Day!")
@@ -257,11 +306,16 @@ import UIKit
         notifObj["message"] = txt
         //notifObj.saveInBackground()
         
-        saveNotification(PFUser.currentUser(), targetObject: notifObj)
-        
+        ServerInteractor.processNotification(PFUser.currentUser(), targetObject: notifObj);
+        //saveNotification(PFUser.currentUser(), targetObject: notifObj)
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFriendRequest(friendName: String, controller: UIViewController) {
+        if (friendName == "") {
+            (controller as SettingsViewController).notifyFailure("Please fill in a name");
+            return;
+        }
+        
         //first, query + find the user
         var query: PFQuery = PFUser.query();
         query.whereKey("username", equalTo: friendName)
@@ -270,16 +324,16 @@ import UIKit
                     //i want to request myself as a friend to my friend
                     var notifObj = PFObject(className:"Notification");
                     notifObj["type"] = "FriendRequest";
-                    notifObj["friend"] = PFUser.currentUser();
-                    notifObj.saveInBackground();
+                    //notifObj.saveInBackground();
                     
                     var friend = objects[0] as PFUser;
-                    
-                    ServerInteractor.saveNotification(friend, targetObject: notifObj)
+                    ServerInteractor.processNotification(friend, targetObject: notifObj);
+                    //ServerInteractor.saveNotification(friend, targetObject: notifObj)
                     
                 }
                 else {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
+                    (controller as SettingsViewController).notifyFailure(error.userInfo["error"] as String);
                 }
             });
     }
@@ -289,10 +343,10 @@ import UIKit
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = "FriendAccept";
-        notifObj["friend"] = PFUser.currentUser();
-        notifObj.saveInBackground();
+        //notifObj.saveInBackground();
         
-        saveNotification(friend, targetObject: notifObj)
+        processNotification(friend, targetObject: notifObj);
+        //saveNotification(friend, targetObject: notifObj)
         
         /*var notifArray = friend["notifs"] as Array<PFObject>
         notifArray.insert(notifObj, atIndex: 0)

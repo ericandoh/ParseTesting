@@ -37,7 +37,7 @@ class HomeFeedController: UIViewController {
         //replace with methods for fetching first two images
         //(BACKEND)
         frontImageView!.image = UIImage(named: "horned-logo.png");
-        backImageView!.image = UIImage(named: "daniel-craig.jpg");
+        backImageView!.image = UIImage(named: "test image 3.jpg");
         self.view.addSubview(frontImageView);
         self.view.addSubview(backImageView);
         

@@ -6,8 +6,6 @@
 //
 //
 
-import Cocoa
-
 class FriendTableViewController: UITableViewController {
 
 }
