@@ -347,11 +347,11 @@ import UIKit
                     
                 }
                 else if(objects.count == 0) {
-                    (controller as SettingsViewController).notifyFailure("No such user exists!");
+                    (controller as FriendTableViewController).notifyFailure("No such user exists!");
                 }
                 else if (error) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                    (controller as SettingsViewController).notifyFailure(error.userInfo["error"] as String);
+                    (controller as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
                 }
             });
     }
@@ -402,10 +402,24 @@ import UIKit
         return nil;
     }
     
-    //gets me a list of my friends! (maybe I should encapsulate in class like I did with notifications/imageposts?)
-    class func getFriends()->Array<PFUser?> {
-        var friendz = PFUser.currentUser()["friends"] as Array<PFUser?>
-        return friendz;
+    //gets me a list of my friends!
+    class func getFriends()->Array<FriendEncapsulator?> {
+        var returnList: Array<FriendEncapsulator?> = [];
+        var friendz: NSArray;
+        if PFUser.currentUser()["friends"] {
+            friendz = PFUser.currentUser()["friends"]as NSArray;
+        }
+        else {
+            friendz = Array<PFUser?>();
+            PFUser.currentUser()["friends"] = Array<PFUser?>();
+            PFUser.currentUser().saveInBackground();
+        }
+        var friend: PFUser;
+        for index in 0..friendz.count {
+            friend = friendz[index] as PFUser;
+            returnList.append(FriendEncapsulator(friend: friend));
+        }
+        return returnList;
     }
     
     //checks that user should do whenever starting to use app on account

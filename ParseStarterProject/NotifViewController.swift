@@ -39,7 +39,7 @@ class NotifViewController: UITableViewController {
         //notifList = Array<InAppNotification>();
         //NSLog("Populating notifs")
         populateNotifs();
-        self.tableView.reloadData();
+        self.tableView.reloadData();    //is this needed
     }
     
     func populateNotifs() {
@@ -74,7 +74,6 @@ class NotifViewController: UITableViewController {
         //return NOTIF_COUNT;
         return notifList.count
     }
-
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell

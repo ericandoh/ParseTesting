@@ -39,6 +39,10 @@ class InAppNotification {
     }
     func assignMessage(listener: NotifViewController) {
         if (personalObj != nil) {
+            
+            //I actually shouldn't need to fetch my personalObj, should already be loaded in from query
+            //this is outdated code from when I had another database schema
+            
             personalObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                 
                 if(object == nil) {

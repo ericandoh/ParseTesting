@@ -13,6 +13,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet var friendAddField: UITextField
     @IBOutlet var logOffButton: UIButton
 
+    var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
+    
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
@@ -65,6 +67,9 @@ class SettingsViewController: UIViewController {
     }
     @IBAction func addFriendTrigger(sender: UIButton) {
         //add friend named friendAddField
-        ServerInteractor.postFriendRequest(friendAddField.text, controller: self);
+        //deprecated
+        NSLog("Deprecated!!!");
+        var unused = 0;
+        //ServerInteractor.postFriendRequest(friendAddField.text, controller: self);
     }
 }
