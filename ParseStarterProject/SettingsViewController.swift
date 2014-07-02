@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
     @IBOutlet var userNameLabel: UILabel
     @IBOutlet var friendAddField: UITextField
+    @IBOutlet var logOffButton: UIButton
 
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -19,9 +20,15 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        if (ServerInteractor.isAnonLogged()) {
+            userNameLabel.text = "Not logged in";
+            logOffButton.setTitle("Sign In", forState: UIControlState.Normal)
+        }
+        else {
+            // Do any additional setup after loading the view.
+            userNameLabel.text = ServerInteractor.getUserName();
 
-        // Do any additional setup after loading the view.
-        userNameLabel.text = ServerInteractor.getUserName();
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +54,9 @@ class SettingsViewController: UIViewController {
     */
 
     @IBAction func logOff(sender: UIButton) {
-        ServerInteractor.logOutUser();
+        if (!ServerInteractor.isAnonLogged()) {
+            ServerInteractor.logOutUser();
+        }
     }
     @IBAction func debugPurposeButton(sender: UIButton) {
         //Test1: Tries posting a notification
