@@ -532,7 +532,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="Sn1-Di-YON" kind="modal" id="7iF-4m-xcb"/>
+                                            <segue destination="M7Q-3C-sKb" kind="modal" id="UB1-uW-jLQ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -555,7 +555,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gsp-Ji-MBc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1651" y="1229"/>
+            <point key="canvasLocation" x="1613" y="1291"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="GbN-ib-ZeW">
@@ -641,7 +641,6 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="oav-2I-DF3"/>
-        <segue reference="7iF-4m-xcb"/>
+        <segue reference="UB1-uW-jLQ"/>
     </inferredMetricsTieBreakers>
 </document>
