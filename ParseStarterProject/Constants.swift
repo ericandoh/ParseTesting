@@ -23,3 +23,20 @@ let POST_LOAD_COUNT = 10
 
 //maximum number of my own posts to load (when i query for my last submitted posts)
 let MYPOST_LOAD_COUNT = 20
+
+//String enums to describe type of notification (work need)
+enum NotificationType: String {
+    case PLAIN_TEXT = "PlainText"
+    case FRIEND_REQUEST = "FriendRequest"
+    case FRIEND_ACCEPT = "FriendAccept"
+    case IMAGE_POST = "ImagePost"
+}
+
+//String enums to describe exclusivity of user post (work need)
+enum PostExclusivity: String {
+    case FRIENDS_ONLY = "friends"
+    case EVERYONE = "everyone"
+    case MALE_ONLY = "male"
+    case FEMALE_ONLY = "female"
+}
+//enum.toRaw() for raw value

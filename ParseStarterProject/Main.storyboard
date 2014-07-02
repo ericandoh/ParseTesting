@@ -9,8 +9,8 @@
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                        <viewControllerLayoutGuide type="top" id="oTU-UP-TnF"/>
+                        <viewControllerLayoutGuide type="bottom" id="nVH-Sm-Ez6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -44,8 +44,8 @@
             <objects>
                 <viewController id="Ism-7q-CMJ" customClass="SettingsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="G97-Bc-LdS"/>
-                        <viewControllerLayoutGuide type="bottom" id="RZq-2m-eob"/>
+                        <viewControllerLayoutGuide type="top" id="Pfs-mx-EFp"/>
+                        <viewControllerLayoutGuide type="bottom" id="1JZ-Ot-Bl4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Ec-Vo-ZiR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -155,8 +155,8 @@
             <objects>
                 <viewController id="KLW-Kf-YUh" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="umB-NB-tcM"/>
-                        <viewControllerLayoutGuide type="bottom" id="SqN-AV-nQn"/>
+                        <viewControllerLayoutGuide type="top" id="kM5-DN-Sm9"/>
+                        <viewControllerLayoutGuide type="bottom" id="xOC-PE-E2O"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dyb-1B-mrT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -229,8 +229,8 @@
             <objects>
                 <viewController id="geD-Vt-qQ8" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IJV-Pd-eWF"/>
-                        <viewControllerLayoutGuide type="bottom" id="Z2U-bS-dhJ"/>
+                        <viewControllerLayoutGuide type="top" id="2fI-ie-dYk"/>
+                        <viewControllerLayoutGuide type="bottom" id="1mY-Jz-aFJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LcW-G4-FI1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -256,8 +256,8 @@
             <objects>
                 <viewController id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aaZ-Tf-Ht1"/>
-                        <viewControllerLayoutGuide type="bottom" id="bRx-XP-Gwl"/>
+                        <viewControllerLayoutGuide type="top" id="ih5-eX-xV4"/>
+                        <viewControllerLayoutGuide type="bottom" id="LO0-fE-W20"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pI2-mo-dPH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -307,8 +307,8 @@
             <objects>
                 <viewController id="cfa-MP-8Gc" customClass="StartController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="khr-7U-bds"/>
-                        <viewControllerLayoutGuide type="bottom" id="xXP-rf-Bv1"/>
+                        <viewControllerLayoutGuide type="top" id="wiQ-s7-O1Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="Iqw-TW-7Rr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fBC-Qh-i7V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -366,8 +366,8 @@
             <objects>
                 <viewController id="Z5R-ca-bUH" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8aQ-9R-uB3"/>
-                        <viewControllerLayoutGuide type="bottom" id="Q5X-wD-u6X"/>
+                        <viewControllerLayoutGuide type="top" id="duG-MP-j0T"/>
+                        <viewControllerLayoutGuide type="bottom" id="JYT-4k-Dka"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EoO-cL-tcl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -449,8 +449,8 @@
             <objects>
                 <viewController id="Sn1-Di-YON" customClass="CameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="azq-8x-0au"/>
-                        <viewControllerLayoutGuide type="bottom" id="hc8-jS-kR8"/>
+                        <viewControllerLayoutGuide type="top" id="kWR-6P-2Rm"/>
+                        <viewControllerLayoutGuide type="bottom" id="uyY-UY-PKk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="f7i-Qk-eYg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -491,45 +491,65 @@
             <objects>
                 <viewController restorationIdentifier="ImagePreview" storyboardIdentifier="ImagePreview" title="ImagePreview" id="gqO-OJ-AGi" userLabel="ImagePreview" customClass="ImagePreviewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jYC-ft-mS4"/>
-                        <viewControllerLayoutGuide type="bottom" id="H5k-h3-uk4"/>
+                        <viewControllerLayoutGuide type="top" id="OL5-t2-hxF"/>
+                        <viewControllerLayoutGuide type="bottom" id="Efw-9K-Fj5"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SSB-6O-sm9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swm-Tv-Rgl">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="317"/>
-                            </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
-                                <rect key="frame" x="20" y="325" width="280" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
-                                <rect key="frame" x="270" y="363" width="30" height="30"/>
-                                <state key="normal" title="X">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Sn1-Di-YON" kind="modal" id="7iF-4m-xcb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
-                                <rect key="frame" x="20" y="363" width="44" height="30"/>
-                                <state key="normal" title="Check">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="acceptImage:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="WfP-ih-7uF"/>
-                                    <segue destination="M7Q-3C-sKb" kind="modal" id="oav-2I-DF3"/>
-                                </connections>
-                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-Af-JCf">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swm-Tv-Rgl">
+                                        <rect key="frame" x="8" y="5" width="305" height="318"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
+                                        <rect key="frame" x="20" y="331" width="280" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
+                                        <rect key="frame" x="20" y="369" width="44" height="30"/>
+                                        <state key="normal" title="Check">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="acceptImage:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="WfP-ih-7uF"/>
+                                            <segue destination="M7Q-3C-sKb" kind="modal" id="oav-2I-DF3"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="HI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yak-oH-Hbj">
+                                        <rect key="frame" x="152" y="503" width="17" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
+                                        <rect key="frame" x="270" y="369" width="30" height="30"/>
+                                        <state key="normal" title="X">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="Sn1-Di-YON" kind="modal" id="7iF-4m-xcb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="swm-Tv-Rgl" secondAttribute="trailing" constant="7" id="5QQ-zw-hc8"/>
+                                    <constraint firstItem="QDt-YK-rqw" firstAttribute="top" secondItem="swm-Tv-Rgl" secondAttribute="bottom" constant="8" id="8F9-7I-PJV"/>
+                                    <constraint firstItem="swm-Tv-Rgl" firstAttribute="leading" secondItem="PSg-Af-JCf" secondAttribute="leading" constant="7" id="8KB-LS-uGD"/>
+                                    <constraint firstAttribute="bottom" secondItem="yak-oH-Hbj" secondAttribute="bottom" constant="36" id="bdm-ot-NXF"/>
+                                    <constraint firstItem="yak-oH-Hbj" firstAttribute="top" secondItem="QDt-YK-rqw" secondAttribute="bottom" constant="142" id="g28-Ye-Koh"/>
+                                    <constraint firstItem="swm-Tv-Rgl" firstAttribute="top" secondItem="PSg-Af-JCf" secondAttribute="top" constant="5" id="obu-Kd-F7U"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="swm-Tv-Rgl" id="44v-2G-Tux"/>
+                        <outlet property="scrollView" destination="PSg-Af-JCf" id="Bjq-Vb-yeo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gsp-Ji-MBc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -541,8 +561,8 @@
             <objects>
                 <viewController id="vp5-wb-cPq" customClass="SignUpViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="QvR-Dh-eGU"/>
-                        <viewControllerLayoutGuide type="bottom" id="CDm-tU-797"/>
+                        <viewControllerLayoutGuide type="top" id="Rlf-LM-glZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="12a-HR-dBc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WHv-yr-geh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
@@ -620,7 +640,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="oav-2I-DF3"/>
         <segue reference="7iF-4m-xcb"/>
-        <segue reference="yZk-AU-KGY"/>
     </inferredMetricsTieBreakers>
 </document>

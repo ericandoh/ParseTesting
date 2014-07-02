@@ -12,6 +12,8 @@ import UIKit
 
 class HomeFeedController: UIViewController {
     
+    var swiperNoSwipe: Bool = false;
+    
     var frontImageView: UIImageView?;
     var backImageView: UIImageView?;
     
@@ -55,13 +57,32 @@ class HomeFeedController: UIViewController {
     }
 
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            //in middle of swiping - do nothing
+            //later replace this with faster animation
+            return;
+        }
+        
         var location: CGPoint = sender.locationInView(self.view);
         location.x -= 220;
         
         animateImageMotion(location, vote: false);
     }
+    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            //in middle of swiping - do nothing
+            //later replace this with faster animation
+            return;
+        }
+        
+        var location: CGPoint = sender.locationInView(self.view);
+        location.x += 220;
+        
+        animateImageMotion(location, vote: true);
+    }
     
     func animateImageMotion(towardPoint: CGPoint, vote: Bool) {
+        swiperNoSwipe = true;
         if let frontView = frontImageView {
             UIView.animateWithDuration(0.5, animations: {
                 frontView.alpha = 0.0;
@@ -107,17 +128,10 @@ class HomeFeedController: UIViewController {
                         self.viewCounter = (self.viewCounter + 1)%(POST_LOAD_COUNT);
                         
                     }
+                    self.swiperNoSwipe = false;
                 });
         }
     }
-    
-    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        var location: CGPoint = sender.locationInView(self.view);
-        location.x += 220;
-        
-        animateImageMotion(location, vote: true);
-    }
-    
     /*
     // #pragma mark - Navigation
 

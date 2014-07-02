@@ -106,7 +106,7 @@ import UIKit
                 NSLog("Succeeded, now pushing other notif objects");
                 var notifObj = PFObject(className:"Notification");
                 //type of notification - in this case, a Image Post (how many #likes i've gotten)
-                notifObj["type"] = "ImagePost";
+                notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
                 notifObj["ImagePost"] = newPost.myObj;
                 
                 ServerInteractor.processNotification(PFUser.currentUser(), targetObject: notifObj);
@@ -259,7 +259,7 @@ import UIKit
                     
                     if(!object["viewed"]) {
                         if (object["type"] != nil) {
-                            if ((object["type"] as String) == "FriendAccept") {
+                            if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
                                 ServerInteractor.addAsFriend(object["sender"] as PFUser);
                             }
@@ -270,8 +270,11 @@ import UIKit
                     
                     //NSLog("Fetching notification \(index)");
                     //returnList[index] = InAppNotification(dataObject: object);
+                    //NSLog("Our notif list is currently \(controller.notifList.count) long")
                     if(index >= controller.notifList.count) {
-                        controller.notifList.append(InAppNotification(dataObject: object));
+                        var item = InAppNotification(dataObject: object);
+                        //weird issue #7 error happening here, notifList is NOT dealloc'd (exists)
+                        controller.notifList.append(item);
                     }
                     else {
                         controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
@@ -314,7 +317,7 @@ import UIKit
         //posts a custom notification (like friend invite, etc)
         var notifObj = PFObject(className:"Notification");
         //type of notification - in this case, a default text one
-        notifObj["type"] = "PlainText";
+        notifObj["type"] = NotificationType.PLAIN_TEXT.toRaw();
         notifObj["message"] = txt
         //notifObj.saveInBackground()
         
@@ -335,7 +338,7 @@ import UIKit
                 if (objects.count > 0) {
                     //i want to request myself as a friend to my friend
                     var notifObj = PFObject(className:"Notification");
-                    notifObj["type"] = "FriendRequest";
+                    notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
                     //notifObj.saveInBackground();
                     
                     var friend = objects[0] as PFUser;
@@ -357,7 +360,7 @@ import UIKit
     class func postFriendAccept(friend: PFUser)->Array<AnyObject?>? {
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
-        notifObj["type"] = "FriendAccept";
+        notifObj["type"] = NotificationType.FRIEND_ACCEPT.toRaw();
         //notifObj.saveInBackground();
         
         processNotification(friend, targetObject: notifObj);

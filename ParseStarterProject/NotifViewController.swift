@@ -30,12 +30,14 @@ class NotifViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        //NSLog("Resetting notif list")
         notifList = Array<InAppNotification>();
         //populateNotifs();
     }
     
     override func viewDidAppear(animated: Bool) {
         //notifList = Array<InAppNotification>();
+        //NSLog("Populating notifs")
         populateNotifs();
         self.tableView.reloadData();
     }
@@ -70,7 +72,6 @@ class NotifViewController: UITableViewController {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         //return NOTIF_COUNT;
-        NSLog("we have \(notifList.count) notifications")
         return notifList.count
     }
 

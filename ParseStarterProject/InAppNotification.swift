@@ -20,11 +20,11 @@ import Foundation
 class InAppNotification {
     //empty class
     var messageString: String = "";
-    var type: String = "PlainText";   //I should *probably* use enums for this
+    var type: String = NotificationType.PLAIN_TEXT.toRaw();   //I should *probably* use enums for this
     var personalObj: PFObject? = nil
     init(message: String) {
         messageString = message;
-        type = "PlainText"
+        type = NotificationType.PLAIN_TEXT.toRaw();
     }
     init(dataObject: PFObject) {
         //type = dataObject["type"] as String;
@@ -49,7 +49,7 @@ class InAppNotification {
                 self.type = self.personalObj!["type"] as String;
                 
                 switch self.type {
-                case "ImagePost":
+                case NotificationType.IMAGE_POST.toRaw():
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var numLikes: Int = object["likes"] as Int
@@ -57,14 +57,14 @@ class InAppNotification {
                         listener.tableView.reloadData()
                     });
                     //wont we need to fetch it?
-                case "FriendRequest":
+                case NotificationType.FRIEND_REQUEST.toRaw():
                     var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String
                         self.messageString = "You have received a friend request from \(friendName)."
                         listener.tableView.reloadData()
                     });
-                case "FriendAccept":
+                case NotificationType.FRIEND_ACCEPT.toRaw():
                     var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         var friendName: String = object["username"] as String

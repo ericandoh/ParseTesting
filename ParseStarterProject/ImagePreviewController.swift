@@ -14,6 +14,7 @@ import UIKit
 class ImagePreviewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView;
+    @IBOutlet var scrollView: UIScrollView
     
     weak var receivedImage: UIImage?;
     
@@ -30,6 +31,7 @@ class ImagePreviewController: UIViewController {
         if receivedImage {
             imageView.image = receivedImage;
         }
+        //scrollView.scrollEnabled = true;
     }
     
     //function triggered by pushing check button
