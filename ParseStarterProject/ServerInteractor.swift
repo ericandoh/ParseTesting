@@ -335,25 +335,25 @@ import UIKit
         var query: PFQuery = PFUser.query();
         query.whereKey("username", equalTo: friendName)
         query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
-                if (objects.count > 0) {
-                    //i want to request myself as a friend to my friend
-                    var notifObj = PFObject(className:"Notification");
-                    notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
-                    //notifObj.saveInBackground();
+            if (objects.count > 0) {
+                //i want to request myself as a friend to my friend
+                var notifObj = PFObject(className:"Notification");
+                notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
+                //notifObj.saveInBackground();
                     
-                    var friend = objects[0] as PFUser;
-                    ServerInteractor.processNotification(friend, targetObject: notifObj);
-                    //ServerInteractor.saveNotification(friend, targetObject: notifObj)
+                var friend = objects[0] as PFUser;
+                ServerInteractor.processNotification(friend, targetObject: notifObj);
+                //ServerInteractor.saveNotification(friend, targetObject: notifObj)
                     
-                }
-                else if(objects.count == 0) {
-                    (controller as FriendTableViewController).notifyFailure("No such user exists!");
-                }
-                else if (error) {
-                    //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                    (controller as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
-                }
-            });
+            }
+            else if(objects.count == 0) {
+                (controller as FriendTableViewController).notifyFailure("No such user exists!");
+            }
+            else if (error) {
+                //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
+                (controller as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
+            }
+        });
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
     //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header

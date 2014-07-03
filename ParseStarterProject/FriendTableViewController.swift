@@ -61,7 +61,7 @@ class FriendTableViewController: UITableViewController {
             cell.textLabel.text = "Add friend";
         }
         else {
-            cell.textLabel.text = friendList[temp - 1]!.getName(self);
+            cell.textLabel.text = friendList[temp - 1]!.getName({self.tableView.reloadData()});
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -92,6 +92,15 @@ class FriendTableViewController: UITableViewController {
         }
         else {
             //handle segueing to friend profile pages, if have time
+            
+            //issues! work
+            self.performSegueWithIdentifier("FriendViewSegue", sender: self);
+            
+            //make a user
+            
+            //making a copy from storyboard:
+            //UIStorybaord.storyboardwithname("main").instantiateViewControllerWithIdentifier("id")
+            
         }
     }
     func notifyFailure(message: String) {
@@ -127,14 +136,21 @@ class FriendTableViewController: UITableViewController {
     }
     */
     
-    /*
     // #pragma mark - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        
+        
+        if (segue!.identifier == "FriendViewSegue") {
+            let index: Int = self.tableView.indexPathForSelectedRow().row - 1;
+        
+            var targetCont = segue!.destinationViewController as FriendSingleViewController;
+            targetCont.receiveUserInfo(friendList[index]!);
+        }
     }
-    */
+    
 
 }

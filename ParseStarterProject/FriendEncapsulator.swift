@@ -13,13 +13,15 @@ class FriendEncapsulator {
     init(friend: PFUser) {
         friendObj = friend;
     }
-    func getName(controller: UITableViewController)->String {
+    //gets the name of the user, fetches it if needed
+    func getName(failFunction: ()->Void)->String {
         if (friendObj.isDataAvailable()) {
             username = friendObj.username;
         }
         else {
             friendObj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in });
-            controller.tableView.reloadData();
+            //controller.tableView.reloadData();
+            failFunction();
         }
         return username;
     }

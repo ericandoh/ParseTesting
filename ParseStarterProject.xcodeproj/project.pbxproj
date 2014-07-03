@@ -39,6 +39,7 @@
 		D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */; };
 		D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC31954E63E007D5EE6 /* CameraViewController.m */; };
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
+		D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */; };
 		D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */; };
 		D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AD195C8D98009E97B0 /* test image 3.jpg */; };
 		D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6AF195C937A009E97B0 /* NotifViewController.swift */; };
@@ -100,6 +101,7 @@
 		D97FCEC31954E63E007D5EE6 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplePFObjectOverride.h; sourceTree = "<group>"; };
 		D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamplePFObjectOverride.m; sourceTree = "<group>"; };
+		D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSingleViewController.swift; sourceTree = "<group>"; };
 		D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daniel-craig.jpg"; sourceTree = "<group>"; };
 		D996F6AD195C8D98009E97B0 /* test image 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "test image 3.jpg"; sourceTree = "<group>"; };
 		D996F6AF195C937A009E97B0 /* NotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotifViewController.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */,
 				D9715D2E1964CD3C00BA3C74 /* ImagePostNotifViewController.swift */,
 				D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */,
+				D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
 				D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */,
+				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

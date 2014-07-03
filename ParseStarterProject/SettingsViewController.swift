@@ -10,7 +10,6 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     @IBOutlet var userNameLabel: UILabel
-    @IBOutlet var friendAddField: UITextField
     @IBOutlet var logOffButton: UIButton
 
     var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
@@ -29,7 +28,6 @@ class SettingsViewController: UIViewController {
         else {
             // Do any additional setup after loading the view.
             userNameLabel.text = ServerInteractor.getUserName();
-
         }
     }
 
@@ -64,12 +62,5 @@ class SettingsViewController: UIViewController {
         //Test1: Tries posting a notification
         ServerInteractor.postDefaultNotif("Test submission post");
         //lets also try adding to user field
-    }
-    @IBAction func addFriendTrigger(sender: UIButton) {
-        //add friend named friendAddField
-        //deprecated
-        NSLog("Deprecated!!!");
-        var unused = 0;
-        //ServerInteractor.postFriendRequest(friendAddField.text, controller: self);
     }
 }
