@@ -21,6 +21,9 @@ class FriendSingleViewController: UIViewController {
         
         if (mainUser) {
             friendName.text = mainUser!.getName({self.friendName.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
+            mainUser!.fetchImage({(image: UIImage)->Void in
+                self.userIcon.image = image;
+            });
         }
     }
 

@@ -12,6 +12,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet var userNameLabel: UILabel
     @IBOutlet var logOffButton: UIButton
 
+    @IBOutlet var userIcon: UIImageView
     var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
     
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -28,6 +29,11 @@ class SettingsViewController: UIViewController {
         else {
             // Do any additional setup after loading the view.
             userNameLabel.text = ServerInteractor.getUserName();
+            NSLog("Getting the iamge");
+            mainUser.fetchImage({(fetchedImage: UIImage)->Void in
+                NSLog("Success!");
+                self.userIcon.image = fetchedImage;
+            });
         }
     }
 

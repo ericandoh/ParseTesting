@@ -27,6 +27,7 @@ class ImagePostStructure
     init(image: UIImage) {
         //called when making a new post
         //must be saved by caller
+        self.image = image;
         let data = UIImagePNGRepresentation(image);
         let file = PFFile(name:"posted.png",data:data);
         //upload - relational data is saved as well

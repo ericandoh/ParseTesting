@@ -98,11 +98,36 @@ import UIKit
     }
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage) {
+        
+        //process image before submission
+        
+        //some ways to do this:
+        /*
+        let newSize: CGSize = CGSize(...)
+        UIGraphicsBeginImageContext(newSize)
+        image.drawInRect(CGRectMake(0,0, newSize.width, newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        
+        or
+        
+        http://iphonedevsdk.com/forum/iphone-sdk-development/5204-resize-image-high-quality.html
+
+        */
+        
+        
         var newPost = ImagePostStructure(image: image);
         NSLog("Made new post")
         newPost.myObj.saveInBackgroundWithBlock({
             (succeeded: Bool, error: NSError!)->Void in
             if (succeeded && !error) {
+                NSLog("Succeeded, now checkign if user has icon");
+                if (PFUser.currentUser()["userIcon"] == nil) {
+                    //above will always run + set to last submitted picture! (godamit)
+                    //might consider just resizing image to a smaller icon value and saving it again
+                    PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
+                    PFUser.currentUser().saveEventually();
+                }
                 NSLog("Succeeded, now pushing other notif objects");
                 var notifObj = PFObject(className:"Notification");
                 //type of notification - in this case, a Image Post (how many #likes i've gotten)
