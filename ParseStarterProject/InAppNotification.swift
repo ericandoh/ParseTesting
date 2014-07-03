@@ -20,6 +20,7 @@ import Foundation
 class InAppNotification {
     //empty class
     var messageString: String = "";
+    var friendName: String = "";
     var type: String = NotificationType.PLAIN_TEXT.toRaw();   //I should *probably* use enums for this
     var personalObj: PFObject? = nil
     init(message: String) {
@@ -64,15 +65,15 @@ class InAppNotification {
                 case NotificationType.FRIEND_REQUEST.toRaw():
                     var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        var friendName: String = object["username"] as String
-                        self.messageString = "You have received a friend request from \(friendName)."
-                        listener.tableView.reloadData()
+                        self.friendName = object["username"] as String;
+                        self.messageString = "You have received a friend request from \(self.friendName).";
+                        listener.tableView.reloadData();
                     });
                 case NotificationType.FRIEND_ACCEPT.toRaw():
                     var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        var friendName: String = object["username"] as String
-                        self.messageString = "\(friendName) has accepted your friend invitation! People love you now!"
+                        self.friendName = object["username"] as String
+                        self.messageString = "\(self.friendName) has accepted your friend invitation! People love you now!"
                         listener.tableView.reloadData()
                     });
                 default:
@@ -83,7 +84,28 @@ class InAppNotification {
                 });
         }
     }
-    func interact() {
+    func getImage(receiveAction:(UIImage)->Void) {
+        if (type != NotificationType.IMAGE_POST.toRaw()) {
+            //this is not the post we're looking for!
+            NSLog("Cannot retrieve image from non-image post notification")
+        }
+        var obj = self.personalObj!["ImagePost"] as PFObject
+        obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+            var imgFile: PFFile = object["imageFile"] as PFFile;
+            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                //get file objects
+                receiveAction(UIImage(data: result));
+                //self.image = UIImage(data: imgFile.getData())
+                });
+        });
+
+    }
+    func acceptFriend() {
         //what happens when the user clicks the notification message?
+        var obj = self.personalObj!["sender"] as PFUser
+        obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+            ServerInteractor.addAsFriend(object as PFUser);
+            ServerInteractor.postFriendAccept(object as PFUser);
+        });
     }
 }

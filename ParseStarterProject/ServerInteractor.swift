@@ -22,7 +22,7 @@ import UIKit
         user.password = password;
         user.email = email;
         
-        user["friends"] = Array<PFUser?>();
+        user["friends"] = NSArray();
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
@@ -257,7 +257,7 @@ import UIKit
                         }
                     }
                     
-                    if(!object["viewed"]) {
+                    if(!(object["viewed"] as Bool)) {
                         if (object["type"] != nil) {
                             if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
@@ -377,9 +377,13 @@ import UIKit
     }
     //call this method when either accepting a friend inv or receiving a confirmation notification
     class func addAsFriend(friend: PFUser)->Array<NSObject?>? {
-        //user["friends"] = Array<PFUser?>();
+        //user["friends"] = NSArray();
         PFUser.currentUser().addUniqueObject(friend, forKey: "friends");
-        PFUser.currentUser().saveInBackground();
+        //PFUser.currentUser().addObject(friend, forKey: "friends");
+        
+        //line below is freezing up app for some reason
+        //PFUser.currentUser().saveInBackground();
+        PFUser.currentUser().saveEventually();
         return nil;
     }
     //call this method when either removing a friend inv directly or when u receive 
@@ -411,7 +415,7 @@ import UIKit
         }
         else {
             friendz = Array<PFUser?>();
-            PFUser.currentUser()["friends"] = Array<PFUser?>();
+            PFUser.currentUser()["friends"] = NSArray()
             PFUser.currentUser().saveInBackground();
         }
         var friend: PFUser;

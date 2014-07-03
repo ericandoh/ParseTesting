@@ -31,6 +31,9 @@
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
+		D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */; };
+		D9715D2F1964CD3C00BA3C74 /* ImagePostNotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D2E1964CD3C00BA3C74 /* ImagePostNotifViewController.swift */; };
+		D9715D311964CD4C00BA3C74 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */; };
 		D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FCEBB1954E60A007D5EE6 /* Main.storyboard */; };
 		D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */; };
 		D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */; };
@@ -85,6 +88,9 @@
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleNotifViewController.swift; sourceTree = "<group>"; };
+		D9715D2E1964CD3C00BA3C74 /* ImagePostNotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostNotifViewController.swift; sourceTree = "<group>"; };
+		D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		D97FCEBB1954E60A007D5EE6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		D97FCEBE1954E63E007D5EE6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -227,6 +233,9 @@
 				D9F89B1A195CD89700849B1D /* SettingsViewController.swift */,
 				D996F6AF195C937A009E97B0 /* NotifViewController.swift */,
 				D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */,
+				D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */,
+				D9715D2E1964CD3C00BA3C74 /* ImagePostNotifViewController.swift */,
+				D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -324,14 +333,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */,
+				D9715D2F1964CD3C00BA3C74 /* ImagePostNotifViewController.swift in Sources */,
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
+				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
 				D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */,
 				D9F89B17195CBC9C00849B1D /* ServerInteractor.swift in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
+				D9715D311964CD4C00BA3C74 /* FriendRequestViewController.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */,
 				D9F89B1B195CD89700849B1D /* SettingsViewController.swift in Sources */,

@@ -215,9 +215,6 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFD-ai-3cA" id="M4i-vK-vSd">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="geD-Vt-qQ8" kind="push" id="KVM-je-gzU"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -226,15 +223,66 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="qW7-za-K02"/>
+                    <connections>
+                        <segue destination="gyS-wk-cim" kind="push" identifier="ImagePostSegue" id="nLw-DS-sgH"/>
+                        <segue destination="geD-Vt-qQ8" kind="push" identifier="DefaultNotifSegue" id="wc2-zM-IBv"/>
+                        <segue destination="h0x-9U-cZu" kind="push" identifier="FriendRequestSegue" id="78m-tZ-Ish"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVX-Xn-NXP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1628" y="1824"/>
+            <point key="canvasLocation" x="1613" y="1824"/>
         </scene>
-        <!--View Controller-->
+        <!--Image Post Notif View Controller-->
+        <scene sceneID="BK4-Rb-pqy">
+            <objects>
+                <viewController id="gyS-wk-cim" customClass="ImagePostNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dtN-tJ-xjA"/>
+                        <viewControllerLayoutGuide type="bottom" id="gM4-0E-IUL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="du7-1U-nIP">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-nK-ccc">
+                                <rect key="frame" x="20" y="58" width="280" height="310"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MY POST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-Pr-0oR">
+                                <rect key="frame" x="122" y="20" width="76" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stats About My Post........" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvs-87-1Zf">
+                                <rect key="frame" x="62" y="376" width="197" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDG-Kj-OMh">
+                                <rect key="frame" x="118" y="430" width="84" height="30"/>
+                                <state key="normal" title="Comments?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="0Cn-2G-0fc"/>
+                    <connections>
+                        <outlet property="imageView" destination="sNR-nK-ccc" id="x3i-Q0-zdS"/>
+                        <outlet property="postTitle" destination="a4c-Pr-0oR" id="6hX-Ae-5mh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WFz-AN-Bz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2622" y="1266"/>
+        </scene>
+        <!--Single Notif View Controller-->
         <scene sceneID="cxR-Vz-ipw">
             <objects>
-                <viewController id="geD-Vt-qQ8" sceneMemberID="viewController">
+                <viewController id="geD-Vt-qQ8" customClass="SingleNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2fI-ie-dYk"/>
                         <viewControllerLayoutGuide type="bottom" id="1mY-Jz-aFJ"/>
@@ -243,8 +291,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Notification Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyb-f4-XZt">
-                                <rect key="frame" x="61" y="229" width="199" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Notification Detail" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="iyb-f4-XZt">
+                                <rect key="frame" x="20" y="143" width="280" height="172"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -253,10 +301,61 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="fXl-dB-4h0"/>
+                    <connections>
+                        <outlet property="notifTextLabel" destination="iyb-f4-XZt" id="hdT-qz-4WG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rGX-4d-Ds9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2034" y="1824"/>
+            <point key="canvasLocation" x="2622" y="1824"/>
+        </scene>
+        <!--Friend Request View Controller-->
+        <scene sceneID="XoF-tT-odo">
+            <objects>
+                <viewController id="h0x-9U-cZu" customClass="FriendRequestViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jz0-by-e7s"/>
+                        <viewControllerLayoutGuide type="bottom" id="GH3-1g-STl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dDb-4f-UYd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FRIEND!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSQ-Pm-J0K">
+                                <rect key="frame" x="127" y="122" width="66" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPd-mx-wsb">
+                                <rect key="frame" x="64" y="266" width="193" height="30"/>
+                                <state key="normal" title="Please accept me I love you">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="acceptFriend:" destination="h0x-9U-cZu" eventType="touchUpInside" id="jpR-sw-mTd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xpb-7H-8jR">
+                                <rect key="frame" x="135" y="316" width="51" height="30"/>
+                                <state key="normal" title="Decline">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="NIy-LE-Tj9" kind="push" id="WON-ki-OGw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xhO-Dr-zxy"/>
+                    <connections>
+                        <outlet property="friendNameLabel" destination="nSQ-Pm-J0K" id="zjf-TY-SEC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="csh-qf-fyX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2622" y="2374"/>
         </scene>
         <!--Home Feed Controller - Home Feed-->
         <scene sceneID="yIV-MD-BT5">
@@ -647,6 +746,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="WON-ki-OGw"/>
         <segue reference="UB1-uW-jLQ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -61,7 +61,7 @@ class FriendTableViewController: UITableViewController {
             cell.textLabel.text = "Add friend";
         }
         else {
-            cell.textLabel.text = friendList[temp]!.getName();
+            cell.textLabel.text = friendList[temp - 1]!.getName(self);
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;

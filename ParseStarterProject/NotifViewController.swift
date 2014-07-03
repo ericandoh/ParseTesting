@@ -95,7 +95,20 @@ class NotifViewController: UITableViewController {
         return cell
     }
     
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var temp = indexPath.row;
+        
+        var member: InAppNotification = notifList[temp] as InAppNotification;
+        if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+            self.performSegueWithIdentifier("ImagePostSegue", sender: self);
+        }
+        else if (member.type == NotificationType.FRIEND_REQUEST.toRaw()) {
+            self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
+        }
+        else {
+            self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
+        }
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView?, canEditRowAtIndexPath indexPath: NSIndexPath?) -> Bool {
@@ -131,14 +144,31 @@ class NotifViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        var id: String = segue!.identifier;
+        
+        let temp: Int = self.tableView.indexPathForSelectedRow().row;
+        
+        let notifObj: InAppNotification = notifList[temp]!;
+        
+        if (id == "ImagePostSegue") {
+            var destination = segue!.destinationViewController as ImagePostNotifViewController;
+            destination.receiveNotifObject(notifObj);
+        }
+        else if (id == "FriendRequestSegue") {
+            var destination = segue!.destinationViewController as FriendRequestViewController;
+            destination.receiveNotifObject(notifObj);
+        }
+        else {
+            var destination = segue!.destinationViewController as SingleNotifViewController;
+            destination.receiveNotifObject(notifObj);
+        }
     }
-    */
 
 }
