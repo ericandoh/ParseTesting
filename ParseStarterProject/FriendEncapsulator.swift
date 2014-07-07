@@ -39,13 +39,10 @@ class FriendEncapsulator {
         return username;
     }
     func fetchImage(receiveAction:(UIImage)->Void) {
-        NSLog("Fetching iamge")
         if friendImg {
-            NSLog("Image exists")
             receiveAction(friendImg!);
         }
         else if (friendObj) {
-            NSLog("pfuser object exists")
             //fetch friend + get image
             if (friendObj!["userIcon"] == nil) {
                 NSLog("No such image they said")
@@ -53,13 +50,11 @@ class FriendEncapsulator {
             }
             var obj = friendObj!["userIcon"] as PFFile;
             obj.getDataInBackgroundWithBlock({(result: NSData!, error: NSError!) in
-                NSLog("Got data")
                 self.friendImg = UIImage(data: result);
                 receiveAction(self.friendImg!);
             });
         }
         else {
-            NSLog("fetching user");
             var query = PFUser.query();
             query.whereKey("username", equalTo: self.username);
             query.limit = 1;

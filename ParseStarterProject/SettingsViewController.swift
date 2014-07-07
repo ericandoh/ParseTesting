@@ -29,9 +29,7 @@ class SettingsViewController: UIViewController {
         else {
             // Do any additional setup after loading the view.
             userNameLabel.text = ServerInteractor.getUserName();
-            NSLog("Getting the iamge");
             mainUser.fetchImage({(fetchedImage: UIImage)->Void in
-                NSLog("Success!");
                 self.userIcon.image = fetchedImage;
             });
         }
