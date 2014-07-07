@@ -37,7 +37,10 @@ class ImagePreviewController: UIViewController {
     //function triggered by pushing check button
     @IBAction func acceptImage(sender: UIButton) {
         //store image and submit (BACKEND)
-        ServerInteractor.uploadImage(receivedImage!)
+        
+        var exclusivity = PostExclusivity.EVERYONE;
+        
+        ServerInteractor.uploadImage(receivedImage!, exclusivity: exclusivity);
     }
 
     override func didReceiveMemoryWarning() {

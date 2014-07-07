@@ -8,20 +8,29 @@
 
 //made solely for FriendTableViewController pretty much (so far) and SettingsVC (which is basically a user profile right now?)
 class FriendEncapsulator {
-    var friendObj: PFUser
+    var friendObj: PFUser?
     var username: String = "";
     init(friend: PFUser) {
         friendObj = friend;
     }
+    init(friendName: String) {
+        username = friendName;
+        friendObj = nil;
+    }
     //gets the name of the user, fetches it if needed
     func getName(failFunction: ()->Void)->String {
-        if (friendObj.isDataAvailable()) {
-            username = friendObj.username;
+        if (username != "") {
+            return username;
         }
-        else {
-            friendObj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in });
-            //controller.tableView.reloadData();
-            failFunction();
+        if (friendObj) {
+            if (friendObj!.isDataAvailable()) {
+                username = friendObj!.username;
+            }
+            else {
+                friendObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in });
+                //controller.tableView.reloadData();
+                failFunction();
+            }
         }
         return username;
     }
