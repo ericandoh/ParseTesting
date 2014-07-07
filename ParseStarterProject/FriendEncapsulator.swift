@@ -41,7 +41,7 @@ class FriendEncapsulator {
         }
         else {
             return;
-            friendObj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+            friendObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                 NSLog("All the keys")
                 for key : AnyObject in object.allKeys() {
                     NSLog("A key is \(key as String)")
