@@ -119,12 +119,14 @@ class HomeFeedController: UIViewController {
                             if (vote) {
                                 //these are causing the object not found for update error
                                 self.firstSet[self.viewCounter]!.like();
+                                self.voteCounter.textColor = UIColor.greenColor();
                             }
                             else {
                                 self.firstSet[self.viewCounter]!.pass();
+                                self.voteCounter.textColor = UIColor.redColor();
                             }
+                            self.voteCounter!.text = "Last Post: +\(self.firstSet[self.viewCounter]!.getLikes())"
                         }
-                        //NSLog("Updating to image at \(self.viewCounter)")
                         var img : UIImage = (self.firstSet[self.viewCounter])!.image!
                         backView.image = img;
                         self.viewCounter = (self.viewCounter + 1)%(POST_LOAD_COUNT);
@@ -136,6 +138,7 @@ class HomeFeedController: UIViewController {
     }
     @IBAction func viewComments(sender: UIButton) {
         //make a view programatically and overlay it over current views, showing comments
+        //alternatively, hide the table view that already exists and re-show it once it is loaded with correct comments
     }
     /*
     // #pragma mark - Navigation
