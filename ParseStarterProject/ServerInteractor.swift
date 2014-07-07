@@ -103,6 +103,12 @@ import UIKit
         newPost.myObj.saveInBackgroundWithBlock({
             (succeeded: Bool, error: NSError!)->Void in
             if (succeeded && !error) {
+                if (PFUser.currentUser()["userIcon"] == nil) {
+                    //above will always run + set to last submitted picture! (godamit)
+                    //might consider just resizing image to a smaller icon value and saving it again
+                    PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
+                    PFUser.currentUser().saveEventually();
+                }
                 var notifObj = PFObject(className:"Notification");
                 //type of notification - in this case, a Image Post (how many #likes i've gotten)
                 notifObj["type"] = NotificationType.IMAGE_POST.toRaw();

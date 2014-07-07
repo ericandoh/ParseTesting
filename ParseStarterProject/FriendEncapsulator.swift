@@ -39,28 +39,43 @@ class FriendEncapsulator {
         return username;
     }
     func fetchImage(receiveAction:(UIImage)->Void) {
+        NSLog("Fetching iamge")
         if friendImg {
+            NSLog("Image exists")
             receiveAction(friendImg!);
         }
-        else {
-            return;
-            friendObj!.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                NSLog("All the keys")
-                for key : AnyObject in object.allKeys() {
-                    NSLog("A key is \(key as String)")
-                }
-                var runCount: Int = object["RunCount"] as Int;
-                NSLog("ran this \(runCount) times")
-                if (object["userIcon"] == nil) {
-                    return;
-                }
-                //var obj = object["userIcon"] as PFFile;
-                var obj = object.objectForKey("userIcon") as PFFile;
-                obj.getDataInBackgroundWithBlock({(result: NSData!, error: NSError!) in
-                    self.friendImg = UIImage(data: result);
-                    //receiveAction(self.friendImg!);
-                });
+        else if (friendObj) {
+            NSLog("pfuser object exists")
+            //fetch friend + get image
+            if (friendObj!["userIcon"] == nil) {
+                NSLog("No such image they said")
+                return;
+            }
+            var obj = friendObj!["userIcon"] as PFFile;
+            obj.getDataInBackgroundWithBlock({(result: NSData!, error: NSError!) in
+                NSLog("Got data")
+                self.friendImg = UIImage(data: result);
+                receiveAction(self.friendImg!);
             });
+        }
+        else {
+            NSLog("fetching user");
+            var query = PFUser.query();
+            query.whereKey("username", equalTo: self.username);
+            query.limit = 1;
+            query.findObjectsInBackgroundWithBlock {
+                (objects: AnyObject[]!, error: NSError!) -> Void in
+                if (!error && objects.count > 0)  {
+                    self.friendObj = objects[0] as? PFUser;
+                    self.fetchImage(receiveAction);
+                }
+                else if (objects.count == 0) {
+                    NSLog("Can't find user: \(self.username)")
+                } else {
+                    // Log details of the failure
+                    NSLog("Error: %@ %@", error, error.userInfo)
+                }
+            }
         }
     }
 }
