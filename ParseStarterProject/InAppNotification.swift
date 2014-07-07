@@ -63,19 +63,25 @@ class InAppNotification {
                     });
                     //wont we need to fetch it?
                 case NotificationType.FRIEND_REQUEST.toRaw():
-                    var obj = self.personalObj!["sender"] as PFUser
+                    self.friendName = self.personalObj!["sender"] as String
+                    self.messageString = "You have received a friend request from \(self.friendName).";
+                    listener.tableView.reloadData();
+                    /*var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         self.friendName = object["username"] as String;
                         self.messageString = "You have received a friend request from \(self.friendName).";
                         listener.tableView.reloadData();
-                    });
+                    });*/
                 case NotificationType.FRIEND_ACCEPT.toRaw():
-                    var obj = self.personalObj!["sender"] as PFUser
+                    self.friendName = self.personalObj!["sender"] as String
+                    self.messageString = "\(self.friendName) has accepted your friend invitation! People love you now!"
+                    listener.tableView.reloadData();
+                    /*var obj = self.personalObj!["sender"] as PFUser
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         self.friendName = object["username"] as String
                         self.messageString = "\(self.friendName) has accepted your friend invitation! People love you now!"
                         listener.tableView.reloadData()
-                    });
+                    });*/
                 default:
                     self.messageString = self.personalObj!["message"] as String
                     listener.tableView.reloadData()
@@ -102,10 +108,13 @@ class InAppNotification {
     }
     func acceptFriend() {
         //what happens when the user clicks the notification message?
-        var obj = self.personalObj!["sender"] as PFUser
+        self.friendName = self.personalObj!["sender"] as String;
+        ServerInteractor.addAsFriend(self.friendName)
+        ServerInteractor.postFriendAccept(self.friendName)
+        /*var obj = self.personalObj!["sender"] as PFUser
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
             ServerInteractor.addAsFriend(object as PFUser);
             ServerInteractor.postFriendAccept(object as PFUser);
-        });
+        });*/
     }
 }

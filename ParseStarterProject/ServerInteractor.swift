@@ -97,44 +97,18 @@ import UIKit
         return PFUser.currentUser().username;
     }
     //------------------Image Post related methods---------------------------------------
-    class func uploadImage(image: UIImage) {
-        
-        //process image before submission
-        
-        //some ways to do this:
-        /*
-        let newSize: CGSize = CGSize(...)
-        UIGraphicsBeginImageContext(newSize)
-        image.drawInRect(CGRectMake(0,0, newSize.width, newSize.height))
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
-        
-        or
-        
-        http://iphonedevsdk.com/forum/iphone-sdk-development/5204-resize-image-high-quality.html
-
-        */
-        
-        
-        var newPost = ImagePostStructure(image: image);
-        NSLog("Made new post")
+    class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
+        var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
+        var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
         newPost.myObj.saveInBackgroundWithBlock({
             (succeeded: Bool, error: NSError!)->Void in
             if (succeeded && !error) {
-                NSLog("Succeeded, now checkign if user has icon");
-                if (PFUser.currentUser()["userIcon"] == nil) {
-                    //above will always run + set to last submitted picture! (godamit)
-                    //might consider just resizing image to a smaller icon value and saving it again
-                    PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
-                    PFUser.currentUser().saveEventually();
-                }
-                NSLog("Succeeded, now pushing other notif objects");
                 var notifObj = PFObject(className:"Notification");
                 //type of notification - in this case, a Image Post (how many #likes i've gotten)
                 notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
                 notifObj["ImagePost"] = newPost.myObj;
                 
-                ServerInteractor.processNotification(PFUser.currentUser(), targetObject: notifObj);
+                ServerInteractor.processNotification(sender, targetObject: notifObj);
                 //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
             }
             else {
@@ -142,10 +116,15 @@ import UIKit
             }
         });
     }
+    
+    class func getPost(skip: Int)->Array<ImagePostStructure?> {
+        return getPost(skip, friendsOnly: true);
+    }
+    
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
-    class func getPost(skip: Int)->Array<ImagePostStructure?> {
+    class func getPost(skip: Int, friendsOnly: Bool)->Array<ImagePostStructure?> {
         //download - relational data is NOT fetched!
         var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
         //query
@@ -153,6 +132,9 @@ import UIKit
         query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
+        if (friendsOnly) {
+            query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
+        }
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
@@ -200,16 +182,38 @@ import UIKit
         return returnList;
     }
     //------------------Notification related methods---------------------------------------
-    class func processNotification(targetUser: PFUser, targetObject: PFObject)->Array<AnyObject?>? {
-        targetObject.ACL.setReadAccess(true, forUser: targetUser)
-        targetObject.ACL.setWriteAccess(true, forUser: targetUser)
+    class func processNotification(targetUserName: String, targetObject: PFObject)->Array<AnyObject?>? {
+        return processNotification(targetUserName, targetObject: targetObject, controller: nil);
+    }
+    class func processNotification(targetUserName: String, targetObject: PFObject, controller: UIViewController?)->Array<AnyObject?>? {
         
-        targetObject["sender"] = PFUser.currentUser();  //this is necessary for friends!
-        targetObject["recipient"] = targetUser;
-        targetObject["viewed"] = false;
-        
-        targetObject.saveInBackground();
-        
+        var query: PFQuery = PFUser.query();
+        query.whereKey("username", equalTo: targetUserName)
+        var currentUserName = PFUser.currentUser().username;
+        query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
+            if (objects.count > 0) {
+                //i want to request myself as a friend to my friend
+                var targetUser = objects[0] as PFUser;
+                targetObject.ACL.setReadAccess(true, forUser: targetUser)
+                targetObject.ACL.setWriteAccess(true, forUser: targetUser)
+                
+                targetObject["sender"] = currentUserName;  //this is necessary for friends!
+                targetObject["recipient"] = targetUserName;
+                targetObject["viewed"] = false;
+                
+                targetObject.saveInBackground();
+                
+            }
+            else if (controller) {
+                if(objects.count == 0) {
+                    (controller! as FriendTableViewController).notifyFailure("No such user exists!");
+                }
+                else if (error) {
+                    //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
+                    (controller! as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
+                }
+            }
+        });
         return nil; //useless statement to suppress useless stupid xcode thing
     }
     /*class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
@@ -262,7 +266,7 @@ import UIKit
         //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil);
         //var returnList = Array<InAppNotification?>();
         var query = PFQuery(className:"Notification")
-        query.whereKey("recipient", equalTo: PFUser.currentUser());
+        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         //query.limit = loadCount;
         //query.skip = skip * loadCount;
         //want most recent first
@@ -286,7 +290,7 @@ import UIKit
                         if (object["type"] != nil) {
                             if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
-                                ServerInteractor.addAsFriend(object["sender"] as PFUser);
+                                ServerInteractor.addAsFriend(object["sender"] as String);
                             }
                         }
                         object["viewed"] = true;
@@ -298,7 +302,7 @@ import UIKit
                     //NSLog("Our notif list is currently \(controller.notifList.count) long")
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
-                        //weird issue #7 error happening here, notifList is NOT dealloc'd (exists)
+                        //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
                         controller.notifList.append(item);
                     }
                     else {
@@ -346,7 +350,7 @@ import UIKit
         notifObj["message"] = txt
         //notifObj.saveInBackground()
         
-        ServerInteractor.processNotification(PFUser.currentUser(), targetObject: notifObj);
+        ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
         //saveNotification(PFUser.currentUser(), targetObject: notifObj)
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
@@ -356,6 +360,12 @@ import UIKit
             return;
         }
         
+        var notifObj = PFObject(className:"Notification");
+        notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
+        //notifObj.saveInBackground();
+        ServerInteractor.processNotification(friendName, targetObject: notifObj, controller: controller);
+        
+        /*
         //first, query + find the user
         var query: PFQuery = PFUser.query();
         query.whereKey("username", equalTo: friendName)
@@ -367,28 +377,22 @@ import UIKit
                 //notifObj.saveInBackground();
                     
                 var friend = objects[0] as PFUser;
-                ServerInteractor.processNotification(friend, targetObject: notifObj);
+                ServerInteractor.processNotification(friend, targetObject: notifObj, controller);
                 //ServerInteractor.saveNotification(friend, targetObject: notifObj)
                     
             }
-            else if(objects.count == 0) {
-                (controller as FriendTableViewController).notifyFailure("No such user exists!");
-            }
-            else if (error) {
-                //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                (controller as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
-            }
-        });
+            
+        });*/
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
     //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header
-    class func postFriendAccept(friend: PFUser)->Array<AnyObject?>? {
+    class func postFriendAccept(friendName: String)->Array<AnyObject?>? {
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FRIEND_ACCEPT.toRaw();
         //notifObj.saveInBackground();
         
-        processNotification(friend, targetObject: notifObj);
+        processNotification(friendName, targetObject: notifObj);
         //saveNotification(friend, targetObject: notifObj)
         
         /*var notifArray = friend["notifs"] as Array<PFObject>
@@ -401,9 +405,9 @@ import UIKit
         return nil;
     }
     //call this method when either accepting a friend inv or receiving a confirmation notification
-    class func addAsFriend(friend: PFUser)->Array<NSObject?>? {
+    class func addAsFriend(friendName: String)->Array<NSObject?>? {
         //user["friends"] = NSArray();
-        PFUser.currentUser().addUniqueObject(friend, forKey: "friends");
+        PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
         //PFUser.currentUser().addObject(friend, forKey: "friends");
         
         //line below is freezing up app for some reason
@@ -418,13 +422,14 @@ import UIKit
     //reason this is NOT a Notification PFObject: I should NOT notify the friend that I broke up with them
     //  (stealthy friend removal) => i.e. if I want to remove a creeper I got deceived into friending
     //RECEIVING END HAS BEEN IMPLEMENTED
-    class func removeFriend(friend: PFUser, isHeartBroken: Bool)->Array<NSObject?>? {
-        PFUser.currentUser().removeObject(friend, forKey: "friends");
+    class func removeFriend(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+        PFUser.currentUser().removeObject(friendName, forKey: "friends");
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
+            //do NOT use processNotification - we don't want to post a notification
             var breakupObj = PFObject(className:"BreakupNotice")
-            breakupObj["sender"] = PFUser.currentUser();
-            breakupObj["recipient"] = friend;
+            breakupObj["sender"] = PFUser.currentUser().username;
+            breakupObj["recipient"] = friendName;
             breakupObj.saveInBackground();
             //send notification object
         }
@@ -435,18 +440,18 @@ import UIKit
     class func getFriends()->Array<FriendEncapsulator?> {
         var returnList: Array<FriendEncapsulator?> = [];
         var friendz: NSArray;
-        if PFUser.currentUser()["friends"] {
-            friendz = PFUser.currentUser()["friends"]as NSArray;
+        if (PFUser.currentUser().allKeys().bridgeToObjectiveC().containsObject("friends")) {
+            friendz = PFUser.currentUser()["friends"] as NSArray;
         }
         else {
             friendz = Array<PFUser?>();
             PFUser.currentUser()["friends"] = NSArray()
             PFUser.currentUser().saveInBackground();
         }
-        var friend: PFUser;
+        var friend: String;
         for index in 0..friendz.count {
-            friend = friendz[index] as PFUser;
-            returnList.append(FriendEncapsulator(friend: friend));
+            friend = friendz[index] as String;
+            returnList.append(FriendEncapsulator(friendName: friend));
         }
         return returnList;
     }
@@ -455,12 +460,12 @@ import UIKit
     class func initialUserChecks() {
         //check and see if user has any notice for removal of friends
         var query = PFQuery(className: "BreakupNotice");
-        query.whereKey("recipient", equalTo: PFUser.currentUser());
+        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
             var object: PFObject;
             for index: Int in 0..objects.count {
                 object = objects[index] as PFObject;
-                ServerInteractor.removeFriend(object["sender"] as PFUser, isHeartBroken: true);
+                ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
                 object.deleteInBackground();
             }
         });

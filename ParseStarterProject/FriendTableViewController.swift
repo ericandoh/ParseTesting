@@ -25,7 +25,6 @@ class FriendTableViewController: UITableViewController {
         
         //refetch friends from serverside
         friendList = ServerInteractor.getFriends();
-        
         self.tableView.reloadData();
     }
 
