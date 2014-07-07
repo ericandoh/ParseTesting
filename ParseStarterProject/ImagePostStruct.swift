@@ -2,19 +2,22 @@
 //  ImagePostStruct.swift
 //  ParseStarterProject
 //
+//  Encapsulating class for an image post, with data about image and link to data object
+//
 //  Created by Eric Oh on 6/26/14.
 //
 //
 
 
 //decided to encapsulate rather than override PFObject so changing code is easier, I can load images semantics, etc.
+
 class ImagePostStructure
 {
     var image: UIImage?
     var imageLoaded: Bool = false
     var myObj: PFObject
     init(inputObj: PFObject, shouldLoadImage: Bool) {
-        //called when retrieving object
+        //called when retrieving object (for viewing, etc)
         myObj = inputObj;
         if (shouldLoadImage) {
             //start loading image
@@ -26,25 +29,22 @@ class ImagePostStructure
     }
     init(image: UIImage, exclusivity: PostExclusivity) {
         //called when making a new post
-        //must be saved by caller
+        //myObj must be saved by caller
         self.image = image;
         let data = UIImagePNGRepresentation(image);
         let file = PFFile(name:"posted.png",data:data);
         //upload - relational data is saved as well
         myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = file;
-        //this causes a self-referential loop between PFUser, notifications, and ImagePosts(this)
-        //myObj["author"] = PFUser.currentUser();
         myObj["author"] = PFUser.currentUser().username;
         myObj["likes"] = 0;
         myObj["passes"] = 0;
         myObj["exclusive"] = exclusivity.toRaw();
         
-        //what happens when I comment these out
-        
+        //setting permissions to public
+        //might want to change this for exclusivity posts?
         myObj.ACL.setPublicReadAccess(true);
         myObj.ACL.setPublicWriteAccess(true);
-        //add more attributes here
     }
     func save() {
         myObj.saveInBackground()
@@ -71,7 +71,6 @@ class ImagePostStructure
             //get file objects
             self.imageLoaded = true
             self.image = UIImage(data: result);
-            //self.image = UIImage(data: imgFile.getData())
         });
     }
 }

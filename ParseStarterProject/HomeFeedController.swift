@@ -12,6 +12,8 @@ import UIKit
 
 class HomeFeedController: UIViewController {
     
+    @IBOutlet var voteCounter: UILabel
+    
     var swiperNoSwipe: Bool = false;
     
     var frontImageView: UIImageView?;
@@ -131,6 +133,9 @@ class HomeFeedController: UIViewController {
                     self.swiperNoSwipe = false;
                 });
         }
+    }
+    @IBAction func viewComments(sender: UIButton) {
+        //make a view programatically and overlay it over current views, showing comments
     }
     /*
     // #pragma mark - Navigation

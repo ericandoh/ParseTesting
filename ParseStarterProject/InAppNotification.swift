@@ -18,27 +18,24 @@ import Foundation
 //probably better written off as a struct, but need to encapsulate ImagePostStruct => justify using it as an object
 
 class InAppNotification {
-    //empty class
     var messageString: String = "";
     var friendName: String = "";
-    var type: String = NotificationType.PLAIN_TEXT.toRaw();   //I should *probably* use enums for this
+    var type: String = NotificationType.PLAIN_TEXT.toRaw();
     var personalObj: PFObject? = nil
     init(message: String) {
+        //makes a default notification with just a text string
         messageString = message;
         type = NotificationType.PLAIN_TEXT.toRaw();
     }
     init(dataObject: PFObject) {
-        //type = dataObject["type"] as String;
         personalObj = dataObject
-        //assignMessage(listener);
     }
     init(dataObject: PFObject, message: String) {
-        //type = dataObject["type"] as String;
         messageString = message;
         personalObj = dataObject
-        //assignMessage(listener);
     }
     func assignMessage(listener: NotifViewController) {
+        //fetch notification message as necessary
         if (personalObj != nil) {
             
             //I actually shouldn't need to fetch my personalObj, should already be loaded in from query
@@ -61,7 +58,6 @@ class InAppNotification {
                         self.messageString = "Your picture has gotten \(numLikes) likes!"
                         listener.tableView.reloadData()
                     });
-                    //wont we need to fetch it?
                 case NotificationType.FRIEND_REQUEST.toRaw():
                     self.friendName = self.personalObj!["sender"] as String
                     self.messageString = "You have received a friend request from \(self.friendName).";
@@ -86,13 +82,12 @@ class InAppNotification {
                     self.messageString = self.personalObj!["message"] as String
                     listener.tableView.reloadData()
                 }
-                //NSLog("Assigned message string \(self.messageString)")
-                });
+            });
         }
     }
     func getImage(receiveAction:(UIImage)->Void) {
         if (type != NotificationType.IMAGE_POST.toRaw()) {
-            //this is not the post we're looking for!
+            //Post does not have image associated with it
             NSLog("Cannot retrieve image from non-image post notification")
         }
         var obj = self.personalObj!["ImagePost"] as PFObject
@@ -101,20 +96,17 @@ class InAppNotification {
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                 //get file objects
                 receiveAction(UIImage(data: result));
-                //self.image = UIImage(data: imgFile.getData())
-                });
+            });
         });
-
     }
     func acceptFriend() {
-        //what happens when the user clicks the notification message?
+        //for accept notification objects
+        if (type != NotificationType.FRIEND_REQUEST.toRaw()) {
+            //Post should be a Friend Request Notification
+            NSLog("Cannot accept friend from a non-friend request notification!")
+        }
         self.friendName = self.personalObj!["sender"] as String;
         ServerInteractor.addAsFriend(self.friendName)
         ServerInteractor.postFriendAccept(self.friendName)
-        /*var obj = self.personalObj!["sender"] as PFUser
-        obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-            ServerInteractor.addAsFriend(object as PFUser);
-            ServerInteractor.postFriendAccept(object as PFUser);
-        });*/
     }
 }

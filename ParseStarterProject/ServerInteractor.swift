@@ -3,7 +3,7 @@
 //  ParseStarterProject
 //
 //  Code to handle all the server-interactions with this app (keeping it in one place for easy portability)
-//
+//  Mostly communications with Parse and PFObjects
 //
 //  Created by Eric Oh on 6/26/14.
 //
@@ -28,16 +28,16 @@ import UIKit
             var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
                 //success!
-                //sign in user
-                //send some sort of notif to bump screen?
+                //sees if user has pending items to process
                 ServerInteractor.initialUserChecks();
+                //user's first notification
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 signController.successfulSignUp();
                 
             } else {
                 var errorString: String = error.userInfo["error"] as String;
                 //display this error string to user
-                //send some sort of notif to refresh screen?
+                //send some sort of notif to refresh screen
                 signController.failedSignUp(errorString);
             }
         });
@@ -104,7 +104,7 @@ import UIKit
             (succeeded: Bool, error: NSError!)->Void in
             if (succeeded && !error) {
                 if (PFUser.currentUser()["userIcon"] == nil) {
-                    //above will always run + set to last submitted picture! (godamit)
+                    //above may set to last submitted picture...? sometimes??
                     //might consider just resizing image to a smaller icon value and saving it again
                     PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
                     PFUser.currentUser().saveEventually();
@@ -126,7 +126,9 @@ import UIKit
     class func getPost(skip: Int)->Array<ImagePostStructure?> {
         return getPost(skip, friendsOnly: true);
     }
-    
+    class func removePost(post: ImagePostStructure) {
+        post.myObj.deleteInBackground();
+    }
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
@@ -222,6 +224,7 @@ import UIKit
         });
         return nil; //useless statement to suppress useless stupid xcode thing
     }
+    //deprecated method - ignore
     /*class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
         
         //targetObject.ACL.setPublicReadAccess(true);
@@ -269,12 +272,8 @@ import UIKit
     }*/
     
     class func getNotifications(controller: NotifViewController) {
-        //var returnList = Array<InAppNotification?>(count: NOTIF_COUNT, repeatedValue: nil);
-        //var returnList = Array<InAppNotification?>();
         var query = PFQuery(className:"Notification")
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
-        //query.limit = loadCount;
-        //query.skip = skip * loadCount;
         //want most recent first
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
@@ -302,10 +301,6 @@ import UIKit
                         object["viewed"] = true;
                         object.saveInBackground()
                     }
-                    
-                    //NSLog("Fetching notification \(index)");
-                    //returnList[index] = InAppNotification(dataObject: object);
-                    //NSLog("Our notif list is currently \(controller.notifList.count) long")
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
                         //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
@@ -321,30 +316,6 @@ import UIKit
                 NSLog("Error: %@ %@", error, error.userInfo)
             }
         }
-        
-        
-        
-        
-        
-        
-        /*
-        var returnList = Array<InAppNotification?>()
-        var currentNotifs: Array<PFObject>;
-        if ( PFUser.currentUser()["notifs"] != nil) {
-            currentNotifs = PFUser.currentUser()["notifs"] as Array<PFObject>;
-        }
-        else {
-            currentNotifs = Array<PFObject>();
-            PFUser.currentUser().addObjectsFromArray(currentNotifs, forKey: "notifs");
-            PFUser.currentUser().saveInBackground();    //is this needed?
-            //PFUser.currentUser()["notifs"] = currentNotifs;
-        }
-        //how many post-notifications we need
-        NSLog("We have \(currentNotifs.count) notifications")
-        for index in 0..(currentNotifs.count) {
-            returnList.append(InAppNotification(dataObject: currentNotifs[index]));
-        }
-        return returnList*/
     }
     //used for default message notifications (i.e. "You have been banned for violating TOS" "Welcome to our app"
     //"Happy April Fool's Day!")
@@ -357,7 +328,6 @@ import UIKit
         //notifObj.saveInBackground()
         
         ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
-        //saveNotification(PFUser.currentUser(), targetObject: notifObj)
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFriendRequest(friendName: String, controller: UIViewController) {
@@ -368,27 +338,7 @@ import UIKit
         
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
-        //notifObj.saveInBackground();
         ServerInteractor.processNotification(friendName, targetObject: notifObj, controller: controller);
-        
-        /*
-        //first, query + find the user
-        var query: PFQuery = PFUser.query();
-        query.whereKey("username", equalTo: friendName)
-        query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
-            if (objects.count > 0) {
-                //i want to request myself as a friend to my friend
-                var notifObj = PFObject(className:"Notification");
-                notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
-                //notifObj.saveInBackground();
-                    
-                var friend = objects[0] as PFUser;
-                ServerInteractor.processNotification(friend, targetObject: notifObj, controller);
-                //ServerInteractor.saveNotification(friend, targetObject: notifObj)
-                    
-            }
-            
-        });*/
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
     //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header
@@ -398,26 +348,12 @@ import UIKit
         notifObj["type"] = NotificationType.FRIEND_ACCEPT.toRaw();
         //notifObj.saveInBackground();
         
-        processNotification(friendName, targetObject: notifObj);
-        //saveNotification(friend, targetObject: notifObj)
-        
-        /*var notifArray = friend["notifs"] as Array<PFObject>
-        notifArray.insert(notifObj, atIndex: 0)
-        if (notifArray.count > 20) {
-            notifArray.removeLast()
-        }
-        friend.saveInBackground()*/
-        
+        ServerInteractor.processNotification(friendName, targetObject: notifObj);
         return nil;
     }
     //call this method when either accepting a friend inv or receiving a confirmation notification
     class func addAsFriend(friendName: String)->Array<NSObject?>? {
-        //user["friends"] = NSArray();
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
-        //PFUser.currentUser().addObject(friend, forKey: "friends");
-        
-        //line below is freezing up app for some reason
-        //PFUser.currentUser().saveInBackground();
         PFUser.currentUser().saveEventually();
         return nil;
     }
