@@ -40,6 +40,7 @@ class ImagePostStructure
         myObj["likes"] = 0;
         myObj["passes"] = 0;
         myObj["exclusive"] = exclusivity.toRaw();
+        myObj["comments"] = [];
         
         //setting permissions to public
         //might want to change this for exclusivity posts?
@@ -54,16 +55,16 @@ class ImagePostStructure
         myObj.incrementKey("likes")
         myObj.saveInBackground()
     }
+    func pass() {
+        //increment pass counter for this post
+        myObj.incrementKey("passes")
+        myObj.saveInBackground()
+    }
     func getLikes()->Int {
         return myObj["likes"] as Int
     }
     func getPasses()->Int {
         return myObj["passes"] as Int
-    }
-    func pass() {
-        //increment pass counter for this post
-        myObj.incrementKey("passes")
-        myObj.saveInBackground()
     }
     func loadImage() {
         var imgFile: PFFile = myObj["imageFile"] as PFFile;
@@ -72,5 +73,15 @@ class ImagePostStructure
             self.imageLoaded = true
             self.image = UIImage(data: result);
         });
+    }
+    func fetchComments(finishFunction: (input: NSArray)->Void) {
+        var commentArray = myObj["comments"] as NSArray;
+        finishFunction(input: commentArray);
+    }
+    func addComment(comment: String) {
+        var commentArray = myObj["comments"] as NSMutableArray;
+        commentArray.insertObject(comment, atIndex: 0);
+        myObj["comments"] = commentArray;
+        myObj.saveInBackground();
     }
 }

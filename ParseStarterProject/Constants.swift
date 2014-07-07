@@ -24,6 +24,11 @@ let POST_LOAD_COUNT = 10
 //maximum number of my own posts to load (when i query for my last submitted posts)
 let MYPOST_LOAD_COUNT = 20
 
+//number of comments to load at once
+//we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
+//but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)
+//let MYCOMMENT_LOAD_COUNT = 20
+
 //String enums to describe type of notification (work need)
 enum NotificationType: String {
     case PLAIN_TEXT = "PlainText"

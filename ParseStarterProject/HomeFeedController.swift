@@ -10,14 +10,17 @@
 
 import UIKit
 
-class HomeFeedController: UIViewController {
+class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet var voteCounter: UILabel
+    @IBOutlet var commentView: UIView               //use this for hiding and showing
+    @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
+    @IBOutlet var voteCounter: UILabel;
+    
     
     var swiperNoSwipe: Bool = false;
-    
     var frontImageView: UIImageView?;
     var backImageView: UIImageView?;
+    
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -29,6 +32,9 @@ class HomeFeedController: UIViewController {
     
     //which set of images we are on (so we dont have to query all 2 million images at once)
     var numSets = 0;
+    
+    //an array of comments which will be populated when loading app
+    var commentList: Array<PostComment> = [];
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +54,8 @@ class HomeFeedController: UIViewController {
         self.view.bringSubviewToFront(frontImageView);
         //removeme
         firstSet = ServerInteractor.getPost(0);
+        
+        commentView.hidden = true; //this should be set in storyboard but just in case
     }
     override func viewDidAppear(animated: Bool) {
         //needs work - reload images back into feed
@@ -137,8 +145,36 @@ class HomeFeedController: UIViewController {
         }
     }
     @IBAction func viewComments(sender: UIButton) {
-        //make a view programatically and overlay it over current views, showing comments
-        //alternatively, hide the table view that already exists and re-show it once it is loaded with correct comments
+        //initialize tableview with right arguments
+        //load latest 20 comments, load more if requested in cellForRowAtIndexPath
+        //self.commentTableView.reloadTable()
+        if (self.firstSet[self.viewCounter] == nil) {
+            //there is no image for this post - no posts on feed
+            //no post = no comments
+            //this might happen due to network problems
+            return;
+        }
+        //hide the table view that already exists and re-show it once it is loaded with correct comments
+        commentView.hidden = false;
+        self.view.bringSubviewToFront(commentView);
+        
+        NSLog("Comments for \(self.viewCounter)")
+        self.commentList = Array<PostComment>();
+        
+        //assume self.viewCounter refers to current post being shown anyways, although right now that is not the case
+        //above needs work (bala get on it!)
+        var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!
+        
+        currentPost.fetchComments({(input: NSArray)->Void in
+            for index in 0..input.count {
+                self.commentList.append(PostComment(content: (input[index] as String)));
+            }
+            self.commentTableView.reloadData();
+        });
+    }
+    @IBAction func exitComments(sender: UIButton) {
+        commentView.hidden = true;
+        //animate this?
     }
     /*
     // #pragma mark - Navigation
@@ -149,5 +185,60 @@ class HomeFeedController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    //--------------------TableView delegate methods-------------------------
+    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        // last cell is always editable
+        return commentList.count + 1;
+    }
+    
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
+        
+        var index: Int = indexPath.row;
+        
+        if (index == 0) {
+            cell.textLabel.text = "Add Comment";
+        }
+        else {
+            cell.textLabel.text = commentList[index - 1].commentString;
+        }
+        return cell;
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var index: Int = indexPath.row;
+        if (index == 0) {
+            let alert: UIAlertController = UIAlertController(title: "Write Comment", message: "Your Comment", preferredStyle: UIAlertControllerStyle.Alert);
+            //var textView = UITextView(frame: CGRect(x: 12, y: 90, width: 260, height: 50));
+            //alert.view.addSubview(textView)
+            alert.addTextFieldWithConfigurationHandler(nil);
+            //set alert text field size bigger - this doesn't work, we need a UITextView
+            /*var frame = (alert.textFields[0] as UITextField).frame;
+            frame.size.height = 100;
+            (alert.textFields[0] as UITextField).frame = frame;*/
+            alert.addAction(UIAlertAction(title: "Comment!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                
+                var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!;
+                
+                currentPost.addComment(alert.textFields[0].text);
+                
+                self.commentList = Array<PostComment>();
+                currentPost.fetchComments({(input: NSArray)->Void in
+                    for index in 0..input.count {
+                        self.commentList.append(PostComment(content: (input[index] as String)));
+                    }
+                    self.commentTableView.reloadData();
+                });
+            }));
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                //canceled
+            }));
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        else {
+            //clicked on other comment - if implement comment upvoting, do it here
+        }
+    }
 }

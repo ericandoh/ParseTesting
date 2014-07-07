@@ -45,6 +45,7 @@
 		D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6AF195C937A009E97B0 /* NotifViewController.swift */; };
 		D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6B1195C9A0E009E97B0 /* Constants.swift */; };
 		D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */; };
+		D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A1E5AD196B4EDB00935062 /* PostComment.swift */; };
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
 		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
 		D9F89B17195CBC9C00849B1D /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */; };
@@ -107,6 +108,7 @@
 		D996F6AF195C937A009E97B0 /* NotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotifViewController.swift; sourceTree = "<group>"; };
 		D996F6B1195C9A0E009E97B0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppNotification.swift; sourceTree = "<group>"; };
+		D9A1E5AD196B4EDB00935062 /* PostComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostComment.swift; sourceTree = "<group>"; };
 		D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParseStarterProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */,
 				D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */,
 				D92566641964A59F00189250 /* FriendEncapsulator.swift */,
+				D9A1E5AD196B4EDB00935062 /* PostComment.swift */,
 			);
 			name = ServerSide;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
+				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
