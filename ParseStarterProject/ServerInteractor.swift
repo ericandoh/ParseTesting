@@ -441,6 +441,7 @@ import UIKit
         var returnList: Array<FriendEncapsulator?> = [];
         var friendz: NSArray;
         if (PFUser.currentUser().allKeys().bridgeToObjectiveC().containsObject("friends")) {
+            //if this runs, the code will break catastrophically, just initialize "friends" with registration
             friendz = PFUser.currentUser()["friends"] as NSArray;
         }
         else {

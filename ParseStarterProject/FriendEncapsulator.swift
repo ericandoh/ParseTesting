@@ -12,9 +12,12 @@ class FriendEncapsulator {
     var username: String = "";
     var friendImg: UIImage? = nil;
     init(friend: PFUser) {
+        //run by settings from main
         friendObj = friend;
+        username = friend.username;
     }
     init(friendName: String) {
+        //run by everythign else
         username = friendName;
         friendObj = nil;
     }
