@@ -119,6 +119,7 @@
                     <navigationItem key="navigationItem" id="19Q-uH-hUr"/>
                     <connections>
                         <outlet property="logOffButton" destination="vC2-Hh-ItC" id="YXt-hT-dCV"/>
+                        <outlet property="userIcon" destination="YOE-Zu-kdT" id="M9U-oJ-mCJ"/>
                         <outlet property="userNameLabel" destination="Dt9-p1-pks" id="AoR-SC-CDD"/>
                     </connections>
                 </viewController>
