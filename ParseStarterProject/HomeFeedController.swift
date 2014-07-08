@@ -199,12 +199,17 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         var index: Int = indexPath.row;
         
+        cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.font = UIFont(name: "Helvetica", size: 17);
+        
         if (index == 0) {
             cell.textLabel.text = "Add Comment";
         }
         else {
             cell.textLabel.text = commentList[index - 1].commentString;
         }
+        cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -240,5 +245,16 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             //clicked on other comment - if implement comment upvoting, do it here
         }
+    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
+        var cellText: NSString;
+        if (indexPath.row == 0) {
+            cellText = "Add Comment";
+        }
+        else {
+            cellText = commentList[indexPath.row - 1].commentString;
+        }
+        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica", size: 17), constrainedToSize: CGSizeMake(280.0, MAXFLOAT), lineBreakMode: NSLineBreakMode.ByWordWrapping)
+        return labelSize.height + 20;
     }
 }
