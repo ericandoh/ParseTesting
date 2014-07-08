@@ -26,6 +26,19 @@
 	<true/>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>FacebookAppID</key>
+	<string>677728738973723</string>
+	<key>FacebookDisplayName</key>
+	<string>Test App One</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb677728738973723</string>
+			</array>
+		</dict>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -38,7 +51,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-    		<string>remote-notification</string>
+		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>

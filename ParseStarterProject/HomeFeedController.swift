@@ -201,7 +201,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
         cell.textLabel.numberOfLines = 0;
-        cell.textLabel.font = UIFont(name: "Helvetica", size: 17);
+        cell.textLabel.font = UIFont(name: "Helvetica Neue", size: 17);
         
         if (index == 0) {
             cell.textLabel.text = "Add Comment";
@@ -254,7 +254,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             cellText = commentList[indexPath.row - 1].commentString;
         }
-        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica", size: 17), constrainedToSize: CGSizeMake(280.0, MAXFLOAT), lineBreakMode: NSLineBreakMode.ByWordWrapping)
+        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, MAXFLOAT), lineBreakMode: NSLineBreakMode.ByWordWrapping)
         return labelSize.height + 20;
     }
 }

@@ -59,6 +59,24 @@ import UIKit
         });
         return true;
     }
+    
+    //loggin in with facebook
+    class func loginWithFacebook() {
+        //whats permissions
+        let permissions: AnyObject[]? = nil;
+        PFFacebookUtils.logInWithPermissions(permissions, {
+            (user: PFUser!, error: NSError!) -> Void in
+            if !user {
+                NSLog("Uh oh. The user cancelled the Facebook login.")
+            } else if user.isNew {
+                NSLog("User signed up and logged in through Facebook!")
+            } else {
+                NSLog("User logged in through Facebook!")
+            }
+        });
+    }
+    
+    
     //logged in as anonymous user does NOT count
     //use this to check whether to go to signup/login screen or directly to home
     class func isUserLogged()->Bool {
