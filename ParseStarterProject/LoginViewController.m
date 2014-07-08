@@ -63,6 +63,9 @@
         NSLog(@"Logging in %@", username);
     }
 }
+- (IBAction)loginWithFacebook:(UIButton *)sender {
+    [ServerInteractor loginWithFacebook:self];
+}
 
 - (void) successfulLogin {
     [self performSegueWithIdentifier:@"JumpIn" sender:self];

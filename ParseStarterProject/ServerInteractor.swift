@@ -61,17 +61,20 @@ import UIKit
     }
     
     //loggin in with facebook
-    class func loginWithFacebook() {
+    class func loginWithFacebook(sender: NSObject) {
         //whats permissions
         let permissions: AnyObject[]? = nil;
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
-            if !user {
-                NSLog("Uh oh. The user cancelled the Facebook login.")
+            var logController: LoginViewController = sender as LoginViewController;
+            if (error) {
+                NSLog("Error message: \(error!.description)");
+            } else if !user {
+                logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
-                NSLog("User signed up and logged in through Facebook!")
+                logController.failedLogin("User signed up and logged in through Facebook!")
             } else {
-                NSLog("User logged in through Facebook!")
+                logController.failedLogin("User logged in through Facebook!")
             }
         });
     }
