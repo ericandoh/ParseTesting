@@ -83,10 +83,14 @@
 // Uncomment this method if you are using Facebook
 ///////////////////////////////////////////////////////////
  
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-    sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+            sourceApplication:(NSString *) sourceApplication
+            annotation:(id)annotation {
     //return [PFFacebookUtils handleOpenURL:url];
-    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication
+    NSLog(@"OPening URL");
+    return [FBAppCall   handleOpenURL:url
+                        sourceApplication:sourceApplication
                         withSession:[PFFacebookUtils session]];
 } 
  
@@ -144,6 +148,7 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    NSLog(@"Setting up fb session");
     [FBAppCall handleDidBecomeActiveWithSession:[PFFacebookUtils session]];
 }
 

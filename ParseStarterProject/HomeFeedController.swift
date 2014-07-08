@@ -254,7 +254,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             cellText = commentList[indexPath.row - 1].commentString;
         }
-        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, MAXFLOAT), lineBreakMode: NSLineBreakMode.ByWordWrapping)
+        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, CGFLOAT_MAX), lineBreakMode: NSLineBreakMode.ByWordWrapping)
         return labelSize.height + 20;
     }
 }

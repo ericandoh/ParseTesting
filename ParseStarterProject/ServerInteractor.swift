@@ -63,7 +63,9 @@ import UIKit
     //loggin in with facebook
     class func loginWithFacebook(sender: NSObject) {
         //whats permissions
-        let permissions: AnyObject[]? = nil;
+        //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
+        //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
+        let permissions: AnyObject[]? = ["user_about_me", "user_relationships"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: LoginViewController = sender as LoginViewController;
