@@ -2,6 +2,8 @@
 //  FriendSingleViewController.swift
 //  ParseStarterProject
 //
+//  Panel for viewing a profile page (not yours)
+//
 //  Created by Eric Oh on 7/3/14.
 //
 //

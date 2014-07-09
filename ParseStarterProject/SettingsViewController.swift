@@ -2,6 +2,9 @@
 //  SettingsViewController.swift
 //  ParseStarterProject
 //
+//  View Controller for the User Profile Page of the current user
+//  (not actually settings!!!)
+//
 //  Created by Eric Oh on 6/26/14.
 //
 //

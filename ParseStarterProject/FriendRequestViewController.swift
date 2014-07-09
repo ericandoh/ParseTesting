@@ -2,6 +2,8 @@
 //  FriendRequestViewController.swift
 //  ParseStarterProject
 //
+//  VC that requests for a friend accept
+//
 //  Created by Eric Oh on 7/2/14.
 //
 //

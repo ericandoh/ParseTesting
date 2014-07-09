@@ -2,6 +2,8 @@
 //  ImagePostNotifViewController.swift
 //  ParseStarterProject
 //
+//  Panel to show an image associated with a notification
+//
 //  Created by Eric Oh on 7/2/14.
 //
 //

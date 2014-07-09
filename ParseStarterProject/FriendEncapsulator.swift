@@ -2,6 +2,9 @@
 //  FriendEncapsulator.swift
 //  ParseStarterProject
 //
+//  Class to encapsulate friend in a non-Parse object without subclassing
+//  Innately stores username as well
+//
 //  Created by Eric Oh on 7/2/14.
 //
 //

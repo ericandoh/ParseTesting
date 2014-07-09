@@ -2,6 +2,8 @@
 //  SingleNotifViewController.swift
 //  ParseStarterProject
 //
+//  Simple VC class to see a single notification individually
+//
 //  Created by Eric Oh on 7/2/14.
 //
 //

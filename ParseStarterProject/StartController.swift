@@ -2,6 +2,9 @@
 //  StartController.swift
 //  ParseStarterProject
 //
+//  Start screen that immediately segues into the correct screen for the app
+//  Either the login screen (if not logged in previously) or the home feed
+//
 //  Created by Eric Oh on 6/26/14.
 //
 //

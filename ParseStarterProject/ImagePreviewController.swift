@@ -13,6 +13,7 @@ import UIKit
 @objc
 class ImagePreviewController: UIViewController {
 
+    @IBOutlet var exclusiveOptionPanel: UISegmentedControl
     @IBOutlet var imageView: UIImageView;
     @IBOutlet var scrollView: UIScrollView
     
@@ -37,9 +38,20 @@ class ImagePreviewController: UIViewController {
     //function triggered by pushing check button
     @IBAction func acceptImage(sender: UIButton) {
         //store image and submit (BACKEND)
-        
-        var exclusivity = PostExclusivity.EVERYONE;
-        
+        var choice = exclusiveOptionPanel.selectedSegmentIndex;
+        var exclusivity: PostExclusivity = PostExclusivity.EVERYONE;
+        switch choice {
+            case 1:
+                exclusivity = PostExclusivity.FRIENDS_ONLY;
+            case 2:
+                exclusivity = PostExclusivity.EVERYONE;
+            case 3:
+                exclusivity = PostExclusivity.MALE_ONLY;
+            case 4:
+                exclusivity = PostExclusivity.FEMALE_ONLY;
+            default:
+                exclusivity = PostExclusivity.EVERYONE;
+        }
         ServerInteractor.uploadImage(receivedImage!, exclusivity: exclusivity);
     }
 
