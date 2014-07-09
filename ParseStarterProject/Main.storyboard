@@ -199,7 +199,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WcF-Sf-Rke" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1225" y="1824"/>
+            <point key="canvasLocation" x="1212" y="1824"/>
         </scene>
         <!--Notif View Controller-->
         <scene sceneID="GIw-Di-XCD">
@@ -265,6 +265,9 @@
                                 <state key="normal" title="Comments?">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="comments:" destination="gyS-wk-cim" eventType="touchUpInside" id="pFA-jl-Yvc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -357,7 +360,7 @@
             </objects>
             <point key="canvasLocation" x="2622" y="2374"/>
         </scene>
-        <!--Home Feed Controller - Home Feed-->
+        <!--Home Feed Controller - Home-->
         <scene sceneID="yIV-MD-BT5">
             <objects>
                 <viewController id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -428,7 +431,7 @@
                             <outletCollection property="gestureRecognizers" destination="aE5-1P-ftA" appends="YES" id="Div-yE-2vX"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home Feed" id="otN-m4-N78"/>
+                    <tabBarItem key="tabBarItem" title="Home" id="otN-m4-N78"/>
                     <connections>
                         <outlet property="commentTableView" destination="fo0-LW-af7" id="m8R-j2-wch"/>
                         <outlet property="commentView" destination="XHX-nM-lHZ" id="uT0-An-rQF"/>
@@ -883,6 +886,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="UB1-uW-jLQ"/>
-        <segue reference="WON-ki-OGw"/>
+        <segue reference="iGr-B4-roj"/>
     </inferredMetricsTieBreakers>
 </document>

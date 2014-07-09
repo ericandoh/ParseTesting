@@ -14,10 +14,28 @@ class ImagePostNotifViewController: UIViewController {
 
     @IBOutlet var postTitle: UILabel
     @IBOutlet var imageView: UIImageView
+    //@IBOutlet var commentView: UIView  //use this for hiding and showing
+
+
+    @IBAction func comments(sender: AnyObject) {
+        NSLog("button pushed");
+        if (notif) {
+            notif!.getComments({(commentary: Array<String>) -> Void in
+                for comment in commentary {
+                    NSLog(comment);
+                }
+                });
+        }
+    }
+    
     
     var notif: InAppNotification?;
-    
+
+    //var commentList: Array<PostComment> = [];
+
+
     override func viewDidLoad() {
+        //second
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -26,7 +44,7 @@ class ImagePostNotifViewController: UIViewController {
             notif!.getImage({(img: UIImage)-> Void in
                 self.imageView.image = img;
                 });
-        
+
             //for now, set post title to notification title?
             postTitle.text = notif!.messageString;
         }
@@ -37,7 +55,10 @@ class ImagePostNotifViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+  
+    
     func receiveNotifObject(notification: InAppNotification) {
+        //first, notif controller calls this first
         notif = notification;
     }
     
