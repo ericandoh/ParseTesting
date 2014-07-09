@@ -2,6 +2,8 @@
 //  FriendTableViewController.swift
 //  ParseStarterProject
 //
+//  View your friends in a table
+//
 //  Created by Eric Oh on 7/1/14.
 //
 //

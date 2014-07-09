@@ -171,6 +171,12 @@ import UIKit
  
         if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
+            //both friends + everyone marked feed from your friends show up here, as long as your friend posted
+            //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
+        }
+        else {
+            //must be an everyone-only post to show in popular feed
+            query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
         }
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {

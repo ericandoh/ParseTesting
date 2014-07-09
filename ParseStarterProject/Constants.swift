@@ -48,3 +48,5 @@ enum PostExclusivity: String {
 
 //default images
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
+
+//other default images below this line
