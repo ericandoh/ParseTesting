@@ -16,16 +16,10 @@ class ImagePostStructure
     var image: UIImage?
     var imageLoaded: Bool = false
     var myObj: PFObject
-    init(inputObj: PFObject, shouldLoadImage: Bool) {
+    init(inputObj: PFObject) {
         //called when retrieving object (for viewing, etc)
         myObj = inputObj;
-        if (shouldLoadImage) {
-            //start loading image
-            loadImage()
-        }
-        else {
-            imageLoaded = false
-        }
+        imageLoaded = false;
     }
     init(image: UIImage, exclusivity: PostExclusivity) {
         //called when making a new post
@@ -72,6 +66,17 @@ class ImagePostStructure
             //get file objects
             self.imageLoaded = true
             self.image = UIImage(data: result);
+        });
+    }
+    func loadImage(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
+        var imgFile: PFFile = myObj["imageFile"] as PFFile;
+        imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+            if (!error) {
+                //get file objects
+                self.imageLoaded = true
+                self.image = UIImage(data: result);
+                finishFunction(imgStruct: self, index: index);
+            }
         });
     }
     func fetchComments(finishFunction: (input: NSArray)->Void) {
