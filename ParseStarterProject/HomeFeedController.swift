@@ -212,6 +212,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                 self.firstSet[self.viewCounter]!.pass();
                                 self.voteCounter.textColor = UIColor.redColor();
                             }
+                            //mark post as read
                             self.voteCounter!.text = "Last Post: +\(self.firstSet[self.viewCounter]!.getLikes())"
                             
                             self.viewCounter += 1

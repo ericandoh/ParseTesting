@@ -23,6 +23,7 @@ import UIKit
         user.email = email;
         
         user["friends"] = NSArray();
+        user["viewHistory"] = NSArray();
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
@@ -44,6 +45,7 @@ import UIKit
         return true;
     }
     class func loginUser(username: String, password: String, sender: NSObject)->Bool {
+        NSLog("Logging in user");
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: LoginViewController = sender as LoginViewController;
             if (user) {
@@ -58,6 +60,19 @@ import UIKit
             }
         });
         return true;
+    }
+    //called when app starts + not anon user
+    class func updateUser(sender: NSObject) {
+        PFUser.currentUser().fetchInBackgroundWithBlock({(user: PFObject!, error: NSError!)->Void in
+            var start: StartController = sender as StartController;
+            if (!error) {
+                ServerInteractor.initialUserChecks();
+                start.approveUser();
+            }
+            else {
+                start.stealthUser();
+            }
+        });
     }
     
     //loggin in with facebook
@@ -177,6 +192,9 @@ import UIKit
             //must be an everyone-only post to show in popular feed
             query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
         }
+        var vi = (PFUser.currentUser()["viewHistory"] as NSArray).count;
+        NSLog("Size of my view history: \(vi)")
+        query.whereKey("objectId", notContainedIn: (PFUser.currentUser()["viewHistory"] as NSArray));
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
@@ -186,6 +204,7 @@ import UIKit
                 sender.setPostArraySize(objects.count);
                 for (index, object:PFObject!) in enumerate(objects!) {
                     var post = ImagePostStructure(inputObj: object);
+                    self.readPost(post);
                     post.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -225,6 +244,14 @@ import UIKit
         
         return returnList;
     }
+    
+    class func readPost(post: ImagePostStructure) {
+        var postID = post.myObj.objectId;
+        PFUser.currentUser().addUniqueObject(postID, forKey: "viewHistory");
+        PFUser.currentUser().saveEventually();
+        
+    }
+    
     //------------------Notification related methods---------------------------------------
     class func processNotification(targetUserName: String, targetObject: PFObject)->Array<AnyObject?>? {
         return processNotification(targetUserName, targetObject: targetObject, controller: nil);
@@ -459,5 +486,12 @@ import UIKit
                 NSLog("Error: Could not fetch");
             }
         });
+        
+        //possibly move friend accepts here?
+        
+        //add method to clear user's viewed post history (for sake of less clutter)
+        //PFUser.currentUser()["viewHistory"] = NSArray();
+        //PFUser.currentUser().saveInBackground();
+        
     }
 }
