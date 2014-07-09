@@ -150,8 +150,8 @@ import UIKit
     }
     }
     
-    class func getPost(skip: Int)->Array<ImagePostStructure?> {
-        return getPost(skip, friendsOnly: true);
+    class func getPost(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
+        return getPost(true, finishFunction: finishFunction, sender:sender);
     }
     class func removePost(post: ImagePostStructure) {
         post.myObj.deleteInBackground();
@@ -159,13 +159,12 @@ import UIKit
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
-    class func getPost(skip: Int, friendsOnly: Bool)->Array<ImagePostStructure?> {
+    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
         //download - relational data is NOT fetched!
-        var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
-
+        var returnList = Array<ImagePostStructure?>();
         //query
         var query = PFQuery(className:"ImagePost")
-        query.skip = skip * POST_LOAD_COUNT;
+        //query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
  
@@ -184,15 +183,17 @@ import UIKit
             if !error {
                 // The find succeeded.
                 // Do something with the found objects
+                sender.setPostArraySize(objects.count);
                 for (index, object:PFObject!) in enumerate(objects!) {
-                    returnList[index] = ImagePostStructure(inputObj: object, shouldLoadImage: true);
+                    var post = ImagePostStructure(inputObj: object);
+                    post.loadImage(finishFunction, index: index);
                 }
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
             }
         }
-        return returnList;
+        //return returnList;
     }
     class func getMySubmissions(skip: Int)->Array<ImagePostStructure?> {
         return getMySubmissions(skip, loadCount: MYPOST_LOAD_COUNT);
@@ -214,7 +215,7 @@ import UIKit
                 // The find succeeded.
                 // Do something with the found objects
                 for (index, object:PFObject!) in enumerate(objects!) {
-                    returnList[index] = ImagePostStructure(inputObj: object, shouldLoadImage: false);
+                    returnList[index] = ImagePostStructure(inputObj: object);
                 }
             } else {
                 // Log details of the failure
