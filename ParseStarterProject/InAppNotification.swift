@@ -84,6 +84,10 @@ class InAppNotification {
                 }
             });
         }
+        else {
+            //just use default message String?
+            listener.tableView.reloadData();
+        }
     }
     func getImage(receiveAction:(UIImage)->Void) {
         if (type != NotificationType.IMAGE_POST.toRaw()) {

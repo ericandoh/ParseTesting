@@ -666,14 +666,12 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swm-Tv-Rgl">
                                         <rect key="frame" x="8" y="5" width="305" height="318"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="305" id="ez3-oX-fii"/>
+                                        </constraints>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
-                                        <rect key="frame" x="20" y="331" width="280" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
-                                        <rect key="frame" x="20" y="369" width="44" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
+                                        <rect key="frame" x="20" y="454" width="44" height="30"/>
                                         <state key="normal" title="Check">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -688,8 +686,8 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
-                                        <rect key="frame" x="270" y="369" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
+                                        <rect key="frame" x="270" y="454" width="30" height="30"/>
                                         <state key="normal" title="X">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -697,14 +695,21 @@
                                             <segue destination="M7Q-3C-sKb" kind="modal" id="UB1-uW-jLQ"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
+                                        <rect key="frame" x="20" y="385" width="280" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="swm-Tv-Rgl" secondAttribute="trailing" constant="7" id="5QQ-zw-hc8"/>
-                                    <constraint firstItem="QDt-YK-rqw" firstAttribute="top" secondItem="swm-Tv-Rgl" secondAttribute="bottom" constant="8" id="8F9-7I-PJV"/>
                                     <constraint firstItem="swm-Tv-Rgl" firstAttribute="leading" secondItem="PSg-Af-JCf" secondAttribute="leading" constant="7" id="8KB-LS-uGD"/>
+                                    <constraint firstItem="JhQ-HB-9IY" firstAttribute="top" secondItem="QDt-YK-rqw" secondAttribute="bottom" constant="8" id="BzS-vG-NFf"/>
                                     <constraint firstAttribute="bottom" secondItem="yak-oH-Hbj" secondAttribute="bottom" constant="36" id="bdm-ot-NXF"/>
                                     <constraint firstItem="yak-oH-Hbj" firstAttribute="top" secondItem="QDt-YK-rqw" secondAttribute="bottom" constant="142" id="g28-Ye-Koh"/>
+                                    <constraint firstItem="0U5-gw-bxJ" firstAttribute="top" secondItem="QDt-YK-rqw" secondAttribute="bottom" constant="8" id="hkf-dw-Umj"/>
                                     <constraint firstItem="swm-Tv-Rgl" firstAttribute="top" secondItem="PSg-Af-JCf" secondAttribute="top" constant="5" id="obu-Kd-F7U"/>
+                                    <constraint firstItem="QDt-YK-rqw" firstAttribute="top" secondItem="swm-Tv-Rgl" secondAttribute="bottom" constant="66" id="s5j-FY-IBp"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -859,7 +864,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="yZk-AU-KGY"/>
+        <segue reference="UB1-uW-jLQ"/>
         <segue reference="WON-ki-OGw"/>
     </inferredMetricsTieBreakers>
 </document>

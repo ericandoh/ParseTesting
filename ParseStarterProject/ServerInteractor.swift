@@ -168,7 +168,7 @@ import UIKit
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
  
-        if (friendsOnly & !isAnonLogged()) {
+        if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
         }
         //query addAscending/DescendingOrder for extra ordering:
@@ -302,6 +302,12 @@ import UIKit
     }*/
     
     class func getNotifications(controller: NotifViewController) {
+        if (isAnonLogged()) {
+            if (controller.notifList.count == 0) {
+                controller.notifList.append(InAppNotification(message: "To see your notifications sign up and make an account!"));
+            }
+            return;
+        }
         var query = PFQuery(className:"Notification")
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         //want most recent first
