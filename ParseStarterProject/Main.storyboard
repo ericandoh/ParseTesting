@@ -604,7 +604,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nk0-uG-nJS">
-                                <rect key="frame" x="133" y="102" width="54" height="30"/>
+                                <rect key="frame" x="133" y="98" width="54" height="30"/>
                                 <state key="normal" title="Camera">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -621,11 +621,27 @@
                                     <action selector="useGallery:" destination="Sn1-Di-YON" eventType="touchUpInside" id="S8o-06-FCl"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="upload pictures" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdN-1g-T14">
+                                <rect key="frame" x="104" y="216" width="119" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Anonymous users cannot" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWN-6a-5fe">
+                                <rect key="frame" x="66" y="164" width="195" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Upload" id="vdp-0I-E4W"/>
                     <connections>
+                        <outlet property="AnonMessage1" destination="KWN-6a-5fe" id="ETc-fe-bmI"/>
+                        <outlet property="AnonMessage2" destination="zdN-1g-T14" id="GkV-u1-CjA"/>
+                        <outlet property="camera" destination="Nk0-uG-nJS" id="N0m-RO-2NR"/>
+                        <outlet property="gallery" destination="ayC-O0-7Dc" id="uRl-0G-vaP"/>
                         <segue destination="gqO-OJ-AGi" kind="modal" identifier="ImagePreview" id="OlG-2e-ZpL"/>
                     </connections>
                 </viewController>

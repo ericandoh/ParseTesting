@@ -13,6 +13,12 @@
 
 @interface CameraViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *AnonMessage1;
+@property (weak, nonatomic) IBOutlet UILabel *AnonMessage2;
+
+@property (weak, nonatomic) IBOutlet UIButton *gallery;
+@property (weak, nonatomic) IBOutlet UIButton *camera;
+
 @property BOOL usingCamera;
 //@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) UIImage *pickedImage;
