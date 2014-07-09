@@ -68,11 +68,12 @@ class FriendEncapsulator {
                     self.friendObj = objects[0] as? PFUser;
                     self.fetchImage(receiveAction);
                 }
-                else if (objects.count == 0) {
-                    NSLog("Can't find user: \(self.username)")
-                } else {
+                else if (error) {
                     // Log details of the failure
                     NSLog("Error: %@ %@", error, error.userInfo)
+                }
+                else if (objects.count == 0) {
+                    NSLog("Can't find user: \(self.username)")
                 }
             }
         }
