@@ -46,7 +46,7 @@ class FriendEncapsulator {
         else if (friendObj) {
             //fetch friend + get image
             if (friendObj!["userIcon"] == nil) {
-                NSLog("No such image they said")
+                receiveAction(DEFAULT_USER_ICON);
                 return;
             }
             var obj = friendObj!["userIcon"] as PFFile;

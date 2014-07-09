@@ -45,3 +45,6 @@ enum PostExclusivity: String {
     case FEMALE_ONLY = "female"
 }
 //enum.toRaw() for raw value
+
+//default images
+let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
