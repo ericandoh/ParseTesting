@@ -14,6 +14,7 @@ class FriendEncapsulator {
     init(friend: PFUser) {
         //run by settings from main
         friendObj = friend;
+        let friend = friendObj!;
         username = friend.username;
     }
     init(friendName: String) {

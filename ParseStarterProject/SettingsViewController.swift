@@ -13,7 +13,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet var logOffButton: UIButton
 
     @IBOutlet var userIcon: UIImageView
-    var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
+    
+    var mainUser: FriendEncapsulator?;
     
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -23,13 +24,17 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if (ServerInteractor.isAnonLogged()) {
+            return;
+        }
+        mainUser = FriendEncapsulator(friend: PFUser.currentUser());
+        if (ServerInteractor.isAnonLogged()) {
             userNameLabel.text = "Not logged in";
             logOffButton.setTitle("Sign In", forState: UIControlState.Normal)
         }
         else {
             // Do any additional setup after loading the view.
             userNameLabel.text = ServerInteractor.getUserName();
-            mainUser.fetchImage({(fetchedImage: UIImage)->Void in
+            mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                 self.userIcon.image = fetchedImage;
             });
         }

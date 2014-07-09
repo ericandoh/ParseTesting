@@ -121,6 +121,9 @@ import UIKit
     }
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
+        if (isAnonLogged()) {
+            return;
+        } else {
         var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
         var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
         newPost.myObj.saveInBackgroundWithBlock({
@@ -145,6 +148,7 @@ import UIKit
             }
         });
     }
+    }
     
     class func getPost(skip: Int)->Array<ImagePostStructure?> {
         return getPost(skip, friendsOnly: true);
@@ -158,12 +162,14 @@ import UIKit
     class func getPost(skip: Int, friendsOnly: Bool)->Array<ImagePostStructure?> {
         //download - relational data is NOT fetched!
         var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
+
         //query
         var query = PFQuery(className:"ImagePost")
         query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
-        if (friendsOnly) {
+ 
+        if (friendsOnly & !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
         }
         //query addAscending/DescendingOrder for extra ordering:

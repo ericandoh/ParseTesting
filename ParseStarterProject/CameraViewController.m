@@ -25,6 +25,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([ServerInteractor isAnonLogged]) {
+        _camera.hidden = YES;
+        _gallery.hidden = YES;
+        _AnonMessage1.hidden = NO;
+        _AnonMessage2.hidden = NO;
+        
+    }
     // Do any additional setup after loading the view.
 }
 
@@ -57,6 +64,7 @@
 - (IBAction)useCamera:(id)sender {
     //when camera button is pressed
     //is there a camera on this device?
+    
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
         imagePicker.delegate = self;
