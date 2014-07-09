@@ -213,7 +213,7 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D99B5FCB196DA0FD00662A39 /* unknown_user.png */,
+				D99B5FCF196DBB2500662A39 /* Defaults */,
 				D996F6AD195C8D98009E97B0 /* test image 3.jpg */,
 				D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */,
 				D9125D04195C7E090082F97B /* horned-logo.png */,
@@ -260,6 +260,14 @@
 				D9F89B1C195CE30600849B1D /* ImagePost.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		D99B5FCF196DBB2500662A39 /* Defaults */ = {
+			isa = PBXGroup;
+			children = (
+				D99B5FCB196DA0FD00662A39 /* unknown_user.png */,
+			);
+			name = Defaults;
 			sourceTree = "<group>";
 		};
 		D9F89B15195CBA7400849B1D /* ServerSide */ = {

@@ -103,6 +103,15 @@ class InAppNotification {
             });
         });
     }
+    
+    func getComments(receiveAction:(Array<String>)->Void) {
+        var obj = self.personalObj!["ImagePost"] as PFObject
+        obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+            var commenting: Array<String> = object["comments"] as Array<String>
+            receiveAction(commenting);
+        });
+    }
+    
     func acceptFriend() {
         //for accept notification objects
         if (type != NotificationType.FRIEND_REQUEST.toRaw()) {
