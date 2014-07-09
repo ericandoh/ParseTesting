@@ -446,11 +446,16 @@ import UIKit
         var query = PFQuery(className: "BreakupNotice");
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
-            var object: PFObject;
-            for index: Int in 0..objects.count {
-                object = objects[index] as PFObject;
-                ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
-                object.deleteInBackground();
+            if (!error) {
+                var object: PFObject;
+                for index: Int in 0..objects.count {
+                    object = objects[index] as PFObject;
+                    ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
+                    object.deleteInBackground();
+                }
+            }
+            else {
+                NSLog("Error: Could not fetch");
             }
         });
     }
