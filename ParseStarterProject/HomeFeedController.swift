@@ -41,6 +41,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     //if my current image is at the end image
     var atEnd: Bool = false;
+    
+    //tells me to reset my content one swipe after atEnd
+    var resetNeed: Bool = false;
    
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
@@ -68,12 +71,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewDidAppear(animated: Bool) {
         //needs work - reload images back into feed
-        NSLog("initial view has appeared");
+        //resetNeed = true;
+        frontImageView!.image = loadingImg;
+        resetNeed = true;
         resetToStart();
     }
     func resetToStart() {
-        NSLog("resetting to start");
-        frontImageView!.image = loadingImg;
         backImageView!.image = loadingImg;
         
         viewCounter = 0;    //we are at start of image sequence
@@ -85,20 +88,20 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func setPostArraySize(size: Int) {
         //called by server to set size of array of images we are fetching, before retrieving
-        NSLog("Fetched size of my next set: \(size)")
-        NSLog("For set \(loadedSetNum)")
         if (size == 0) {
             //we fetched an array of size 0...
             if (loadedSetNum == 1) {
                 //this is our first set, and we have no images to display
-                NSLog("VC should be 0: \(viewCounter)")
                 frontImageView!.image = endingImg;
-                backImageView!.image = endingImg;
+                backImageView!.image = loadingImg;
                 atEnd = true;
             }
             else {
                 //do nothing, just make sure to set backImg to endingImg when firstSet ends
             }
+        }
+        else {
+            resetNeed = false;
         }
         loadedCount = 0;
         if (loadedSetNum == 1) {
@@ -112,24 +115,21 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func getReturnList(imgStruct: ImagePostStructure, index: Int){
-        NSLog("Fetching img post at \(index) for list# \(loadedSetNum)")
+        //NSLog("Fetching img post at \(index) for list# \(loadedSetNum)")
         if (loadedSetNum == 1) {
             firstSet[index] = imgStruct;
             loadedSet[index] = true;
             if (index == viewCounter) {
                 //my first image needs to be loaded ASAP, it is first image that needs to be shown
-                NSLog("Setting front img")
                 frontImageView!.image = firstSet[viewCounter]!.image;   //this changes it from the loading scene
             }
             else if (index == viewCounter + 1) {
                 //my back image needs to be loaded
-                NSLog("Setting back image")
                 backImageView!.image = firstSet[viewCounter + 1]!.image;
             }
             loadedCount++;
             if (loadedCount == firstSet.count) {
                 //finished loading all of first set, and there is more to load...?
-                NSLog("First set is done loading, let's now load the 2nd set");
                 loadedSetNum = 2;
                 ServerInteractor.getPost(getReturnList, sender: self);
             }
@@ -140,7 +140,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //no need to check if I need this image right now; first set is the one buffering
             if (index == 0 && viewCounter == firstSet.count - 1) {
                 //my VC is at the last img in firstSet; and backImg is not loaded
-                NSLog("Setting first image of my backimg")
                 backImageView!.image = secondSet[0]!.image;
             }
             loadedCount++;
@@ -199,7 +198,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                         //backView.image = METHOD FOR INSERTING NEW IMAGE HERE (BACKEND)
                         //removeme commented below line
                         //backView.image = UIImage(named: "test image 3.jpg");
-                        NSLog("Swipe \(self.viewCounter)")
+                        //NSLog("Swipe \(self.viewCounter)")
                         
                         
                         if (!(self.atEnd)) {
@@ -226,21 +225,20 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                 if (self.viewCounter == self.firstSet.count - 1) {
                                     //need to load 2nd set images, but first set isn't done loading!!!
                                     //this is impossible, since we just showed all of first set though!
-                                    NSLog("OP is a phony");
+                                    
+                                    //actually, this might happen for an image queue size of 1
+                                    NSLog("Potential Error: loadedSetNum did not update although list is completely loaded");
                                 }
                                 else if (self.loadedSet[self.viewCounter+1]) {
-                                    NSLog("image is loaded, setting")
                                     self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image;
                                 }
                                 else {
-                                    NSLog("image is not loaded!")
                                     self.backImageView!.image = self.loadingImg;
                                 }
                             }
                             else {
                                 if (self.viewCounter == self.firstSet.count - 1) {
                                     if (self.secondSet.count == 0) {
-                                        NSLog("Next queued set is empty, ending")
                                         //my 2nd set has nothing in it...
                                         self.firstSet = self.secondSet;
                                         self.backImageView!.image = self.endingImg;
@@ -248,7 +246,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                     }
                                     else if (self.loadedCount == self.secondSet.count) {
                                         //my 2nd set is all loaded and I can copy the 2nd set => 1st set and start loading right away
-                                        NSLog("Moving 2nd set to 1st, starting queue for new 2nd set")
                                         self.firstSet = self.secondSet;
                                         
                                         //self.loadedSetNum = 2; unnecessary: still loading into set #2
@@ -258,104 +255,42 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         if (self.firstSet.count > 0) {
                                             //no need to check loading, they should all be loaded
-                                            NSLog("Set backimg from next set")
                                             self.backImageView!.image = (self.firstSet[0])!.image;
                                         }
                                         else {
                                             //this should never run, since all images are loaded!
-                                            NSLog("All images are loaded, yet we are trying to load an image. WTF?");
+                                            NSLog("Error: All images are loaded, yet we are trying to load an image.");
                                             self.backImageView!.image = self.loadingImg;
                                         }
                                     }
                                     else {
-                                        NSLog("Current set is still loading, now loading first set instead of 2nd")
                                         //my 2nd set is still loading, I need to copy the 2nd set over to the 1st and keep on loading
                                         self.firstSet = self.secondSet;
                                         self.loadedSetNum = 1;
                                         if (self.firstSet.count > 0 && self.loadedSet[0]) {
-                                            NSLog("Fortunately backimg was ready for load at index 0")
                                             self.backImageView!.image = (self.firstSet[0])!.image;
                                         }
                                         else {
-                                            NSLog("Waiting for backimg to load at 0")
                                             self.backImageView!.image = self.loadingImg;
                                         }
                                     }
                                 }
                                 else {
-                                    NSLog("All first set elements loaded, getting backImg");
                                     self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image;
                                 }
                             }
                         }
                         else {
-                            NSLog("Resetting content, since queue is stopped");
-                            self.resetToStart();
-                        }
-                        
-                        
-                        
-                        /*
-                        if (self.viewCounter == self.firstSet.count - 1) {
-                            //need to load image from next set, if there is one
-                            if (self.loadedSetNum == 1) {
-                                
-                            }
-                            
-                        }
-                        else {
-                            if (self.loadedSetNum == 1) {
-                                if (self.loadedSet[self.viewCounter]) {
-                                    self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image;
-                                }
-                                else {
-                                    //notify I am waiting on this image to load
-                                    self.needNext = true;
-                                    self.backImageView!.image = self.loadingImg;
-                                }
+                            //tell server to reset
+                            if (!self.resetNeed) {
+                                self.resetNeed = true;
                             }
                             else {
-                                //fetch back image to show next
-                                self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image
+                                self.resetNeed = false;
+                                ServerInteractor.resetViewedPosts();
                             }
+                            self.resetToStart();
                         }
-                        
-                        if (self.viewCounter == self.firstSet.count - 1) {
-                            self.backImageView!.image = UIImage(named: "daniel-craig.jpg");
-                            return;
-                        }
-                        
-                        
-                        
-                        
-                        if (self.viewCounter == (POST_LOAD_COUNT - 1)) {
-                            self.backImageView!.image = (self.secondSet[0])!.image
-                        } else if (self.viewCounter == POST_LOAD_COUNT) {
-                            self.viewCounter = 0;
-                            self.backImageView!.image = (self.secondSet[self.viewCounter+1])!.image
-                            
-                            self.firstSet = self.secondSet;
-                            
-                            self.numSets += 1
-                            ServerInteractor.getPost(getReturnList);
-                        } else {
-                            self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image
-                        }*/
-                        
-                        
-                        /*
-                        if (vote) {
-                        //these are causing the object not found for update error
-                        self.firstSet[self.viewCounter]!.like();
-                        self.voteCounter.textColor = UIColor.greenColor();
-                        }
-                        else {
-                        self.firstSet[self.viewCounter]!.pass();
-                        self.voteCounter.textColor = UIColor.redColor();
-                        }
-                        self.voteCounter!.text = "Last Post: +\(self.firstSet[self.viewCounter]!.getLikes())"
-                        */
-                        
                     }
                     self.swiperNoSwipe = false;
                 });

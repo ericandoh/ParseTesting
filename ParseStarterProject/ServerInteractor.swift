@@ -192,8 +192,6 @@ import UIKit
             //must be an everyone-only post to show in popular feed
             query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
         }
-        var vi = (PFUser.currentUser()["viewHistory"] as NSArray).count;
-        NSLog("Size of my view history: \(vi)")
         query.whereKey("objectId", notContainedIn: (PFUser.currentUser()["viewHistory"] as NSArray));
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
@@ -213,6 +211,10 @@ import UIKit
             }
         }
         //return returnList;
+    }
+    class func resetViewedPosts() {
+        PFUser.currentUser()["viewHistory"] = NSArray();
+        PFUser.currentUser().saveEventually();
     }
     class func getMySubmissions(skip: Int)->Array<ImagePostStructure?> {
         return getMySubmissions(skip, loadCount: MYPOST_LOAD_COUNT);
