@@ -45,15 +45,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //if my current image is at the end image
     var atEnd: Bool = false;
     
-    //tells me to reset my content one swipe after atEnd
-    //var resetNeed: Bool = false;
-   
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
     
-    //the pointer to the current post
-    var currentPost: ImagePostStructure?;
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -80,7 +74,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //resetNeed = true;
         frontImageView!.image = loadingImg;
         //resetNeed = true;
-        currentPost = nil;
         resetToStart();
     }
     func resetToStart() {
@@ -96,16 +89,23 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     func getPostCall() {
         loadedCount = 0;
         var selected = typeFeed.selectedSegmentIndex;
-        
+        var otherExcludes: Array<ImagePostStructure?>?
+        if (loadedSetNum == 1) {
+            otherExcludes = Array<ImagePostStructure?>();
+        }
+        else {
+            //do not include posts which we already loaded into our first set
+            otherExcludes = firstSet;
+        }
         if (selected == 0) {
             NSLog("Getting posts for friends")
             //selected news feed => friends only => true
-            ServerInteractor.getPost(true, finishFunction: getReturnList, sender: self);
+            ServerInteractor.getPost(true, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
         }
         else {
             NSLog("Getting everyone's posts");
             //selected everyone
-            ServerInteractor.getPost(false, finishFunction: getReturnList, sender: self);
+            ServerInteractor.getPost(false, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
         }
     }
     func setPostArraySize(size: Int) {
@@ -267,6 +267,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                 self.voteCounter.textColor = UIColor.redColor();
                             }
                             //mark post as read
+                            ServerInteractor.readPost(self.firstSet[self.viewCounter]!);
+                            
                             self.voteCounter!.text = "Last Post: +\(self.firstSet[self.viewCounter]!.getLikes())"
                             
                             self.viewCounter += 1

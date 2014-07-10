@@ -165,16 +165,23 @@ import UIKit
     }
     }
     
-    class func getPost(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
-        return getPost(true, finishFunction: finishFunction, sender:sender);
-    }
     class func removePost(post: ImagePostStructure) {
         post.myObj.deleteInBackground();
     }
+    
+    //helper function to convert an array of ImagePostStructures into an array of its objectID's
+    class func convertPostToID(input: Array<ImagePostStructure?>)->NSMutableArray {
+        var output = NSMutableArray();
+        for post: ImagePostStructure? in input {
+            output.addObject(post!.myObj.objectId);
+        }
+        return output;
+    }
+    
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
-    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
+    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController, excludes: Array<ImagePostStructure?>) {
         //download - relational data is NOT fetched!
         var returnList = Array<ImagePostStructure?>();
         //query
@@ -183,18 +190,23 @@ import UIKit
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
  
+        
+        var excludeList = convertPostToID(excludes);
         if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
+            //query.whereKey("objectId", notContainedIn: excludeList);
             //both friends + everyone marked feed from your friends show up here, as long as your friend posted
             //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
         }
         else {
             //must be an everyone-only post to show in popular feed
             query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
+            if (!isAnonLogged()) {
+                excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+            }
+            //query.whereKey("objectId", notContainedIn: excludeList);
         }
-        if (!isAnonLogged()) {
-            query.whereKey("objectId", notContainedIn: (PFUser.currentUser()["viewHistory"] as NSArray));
-        }
+        query.whereKey("objectId", notContainedIn: excludeList);
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
@@ -204,7 +216,7 @@ import UIKit
                 sender.setPostArraySize(objects.count);
                 for (index, object:PFObject!) in enumerate(objects!) {
                     var post = ImagePostStructure(inputObj: object);
-                    self.readPost(post);
+                    //self.readPost(post);
                     post.loadImage(finishFunction, index: index);
                 }
             } else {
