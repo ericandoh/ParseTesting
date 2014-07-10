@@ -192,7 +192,9 @@ import UIKit
             //must be an everyone-only post to show in popular feed
             query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
         }
-        query.whereKey("objectId", notContainedIn: (PFUser.currentUser()["viewHistory"] as NSArray));
+        if (!isAnonLogged()) {
+            query.whereKey("objectId", notContainedIn: (PFUser.currentUser()["viewHistory"] as NSArray));
+        }
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in

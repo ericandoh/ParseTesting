@@ -15,13 +15,16 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var voteCounter: UILabel;
+    @IBOutlet var typeFeed: UISegmentedControl
     
     let loadingImg: UIImage = UIImage(named: "horned-logo.png");
     let endingImg: UIImage = UIImage(named: "daniel-craig.jpg");
     
     var swiperNoSwipe: Bool = false;
-    var frontImageView: UIImageView?;
-    var backImageView: UIImageView?;
+    //var frontImageView: UIImageView?;
+    //var backImageView: UIImageView?;
+    @IBOutlet var frontImageView: UIImageView
+    @IBOutlet var backImageView: UIImageView
     
     
     //which image we are viewing currently in firstSet
@@ -43,25 +46,28 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var atEnd: Bool = false;
     
     //tells me to reset my content one swipe after atEnd
-    var resetNeed: Bool = false;
+    //var resetNeed: Bool = false;
    
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
+    
+    //the pointer to the current post
+    var currentPost: ImagePostStructure?;
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        frontImageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 280, height: 320));
-        backImageView = UIImageView(frame: CGRect(x: 20, y: 20, width: 280, height: 320));
+        //frontImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
+        //backImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
         //var imageHorn: UIImage = UIImage(named: "horned-logo.png");
         
         //replace with methods for fetching first two images
         //(BACKEND)
         //image loading screen -> horned-logo
         
-        self.view.addSubview(frontImageView);
-        self.view.addSubview(backImageView);
+        //self.view.addSubview(frontImageView);
+        //self.view.addSubview(backImageView);
         
         self.view.bringSubviewToFront(frontImageView);
         //removeme
@@ -73,7 +79,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //needs work - reload images back into feed
         //resetNeed = true;
         frontImageView!.image = loadingImg;
-        resetNeed = true;
+        //resetNeed = true;
+        currentPost = nil;
         resetToStart();
     }
     func resetToStart() {
@@ -81,13 +88,29 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         viewCounter = 0;    //we are at start of image sequence
         loadedSetNum = 1;   //load into first set
-        loadedCount = 0;    //have 0 images loaded
+        //loadedCount = 0;    //have 0 images loaded
         atEnd = false;
         //loadedSet = Array<Bool>(count: POST_LOAD_COUNT, repeatedValue: false);
-        ServerInteractor.getPost(getReturnList, sender: self);
+        getPostCall();
+    }
+    func getPostCall() {
+        loadedCount = 0;
+        var selected = typeFeed.selectedSegmentIndex;
+        
+        if (selected == 0) {
+            NSLog("Getting posts for friends")
+            //selected news feed => friends only => true
+            ServerInteractor.getPost(true, finishFunction: getReturnList, sender: self);
+        }
+        else {
+            NSLog("Getting everyone's posts");
+            //selected everyone
+            ServerInteractor.getPost(false, finishFunction: getReturnList, sender: self);
+        }
     }
     func setPostArraySize(size: Int) {
         //called by server to set size of array of images we are fetching, before retrieving
+        //NSLog("Set \(loadedSetNum): Fetched imgs of size \(size)");
         if (size == 0) {
             //we fetched an array of size 0...
             if (loadedSetNum == 1) {
@@ -98,10 +121,15 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             }
             else {
                 //do nothing, just make sure to set backImg to endingImg when firstSet ends
+                if (viewCounter == self.firstSet.count - 1) {
+                    //first set has only one image, back set needs an image but has none
+                    backImageView!.image = endingImg;
+                    //atEnd = true;
+                }
             }
         }
         else {
-            resetNeed = false;
+            //resetNeed = false;
         }
         loadedCount = 0;
         if (loadedSetNum == 1) {
@@ -131,7 +159,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             if (loadedCount == firstSet.count) {
                 //finished loading all of first set, and there is more to load...?
                 loadedSetNum = 2;
-                ServerInteractor.getPost(getReturnList, sender: self);
+                getPostCall();
             }
         }
         else {
@@ -151,6 +179,19 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func switchedFeed(sender: UISegmentedControl) {
+        //this code works but resets what you've viewed every time you switch...
+        /*frontImageView!.image = loadingImg;
+        //resetNeed = true;
+        ServerInteractor.resetViewedPosts();
+        resetToStart();*/
+        
+        
+        frontImageView!.image = loadingImg;
+        //resetNeed = true;
+        //ServerInteractor.resetViewedPosts();
+        resetToStart();
+    }
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
         
         var location: CGPoint = sender.locationInView(self.view);
@@ -165,7 +206,15 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         animateImageMotion(location, vote: true);
     }
-    
+    func performBufferLog() {
+        NSLog("----------Logging---------")
+        NSLog("VC: \(self.viewCounter) LoadedSetCount: \(self.loadedSet.count)");
+        NSLog("FirstSetCount: \(self.firstSet.count) SecondSetCount: \(self.secondSet.count)")
+        NSLog("LoadedSetNum: \(self.loadedSetNum) IsAtEnd: \(self.atEnd)")
+        NSLog("First img = loading? \(self.frontImageView!.image == self.loadingImg)")
+        NSLog("Second img = loading? \(self.backImageView!.image == self.loadingImg)")
+        NSLog("----------End Log---------")
+    }
     func animateImageMotion(towardPoint: CGPoint, vote: Bool) {
         if (swiperNoSwipe) {
             //in middle of swiping - do nothing
@@ -189,9 +238,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     //set frontView's image to backView's image
                     if let backView = self.backImageView {
                         
+                        //self.performBufferLog();
+                        
                         frontView.image = backView.image;
                         //reset frontView back to front
-                        frontView.frame = CGRect(x: 20, y: 20, width: 280, height: 320);
+                        frontView.frame = CGRect(origin: backView.frame.origin, size: backView.frame.size);
                         frontView.alpha = 1.0;
                         
                         //fetch new backView image for backView
@@ -204,6 +255,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                         if (!(self.atEnd)) {
                             if (vote) {
                                 //these are causing the object not found for update error
+                                if (self.viewCounter >= self.firstSet.count) {
+                                    NSLog("Houston we have a problem");
+                                    self.performBufferLog();
+                                }
                                 self.firstSet[self.viewCounter]!.like();
                                 self.voteCounter.textColor = UIColor.greenColor();
                             }
@@ -239,36 +294,48 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                             else {
                                 if (self.viewCounter == self.firstSet.count - 1) {
                                     if (self.secondSet.count == 0) {
+                                        self.backImageView!.image = self.endingImg;
+                                        //self.atEnd = true;
+                                        if (self.frontImageView!.image == self.endingImg) {
+                                            self.resetToStart();
+                                        }
+                                    }
+                                    else if (self.loadedCount == self.secondSet.count) {
+                                        //no need to check loading, they should all be loaded
+                                        self.backImageView!.image = (self.secondSet[0])!.image;
+                                    }
+                                    else {
+                                        if (self.secondSet.count > 0 && self.loadedSet[0]) {
+                                            self.backImageView!.image = (self.secondSet[0])!.image;
+                                        }
+                                        else {
+                                            self.backImageView!.image = self.loadingImg;
+                                        }
+                                    }
+                                }
+                                else if (self.viewCounter == 0) {
+                                    //only way for this to happen + !atEnd is if we just cycled through and just swiped past the last frame
+                                    if (self.secondSet.count == 0) {
                                         //my 2nd set has nothing in it...
                                         self.firstSet = self.secondSet;
-                                        self.backImageView!.image = self.endingImg;
+                                        self.backImageView!.image = self.loadingImg;    //from ending
                                         self.atEnd = true;
                                     }
                                     else if (self.loadedCount == self.secondSet.count) {
                                         //my 2nd set is all loaded and I can copy the 2nd set => 1st set and start loading right away
                                         self.firstSet = self.secondSet;
-                                        
                                         //self.loadedSetNum = 2; unnecessary: still loading into set #2
-                                        self.loadedCount = 0;    //have 0 images loaded
                                         //start loading another set of images
-                                        ServerInteractor.getPost(self.getReturnList, sender: self);
+                                        self.getPostCall();
+                                        self.backImageView!.image = (self.firstSet[1])!.image;
                                         
-                                        if (self.firstSet.count > 0) {
-                                            //no need to check loading, they should all be loaded
-                                            self.backImageView!.image = (self.firstSet[0])!.image;
-                                        }
-                                        else {
-                                            //this should never run, since all images are loaded!
-                                            NSLog("Error: All images are loaded, yet we are trying to load an image.");
-                                            self.backImageView!.image = self.loadingImg;
-                                        }
                                     }
                                     else {
                                         //my 2nd set is still loading, I need to copy the 2nd set over to the 1st and keep on loading
                                         self.firstSet = self.secondSet;
                                         self.loadedSetNum = 1;
-                                        if (self.firstSet.count > 0 && self.loadedSet[0]) {
-                                            self.backImageView!.image = (self.firstSet[0])!.image;
+                                        if (self.firstSet.count > 1 && self.loadedSet[1]) {
+                                            self.backImageView!.image = (self.firstSet[1])!.image;
                                         }
                                         else {
                                             self.backImageView!.image = self.loadingImg;
@@ -282,15 +349,17 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                         else {
                             //tell server to reset
-                            if (!self.resetNeed) {
+                            /*if (!self.resetNeed) {
                                 self.resetNeed = true;
                             }
                             else {
                                 self.resetNeed = false;
                                 ServerInteractor.resetViewedPosts();
-                            }
+                            }*/
+                            ServerInteractor.resetViewedPosts();
                             self.resetToStart();
                         }
+                        
                     }
                     self.swiperNoSwipe = false;
                 });
@@ -300,7 +369,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath
         //self.commentTableView.reloadTable()
-        if (self.firstSet[self.viewCounter] == nil) {
+        if (self.firstSet.count == 0 || self.firstSet[self.viewCounter] == nil) {
             //there is no image for this post - no posts on feed
             //no post = no comments
             //this might happen due to network problems
