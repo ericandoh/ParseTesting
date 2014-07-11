@@ -50,7 +50,11 @@
                         <viewControllerLayoutGuide type="bottom" id="vQ2-VK-Tug"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Ec-Vo-ZiR">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fIu-Ms-9co">
@@ -133,7 +137,11 @@
             <objects>
                 <tableViewController id="N3u-vY-mx7" customClass="FriendTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eqC-x1-v2Q">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -164,7 +172,11 @@
                         <viewControllerLayoutGuide type="bottom" id="oBf-zb-Oi1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dyb-1B-mrT">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-ev-5hU">
@@ -204,7 +216,7 @@
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -240,11 +252,11 @@
                         <viewControllerLayoutGuide type="bottom" id="hSB-21-6UE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="du7-1U-nIP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-nK-ccc">
-                                <rect key="frame" x="20" y="58" width="280" height="310"/>
+                                <rect key="frame" x="12" y="49" width="297" height="310"/>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MY POST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-Pr-0oR">
                                 <rect key="frame" x="122" y="20" width="76" height="21"/>
@@ -580,7 +592,11 @@
                         <viewControllerLayoutGuide type="bottom" id="TTe-tL-92u"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EoO-cL-tcl">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username/Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXt-kU-S3A">
@@ -663,7 +679,7 @@
                         <viewControllerLayoutGuide type="bottom" id="85c-jx-Rtc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="f7i-Qk-eYg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nk0-uG-nJS">
@@ -721,7 +737,7 @@
                         <viewControllerLayoutGuide type="bottom" id="mVt-U3-Xnw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SSB-6O-sm9">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PSg-Af-JCf">
@@ -799,7 +815,11 @@
                         <viewControllerLayoutGuide type="bottom" id="4fd-TK-1GL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WHv-yr-geh">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="testbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-8p-XWM">
@@ -863,7 +883,11 @@
                         <viewControllerLayoutGuide type="bottom" id="kif-gf-ZPN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uaH-Yi-Wxb">
+<<<<<<< HEAD
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+=======
                         <rect key="frame" x="0.0" y="64" width="320" height="480"/>
+>>>>>>> master
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9e-ta-p5q">
