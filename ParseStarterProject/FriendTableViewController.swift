@@ -10,6 +10,8 @@
 
 class FriendTableViewController: UITableViewController {
 
+    var srcFriend: FriendEncapsulator?;
+    
     var friendList: Array<FriendEncapsulator?> = [];
     
     override func viewDidLoad() {
@@ -26,7 +28,7 @@ class FriendTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         
         //refetch friends from serverside
-        friendList = ServerInteractor.getFriends();
+        friendList = ServerInteractor.getFriends(srcFriend!); //--> change this to getFriends(srcFriend)
         self.tableView.reloadData();
     }
 
@@ -35,6 +37,11 @@ class FriendTableViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func receiveMasterFriend(friend: FriendEncapsulator) {
+        srcFriend = friend;
+    }
+    
     
     // #pragma mark - Table view data source
     
@@ -95,12 +102,19 @@ class FriendTableViewController: UITableViewController {
             //handle segueing to friend profile pages, if have time
             
             //issues! work
-            self.performSegueWithIdentifier("FriendViewSegue", sender: self);
+            
+            //below is temporary; please remake
+            //self.performSegueWithIdentifier("FriendViewSegue", sender: self);
             
             //make a user
+            let index: Int = self.tableView.indexPathForSelectedRow().row - 1;
             
-            //making a copy from storyboard:
-            //UIStorybaord.storyboardwithname("main").instantiateViewControllerWithIdentifier("id")
+            //I "think" this makes a copy from storyboard, lets hope I am right.
+            var nextBoard : UIViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            
+            (nextBoard as SettingsViewController).receiveUserInfo(friendList[index]!);
+            
+            self.navigationController.pushViewController(nextBoard, animated: true);
             
         }
     }
@@ -137,6 +151,7 @@ class FriendTableViewController: UITableViewController {
     }
     */
     
+    /*
     // #pragma mark - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -151,7 +166,7 @@ class FriendTableViewController: UITableViewController {
             var targetCont = segue!.destinationViewController as FriendSingleViewController;
             targetCont.receiveUserInfo(friendList[index]!);
         }
-    }
+    }*/
     
 
 }

@@ -27,8 +27,7 @@ class StartController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         if (ServerInteractor.isUserLogged()) {
             //user logged in from last session
-            ServerInteractor.initialUserChecks();
-            self.performSegueWithIdentifier("JumpIn", sender: self);
+            ServerInteractor.updateUser(self);
         }
         else {
             self.performSegueWithIdentifier("SignIn", sender: self);
@@ -40,6 +39,14 @@ class StartController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func approveUser() {
+        NSLog("User should have been fetched with correct properties");
+        self.performSegueWithIdentifier("JumpIn", sender: self);
+    }
+    func stealthUser() {
+        NSLog("User may not be synced!");
+        self.performSegueWithIdentifier("JumpIn", sender: self);
+    }
 
     /*
     // #pragma mark - Navigation

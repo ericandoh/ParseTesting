@@ -23,6 +23,7 @@ import UIKit
         user.email = email;
         
         user["friends"] = NSArray();
+        user["viewHistory"] = NSArray();
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
@@ -44,6 +45,7 @@ import UIKit
         return true;
     }
     class func loginUser(username: String, password: String, sender: NSObject)->Bool {
+        NSLog("Logging in user");
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: LoginViewController = sender as LoginViewController;
             if (user) {
@@ -58,6 +60,19 @@ import UIKit
             }
         });
         return true;
+    }
+    //called when app starts + not anon user
+    class func updateUser(sender: NSObject) {
+        PFUser.currentUser().fetchInBackgroundWithBlock({(user: PFObject!, error: NSError!)->Void in
+            var start: StartController = sender as StartController;
+            if (!error) {
+                ServerInteractor.initialUserChecks();
+                start.approveUser();
+            }
+            else {
+                start.stealthUser();
+            }
+        });
     }
     
     //loggin in with facebook
@@ -119,6 +134,10 @@ import UIKit
         //need to add check checking if I am anon
         return PFUser.currentUser().username;
     }
+    //used in friend display panels to handle my user screen vs other user screens
+    class func getCurrentUser()->FriendEncapsulator {
+        return FriendEncapsulator(friend: PFUser.currentUser());
+    }
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
         if (isAnonLogged()) {
@@ -150,16 +169,23 @@ import UIKit
     }
     }
     
-    class func getPost(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
-        return getPost(true, finishFunction: finishFunction, sender:sender);
-    }
     class func removePost(post: ImagePostStructure) {
         post.myObj.deleteInBackground();
     }
+    
+    //helper function to convert an array of ImagePostStructures into an array of its objectID's
+    class func convertPostToID(input: Array<ImagePostStructure?>)->NSMutableArray {
+        var output = NSMutableArray();
+        for post: ImagePostStructure? in input {
+            output.addObject(post!.myObj.objectId);
+        }
+        return output;
+    }
+    
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
-    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController) {
+    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController, excludes: Array<ImagePostStructure?>) {
         //download - relational data is NOT fetched!
         var returnList = Array<ImagePostStructure?>();
         //query
@@ -168,15 +194,23 @@ import UIKit
         query.limit = POST_LOAD_COUNT;
         query.orderByDescending("likes");
  
+        
+        var excludeList = convertPostToID(excludes);
         if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
+            //query.whereKey("objectId", notContainedIn: excludeList);
             //both friends + everyone marked feed from your friends show up here, as long as your friend posted
             //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
         }
         else {
             //must be an everyone-only post to show in popular feed
             query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
+            if (!isAnonLogged()) {
+                excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+            }
+            //query.whereKey("objectId", notContainedIn: excludeList);
         }
+        query.whereKey("objectId", notContainedIn: excludeList);
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: AnyObject[]!, error: NSError!) -> Void in
@@ -186,6 +220,7 @@ import UIKit
                 sender.setPostArraySize(objects.count);
                 for (index, object:PFObject!) in enumerate(objects!) {
                     var post = ImagePostStructure(inputObj: object);
+                    //self.readPost(post);
                     post.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -194,6 +229,10 @@ import UIKit
             }
         }
         //return returnList;
+    }
+    class func resetViewedPosts() {
+        PFUser.currentUser()["viewHistory"] = NSArray();
+        PFUser.currentUser().saveEventually();
     }
     class func getMySubmissions(skip: Int)->Array<ImagePostStructure?> {
         return getMySubmissions(skip, loadCount: MYPOST_LOAD_COUNT);
@@ -225,6 +264,14 @@ import UIKit
         
         return returnList;
     }
+    
+    class func readPost(post: ImagePostStructure) {
+        var postID = post.myObj.objectId;
+        PFUser.currentUser().addUniqueObject(postID, forKey: "viewHistory");
+        PFUser.currentUser().saveEventually();
+        
+    }
+    
     //------------------Notification related methods---------------------------------------
     class func processNotification(targetUserName: String, targetObject: PFObject)->Array<AnyObject?>? {
         return processNotification(targetUserName, targetObject: targetObject, controller: nil);
@@ -420,18 +467,26 @@ import UIKit
         return nil;
     }
     
-    //gets me a list of my friends!
+    //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {
+        return getFriends(FriendEncapsulator(friend: PFUser.currentUser()));
+    }
+    
+    //gets me a list of my friends!
+    //used by friend table loader
+    class func getFriends(user: FriendEncapsulator)->Array<FriendEncapsulator?> {
+        var unwrapUser = user.friendObj;
         var returnList: Array<FriendEncapsulator?> = [];
         var friendz: NSArray;
-        if (PFUser.currentUser().allKeys().bridgeToObjectiveC().containsObject("friends")) {
+        if (unwrapUser!.allKeys().bridgeToObjectiveC().containsObject("friends")) {
             //if this runs, the code will break catastrophically, just initialize "friends" with registration
-            friendz = PFUser.currentUser()["friends"] as NSArray;
+            friendz = unwrapUser!["friends"] as NSArray;
         }
         else {
+            NSLog("Updating an old account to have friends");
             friendz = Array<PFUser?>();
-            PFUser.currentUser()["friends"] = NSArray()
-            PFUser.currentUser().saveInBackground();
+            unwrapUser!["friends"] = NSArray()
+            unwrapUser!.saveInBackground();
         }
         var friend: String;
         for index in 0..friendz.count {
@@ -459,5 +514,12 @@ import UIKit
                 NSLog("Error: Could not fetch");
             }
         });
+        
+        //possibly move friend accepts here?
+        
+        //add method to clear user's viewed post history (for sake of less clutter)
+        //PFUser.currentUser()["viewHistory"] = NSArray();
+        //PFUser.currentUser().saveInBackground();
+        
     }
 }
