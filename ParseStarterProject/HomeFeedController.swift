@@ -227,6 +227,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             NSLog("Cannot swipe while first image is not loaded");
             return;
         }
+        if (frontImageView!.image == loadingImg) {
+            //front is loading still!
+            return;
+        }
         swiperNoSwipe = true;
         if let frontView = frontImageView {
             UIView.animateWithDuration(0.5, animations: {

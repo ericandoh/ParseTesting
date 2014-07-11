@@ -54,6 +54,7 @@ while(iterations > 0) {
 
 
 var someArray: Int[] = Int[](count: 3, repeatedValue: 0)
+someArray += [1,2,3];
 someArray.insert(3, atIndex: 0)
 someArray.insert(5, atIndex: 1)
 someArray.insert(7, atIndex: 3)
