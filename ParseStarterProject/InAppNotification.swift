@@ -94,9 +94,12 @@ class InAppNotification {
             //Post does not have image associated with it
             NSLog("Cannot retrieve image from non-image post notification")
         }
+        //The next line does not really fetch the object just initializes what it should be
         var obj = self.personalObj!["ImagePost"] as PFObject
+        //fetchIfNeededInBackgroundWithBlock is used when getting PFObjects (smaller things). This fetches the actual object.
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
             var imgFile: PFFile = object["imageFile"] as PFFile;
+            //getDataINBackgroundWithBlock is used to get big chunks of data - such as PFFiles
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                 //get file objects
                 receiveAction(UIImage(data: result));
@@ -104,12 +107,17 @@ class InAppNotification {
         });
     }
     
-    func getComments(receiveAction:(Array<String>)->Void) {
+    func getComments(receiveAction:(Array<String>)->Void)->Void {
         var obj = self.personalObj!["ImagePost"] as PFObject
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
             var commenting: Array<String> = object["comments"] as Array<String>
             receiveAction(commenting);
         });
+    }
+    
+    func getImagePost()->PFObject {
+        var obj: PFObject = self.personalObj!["ImagePost"] as PFObject
+        return obj;
     }
     
     func acceptFriend() {

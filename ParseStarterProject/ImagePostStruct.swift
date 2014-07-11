@@ -16,6 +16,7 @@ class ImagePostStructure
     var image: UIImage?
     var imageLoaded: Bool = false
     var myObj: PFObject
+    //var user: PFUser()
     init(inputObj: PFObject) {
         //called when retrieving object (for viewing, etc)
         myObj = inputObj;
@@ -85,7 +86,7 @@ class ImagePostStructure
     }
     func addComment(comment: String) {
         var commentArray = myObj["comments"] as NSMutableArray;
-        commentArray.insertObject(comment, atIndex: 0);
+        commentArray.insertObject(PFUser.currentUser().username + ": " + comment, atIndex: 0);
         myObj["comments"] = commentArray;
         myObj.saveInBackground();
     }
