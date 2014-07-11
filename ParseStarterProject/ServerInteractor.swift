@@ -467,18 +467,26 @@ import UIKit
         return nil;
     }
     
-    //gets me a list of my friends!
+    //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {
+        return getFriends(FriendEncapsulator(friend: PFUser.currentUser()));
+    }
+    
+    //gets me a list of my friends!
+    //used by friend table loader
+    class func getFriends(user: FriendEncapsulator)->Array<FriendEncapsulator?> {
+        var unwrapUser = user.friendObj;
         var returnList: Array<FriendEncapsulator?> = [];
         var friendz: NSArray;
-        if (PFUser.currentUser().allKeys().bridgeToObjectiveC().containsObject("friends")) {
+        if (unwrapUser!.allKeys().bridgeToObjectiveC().containsObject("friends")) {
             //if this runs, the code will break catastrophically, just initialize "friends" with registration
-            friendz = PFUser.currentUser()["friends"] as NSArray;
+            friendz = unwrapUser!["friends"] as NSArray;
         }
         else {
+            NSLog("Updating an old account to have friends");
             friendz = Array<PFUser?>();
-            PFUser.currentUser()["friends"] = NSArray()
-            PFUser.currentUser().saveInBackground();
+            unwrapUser!["friends"] = NSArray()
+            unwrapUser!.saveInBackground();
         }
         var friend: String;
         for index in 0..friendz.count {

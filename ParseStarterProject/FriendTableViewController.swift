@@ -28,7 +28,7 @@ class FriendTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         
         //refetch friends from serverside
-        friendList = ServerInteractor.getFriends(); //--> change this to getFriends(srcFriend)
+        friendList = ServerInteractor.getFriends(srcFriend!); //--> change this to getFriends(srcFriend)
         self.tableView.reloadData();
     }
 
