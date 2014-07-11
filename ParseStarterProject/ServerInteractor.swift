@@ -134,6 +134,10 @@ import UIKit
         //need to add check checking if I am anon
         return PFUser.currentUser().username;
     }
+    //used in friend display panels to handle my user screen vs other user screens
+    class func getCurrentUser()->FriendEncapsulator {
+        return FriendEncapsulator(friend: PFUser.currentUser());
+    }
     //------------------Image Post related methods---------------------------------------
     class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
         if (isAnonLogged()) {
