@@ -138,10 +138,15 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
             //removeObjectAtIndex(indexPath.row)
             
             
+            var index = indexPath.row - 1;
+            
+            NSLog("\(friendList.count)")
+            ServerInteractor.removeFriend(friendList[index]!.getName({}), isHeartBroken: false)
             
             friendList.removeAtIndex(indexPath.row - 1)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+
             NSLog("it comes this far")
             //tableView.reloadData();
         }
