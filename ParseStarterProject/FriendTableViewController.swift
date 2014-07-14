@@ -8,7 +8,7 @@
 //
 //
 
-class FriendTableViewController: UITableViewController {
+class FriendTableViewController: UITableViewController, UITableViewDataSource  {
 
     var srcFriend: FriendEncapsulator?;
     
@@ -22,10 +22,20 @@ class FriendTableViewController: UITableViewController {
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+    
+        //self.tableView.allowsMultipleSelectionDuringEditing = false
         
     }
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        NSLog("Vew did wappaer")
+        //self.tableView(self.tableView, commitEditingStyle: UITableViewCellEditingStyle.Delete, forRowAtIndexPath: <#NSIndexPath#>)
+        self.tableView.allowsSelectionDuringEditing = true
+        self.setEditing(false, animated: false);
+        self.setEditing(true, animated: true)
+        
+        //tableView.setEditing(true, animated: true)
+        tableView.editing = true;
         
         //refetch friends from serverside
         friendList = ServerInteractor.getFriends(srcFriend!); //--> change this to getFriends(srcFriend)
@@ -59,6 +69,8 @@ class FriendTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
+        //self.setEditing(false, animated: false)
+
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
         // Configure the cell...
         
@@ -73,10 +85,58 @@ class FriendTableViewController: UITableViewController {
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        //cell.editingStyle = UITableViewCellEditingStyle.Delete;
         
         return cell
     }
     
+    /*@IBAction func deleteFriendz(sender: UIPanGestureRecognizer) {
+        var translation: CGPoint = sender.translationInView(self.view)
+        
+        var location: CGPoint = sender.locationInView(tableView)
+        
+        var indexRow = self.tableView.indexPathForRowAtPoint(location)
+        
+        var cell = tableView.cellForRowAtIndexPath(indexRow)
+        
+        var cellPosition: CGPoint = cell.center
+        
+        cellPosition.x += (translation.x / 10.0)
+        
+        //NSLog(translation.x)
+        
+        cell.center = cellPosition
+            }*/
+    
+    /*func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) {
+        
+        return true;
+    }*/
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true;
+    }
+    
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.beginUpdates();
+        super.tableView(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath);
+        //self.setEditing(true, animated: true)
+        if (editingStyle == UITableViewCellEditingStyle.Delete && indexPath.row != 0) {
+            //let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
+            //cell.textLabel.text = ""
+            
+            //removeObjectAtIndex(indexPath.row)
+            
+            friendList.removeAtIndex(indexPath.row - 1)
+            
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+            NSLog("it comes this far")
+            tableView.reloadData();
+        }
+        self.tableView.endUpdates();
+    }
     
     /*
     // Override to support conditional editing of the table view.
@@ -85,8 +145,19 @@ class FriendTableViewController: UITableViewController {
         return indexPath!.row == 0; //can only edit at row 0, and at all times
     }
     */
+    override func tableView(tableView: UITableView!, editingStyleForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //super.tableView(tableView, didSelectRowAtIndexPath: indexPath);
         if (indexPath.row == 0) {
+            NSLog("---")
+            NSLog("\(self.editing)");
+            NSLog("\(self.tableView(self.tableView, canEditRowAtIndexPath:NSIndexPath(forRow: 1, inSection: 0  ) ))")
+            //self.setEditing(!self.editing, animated: true);
+            NSLog("\(self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0  )).editingStyle.toRaw())")
+            NSLog("\(self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0  )).editingStyle.toRaw())")
             let alert: UIAlertController = UIAlertController(title: "Add Friend", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
