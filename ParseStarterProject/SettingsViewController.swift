@@ -75,9 +75,11 @@ class SettingsViewController: UIViewController {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
-        if (segue!.identifier == "SeeFriendsSegue") {
-            if (mainUser) {
-                (segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
+        if (segue && segue!.identifier != nil) {
+            if (segue!.identifier == "SeeFriendsSegue") {
+                if (mainUser) {
+                    (segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
+                }
             }
         }
     }

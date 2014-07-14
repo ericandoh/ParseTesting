@@ -16,30 +16,32 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NSLog("View did load");
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-    
-        //self.tableView.allowsMultipleSelectionDuringEditing = false
+        friendList = ServerInteractor.getFriends(srcFriend!); //--> change this to getFriends(srcFriend)
+
+        self.tableView.allowsMultipleSelectionDuringEditing = false
+        
+        self.tableView.allowsSelectionDuringEditing = true
         
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         NSLog("Vew did wappaer")
         //self.tableView(self.tableView, commitEditingStyle: UITableViewCellEditingStyle.Delete, forRowAtIndexPath: <#NSIndexPath#>)
-        self.tableView.allowsSelectionDuringEditing = true
-        self.setEditing(false, animated: false);
-        self.setEditing(true, animated: true)
+        //self.tableView.allowsSelectionDuringEditing = true
+        //self.setEditing(false, animated: false);
+        setEditing(true, animated: true)
         
         //tableView.setEditing(true, animated: true)
-        tableView.editing = true;
+        //tableView.editing = true;
         
         //refetch friends from serverside
-        friendList = ServerInteractor.getFriends(srcFriend!); //--> change this to getFriends(srcFriend)
-        self.tableView.reloadData();
+        //self.tableView.reloadData();
     }
 
     
@@ -70,7 +72,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         //self.setEditing(false, animated: false)
-
+        NSLog("Getting cell \(indexPath!.row)")
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
         // Configure the cell...
         
@@ -114,28 +116,36 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     }*/
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if (indexPath.row == 0) {
+            NSLog("Cannot edit cell 0")
+            return false;
+        }
+        NSLog("Can edit cell \(indexPath.row)")
         return true;
     }
     
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        self.tableView.beginUpdates();
-        super.tableView(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath);
+        //super.tableView(tableView, commitEditingStyle: editingStyle, forRowAtIndexPath: indexPath);
+        NSLog("Commiting edits at \(indexPath.row)")
+        //self.tableView.beginUpdates();
         //self.setEditing(true, animated: true)
         if (editingStyle == UITableViewCellEditingStyle.Delete && indexPath.row != 0) {
+            NSLog("Deleting!");
             //let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
             //cell.textLabel.text = ""
             
             //removeObjectAtIndex(indexPath.row)
             
-            friendList.removeAtIndex(indexPath.row - 1)
             
+            
+            friendList.removeAtIndex(indexPath.row - 1)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             
             NSLog("it comes this far")
-            tableView.reloadData();
+            //tableView.reloadData();
         }
-        self.tableView.endUpdates();
+        //self.tableView.endUpdates();
     }
     
     /*
@@ -151,6 +161,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //super.tableView(tableView, didSelectRowAtIndexPath: indexPath);
+        NSLog("Selecting");
         if (indexPath.row == 0) {
             NSLog("---")
             NSLog("\(self.editing)");
