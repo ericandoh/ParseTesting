@@ -19,10 +19,10 @@ let N_DEBUG_FLAG = true //currently not used, there is a separate DEBUG_FLAG in 
 let NOTIF_COUNT = 10
 
 //number of post-images to load at once
-let POST_LOAD_COUNT = 20
+let POST_LOAD_COUNT = 10
 
 //maximum number of my own posts to load (when i query for my last submitted posts)
-let MYPOST_LOAD_COUNT = 20
+let MYPOST_LOAD_COUNT = 10
 
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks

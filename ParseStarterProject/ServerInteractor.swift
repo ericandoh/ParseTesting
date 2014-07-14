@@ -201,6 +201,9 @@ import UIKit
             //query.whereKey("objectId", notContainedIn: excludeList);
             //both friends + everyone marked feed from your friends show up here, as long as your friend posted
             //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
+            if (!isAnonLogged()) {
+                excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+            }
         }
         else {
             //must be an everyone-only post to show in popular feed
@@ -234,17 +237,12 @@ import UIKit
         PFUser.currentUser()["viewHistory"] = NSArray();
         PFUser.currentUser().saveEventually();
     }
-    class func getMySubmissions(skip: Int)->Array<ImagePostStructure?> {
-        return getMySubmissions(skip, loadCount: MYPOST_LOAD_COUNT);
-    }
     //returns a list of my submissions (once again restricted by POST_LOAD_COUNT
     //does NOT autoload the image with the file
     //return reference to PFFile as well - use to load files later on
-    class func getMySubmissions(skip: Int, loadCount: Int)->Array<ImagePostStructure?>  {
-        var returnList = Array<ImagePostStructure?>(count: POST_LOAD_COUNT, repeatedValue: nil);
-        
+    class func getSubmissions(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("author", equalTo: PFUser.currentUser().username);
+        query.whereKey("author", equalTo: user.getName({}));
         query.limit = loadCount;
         query.skip = skip * loadCount;
         query.orderByDescending("createdAt");
@@ -252,17 +250,20 @@ import UIKit
             (objects: AnyObject[]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
+                
+                notifyQueryFinish(objects.count);
+                
                 // Do something with the found objects
+                var post: ImagePostStructure?;
                 for (index, object:PFObject!) in enumerate(objects!) {
-                    returnList[index] = ImagePostStructure(inputObj: object);
+                    post = ImagePostStructure(inputObj: object);
+                    post!.loadImage(finishFunction, index: index);
                 }
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
             }
         }
-        
-        return returnList;
     }
     
     class func readPost(post: ImagePostStructure) {

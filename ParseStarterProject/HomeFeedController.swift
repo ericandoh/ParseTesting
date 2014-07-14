@@ -43,7 +43,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var loadedCount: Int = 0;
     
     //if my current image is at the end image
-    var atEnd: Bool = false;
+    //var atEnd: Bool = false;
     
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
@@ -82,7 +82,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         viewCounter = 0;    //we are at start of image sequence
         loadedSetNum = 1;   //load into first set
         //loadedCount = 0;    //have 0 images loaded
-        atEnd = false;
+        //atEnd = false;
         //loadedSet = Array<Bool>(count: POST_LOAD_COUNT, repeatedValue: false);
         getPostCall();
     }
@@ -98,12 +98,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             otherExcludes = firstSet;
         }
         if (selected == 0) {
-            NSLog("Getting posts for friends")
+            //NSLog("Getting posts for friends")
             //selected news feed => friends only => true
             ServerInteractor.getPost(true, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
         }
         else {
-            NSLog("Getting everyone's posts");
+            //NSLog("Getting everyone's posts");
             //selected everyone
             ServerInteractor.getPost(false, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
         }
@@ -117,7 +117,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                 //this is our first set, and we have no images to display
                 frontImageView!.image = endingImg;
                 backImageView!.image = loadingImg;
-                atEnd = true;
+                //atEnd = true;
             }
             else {
                 //do nothing, just make sure to set backImg to endingImg when firstSet ends
@@ -131,7 +131,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             //resetNeed = false;
         }
-        loadedCount = 0;
+        //loadedCount = 0;  this should already be set
         if (loadedSetNum == 1) {
             firstSet = Array<ImagePostStructure?>(count: size, repeatedValue: nil);
         }
@@ -210,7 +210,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         NSLog("----------Logging---------")
         NSLog("VC: \(self.viewCounter) LoadedSetCount: \(self.loadedSet.count)");
         NSLog("FirstSetCount: \(self.firstSet.count) SecondSetCount: \(self.secondSet.count)")
-        NSLog("LoadedSetNum: \(self.loadedSetNum) IsAtEnd: \(self.atEnd)")
+        NSLog("LoadedSetNum: \(self.loadedSetNum)")
         NSLog("First img = loading? \(self.frontImageView!.image == self.loadingImg)")
         NSLog("Second img = loading? \(self.backImageView!.image == self.loadingImg)")
         NSLog("----------End Log---------")
@@ -221,10 +221,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //later replace this with faster animation
             return;
         }
-        if (loadedSet.count > 0 && !loadedSet[viewCounter]) {
+        /*if (loadedSet.count > 0 && loadedSetNum == 1 && !loadedSet[viewCounter]) {
             //we are waiting for frontImg to load; should (not?) swipe over a loading screen
             //but can swipe if nothing is in queue to refresh
             NSLog("Cannot swipe while first image is not loaded");
+            return;
+        }*/
+        if (frontImageView!.image == loadingImg) {
+            //front is loading still!
             return;
         }
         swiperNoSwipe = true;
@@ -239,7 +243,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     if let backView = self.backImageView {
                         
                         //self.performBufferLog();
-                        
+                        var needRefresh = (frontView.image == self.endingImg);
                         frontView.image = backView.image;
                         //reset frontView back to front
                         frontView.frame = CGRect(origin: backView.frame.origin, size: backView.frame.size);
@@ -252,7 +256,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                         //NSLog("Swipe \(self.viewCounter)")
                         
                         
-                        if (!(self.atEnd)) {
+                        if (!(needRefresh)) {
                             if (vote) {
                                 //these are causing the object not found for update error
                                 if (self.viewCounter >= self.firstSet.count) {
@@ -298,6 +302,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                     if (self.secondSet.count == 0) {
                                         self.backImageView!.image = self.endingImg;
                                         //self.atEnd = true;
+                                        
+                                        //this was there before 7/14
                                         if (self.frontImageView!.image == self.endingImg) {
                                             self.resetToStart();
                                         }
@@ -321,16 +327,24 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                         //my 2nd set has nothing in it...
                                         self.firstSet = self.secondSet;
                                         self.backImageView!.image = self.loadingImg;    //from ending
-                                        self.atEnd = true;
+                                        //self.atEnd = true;
                                     }
                                     else if (self.loadedCount == self.secondSet.count) {
                                         //my 2nd set is all loaded and I can copy the 2nd set => 1st set and start loading right away
                                         self.firstSet = self.secondSet;
                                         //self.loadedSetNum = 2; unnecessary: still loading into set #2
                                         //start loading another set of images
-                                        self.getPostCall();
-                                        self.backImageView!.image = (self.firstSet[1])!.image;
-                                        
+                                        if (self.firstSet.count > 1) {
+                                            self.backImageView!.image = (self.firstSet[1])!.image;
+                                            self.getPostCall();
+                                        }
+                                        else {
+                                            //my set only has 1 thing in it
+                                            NSLog("Setting as end");
+                                            self.backImageView!.image = self.endingImg;
+                                            //self.atEnd = true;
+                                            //self.resetToStart();
+                                        }
                                     }
                                     else {
                                         //my 2nd set is still loading, I need to copy the 2nd set over to the 1st and keep on loading
@@ -358,8 +372,13 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                                 self.resetNeed = false;
                                 ServerInteractor.resetViewedPosts();
                             }*/
+                            //NSLog("Resetting")
+                            self.backImageView!.image = self.loadingImg;
                             ServerInteractor.resetViewedPosts();
                             self.resetToStart();
+                        }
+                        if (self.frontImageView!.image == self.endingImg) {
+                            self.backImageView!.image = self.loadingImg;
                         }
                         
                     }
