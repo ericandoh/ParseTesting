@@ -16,7 +16,6 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("View did load");
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
@@ -31,7 +30,6 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
-        NSLog("Vew did wappaer")
         //self.tableView(self.tableView, commitEditingStyle: UITableViewCellEditingStyle.Delete, forRowAtIndexPath: <#NSIndexPath#>)
         //self.tableView.allowsSelectionDuringEditing = true
         //self.setEditing(false, animated: false);
@@ -72,7 +70,6 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
         //self.setEditing(false, animated: false)
-        NSLog("Getting cell \(indexPath!.row)")
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
         // Configure the cell...
         
@@ -117,10 +114,8 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         if (indexPath.row == 0) {
-            NSLog("Cannot edit cell 0")
             return false;
         }
-        NSLog("Can edit cell \(indexPath.row)")
         return true;
     }
     

@@ -123,7 +123,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         //lets also try adding to user field
     }
     func receiveNumQuery(size: Int) {
-        NSLog("Received \(size) results")
         if (size < MYPOST_LOAD_COUNT) {
             hitEnd = true;
             endLoadCount = size;
@@ -153,7 +152,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.imageView.image = post.image;
     }
     func loadSet() {
-        NSLog("Loading set, loaded up to \(loadedUpTo) previously")
         loadedUpTo += 1;
         loadedPosts += Array<ImagePostStructure?>(count: MYPOST_LOAD_COUNT, repeatedValue: nil);
         //start loading next set of MYPOST_LOAD_COUNT here
