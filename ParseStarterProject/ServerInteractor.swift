@@ -201,6 +201,9 @@ import UIKit
             //query.whereKey("objectId", notContainedIn: excludeList);
             //both friends + everyone marked feed from your friends show up here, as long as your friend posted
             //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
+            if (!isAnonLogged()) {
+                excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+            }
         }
         else {
             //must be an everyone-only post to show in popular feed

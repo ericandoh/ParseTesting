@@ -40,7 +40,7 @@ class StartController: UIViewController {
     }
     
     func approveUser() {
-        NSLog("User should have been fetched with correct properties");
+        //NSLog("User should have been fetched with correct properties");
         self.performSegueWithIdentifier("JumpIn", sender: self);
     }
     func stealthUser() {
