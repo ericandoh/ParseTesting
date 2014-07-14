@@ -68,6 +68,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         }
         //start fetching submission posts for user, for first set here
         loadedUpTo = 0;
+        hitEnd = false;
         loadedPosts = [];
         if (!ServerInteractor.isAnonLogged()) {
             loadSet();
@@ -121,7 +122,8 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         //lets also try adding to user field
     }
     func receiveNumQuery(size: Int) {
-        if (size != MYPOST_LOAD_COUNT) {
+        NSLog("Received \(size) results")
+        if (size < MYPOST_LOAD_COUNT) {
             hitEnd = true;
             endLoadCount = size;
         }
@@ -129,7 +131,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
         //called by getSubmissions for when image at index x is loaded in...
-        NSLog("Received image at index \(index)")
+        //NSLog("Received image at index \(index)")
         var realIndex = index + ((loadedUpTo - 1) * MYPOST_LOAD_COUNT);
         loadedPosts[realIndex] = loaded;
         
@@ -150,12 +152,13 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.imageView.image = post.image;
     }
     func loadSet() {
+        NSLog("Loading set, loaded up to \(loadedUpTo) previously")
         loadedUpTo += 1;
         loadedPosts += Array<ImagePostStructure?>(count: MYPOST_LOAD_COUNT, repeatedValue: nil);
         //start loading next set of MYPOST_LOAD_COUNT here
         //ServerInteractor.getSubmissions()...; with receiveNumQuery, receiveImagePostWithImage
         //broke here
-        ServerInteractor.getSubmissions((loadedUpTo - 1) * MYPOST_LOAD_COUNT, loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+        ServerInteractor.getSubmissions((loadedUpTo - 1), loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
     }
     //----------------------collectionview methods------------------------------
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
@@ -187,6 +190,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
             if (path.row == loadedUpTo * MYPOST_LOAD_COUNT - 1) {
                 //need to load more
+                NSLog("Loading more");
                 loadSet();
                 return;
             }
