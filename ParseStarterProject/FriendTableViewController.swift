@@ -115,7 +115,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
             let alert: UIAlertController = UIAlertController(title: "Add Friend", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                ServerInteractor.postFriendRequest(alert.textFields[0].text, controller: self);
+                //NSLog("Clicked stuff \(alert.textFields[0].text)");
                 }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //canceled

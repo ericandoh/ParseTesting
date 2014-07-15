@@ -48,7 +48,7 @@ class FriendEncapsulator {
         }
         else if (friendObj) {
             //fetch friend + get image
-            if (friendObj!["userIcon"] == nil) {
+            if (!(friendObj!["userIcon"])) {
                 receiveAction(DEFAULT_USER_ICON);
                 return;
             }
@@ -63,7 +63,7 @@ class FriendEncapsulator {
             query.whereKey("username", equalTo: self.username);
             query.limit = 1;
             query.findObjectsInBackgroundWithBlock {
-                (objects: AnyObject[]!, error: NSError!) -> Void in
+                (objects: [AnyObject]!, error: NSError!) -> Void in
                 if (!error && objects.count > 0)  {
                     self.friendObj = objects[0] as? PFUser;
                     self.fetchImage(receiveAction);

@@ -18,11 +18,11 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet var commentTableView: UITableView
 
     var notif: InAppNotification?;
+    var imgPost: ImagePostStructure?;
     
     var commentList: Array<PostComment> = [];
 
     @IBAction func comments(sender: AnyObject) {
-        NSLog("button pushed");
         commentView.hidden = false;
         if (notif) {
             notif!.getComments({(commentary: Array<String>) -> Void in
@@ -42,13 +42,28 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         //second
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
         
-        if (notif) {
-            notif!.getImage({(img: UIImage)-> Void in
-                self.imageView.image = img;
-                });
-
+        if (imgPost) {
+            imgPost!.loadImage({
+                (imgStruct: ImagePostStructure, index: Int)->Void in
+                self.imageView.image = imgStruct.image;
+                }, index: 0);
+            postTitle.text = "Your post! (tbfilled)";
+        }
+        else if (notif) {
+            notif!.getImagePost().fetchIfNeededInBackgroundWithBlock({
+                (object:PFObject!, error: NSError!)->Void in
+                self.imgPost = ImagePostStructure(inputObj: object);
+                
+                self.imgPost!.loadImage({
+                    (imgStruct: ImagePostStructure, index: Int)->Void in
+                    self.imageView.image = imgStruct.image;
+                    }, index: 0);
+                
+            });
+            
             //for now, set post title to notification title?
             postTitle.text = notif!.messageString;
         }
@@ -64,6 +79,9 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     func receiveNotifObject(notification: InAppNotification) {
         //first, notif controller calls this first
         notif = notification;
+    }
+    func receiveImagePost(post: ImagePostStructure) {
+        imgPost = post;
     }
     
     @IBAction func Exit(sender: UIButton) {
@@ -111,11 +129,11 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
                 
                 var currentPost: ImagePostStructure = ImagePostStructure(inputObj: obj)
                 
-                currentPost.addComment(alert.textFields[0].text);
+                currentPost.addComment((alert.textFields[0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in
-                    for index in 0..input.count {
+                    for index in 0..<input.count {
                         self.commentList.append(PostComment(content: (input[index] as String)));
                     }
                     self.commentTableView.reloadData();
@@ -139,8 +157,15 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         else {
             cellText = commentList[indexPath.row - 1].commentString;
         }
-        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, CGFLOAT_MAX), lineBreakMode: NSLineBreakMode.ByWordWrapping)
-        return labelSize.height + 20;
+        
+        var cell: CGRect = tableView.frame;
+        
+        var textCell = UILabel();
+        textCell.text = cellText;
+        textCell.numberOfLines = 10;
+        var maxSize: CGSize = CGSizeMake(cell.width, 9999);
+        var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
+        return expectedSize.height + 20;
     }
 
 

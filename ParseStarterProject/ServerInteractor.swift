@@ -36,7 +36,8 @@ import UIKit
                 signController.successfulSignUp();
                 
             } else {
-                var errorString: String = error.userInfo["error"] as String;
+                //var errorString: String = error.userInfo["error"] as String;
+                var errorString = error.localizedDescription;
                 //display this error string to user
                 //send some sort of notif to refresh screen
                 signController.failedSignUp(errorString);
@@ -45,7 +46,6 @@ import UIKit
         return true;
     }
     class func loginUser(username: String, password: String, sender: NSObject)->Bool {
-        NSLog("Logging in user");
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: LoginViewController = sender as LoginViewController;
             if (user) {
@@ -55,7 +55,8 @@ import UIKit
             }
             else {
                 //login failed
-                var errorString: String = error.userInfo["error"] as String;
+                //var errorString: String = error.userInfo["error"] as String;
+                var errorString = error.localizedDescription;
                 logController.failedLogin(errorString);
             }
         });
@@ -80,7 +81,7 @@ import UIKit
         //whats permissions
         //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
         //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
-        let permissions: AnyObject[]? = ["user_about_me", "user_relationships"];
+        let permissions: [AnyObject]? = ["user_about_me", "user_relationships"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: LoginViewController = sender as LoginViewController;
@@ -89,9 +90,20 @@ import UIKit
             } else if !user {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
-                logController.failedLogin("User signed up and logged in through Facebook!")
+                //logController.failedLogin("User signed up and logged in through Facebook!")
+                NSLog("Setting up initial stuff for user");
+                user["friends"] = NSArray();
+                user["viewHistory"] = NSArray();
+                ServerInteractor.initialUserChecks();
+                //user's first notification
+                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                user.saveEventually();
+                logController.successfulLogin();
+                
             } else {
-                logController.failedLogin("User logged in through Facebook!")
+                //logController.failedLogin("User logged in through Facebook!")
+                ServerInteractor.initialUserChecks();
+                logController.successfulLogin();
             }
         });
     }
@@ -100,7 +112,7 @@ import UIKit
     //logged in as anonymous user does NOT count
     //use this to check whether to go to signup/login screen or directly to home
     class func isUserLogged()->Bool {
-        if (PFUser.currentUser != nil) {
+        if (PFUser.currentUser() != nil) {
             if (PFAnonymousUtils.isLinkedWithUser(PFUser.currentUser())) {
                 //anonymous user
                 return false;
@@ -143,30 +155,35 @@ import UIKit
         if (isAnonLogged()) {
             return;
         } else {
-        var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
-        var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
-        newPost.myObj.saveInBackgroundWithBlock({
-            (succeeded: Bool, error: NSError!)->Void in
-            if (succeeded && !error) {
-                if (PFUser.currentUser()["userIcon"] == nil) {
-                    //above may set to last submitted picture...? sometimes??
-                    //might consider just resizing image to a smaller icon value and saving it again
-                    PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
-                    PFUser.currentUser().saveEventually();
+            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
+            var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
+            /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
+                NSLog("What");
+                });*/
+            
+            newPost.myObj.saveInBackgroundWithBlock({
+                (succeeded: Bool, error: NSError!)->Void in
+                if (succeeded && !error) {
+                    var myUser: PFUser = PFUser.currentUser();
+                    if (!(myUser["userIcon"])) {
+                        //above may set to last submitted picture...? sometimes??
+                        //might consider just resizing image to a smaller icon value and saving it again
+                        PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
+                        PFUser.currentUser().saveEventually();
+                    }
+                    var notifObj = PFObject(className:"Notification");
+                    //type of notification - in this case, a Image Post (how many #likes i've gotten)
+                    notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
+                    notifObj["ImagePost"] = newPost.myObj;
+                    
+                    ServerInteractor.processNotification(sender, targetObject: notifObj);
+                    //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
                 }
-                var notifObj = PFObject(className:"Notification");
-                //type of notification - in this case, a Image Post (how many #likes i've gotten)
-                notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
-                notifObj["ImagePost"] = newPost.myObj;
-                
-                ServerInteractor.processNotification(sender, targetObject: notifObj);
-                //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
-            }
-            else {
-                NSLog("Soem error of some sort")
-            }
-        });
-    }
+                else {
+                    NSLog("Soem error of some sort");
+                }
+            });
+        }
     }
     
     class func removePost(post: ImagePostStructure) {
@@ -216,7 +233,7 @@ import UIKit
         query.whereKey("objectId", notContainedIn: excludeList);
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
-            (objects: AnyObject[]!, error: NSError!) -> Void in
+            (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
                 // Do something with the found objects
@@ -244,10 +261,10 @@ import UIKit
         var query = PFQuery(className:"ImagePost")
         query.whereKey("author", equalTo: user.getName({}));
         query.limit = loadCount;
-        query.skip = skip * loadCount;
+        query.skip = skip;
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
-            (objects: AnyObject[]!, error: NSError!) -> Void in
+            (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
                 
@@ -282,7 +299,7 @@ import UIKit
         var query: PFQuery = PFUser.query();
         query.whereKey("username", equalTo: targetUserName)
         var currentUserName = PFUser.currentUser().username;
-        query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
+        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
             if (objects.count > 0) {
                 //i want to request myself as a friend to my friend
                 var targetUser = objects[0] as PFUser;
@@ -302,7 +319,7 @@ import UIKit
                 }
                 else if (error) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                    (controller! as FriendTableViewController).notifyFailure(error.userInfo["error"] as String);
+                    (controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
                 }
             }
         });
@@ -367,7 +384,7 @@ import UIKit
         //want most recent first
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
-            (objects: AnyObject[]!, error: NSError!) -> Void in
+            (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
                 // Do something with the found objects
@@ -394,19 +411,8 @@ import UIKit
                         }
                     }
                     
-                   // NSLog(\(objects[objects.count] as NSString == objects[objects.count - 1] as NSString))
-                    /*var lol: PFObject = objects![objects.count - 1] as PFObject
-                    var lol2: PFObject = objects![objects.count - 2] as PFObject
-                    
-                    if (lol == lol2){
-                       // object.deleteInBackground()
-                        NSLog("true")
-                    } else {
-                        NSLog("false")
-                    }*/
-                    
-                    /*if(!(object["viewed"] as Bool)) {
-                        if (object["type"] != nil) {
+                    if(!(object["viewed"] as Bool)) {
+                        if (object["type"]) {
                             if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
                                 ServerInteractor.addAsFriend(object["sender"] as String);
@@ -414,7 +420,7 @@ import UIKit
                         }
                         object["viewed"] = true;
                         object.saveInBackground()
-                    }*/
+                    }
                     
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
@@ -516,7 +522,7 @@ import UIKit
             unwrapUser!.saveInBackground();
         }
         var friend: String;
-        for index in 0..friendz.count {
+        for index in 0..<friendz.count {
             friend = friendz[index] as String;
             returnList.append(FriendEncapsulator(friendName: friend));
         }
@@ -528,10 +534,10 @@ import UIKit
         //check and see if user has any notice for removal of friends
         var query = PFQuery(className: "BreakupNotice");
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
-        query.findObjectsInBackgroundWithBlock({ (objects: AnyObject[]!, error: NSError!) -> Void in
+        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
             if (!error) {
                 var object: PFObject;
-                for index: Int in 0..objects.count {
+                for index: Int in 0..<objects.count {
                     object = objects[index] as PFObject;
                     ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
                     object.deleteInBackground();
