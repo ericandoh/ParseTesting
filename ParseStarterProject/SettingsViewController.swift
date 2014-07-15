@@ -35,11 +35,18 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     //set to true when I have already loaded in last set of stuff
     var hitEnd: Bool = false;
     
+    //set to what I last selected
+    //var lastSelect: Int = 0;
+    
     /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
     }*/
-
+    override func viewDidLoad()  {
+        super.viewDidLoad();
+        
+        myCollectionView.allowsSelection = true;
+    }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         if (mainUser && mainUser!.username != ServerInteractor.getUserName()) {
@@ -74,6 +81,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
             loadSet();
         }
         else {
+            loadedUpTo = 0;
             hitEnd = true;
             endLoadCount = 0;
         }
@@ -108,6 +116,17 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
                     (segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
                 }
             }
+            else if (segue!.identifier == "ImagePostSegue") {
+                if (mainUser) {
+                    var indexPaths: [NSIndexPath] = myCollectionView.indexPathsForSelectedItems() as [NSIndexPath];
+                    if (indexPaths.count > 0) {
+                        var indexPath: NSIndexPath = indexPaths[0];
+                        NSLog("Index path is \(indexPath.row)");
+                        (segue!.destinationViewController as ImagePostNotifViewController).receiveImagePost(loadedPosts[indexPath.row]!);
+                    }
+                    //(segue!.destinationViewController as ImagePostNotifViewController).receiveImagePost(loadedPosts[lastSelect]!);
+                }
+            }
         }
     }
     
@@ -123,9 +142,24 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         //lets also try adding to user field
     }
     func receiveNumQuery(size: Int) {
+        if (size != 0) {
+            loadedUpTo += 1;
+        }
+        else {
+            return;
+        }
+        var needAmount: Int;
         if (size < MYPOST_LOAD_COUNT) {
             hitEnd = true;
             endLoadCount = size;
+            needAmount = (loadedUpTo - 1) * MYPOST_LOAD_COUNT + endLoadCount;
+        }
+        else {
+            endLoadCount = 0;
+            needAmount = loadedUpTo * MYPOST_LOAD_COUNT;
+        }
+        if (loadedPosts.count < needAmount) {
+            loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
         }
         myCollectionView.reloadData();
     }
@@ -152,12 +186,11 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.imageView.image = post.image;
     }
     func loadSet() {
-        loadedUpTo += 1;
-        loadedPosts += Array<ImagePostStructure?>(count: MYPOST_LOAD_COUNT, repeatedValue: nil);
+        //loadedPosts += Array<ImagePostStructure?>(count: MYPOST_LOAD_COUNT, repeatedValue: nil);
         //start loading next set of MYPOST_LOAD_COUNT here
         //ServerInteractor.getSubmissions()...; with receiveNumQuery, receiveImagePostWithImage
         //broke here
-        ServerInteractor.getSubmissions((loadedUpTo - 1), loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+        ServerInteractor.getSubmissions((loadedUpTo)*MYPOST_LOAD_COUNT + endLoadCount, loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
     }
     //----------------------collectionview methods------------------------------
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
@@ -181,14 +214,19 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     }
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         NSLog("Selected at \(indexPath!.row)");
+        //lastSelect = indexPath!.row;
+        self.performSegueWithIdentifier("ImagePostSegue", sender: self);
     }
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         if (hitEnd) {
             return;
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
-            if (path.row == loadedUpTo * MYPOST_LOAD_COUNT - 1) {
-                //need to load more
+            if (hitEnd && path.row == (loadedUpTo - 1) * MYPOST_LOAD_COUNT + endLoadCount - 1) {
+                loadSet();
+                return;
+            }
+            else if (path.row == loadedUpTo * MYPOST_LOAD_COUNT - 1) {
                 loadSet();
                 return;
             }

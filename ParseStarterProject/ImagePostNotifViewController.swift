@@ -19,6 +19,7 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet var commentTableView: UITableView
 
     var notif: InAppNotification?;
+    var imgPost: ImagePostStructure?;
     
     var commentList: Array<PostComment> = [];
     
@@ -45,13 +46,28 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         //second
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
         
-        if (notif) {
-            notif!.getImage({(img: UIImage)-> Void in
-                self.imageView.image = img;
-                });
-
+        if (imgPost) {
+            imgPost!.loadImage({
+                (imgStruct: ImagePostStructure, index: Int)->Void in
+                self.imageView.image = imgStruct.image;
+                }, index: 0);
+            postTitle.text = "Your post! (tbfilled)";
+        }
+        else if (notif) {
+            notif!.getImagePost().fetchIfNeededInBackgroundWithBlock({
+                (object:PFObject!, error: NSError!)->Void in
+                self.imgPost = ImagePostStructure(inputObj: object);
+                
+                self.imgPost!.loadImage({
+                    (imgStruct: ImagePostStructure, index: Int)->Void in
+                    self.imageView.image = imgStruct.image;
+                    }, index: 0);
+                
+            });
+            
             //for now, set post title to notification title?
             postTitle.text = notif!.messageString;
         }
@@ -67,6 +83,9 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     func receiveNotifObject(notification: InAppNotification) {
         //first, notif controller calls this first
         notif = notification;
+    }
+    func receiveImagePost(post: ImagePostStructure) {
+        imgPost = post;
     }
     
     @IBAction func Exit(sender: UIButton) {

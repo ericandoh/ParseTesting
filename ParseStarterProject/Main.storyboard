@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
@@ -165,11 +166,12 @@
                         <outlet property="settingsButton" destination="fIu-Ms-9co" id="0va-FH-7fk"/>
                         <outlet property="userIcon" destination="YOE-Zu-kdT" id="M9U-oJ-mCJ"/>
                         <outlet property="userNameLabel" destination="Dt9-p1-pks" id="AoR-SC-CDD"/>
+                        <segue destination="gyS-wk-cim" kind="push" identifier="ImagePostSegue" id="9oq-uE-35W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Emp-ZB-3wh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1613" y="2374"/>
+            <point key="canvasLocation" x="1613" y="2442"/>
         </scene>
         <!--Friend Table View Controller-->
         <scene sceneID="bAA-82-sWc">
@@ -236,7 +238,7 @@
             <objects>
                 <navigationController id="Z9q-9c-yfZ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Notifications" id="fho-x3-OLt"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UOD-BN-x2b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UOD-BN-x2b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -253,7 +255,7 @@
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -289,7 +291,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hSB-21-6UE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="du7-1U-nIP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-nK-ccc">
@@ -363,7 +365,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WFz-AN-Bz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2644" y="1010"/>
+            <point key="canvasLocation" x="2627" y="1106"/>
         </scene>
         <!--Single Notif View Controller-->
         <scene sceneID="cxR-Vz-ipw">
@@ -374,7 +376,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6xD-vt-0LT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LcW-G4-FI1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Notification Detail" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="iyb-f4-XZt">
@@ -404,7 +406,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vH2-2q-lvg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dDb-4f-UYd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FRIEND!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSQ-Pm-J0K">
@@ -903,62 +905,6 @@
             </objects>
             <point key="canvasLocation" x="1203" y="130"/>
         </scene>
-        <!--User Profile-->
-        <scene sceneID="pln-KT-UZR">
-            <objects>
-                <viewController id="RIe-nH-hIy" customClass="FriendSingleViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qj3-RO-dfL"/>
-                        <viewControllerLayoutGuide type="bottom" id="kif-gf-ZPN"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="uaH-Yi-Wxb">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V9e-ta-p5q">
-                                <rect key="frame" x="74" y="230" width="76" height="30"/>
-                                <state key="normal" title="My Friends">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="seeFriendsOfFriends:" destination="RIe-nH-hIy" eventType="touchUpInside" id="VhO-lN-0gB"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DEPRECATED REMOVE ME" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbI-Lh-D9S">
-                                <rect key="frame" x="44" y="246" width="311" height="28"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3DS-mt-IjF">
-                                <rect key="frame" x="60" y="124" width="128" height="128"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What should we fill in here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qLZ-wr-T73">
-                                <rect key="frame" x="60" y="282" width="201" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Friend Name Here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4J-Zu-sn2">
-                                <rect key="frame" x="95" y="147" width="140" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="User Profile" id="skm-st-4Ww"/>
-                    <navigationItem key="navigationItem" id="BpS-DQ-sNX"/>
-                    <connections>
-                        <outlet property="friendName" destination="z4J-Zu-sn2" id="70C-BN-Ogi"/>
-                        <outlet property="userIcon" destination="3DS-mt-IjF" id="fi1-Bw-6Ud"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="buQ-SI-CWq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2622" y="3035"/>
-        </scene>
     </scenes>
     <resources>
         <image name="testbackground.jpg" width="500" height="667"/>
@@ -973,6 +919,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="yZk-AU-KGY"/>
+        <segue reference="9oq-uE-35W"/>
         <segue reference="iGr-B4-roj"/>
     </inferredMetricsTieBreakers>
 </document>

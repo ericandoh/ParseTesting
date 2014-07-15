@@ -163,7 +163,6 @@ import UIKit
             
             newPost.myObj.saveInBackgroundWithBlock({
                 (succeeded: Bool, error: NSError!)->Void in
-                NSLog("HI");
                 if (succeeded && !error) {
                     var myUser: PFUser = PFUser.currentUser();
                     if (!(myUser["userIcon"])) {
@@ -262,7 +261,7 @@ import UIKit
         var query = PFQuery(className:"ImagePost")
         query.whereKey("author", equalTo: user.getName({}));
         query.limit = loadCount;
-        query.skip = skip * loadCount;
+        query.skip = skip;
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
