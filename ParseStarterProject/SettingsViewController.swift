@@ -189,7 +189,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
             if (path.row == loadedUpTo * MYPOST_LOAD_COUNT - 1) {
                 //need to load more
-                NSLog("Loading more");
                 loadSet();
                 return;
             }

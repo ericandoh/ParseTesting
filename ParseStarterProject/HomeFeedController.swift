@@ -50,7 +50,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("Lets go team")
         // Do any additional setup after loading the view.
         //frontImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
         //backImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
@@ -68,7 +67,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         commentView.hidden = true; //this should be set in storyboard but just in case
-        NSLog("Done")
     }
     override func viewDidAppear(animated: Bool) {
         //needs work - reload images back into feed

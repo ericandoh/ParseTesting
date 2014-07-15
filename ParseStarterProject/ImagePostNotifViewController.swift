@@ -26,7 +26,6 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     
 
     @IBAction func comments(sender: AnyObject) {
-        NSLog("button pushed");
         commentView.hidden = false;
         if (notif) {
             notif!.getComments({(commentary: Array<String>) -> Void in

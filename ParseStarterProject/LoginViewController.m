@@ -60,10 +60,11 @@
     //connect to server + authenticate here (BACKEND)
     [ServerInteractor loginUser:username password:password sender:self];
     if (DEBUG_FLAG) {
-        NSLog(@"Logging in %@", username);
+        //NSLog(@"Logging in %@", username);
     }
 }
 - (IBAction)loginWithFacebook:(UIButton *)sender {
+    NSLog(@"Logging with FB");
     [ServerInteractor loginWithFacebook:self];
 }
 

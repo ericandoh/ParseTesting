@@ -46,7 +46,6 @@ import UIKit
         return true;
     }
     class func loginUser(username: String, password: String, sender: NSObject)->Bool {
-        NSLog("Logging in user");
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: LoginViewController = sender as LoginViewController;
             if (user) {
@@ -91,9 +90,20 @@ import UIKit
             } else if !user {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
-                logController.failedLogin("User signed up and logged in through Facebook!")
+                //logController.failedLogin("User signed up and logged in through Facebook!")
+                NSLog("Setting up initial stuff for user");
+                user["friends"] = NSArray();
+                user["viewHistory"] = NSArray();
+                ServerInteractor.initialUserChecks();
+                //user's first notification
+                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                user.saveEventually();
+                logController.successfulLogin();
+                
             } else {
-                logController.failedLogin("User logged in through Facebook!")
+                //logController.failedLogin("User logged in through Facebook!")
+                ServerInteractor.initialUserChecks();
+                logController.successfulLogin();
             }
         });
     }
