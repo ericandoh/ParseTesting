@@ -24,6 +24,13 @@ let POST_LOAD_COUNT = 10
 //maximum number of my own posts to load (when i query for my last submitted posts)
 let MYPOST_LOAD_COUNT = 10
 
+//Whenever something needs to be loaded, this picture shows up
+let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
+
+//When HomeFeed is done with pictures, this picture is shown
+let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
+
+
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
 //but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)

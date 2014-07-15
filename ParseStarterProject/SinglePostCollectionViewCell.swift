@@ -15,12 +15,10 @@ class SinglePostCollectionViewCell: UICollectionViewCell {
     init(frame: CGRect) {
         super.init(frame: frame)
         // Initialization code
-        //postLabel.text = "Fill me in";
     }
     
     init(coder aDecoder: NSCoder!)  {
         super.init(coder: aDecoder);
-        //postLabel.text = "Fill me in";
     }
     
 }

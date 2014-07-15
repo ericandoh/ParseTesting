@@ -65,3 +65,8 @@ for a in someArray {
     a
 }
 5+3
+
+var array = [1,2];
+array.removeLast();
+array.removeLast();
+array

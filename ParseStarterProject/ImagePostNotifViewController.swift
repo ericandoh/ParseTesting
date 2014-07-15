@@ -15,15 +15,11 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet var commentView: UIView
     @IBOutlet var postTitle: UILabel
     @IBOutlet var imageView: UIImageView
-    //@IBOutlet var commentView: UIView  //use this for hiding and showing
     @IBOutlet var commentTableView: UITableView
 
     var notif: InAppNotification?;
     
     var commentList: Array<PostComment> = [];
-    
-    //let someCommentMethod = InAppNotification.getComments()
-    
 
     @IBAction func comments(sender: AnyObject) {
         NSLog("button pushed");
@@ -75,16 +71,6 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         //animate this?
     }
     
-    /*
-    // #pragma mark - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     //--------------------TableView delegate methods-------------------------
     
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
@@ -117,18 +103,9 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         var index: Int = indexPath.row;
         if (index == 0) {
             let alert: UIAlertController = UIAlertController(title: "Write Comment", message: "Your Comment", preferredStyle: UIAlertControllerStyle.Alert);
-            //var textView = UITextView(frame: CGRect(x: 12, y: 90, width: 260, height: 50));
-            //alert.view.addSubview(textView)
             alert.addTextFieldWithConfigurationHandler(nil);
             //set alert text field size bigger - this doesn't work, we need a UITextView
-            /*var frame = (alert.textFields[0] as UITextField).frame;
-            frame.size.height = 100;
-            (alert.textFields[0] as UITextField).frame = frame;*/
             alert.addAction(UIAlertAction(title: "Comment!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                
-                //var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!;
-                
-                //var currentPost = InAppNotification.getComments(Array<String>()).obj;
                 
                 var obj = self.notif!.getImagePost()
                 

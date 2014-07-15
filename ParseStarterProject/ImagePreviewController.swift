@@ -19,12 +19,6 @@ class ImagePreviewController: UIViewController {
     
     weak var receivedImage: UIImage?;
     
-    /*
-    init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Custom initialization
-        //imageView = UIImageView();
-    }*/
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,7 +26,6 @@ class ImagePreviewController: UIViewController {
         if receivedImage {
             imageView.image = receivedImage;
         }
-        //scrollView.scrollEnabled = true;
     }
     
     //function triggered by pushing check button

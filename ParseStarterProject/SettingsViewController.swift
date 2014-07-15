@@ -22,7 +22,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     
     var mainUser: FriendEncapsulator?;
     
-    //var loadCount: Int = MYPOST_LOAD_COUNT;
     //the posts I have loaded
     var loadedPosts: Array<ImagePostStructure?> = [];
     
@@ -35,11 +34,6 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     //set to true when I have already loaded in last set of stuff
     var hitEnd: Bool = false;
     
-    /*init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Custom initialization
-    }*/
-
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         if (mainUser && mainUser!.username != ServerInteractor.getUserName()) {

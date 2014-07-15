@@ -129,5 +129,6 @@ class InAppNotification {
         self.friendName = self.personalObj!["sender"] as String;
         ServerInteractor.addAsFriend(self.friendName)
         ServerInteractor.postFriendAccept(self.friendName)
+        self.personalObj!.deleteInBackground()
     }
 }

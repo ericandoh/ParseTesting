@@ -372,6 +372,19 @@ import UIKit
                 // The find succeeded.
                 // Do something with the found objects
                 var object: PFObject;
+                if (objects.count < controller.notifList.count) {
+                    var stupidError = controller.notifList.count - objects.count
+                    //var counter = objects.count - controller.notifList.count
+                    //objects = controller.notifList[0...objects.count - counter]
+                    //controller.notifList = controller.notifList[0...stupidError] as Array<InAppNotification?>
+                    for index: Int in 0..stupidError {
+                        controller.notifList.removeLast()
+                        //object = objects[0] as PFObject;
+                    }
+                    if (controller.notifList.count == 0) {
+                        controller.tableView.reloadData();
+                    }
+                }
                 for index:Int in 0..objects.count {
                     object = objects![index] as PFObject;
                     if (index >= NOTIF_COUNT) {
@@ -381,7 +394,18 @@ import UIKit
                         }
                     }
                     
-                    if(!(object["viewed"] as Bool)) {
+                   // NSLog(\(objects[objects.count] as NSString == objects[objects.count - 1] as NSString))
+                    /*var lol: PFObject = objects![objects.count - 1] as PFObject
+                    var lol2: PFObject = objects![objects.count - 2] as PFObject
+                    
+                    if (lol == lol2){
+                       // object.deleteInBackground()
+                        NSLog("true")
+                    } else {
+                        NSLog("false")
+                    }*/
+                    
+                    /*if(!(object["viewed"] as Bool)) {
                         if (object["type"] != nil) {
                             if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
@@ -390,7 +414,8 @@ import UIKit
                         }
                         object["viewed"] = true;
                         object.saveInBackground()
-                    }
+                    }*/
+                    
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
                         //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
@@ -429,6 +454,7 @@ import UIKit
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
         ServerInteractor.processNotification(friendName, targetObject: notifObj, controller: controller);
+        
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
     //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header
@@ -516,11 +542,35 @@ import UIKit
             }
         });
         
+        
+        
         //possibly move friend accepts here?
         
         //add method to clear user's viewed post history (for sake of less clutter)
         //PFUser.currentUser()["viewHistory"] = NSArray();
         //PFUser.currentUser().saveInBackground();
+        var queryForNotif = PFQuery(className: "Notification")
+        queryForNotif.whereKey("recipient", equalTo: PFUser.currentUser().username);
+        queryForNotif.orderByDescending("createdAt");
         
+        queryForNotif.findObjectsInBackgroundWithBlock {
+            (objects: AnyObject[]!, error: NSError!) -> Void in
+            if !error {
+                var object: PFObject;
+                for index: Int in 0..objects.count {
+                    object = objects[index] as PFObject;
+                    if(!(object["viewed"] as Bool)) {
+                        if (object["type"] != nil) {
+                            if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
+                                //accept the friend!
+                                ServerInteractor.addAsFriend(object["sender"] as String);
+                            }
+                        }
+                        object["viewed"] = true;
+                        object.saveInBackground()
+                    }
+                }
+            }
+        }
     }
 }
