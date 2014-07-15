@@ -134,11 +134,11 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
                 
                 var currentPost: ImagePostStructure = ImagePostStructure(inputObj: obj)
                 
-                currentPost.addComment(alert.textFields[0].text);
+                currentPost.addComment((alert.textFields[0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in
-                    for index in 0..input.count {
+                    for index in 0..<input.count {
                         self.commentList.append(PostComment(content: (input[index] as String)));
                     }
                     self.commentTableView.reloadData();
@@ -162,8 +162,15 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
         else {
             cellText = commentList[indexPath.row - 1].commentString;
         }
-        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, CGFLOAT_MAX), lineBreakMode: NSLineBreakMode.ByWordWrapping)
-        return labelSize.height + 20;
+        
+        var cell: CGRect = tableView.frame;
+        
+        var textCell = UILabel();
+        textCell.text = cellText;
+        textCell.numberOfLines = 10;
+        var maxSize: CGSize = CGSizeMake(cell.width, 9999);
+        var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
+        return expectedSize.height + 20;
     }
 
 

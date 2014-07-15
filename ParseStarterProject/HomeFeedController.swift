@@ -50,7 +50,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NSLog("Lets go team")
         // Do any additional setup after loading the view.
         //frontImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
         //backImageView = UIImageView(frame: CGRect(x: 20, y: 40, width: 280, height: 320));
@@ -68,6 +68,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         commentView.hidden = true; //this should be set in storyboard but just in case
+        NSLog("Done")
     }
     override func viewDidAppear(animated: Bool) {
         //needs work - reload images back into feed
@@ -390,7 +391,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath
         //self.commentTableView.reloadTable()
-        if (self.firstSet.count == 0 || self.firstSet[self.viewCounter] == nil) {
+        if (self.firstSet.count == 0 || (!self.firstSet[self.viewCounter])) {
             //there is no image for this post - no posts on feed
             //no post = no comments
             //this might happen due to network problems
@@ -408,7 +409,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!
         
         currentPost.fetchComments({(input: NSArray)->Void in
-            for index in 0..input.count {
+            for index in 0..<input.count {
                 self.commentList.append(PostComment(content: (input[index] as String)));
             }
             self.commentTableView.reloadData();
@@ -469,11 +470,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                 
                 var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!;
                 
-                currentPost.addComment(alert.textFields[0].text);
+                //textFields[0].text
+                currentPost.addComment((alert.textFields[0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in
-                    for index in 0..input.count {
+                    for index in 0..<input.count {
                         self.commentList.append(PostComment(content: (input[index] as String)));
                     }
                     self.commentTableView.reloadData();
@@ -489,14 +491,21 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
-        var cellText: NSString;
+        var cellText: NSString?;
         if (indexPath.row == 0) {
             cellText = "Add Comment";
         }
         else {
             cellText = commentList[indexPath.row - 1].commentString;
         }
-        var labelSize: CGSize = cellText.sizeWithFont(UIFont(name: "Helvetica Neue", size: 17), constrainedToSize: CGSizeMake(280.0, CGFLOAT_MAX), lineBreakMode: NSLineBreakMode.ByWordWrapping)
-        return labelSize.height + 20;
+        
+        var cell: CGRect = tableView.frame;
+        
+        var textCell = UILabel();
+        textCell.text = cellText;
+        textCell.numberOfLines = 10;
+        var maxSize: CGSize = CGSizeMake(cell.width, 9999);
+        var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
+        return expectedSize.height + 20;
     }
 }

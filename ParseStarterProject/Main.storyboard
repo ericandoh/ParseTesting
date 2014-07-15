@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.21" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.13"/>
+        <deployment defaultVersion="1808" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -22,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="1613" y="102"/>
         </scene>
-        <!--Navigation Controller - User Profile-->
+        <!--User Profile-->
         <scene sceneID="Lnv-1g-THV">
             <objects>
                 <navigationController id="94M-If-egL" sceneMemberID="viewController">
@@ -41,7 +42,7 @@
             </objects>
             <point key="canvasLocation" x="1212" y="2374"/>
         </scene>
-        <!--Settings View Controller - User Profile-->
+        <!--User Profile-->
         <scene sceneID="HDz-ta-5fb">
             <objects>
                 <viewController storyboardIdentifier="UserProfilePage" id="Ism-7q-CMJ" customClass="SettingsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -231,7 +232,7 @@
             </objects>
             <point key="canvasLocation" x="2015" y="2374"/>
         </scene>
-        <!--Navigation Controller - Notifications-->
+        <!--Notifications-->
         <scene sceneID="Zst-hV-oVj">
             <objects>
                 <navigationController id="Z9q-9c-yfZ" sceneMemberID="viewController">
@@ -443,7 +444,7 @@
             </objects>
             <point key="canvasLocation" x="2622" y="2374"/>
         </scene>
-        <!--Home Feed Controller - Home-->
+        <!--Home-->
         <scene sceneID="yIV-MD-BT5">
             <objects>
                 <viewController id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -703,7 +704,7 @@
             </objects>
             <point key="canvasLocation" x="756" y="130"/>
         </scene>
-        <!--Camera View Controller - Upload-->
+        <!--Upload-->
         <scene sceneID="GWN-jX-G5j">
             <objects>
                 <viewController id="Sn1-Di-YON" customClass="CameraViewController" sceneMemberID="viewController">
@@ -903,7 +904,7 @@
             </objects>
             <point key="canvasLocation" x="1203" y="130"/>
         </scene>
-        <!--Friend Single View Controller - User Profile-->
+        <!--User Profile-->
         <scene sceneID="pln-KT-UZR">
             <objects>
                 <viewController id="RIe-nH-hIy" customClass="FriendSingleViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -966,7 +967,10 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="Z3C-cF-les"/>

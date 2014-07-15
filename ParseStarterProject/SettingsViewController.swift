@@ -169,7 +169,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell: SinglePostCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PostCell", forIndexPath: indexPath) as SinglePostCollectionViewCell;
         
-        if (loadedPosts[indexPath.row] != nil) {
+        if (loadedPosts[indexPath.row]) {
             //load in cell
             configureCell(cell, index: indexPath.row)
         }

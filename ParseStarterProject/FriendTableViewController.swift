@@ -161,19 +161,12 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //super.tableView(tableView, didSelectRowAtIndexPath: indexPath);
-        NSLog("Selecting");
         if (indexPath.row == 0) {
-            NSLog("---")
-            NSLog("\(self.editing)");
-            NSLog("\(self.tableView(self.tableView, canEditRowAtIndexPath:NSIndexPath(forRow: 1, inSection: 0  ) ))")
-            //self.setEditing(!self.editing, animated: true);
-            NSLog("\(self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0  )).editingStyle.toRaw())")
-            NSLog("\(self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0  )).editingStyle.toRaw())")
             let alert: UIAlertController = UIAlertController(title: "Add Friend", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //NSLog("Clicked stuff \(alert.textFields[0].text)");
-                ServerInteractor.postFriendRequest(alert.textFields[0].text, controller: self);
+                ServerInteractor.postFriendRequest((alert.textFields[0] as UITextField).text, controller: self);
                 }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
