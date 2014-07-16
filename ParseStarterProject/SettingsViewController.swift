@@ -34,6 +34,9 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     //set to true when I have already loaded in last set of stuff
     var hitEnd: Bool = false;
     
+    //isLoading
+    var isLoading: Bool = false;
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         if (mainUser && mainUser!.username != ServerInteractor.getUserName()) {
@@ -61,9 +64,9 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
             }
         }
         //start fetching submission posts for user, for first set here
-        loadedUpTo = 0;
+        //loadedUpTo = 0;
         hitEnd = false;
-        loadedPosts = [];
+        //loadedPosts = [];
         if (!ServerInteractor.isAnonLogged()) {
             loadSet();
         }
@@ -129,20 +132,15 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         //lets also try adding to user field
     }
     func receiveNumQuery(size: Int) {
-        if (size != 0) {
-            loadedUpTo += 1;
-        }
-        else {
-            return;
-        }
         var needAmount: Int;
         if (size < MYPOST_LOAD_COUNT) {
             hitEnd = true;
             endLoadCount = size;
-            needAmount = (loadedUpTo - 1) * MYPOST_LOAD_COUNT + endLoadCount;
+            needAmount = (loadedUpTo * MYPOST_LOAD_COUNT) + endLoadCount;
         }
         else {
             endLoadCount = 0;
+            loadedUpTo += 1;
             needAmount = loadedUpTo * MYPOST_LOAD_COUNT;
         }
         if (loadedPosts.count < needAmount) {
@@ -153,7 +151,13 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
         //called by getSubmissions for when image at index x is loaded in...
         //NSLog("Received image at index \(index)")
-        var realIndex = index + ((loadedUpTo - 1) * MYPOST_LOAD_COUNT);
+        var realIndex: Int;
+        if (hitEnd) {
+            realIndex = index + (loadedUpTo * MYPOST_LOAD_COUNT);
+        }
+        else {
+            realIndex = index + ((loadedUpTo - 1) * MYPOST_LOAD_COUNT);
+        }
         loadedPosts[realIndex] = loaded;
         
         for path : AnyObject in myCollectionView.indexPathsForVisibleItems() {
@@ -163,6 +167,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
                 configureCell(cell, index: realIndex);
             }
         }
+        isLoading = false;  //still loading cells in, but setting indexes are ok
     }
     //configures current cell at index with the appropriate post in loadedPosts
     //assumes post at index is already fetched from server
@@ -173,18 +178,22 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
         cell.imageView.image = post.image;
     }
     func loadSet() {
+        if (isLoading) {
+            return;
+        }
+        isLoading = true;
+        //loadedUpTo += 1;
         //loadedPosts += Array<ImagePostStructure?>(count: MYPOST_LOAD_COUNT, repeatedValue: nil);
         //start loading next set of MYPOST_LOAD_COUNT here
         //ServerInteractor.getSubmissions()...; with receiveNumQuery, receiveImagePostWithImage
         //broke here
-        ServerInteractor.getSubmissions((loadedUpTo)*MYPOST_LOAD_COUNT + endLoadCount, loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+        NSLog("Loading set, skipping \(loadedUpTo*MYPOST_LOAD_COUNT)")
+        NSLog("Loaded \(MYPOST_LOAD_COUNT) posts")
+        ServerInteractor.getSubmissions((loadedUpTo)*MYPOST_LOAD_COUNT, loadCount: MYPOST_LOAD_COUNT, user: mainUser!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
     }
     //----------------------collectionview methods------------------------------
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
-        if (hitEnd) {
-            return (loadedUpTo - 1) * MYPOST_LOAD_COUNT + endLoadCount;
-        }
-        return loadedUpTo * MYPOST_LOAD_COUNT;
+        return loadedUpTo * MYPOST_LOAD_COUNT + endLoadCount;
     }
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell: SinglePostCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PostCell", forIndexPath: indexPath) as SinglePostCollectionViewCell;
@@ -209,11 +218,7 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
             return;
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
-            if (hitEnd && path.row == (loadedUpTo - 1) * MYPOST_LOAD_COUNT + endLoadCount - 1) {
-                loadSet();
-                return;
-            }
-            else if (path.row == loadedUpTo * MYPOST_LOAD_COUNT - 1) {
+            if (path.row == loadedUpTo * MYPOST_LOAD_COUNT + endLoadCount - 1) {
                 loadSet();
                 return;
             }
