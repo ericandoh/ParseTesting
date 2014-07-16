@@ -394,7 +394,7 @@ import UIKit
                     //var counter = objects.count - controller.notifList.count
                     //objects = controller.notifList[0...objects.count - counter]
                     //controller.notifList = controller.notifList[0...stupidError] as Array<InAppNotification?>
-                    for index: Int in 0..stupidError {
+                    for index: Int in 0..<stupidError {
                         controller.notifList.removeLast()
                         //object = objects[0] as PFObject;
                     }
@@ -402,7 +402,7 @@ import UIKit
                         controller.tableView.reloadData();
                     }
                 }
-                for index:Int in 0..objects.count {
+                for index:Int in 0..<objects.count {
                     object = objects![index] as PFObject;
                     if (index >= NOTIF_COUNT) {
                         if(object["viewed"]) {
@@ -411,17 +411,7 @@ import UIKit
                         }
                     }
                     
-                    if(!(object["viewed"] as Bool)) {
-                        if (object["type"]) {
-                            if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
-                                //accept the friend!
-                                ServerInteractor.addAsFriend(object["sender"] as String);
-                            }
-                        }
-                        object["viewed"] = true;
-                        object.saveInBackground()
-                    }
-                    
+                                        
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
                         //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
@@ -491,11 +481,25 @@ import UIKit
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
             //do NOT use processNotification - we don't want to post a notification
-            var breakupObj = PFObject(className:"BreakupNotice")
-            breakupObj["sender"] = PFUser.currentUser().username;
-            breakupObj["recipient"] = friendName;
-            breakupObj.saveInBackground();
-            //send notification object
+            
+            
+            var query: PFQuery = PFUser.query();
+            query.whereKey("username", equalTo: friendName)
+            var currentUserName = PFUser.currentUser().username;
+            query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+                if (objects.count > 0) {
+                    var targetUser = objects[0] as PFUser;
+                    var breakupObj = PFObject(className:"BreakupNotice")
+                    breakupObj["sender"] = PFUser.currentUser().username;
+                    breakupObj["recipient"] = friendName;
+                    
+                    breakupObj.ACL.setReadAccess(true, forUser: targetUser)
+                    breakupObj.ACL.setWriteAccess(true, forUser: targetUser)
+                    
+                    breakupObj.saveInBackground();
+                    //send notification object
+                }
+            });
         }
         return nil;
     }
@@ -528,28 +532,7 @@ import UIKit
         }
         return returnList;
     }
-    
-    //checks that user should do whenever starting to use app on account
-    class func initialUserChecks() {
-        //check and see if user has any notice for removal of friends
-        var query = PFQuery(className: "BreakupNotice");
-        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
-        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (!error) {
-                var object: PFObject;
-                for index: Int in 0..<objects.count {
-                    object = objects[index] as PFObject;
-                    ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
-                    object.deleteInBackground();
-                }
-            }
-            else {
-                NSLog("Error: Could not fetch");
-            }
-        });
-        
-        
-        
+    class func checkAcceptNotifs() {
         //possibly move friend accepts here?
         
         //add method to clear user's viewed post history (for sake of less clutter)
@@ -558,25 +541,67 @@ import UIKit
         var queryForNotif = PFQuery(className: "Notification")
         queryForNotif.whereKey("recipient", equalTo: PFUser.currentUser().username);
         queryForNotif.orderByDescending("createdAt");
-        
-        queryForNotif.findObjectsInBackgroundWithBlock {
-            (objects: AnyObject[]!, error: NSError!) -> Void in
+        queryForNotif.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
                 var object: PFObject;
-                for index: Int in 0..objects.count {
+                for index: Int in 0..<objects.count {
                     object = objects[index] as PFObject;
                     if(!(object["viewed"] as Bool)) {
-                        if (object["type"] != nil) {
+                        if (object["type"]) {
                             if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
                                 //accept the friend!
                                 ServerInteractor.addAsFriend(object["sender"] as String);
+                                //object["viewed"] = true;
                             }
                         }
-                        object["viewed"] = true;
                         object.saveInBackground()
                     }
                 }
             }
-        }
+        });
+    }
+    //checks that user should do whenever starting to use app on account
+    class func initialUserChecks() {
+        //check and see if user has any notice for removal of friends
+        var query = PFQuery(className: "BreakupNotice");
+        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
+        query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in 
+            NSLog("No explanation");
+            if (!error) {
+                var object: PFObject;
+                
+                if (objects.count == 0 ){
+                    ServerInteractor.checkAcceptNotifs();
+                    return;
+                }
+                
+                for index: Int in 0..<objects.count {
+                    var last = (index == objects.count - 1);
+                    object = objects[index] as PFObject;
+                    ServerInteractor.removeFriend(object["sender"] as String, isHeartBroken: true);
+                    
+                    
+                    var query = PFQuery(className: "Notification");
+                    query.whereKey("sender", equalTo: object["sender"] as String);
+                    query.whereKey("createdAt", lessThan: object.createdAt);
+                    //query.lessThan("createdAt", object["createdAt"]);
+                    query.findObjectsInBackgroundWithBlock({(objects: [AnyObject]!, error: NSError!) -> Void in
+                        for index: Int in 0..<objects.count {
+                            objects[index].deleteInBackgroundWithBlock({
+                                (succeeded: Bool, error: NSError!)->Void in
+                                    if (last) {
+                                        object.deleteInBackground();
+                                        ServerInteractor.checkAcceptNotifs();
+                                    }
+                                });
+                            }
+                    });
+                }
+            }
+            else {
+                NSLog("Error: Could not fetch");
+            }
+        });
     }
 }
