@@ -16,6 +16,7 @@ class ImagePreviewController: UIViewController {
     @IBOutlet var exclusiveOptionPanel: UISegmentedControl
     @IBOutlet var imageView: UIImageView;
     @IBOutlet var scrollView: UIScrollView
+    @IBOutlet var labelBar: UITextField
     
     weak var receivedImage: UIImage?;
     
@@ -45,7 +46,7 @@ class ImagePreviewController: UIViewController {
             default:
                 exclusivity = PostExclusivity.EVERYONE;
         }
-        ServerInteractor.uploadImage(receivedImage!, exclusivity: exclusivity);
+        ServerInteractor.uploadImage(receivedImage!, exclusivity: exclusivity, labels: labelBar!.text);
     }
 
     override func didReceiveMemoryWarning() {

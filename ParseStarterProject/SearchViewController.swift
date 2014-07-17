@@ -38,8 +38,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             
             let temp: Int = myTable.indexPathForSelectedRow().row;
             
-            NSLog("true? \(segue!.destinationViewController is SearchResultsController)")
-
             //tell my search result controller to receive item
             var controller = segue!.destinationViewController as SearchResultsController;
             
@@ -91,7 +89,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             cell.textLabel.text = "Search for \"" + currentTerm + "\"!";
         }
         else {
-            cell.textLabel.text = searchTermList[index - 1];
+            if (index - 1 < searchTermList.count) {
+                //to avoid race conditions
+                cell.textLabel.text = searchTermList[index - 1];
+            }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;

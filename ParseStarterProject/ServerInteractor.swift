@@ -12,9 +12,6 @@
 import UIKit
 
 @objc class ServerInteractor: NSObject {
-    class func someTypeMethod() {
-        
-    }
     //---------------User Login/Signup/Interaction Methods---------------------------------
     class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
         var user: PFUser = PFUser();
@@ -151,11 +148,48 @@ import UIKit
         return FriendEncapsulator(friend: PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
-    class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
+    //separates + processes label string, and also uploads labels to server
+    class func separateLabels(labels: String)->Array<String> {
+        var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "));
+        arr = arr.filter({(obj: String)->Bool in obj != ""});
+        
+        
+        var query = PFQuery(className: "SearchTerm");
+        query.whereKey("term", containedIn: arr);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (!error) {
+                var foundLabel: String;
+                for object:PFObject in objects as [PFObject] {
+                    foundLabel = object["term"] as String;
+                    NSLog("\(foundLabel) already exists as label, incrementing")
+                    object.incrementKey("count");
+                    object.saveInBackground();
+                    arr.removeAtIndex(find(arr, foundLabel)!);
+                }
+                //comment below to force use of only our labels (so users cant add new labels?)
+                var newLabel: PFObject;
+                for label: String in arr {
+                    NSLog("Adding new label \(label)")
+                    newLabel = PFObject(className: "SearchTerm");
+                    newLabel["term"] = label;
+                    newLabel["count"] = 1;
+                    newLabel.ACL.setPublicReadAccess(true);
+                    newLabel.ACL.setPublicWriteAccess(true);
+                    newLabel.saveInBackground();
+                }
+            }
+        });
+        
+        
+        return arr;
+    }
+    
+    class func uploadImage(image: UIImage, exclusivity: PostExclusivity, labels: String) {
         if (isAnonLogged()) {
             return;
         } else {
-            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
+            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity, labels: labels);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");
@@ -282,6 +316,33 @@ import UIKit
             }
         }
     }
+    
+    class func getSearchPosts(skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
+        var query = PFQuery(className:"ImagePost")
+        query.whereKey("labels", containsAllObjectsInArray: [term]);
+        query.limit = loadCount;
+        query.skip = skip;
+        query.orderByDescending("createdAt");
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if !error {
+                // The find succeeded.
+                
+                notifyQueryFinish(objects.count);
+                
+                // Do something with the found objects
+                var post: ImagePostStructure?;
+                for (index, object:PFObject!) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: object);
+                    post!.loadImage(finishFunction, index: index);
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+            }
+        }
+    }
+
     
     class func readPost(post: ImagePostStructure) {
         var postID = post.myObj.objectId;

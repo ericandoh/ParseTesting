@@ -22,7 +22,7 @@ class ImagePostStructure
         myObj = inputObj;
         imageLoaded = false;
     }
-    init(image: UIImage, exclusivity: PostExclusivity) {
+    init(image: UIImage, exclusivity: PostExclusivity, labels: String) {
         //called when making a new post
         //myObj must be saved by caller
         self.image = image;
@@ -36,6 +36,11 @@ class ImagePostStructure
         myObj["passes"] = 0;
         myObj["exclusive"] = exclusivity.toRaw();
         myObj["comments"] = [];
+        
+        
+        var labelArr = ServerInteractor.separateLabels(labels);
+        myObj["labels"] = labelArr;
+        
         
         //setting permissions to public
         //might want to change this for exclusivity posts?

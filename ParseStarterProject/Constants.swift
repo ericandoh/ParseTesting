@@ -24,6 +24,9 @@ let POST_LOAD_COUNT = 10
 //maximum number of my own posts to load (when i query for my last submitted posts)
 let MYPOST_LOAD_COUNT = 10
 
+//maximum number of search results to load at once
+let SEARCH_LOAD_COUNT = 20;
+
 //Whenever something needs to be loaded, this picture shows up
 let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
 
