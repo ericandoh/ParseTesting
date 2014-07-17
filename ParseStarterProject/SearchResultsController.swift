@@ -12,6 +12,8 @@ let reuseIdentifier = "Cell"
 
 class SearchResultsController: UICollectionViewController {
 
+    var searchTerm: String = "";
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,10 +25,19 @@ class SearchResultsController: UICollectionViewController {
 
         // Do any additional setup after loading the view.
     }
+    override func viewDidAppear(animated: Bool)  {
+        super.viewDidAppear(animated);
+        self.title = searchTerm;
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func receiveSearchTerm(someTerm: String) {
+        NSLog("Received \(someTerm)")
+        searchTerm = someTerm;
     }
 
     /*

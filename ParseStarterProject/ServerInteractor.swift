@@ -325,52 +325,6 @@ import UIKit
         });
         return nil; //useless statement to suppress useless stupid xcode thing
     }
-    //deprecated method - ignore
-    /*class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
-        
-        //targetObject.ACL.setPublicReadAccess(true);
-        //targetObject.ACL.setPublicWriteAccess(true);
-        
-        targetObject.ACL.setReadAccess(true, forUser: targetUser)
-        targetObject.ACL.setWriteAccess(true, forUser: targetUser)
-        
-        targetUser.addObject(targetObject, forKey: "notifs");
-        var notifArray = targetUser["notifs"] as Array<PFObject>
-        
-        NSLog("Notif size: \(notifArray.count)")
-        
-        if (notifArray.count > 20) {
-            
-            //find oldest item and delete it
-            var oldestDate: NSDate = notifArray[0].updatedAt;
-            var oldestItem: PFObject = notifArray[0];
-            var oldestIndex: Int = 0;
-            
-            var listItem: PFObject;
-            //had enumeration error: check this
-            for index: Int in 0..notifArray.count {
-                listItem = notifArray[index]
-                if (listItem.updatedAt != nil && listItem.updatedAt.compare(oldestDate) == NSComparisonResult.OrderedAscending) {
-                    //this is the oldest
-                    oldestItem = listItem;
-                    oldestDate = listItem.updatedAt;
-                    oldestIndex = index;
-                }
-            }
-            oldestItem.deleteInBackground();
-            notifArray.removeAtIndex(oldestIndex);
-            targetUser["notifs"] = notifArray;
-        }
-        targetUser.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)-> Void in
-            if (!error) {
-                //NSLog("Saved user successfully")
-            }
-            else {
-                NSLog("Soemthing is very very wrong")
-            }
-            });
-        return nil
-    }*/
     
     class func getNotifications(controller: NotifViewController) {
         if (isAnonLogged()) {
@@ -532,6 +486,7 @@ import UIKit
         }
         return returnList;
     }
+    
     class func checkAcceptNotifs() {
         //possibly move friend accepts here?
         
@@ -602,6 +557,22 @@ import UIKit
             else {
                 NSLog("Error: Could not fetch");
             }
+        });
+    }
+    //------------------Search methods---------------------------------------
+    class func getSearchTerms(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var query = PFQuery(className: "SearchTerm");
+        query.whereKey("term", containsString: term);
+        //query.orderByDescending("importance")
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!)->Void in
+            initFunc(objects.count);
+            var content: String;
+            for index: Int in 0..<objects.count {
+                content = (objects[index] as PFObject)["term"] as String;
+                receiveFunc(index, content);
+            }
+            endFunc();
         });
     }
 }
