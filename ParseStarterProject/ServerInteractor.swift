@@ -184,12 +184,25 @@ import UIKit
         
         return arr;
     }
-    
     class func uploadImage(image: UIImage, exclusivity: PostExclusivity, labels: String) {
+        NSLog("Warning: This method should be deprecated; fix any calls to this method. Placeholder. ")
+        var data = UIImagePNGRepresentation(image);
+        uploadImage([image], exclusivity: exclusivity, labels: labels);
+    }
+    class func uploadImage(images: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
         if (isAnonLogged()) {
             return;
         } else {
-            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity, labels: labels);
+            
+            //do preprocessing here to resize image to rendering specifications-WORK
+            
+            var data = UIImagePNGRepresentation(images[0]);
+            
+            //end
+            
+            
+            
+            var newPost = ImagePostStructure(images: images, exclusivity: exclusivity, labels: labels);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");

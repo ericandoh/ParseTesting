@@ -2,16 +2,41 @@
 
 import UIKit
 
+
+func wordNumberer(num: Int)->String {
+    if (num > 1000000) {
+        return "\(num / 1000000)M"
+    }
+    else if (num > 1000) {
+        return "\(num / 1000)K"
+    }
+    return "\(num)"
+}
+
+wordNumberer(13);
+wordNumberer(723);
+wordNumberer(4216);
+wordNumberer(10484);
+wordNumberer(10999);
+wordNumberer(409298);
+wordNumberer(50194809);
+wordNumberer(98682091809184604);
+
+
+
+
+
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 
 var array = str.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))
 array = array.filter({(obj: String)->Bool in obj != ""});
 array
-*/
+
 
 var a=1
 a++;
 a
+*/
 
 /*
 var str = "Hello, playground"

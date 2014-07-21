@@ -75,6 +75,9 @@
                            animated:YES completion:nil];
         _usingCamera = YES;
     }
+    else {
+        //error message saying camera is not available - WORK NEED
+    }
 }
 
 - (IBAction)useGallery:(id)sender {

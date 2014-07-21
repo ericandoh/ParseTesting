@@ -74,7 +74,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     //to refresh all images in feed
     func refresh() {
-        NSLog("Refresh")
         loadedPosts = [];
         loadedUpTo = 0;
         endLoadCount = 0;
@@ -87,7 +86,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     //to load another set, if possible
     func loadSet() {
-        NSLog("Loading set from \(loadedPosts.count)")
         if (isLoading) {
             return;
         }
@@ -101,7 +99,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //ServerInteractor.getPost(getReturnList, sender: self, excludes: otherExcludes!);
     }
     func receiveNumQuery(size: Int) {
-        NSLog("Query finished with size \(size)")
+        //NSLog("Query finished with size \(size)")
         var needAmount: Int;
         if (size < POST_LOAD_COUNT) {
             hitEnd = true;
@@ -129,7 +127,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             realIndex = index + ((loadedUpTo - 1) * POST_LOAD_COUNT);
         }
-        NSLog("Received image at index \(realIndex)")
+        //NSLog("Received image at index \(realIndex)")
         loadedPosts[realIndex] = loaded;
         
         //check if I need to refresh anything
@@ -138,7 +136,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func configureCurrent() {
-        NSLog("Configuring \(viewCounter)")
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = loadedPosts[viewCounter];
         
@@ -150,13 +147,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         // Dispose of any resources that can be recreated.
     }
     @IBAction func swipeUp(sender: UISwipeGestureRecognizer) {
-        NSLog("Swiping up")
         viewCounter++;
         swipeAction(true);
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
-        NSLog("Swiping down")
         viewCounter--;
         swipeAction(false);
     }
@@ -178,7 +173,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //called after viewCounter is changed appropriately
     //motion is true when motion == down
     func swipeAction(motion: Bool) {
-        NSLog("VC is now \(viewCounter)");
         if (refreshNeeded) {
             if (motion) {
                 refresh();

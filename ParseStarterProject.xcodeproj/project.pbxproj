@@ -27,6 +27,7 @@
 		C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B551613CE0800959FDC /* Default-568h@2x.png */; };
 		C4C51B591613CE0800959FDC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B561613CE0800959FDC /* Default@2x.png */; };
 		D9125D05195C7E090082F97B /* horned-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D9125D04195C7E090082F97B /* horned-logo.png */; };
+		D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9130EC2197D957D0063E081 /* NewCameraViewController.swift */; };
 		D91C98D7196EF69A00E1DBEE /* testbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91C98D6196EF69A00E1DBEE /* testbackground.jpg */; };
 		D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */; };
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
@@ -93,6 +94,7 @@
 		C4C51B551613CE0800959FDC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		C4C51B561613CE0800959FDC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D9125D04195C7E090082F97B /* horned-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "horned-logo.png"; sourceTree = "<group>"; };
+		D9130EC2197D957D0063E081 /* NewCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCameraViewController.swift; sourceTree = "<group>"; };
 		D91C98D6196EF69A00E1DBEE /* testbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testbackground.jpg; sourceTree = "<group>"; };
 		D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */,
 				D97FCEC21954E63E007D5EE6 /* CameraViewController.h */,
 				D97FCEC31954E63E007D5EE6 /* CameraViewController.m */,
+				D9130EC2197D957D0063E081 /* NewCameraViewController.swift */,
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
 				D9F89B18195CCD9700849B1D /* StartController.swift */,
@@ -376,6 +379,7 @@
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
 				D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */,
 				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
+				D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,

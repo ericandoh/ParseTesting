@@ -18,14 +18,14 @@ class ImagePreviewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView
     @IBOutlet var labelBar: UITextField
     
-    weak var receivedImage: UIImage?;
+    var receivedImages: Array<UIImage> = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if receivedImage {
-            imageView.image = receivedImage;
+        if receivedImages.count > 0 {
+            imageView.image = receivedImages[0];
         }
     }
     
@@ -46,27 +46,33 @@ class ImagePreviewController: UIViewController {
             default:
                 exclusivity = PostExclusivity.EVERYONE;
         }
-        ServerInteractor.uploadImage(receivedImage!, exclusivity: exclusivity, labels: labelBar!.text);
+        ServerInteractor.uploadImage(receivedImages, exclusivity: exclusivity, labels: labelBar!.text);
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func getMoreImages(sender: AnyObject) {
+        NSLog("Delete this method later");
+    }
     
     @objc
-    func receiveImage(imageValue: UIImage) {
-        receivedImage = imageValue
+    func receiveImage(imageValues: Array<UIImage>) {
+        receivedImages = imageValues;
     }
 
-    /*
+    
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        if (segue!.destinationViewController is NewCameraViewController) {
+            (segue!.destinationViewController as NewCameraViewController).receivePreviousImages(receivedImages);
+        }
     }
-    */
+    
 
 }
