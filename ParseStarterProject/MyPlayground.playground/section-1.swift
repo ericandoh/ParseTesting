@@ -2,11 +2,16 @@
 
 import UIKit
 
-var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
+/*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 
 var array = str.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))
 array = array.filter({(obj: String)->Bool in obj != ""});
 array
+*/
+
+var a=1
+a++;
+a
 
 /*
 var str = "Hello, playground"

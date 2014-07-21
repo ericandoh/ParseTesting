@@ -259,10 +259,10 @@
 				D9715D2E1964CD3C00BA3C74 /* ImagePostNotifViewController.swift */,
 				D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */,
 				D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */,
-				D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */,
 				D97E36E51977003700380A12 /* SearchViewController.swift */,
 				D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */,
 				D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */,
+				D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

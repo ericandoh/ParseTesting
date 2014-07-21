@@ -15,16 +15,32 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var voteCounter: UILabel;
-    @IBOutlet var typeFeed: UISegmentedControl
+    @IBOutlet var frontImageView: UIImageView
+    //@IBOutlet var backImageView: UIImageView      //deprecated
     
     var swiperNoSwipe: Bool = false;
-    @IBOutlet var frontImageView: UIImageView
-    @IBOutlet var backImageView: UIImageView
     
+    //the posts I have loaded
+    var loadedPosts: Array<ImagePostStructure?> = [];
+    
+    //how many sets I have loaded up to
+    var loadedUpTo: Int = 0;
+    
+    //how many images are loaded in our last set (only valid when hitEnd = true)
+    var endLoadCount: Int = 0;
+    
+    //set to true when I have already loaded in last set of stuff
+    var hitEnd: Bool = false;
+    
+    //isLoading
+    var isLoading: Bool = false;
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
     
+    var refreshNeeded = false;
+    
+    /*
     //first set has images to display, viewCounter tells me where in array I am currently viewing
     var firstSet: Array<ImagePostStructure?> = Array<ImagePostStructure?>();
     //second set should be loaded while viewing first set (load in background), switch to this when we run out in firstSet
@@ -36,6 +52,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var loadedSetNum: Int = 1;
     //tells me how many posts I have loaded so far (so I know if I have loaded all my posts)
     var loadedCount: Int = 0;
+    */
     
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
@@ -48,147 +65,197 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         self.view.bringSubviewToFront(frontImageView);
         
         commentView.hidden = true; //this should be set in storyboard but just in case
+        refresh();
     }
     override func viewDidAppear(animated: Bool) {
+        //frontImageView!.image = LOADING_IMG;
+        //check if page needs a refresh
+        loadSet();
+    }
+    //to refresh all images in feed
+    func refresh() {
+        NSLog("Refresh")
+        loadedPosts = [];
+        loadedUpTo = 0;
+        endLoadCount = 0;
+        hitEnd = false;
+        isLoading = false;
+        viewCounter = 0;
+        refreshNeeded = false;
         frontImageView!.image = LOADING_IMG;
-        resetToStart();
+        loadSet();
     }
-    func resetToStart() {
-        backImageView!.image = LOADING_IMG;
+    //to load another set, if possible
+    func loadSet() {
+        NSLog("Loading set from \(loadedPosts.count)")
+        if (isLoading) {
+            return;
+        }
+        isLoading = true;
         
-        viewCounter = 0;    //we are at start of image sequence
-        loadedSetNum = 1;   //load into first set
-        getPostCall();
-    }
-    func getPostCall() {
-        loadedCount = 0;
-        var selected = typeFeed.selectedSegmentIndex;
-        var otherExcludes: Array<ImagePostStructure?>?
-        if (loadedSetNum == 1) {
-            otherExcludes = Array<ImagePostStructure?>();
-        }
-        else {
-            //do not include posts which we already loaded into our first set
-            otherExcludes = firstSet;
-        }
-        if (selected == 0) {
-            //selected news feed => friends only => true
-            ServerInteractor.getPost(true, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
-        }
-        else {
-            //selected everyone
-            ServerInteractor.getPost(false, finishFunction: getReturnList, sender: self, excludes: otherExcludes!);
-        }
-    }
-    func setPostArraySize(size: Int) {
-        //called by server to set size of array of images we are fetching, before retrieving
-        if (size == 0) {
-            //we fetched an array of size 0...
-            if (loadedSetNum == 1) {
-                //this is our first set, and we have no images to display
-                frontImageView!.image = ENDING_IMG;
-                backImageView!.image = LOADING_IMG;
-            }
-            else {
-                //do nothing, just make sure to set backImg to ENDING_IMG when firstSet ends
-                if (viewCounter == self.firstSet.count - 1) {
-                    //first set has only one image, back set needs an image but has none
-                    backImageView!.image = ENDING_IMG;
-                }
-            }
-        }
-        else {
-        }
-        if (loadedSetNum == 1) {
-            firstSet = Array<ImagePostStructure?>(count: size, repeatedValue: nil);
-        }
-        else {
-            secondSet = Array<ImagePostStructure?>(count: size, repeatedValue: nil);
-        }
+        var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
         
-        loadedSet = Array<Bool>(count: size, repeatedValue: false); //none of values loaded yet
+        //(loadedUpTo)*POST_LOAD_COUNT, == skip, but wont need cuz it is in excludes
+        ServerInteractor.getPost(POST_LOAD_COUNT, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+        
+        //ServerInteractor.getPost(getReturnList, sender: self, excludes: otherExcludes!);
+    }
+    func receiveNumQuery(size: Int) {
+        NSLog("Query finished with size \(size)")
+        var needAmount: Int;
+        if (size < POST_LOAD_COUNT) {
+            hitEnd = true;
+            endLoadCount = size;
+            needAmount = (loadedUpTo * POST_LOAD_COUNT) + endLoadCount;
+        }
+        else {
+            endLoadCount = 0;
+            loadedUpTo += 1;
+            needAmount = loadedUpTo * POST_LOAD_COUNT;
+        }
+        if (loadedPosts.count < needAmount) {
+            loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
+        }
+        //myCollectionView.reloadData();
+        isLoading = false;
     }
     
-    func getReturnList(imgStruct: ImagePostStructure, index: Int){
-        if (loadedSetNum == 1) {
-            firstSet[index] = imgStruct;
-            loadedSet[index] = true;
-            if (index == viewCounter) {
-                //my first image needs to be loaded ASAP, it is first image that needs to be shown
-                frontImageView!.image = firstSet[viewCounter]!.image;   //this changes it from the loading scene
-            }
-            else if (index == viewCounter + 1) {
-                //my back image needs to be loaded
-                backImageView!.image = firstSet[viewCounter + 1]!.image;
-            }
-            loadedCount++;
-            if (loadedCount == firstSet.count) {
-                //finished loading all of first set, and there is more to load...?
-                loadedSetNum = 2;
-                getPostCall();
-            }
+    func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
+        //called by getSubmissions for when image at index x is loaded in...
+        var realIndex: Int;
+        if (hitEnd) {
+            realIndex = index + (loadedUpTo * POST_LOAD_COUNT);
         }
         else {
-            secondSet[index] = imgStruct;
-            loadedSet[index] = true;
-            //no need to check if I need this image right now; first set is the one buffering
-            if (index == 0 && viewCounter == firstSet.count - 1) {
-                //my VC is at the last img in firstSet; and backImg is not loaded
-                backImageView!.image = secondSet[0]!.image;
-            }
-            loadedCount++;
+            realIndex = index + ((loadedUpTo - 1) * POST_LOAD_COUNT);
+        }
+        NSLog("Received image at index \(realIndex)")
+        loadedPosts[realIndex] = loaded;
+        
+        //check if I need to refresh anything
+        if (realIndex == viewCounter) {
+            configureCurrent();
         }
     }
-
+    func configureCurrent() {
+        NSLog("Configuring \(viewCounter)")
+        //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
+        var currentPost = loadedPosts[viewCounter];
+        
+        frontImageView!.image = currentPost!.image;
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    @IBAction func switchedFeed(sender: UISegmentedControl) {
-        frontImageView!.image = LOADING_IMG;
-        resetToStart();
+    @IBAction func swipeUp(sender: UISwipeGestureRecognizer) {
+        NSLog("Swiping up")
+        viewCounter++;
+        swipeAction(true);
     }
-    @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
-        
-        var location: CGPoint = sender.locationInView(self.view);
-        location.x -= 220;
-        
-        animateImageMotion(location, vote: false);
+    
+    @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
+        NSLog("Swiping down")
+        viewCounter--;
+        swipeAction(false);
     }
+    
+    //actions for swipe Up/Down
+    /*
+    {
+    
+        //swipe down
+        viewCounter++;
+        swipeAction(true);
+        //swipe up
+    
+    
+    
+    }
+    */
+    
+    //called after viewCounter is changed appropriately
+    //motion is true when motion == down
+    func swipeAction(motion: Bool) {
+        NSLog("VC is now \(viewCounter)");
+        if (refreshNeeded) {
+            if (motion) {
+                refresh();
+                return;
+            }
+            else {
+                refreshNeeded = false;
+            }
+        }
+        
+        
+        if (viewCounter >= loadedPosts.count) {
+            //show end of file screen, refresh if needed
+            refreshNeeded = true;
+            frontImageView!.image = ENDING_IMG;
+        }
+        else if (viewCounter < 0) {
+            //do nothing
+            viewCounter = 0;
+        }
+        else if (loadedPosts[viewCounter]) {
+            //might also need to see if image itself is loaded (depending on changes for deallocing)
+            configureCurrent();
+        }
+        else {
+            //cell will get fetched, wait
+            frontImageView!.image = LOADING_IMG;
+        }
+        
+        //load more if necessary
+        if ((!hitEnd) && loadedPosts.count - viewCounter < POST_LOAD_LIMIT) {
+            loadSet();
+        }
+        /*else if () {
+            //method for unloading images at start of list - to save memory
+            //have a variable to keep track of from which variable we actually have loaded (start at 0, go to 10, 20, etc)
+            //only unload images, still keep track of post (is this possible?) => lose reference to parse object, but keep object ID in memory!
+        }*/
+        
+    }
+    //is actually swipe left, but the new image moves in from the right
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
         
-        var location: CGPoint = sender.locationInView(self.view);
-        location.x += 220;
+        //var location: CGPoint = sender.locationInView(self.view);
+        //location.x += 220;
         
-        animateImageMotion(location, vote: true);
+        //animateImageMotion(location, vote: true);
+        //flip through individual images in album, or go to comments
     }
     func performBufferLog() {
-        NSLog("----------Logging---------")
+        /*NSLog("----------Logging---------")
         NSLog("VC: \(self.viewCounter) LoadedSetCount: \(self.loadedSet.count)");
         NSLog("FirstSetCount: \(self.firstSet.count) SecondSetCount: \(self.secondSet.count)")
         NSLog("LoadedSetNum: \(self.loadedSetNum)")
         NSLog("First img = loading? \(self.frontImageView!.image == LOADING_IMG)")
         NSLog("Second img = loading? \(self.backImageView!.image == LOADING_IMG)")
-        NSLog("----------End Log---------")
+        NSLog("----------End Log---------")*/
     }
+    /*
     func animateImageMotion(towardPoint: CGPoint, vote: Bool) {
         if (swiperNoSwipe) {
             //in middle of swiping - do nothing
             //later replace this with faster animation
             return;
         }
-        if (frontImageView!.image == LOADING_IMG) {
-            //front is loading still!
-            return;
-        }
         swiperNoSwipe = true;
-        if let frontView = frontImageView {
-            UIView.animateWithDuration(0.5, animations: {
-                frontView.alpha = 0.0;
-                frontView.center = towardPoint;
-                }
-                , completion: { completed in
+        
+        /*
+        UIView.animateWithDuration(0.5, animations: {
+            frontView.alpha = 0.0;
+            frontView.center = towardPoint;
+        }
+        , completion: { });
+        */
+        
+        
+        
                     //register vote to backend (BACKEND)
                     //set frontView's image to backView's image
                     if let backView = self.backImageView {
@@ -316,11 +383,19 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     self.swiperNoSwipe = false;
                 });
         }
+    }*/
+    
+    
+    @IBAction func likePost(sender: UIButton) {
+        if (loadedPosts[viewCounter]) {
+            loadedPosts[viewCounter]!.like();
+        }
     }
+    
     @IBAction func viewComments(sender: UIButton) {
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath        
-        if (self.firstSet.count == 0 || (!self.firstSet[self.viewCounter])) {
+        if (self.loadedPosts.count == 0 || (!self.loadedPosts[self.viewCounter])) {
             //there is no image for this post - no posts on feed
             //no post = no comments
             //this might happen due to network problems
@@ -333,7 +408,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         NSLog("Comments for \(self.viewCounter)")
         self.commentList = Array<PostComment>();
         
-        var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!
+        var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!
         
         currentPost.fetchComments({(input: NSArray)->Void in
             for index in 0..<input.count {
@@ -381,7 +456,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //set alert text field size bigger - this doesn't work, we need a UITextView
             alert.addAction(UIAlertAction(title: "Comment!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 
-                var currentPost: ImagePostStructure = self.firstSet[self.viewCounter]!;
+                var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!;
                 
                 //textFields[0].text
                 currentPost.addComment((alert.textFields[0] as UITextField).text);

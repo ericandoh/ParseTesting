@@ -236,17 +236,24 @@ import UIKit
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
-    class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController, excludes: Array<ImagePostStructure?>) {
-        //download - relational data is NOT fetched!
-        var returnList = Array<ImagePostStructure?>();
+    //class func getPost(friendsOnly: Bool, finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, sender: HomeFeedController, excludes: Array<ImagePostStructure?>) {
+        
+    class func getPost(loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
+        
+        
         //query
         var query = PFQuery(className:"ImagePost")
         //query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
-        query.orderByDescending("likes");
- 
+        query.orderByDescending("createdAt");
         
         var excludeList = convertPostToID(excludes);
+
+        if (!isAnonLogged()) {
+            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+        }
+
+        /*
         if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
             //query.whereKey("objectId", notContainedIn: excludeList);
@@ -263,19 +270,21 @@ import UIKit
                 excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
             }
             //query.whereKey("objectId", notContainedIn: excludeList);
-        }
+        }*/
         query.whereKey("objectId", notContainedIn: excludeList);
+        query.whereKey("author", notEqualTo: PFUser.currentUser().username);
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
                 // The find succeeded.
                 // Do something with the found objects
-                sender.setPostArraySize(objects.count);
+                notifyQueryFinish(objects.count);
+                
+                var post: ImagePostStructure?;
                 for (index, object:PFObject!) in enumerate(objects!) {
-                    var post = ImagePostStructure(inputObj: object);
-                    //self.readPost(post);
-                    post.loadImage(finishFunction, index: index);
+                    post = ImagePostStructure(inputObj: object);
+                    post!.loadImage(finishFunction, index: index);
                 }
             } else {
                 // Log details of the failure
