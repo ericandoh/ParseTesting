@@ -43,7 +43,6 @@
 		D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FCEBB1954E60A007D5EE6 /* Main.storyboard */; };
 		D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */; };
 		D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */; };
-		D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC31954E63E007D5EE6 /* CameraViewController.m */; };
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
 		D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */; };
 		D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */; };
@@ -112,8 +111,6 @@
 		D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		D97FCEC01954E63E007D5EE6 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
-		D97FCEC21954E63E007D5EE6 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		D97FCEC31954E63E007D5EE6 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplePFObjectOverride.h; sourceTree = "<group>"; };
 		D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SamplePFObjectOverride.m; sourceTree = "<group>"; };
 		D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSingleViewController.swift; sourceTree = "<group>"; };
@@ -249,8 +246,6 @@
 				D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */,
 				D97FCEC01954E63E007D5EE6 /* SignUpViewController.h */,
 				D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */,
-				D97FCEC21954E63E007D5EE6 /* CameraViewController.h */,
-				D97FCEC31954E63E007D5EE6 /* CameraViewController.m */,
 				D9130EC2197D957D0063E081 /* NewCameraViewController.swift */,
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
@@ -391,7 +386,6 @@
 				D9715D311964CD4C00BA3C74 /* FriendRequestViewController.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97E36E61977003700380A12 /* SearchViewController.swift in Sources */,
-				D97FCECA1954E63E007D5EE6 /* CameraViewController.m in Sources */,
 				D9F89B1B195CD89700849B1D /* SettingsViewController.swift in Sources */,
 				D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,

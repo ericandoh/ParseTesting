@@ -38,7 +38,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
     
-    var refreshNeeded = false;
+    //which pic in the set of pics of a post I am looking at
+    var postCounter = 0;
+    
+    var refreshNeeded: Bool = false;
+    
+    var viewingComments: Bool = false;
     
     /*
     //first set has images to display, viewCounter tells me where in array I am currently viewing
@@ -138,8 +143,28 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     func configureCurrent() {
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = loadedPosts[viewCounter];
-        
-        frontImageView!.image = currentPost!.image;
+        NSLog("Post Counter \(postCounter)")
+        if (postCounter == 0) {
+            frontImageView!.image = currentPost!.image;
+        }
+        else {
+            var currentPostNum = postCounter;
+            self.frontImageView!.image = LOADING_IMG;
+            currentPost!.loadImages({(img: UIImage?, comments: Bool)->Void in
+                if (currentPostNum == self.postCounter) {
+                    //i haven't swiped more in that time
+                    
+                    if (comments) {
+                        //we have comments! or error :(
+                        self.viewingComments = true;
+                    }
+                    else {
+                        self.frontImageView!.image = img!;
+                    }
+                }
+
+            }, postIndex: postCounter);
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -173,6 +198,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //called after viewCounter is changed appropriately
     //motion is true when motion == down
     func swipeAction(motion: Bool) {
+        postCounter = 0;
+        viewingComments = false;
         if (refreshNeeded) {
             if (motion) {
                 refresh();
@@ -213,14 +240,43 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }*/
         
     }
+    func swipeSideAction() {
+        if (refreshNeeded) {
+            //we are at eof
+            postCounter = 0;
+            return;
+        }
+        if (loadedPosts[viewCounter]) {
+            configureCurrent();
+        }
+    }
+    
+    @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
+        NSLog("Left");
+        if (postCounter == 0) {
+            return;
+        }
+        if (viewingComments) {
+            viewingComments = false;
+        }
+        postCounter--;
+        swipeSideAction();
+        
+    }
+    
     //is actually swipe left, but the new image moves in from the right
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        
+        NSLog("Right");
         //var location: CGPoint = sender.locationInView(self.view);
         //location.x += 220;
         
         //animateImageMotion(location, vote: true);
         //flip through individual images in album, or go to comments
+        if (viewingComments) {
+            return;
+        }
+        postCounter++;
+        swipeSideAction();
     }
     func performBufferLog() {
         /*NSLog("----------Logging---------")

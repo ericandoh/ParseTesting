@@ -104,37 +104,47 @@ class ImagePostStructure
         }
     }
     //loads all images, as I load I return images by index
-    func loadImages(finishFunction: (UIImage, Int)->Void) {
+    func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
         
         //get me img at index 0
-        loadImage({(imgStruct: ImagePostStructure, index: Int)->Void in
-            finishFunction(self.image!, 0);
+        if (postIndex == 0) {
+            loadImage({(imgStruct: ImagePostStructure, index: Int)->Void in
+                finishFunction(self.image!, false);
             }, index: 0);
-        
-        
-        //get me rest of images
-        if (!imagesLoaded) {
-            var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
-            for (index, imgFile: PFFile) in enumerate(imgFiles) {
-                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                    if (!error) {
-                        //get file objects
-                        var fImage = UIImage(data: result);
-                        self.images.append(fImage);
-                        finishFunction(fImage, index + 1);
-                    }
-                    if (index == imgFiles.count - 1) {
-                        self.imagesLoaded = true;
-                    }
-                });
-            }
-            if (imgFiles.count == 0) {
-                imagesLoaded = true;
-            }
         }
         else {
-            for (index, img: UIImage) in enumerate(images) {
-                finishFunction(img as UIImage, index + 1);
+            //get me rest of images
+            if (!imagesLoaded) {
+                var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
+                for (index, imgFile: PFFile) in enumerate(imgFiles) {
+                    imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                        if (!error) {
+                            //get file objects
+                            var fImage = UIImage(data: result);
+                            self.images.append(fImage);
+                            if (index == postIndex - 1) {
+                                finishFunction(fImage, false);
+                            }
+                        }
+                        if (index == imgFiles.count - 1) {
+                            self.imagesLoaded = true;
+                        }
+                        });
+                }
+                if (postIndex >= imgFiles.count) {
+                    finishFunction(nil, true);
+                }
+                if (imgFiles.count == 0) {
+                    imagesLoaded = true;
+                }
+            }
+            else {
+                if (postIndex >= images.count) {
+                    finishFunction(nil, true);
+                }
+                else {
+                    finishFunction(images[postIndex - 1], false);
+                }
             }
         }
     }

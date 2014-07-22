@@ -33,7 +33,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vQ2-VK-Tug"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Ec-Vo-ZiR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MSq-Ct-B5h">
@@ -160,7 +160,7 @@
             <objects>
                 <tableViewController id="N3u-vY-mx7" customClass="FriendTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eqC-x1-v2Q">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -197,7 +197,7 @@
                         <viewControllerLayoutGuide type="bottom" id="oBf-zb-Oi1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dyb-1B-mrT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-ev-5hU">
@@ -239,7 +239,7 @@
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -360,7 +360,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6xD-vt-0LT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LcW-G4-FI1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Notification Detail" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="iyb-f4-XZt">
@@ -390,7 +390,7 @@
                         <viewControllerLayoutGuide type="bottom" id="vH2-2q-lvg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dDb-4f-UYd">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FRIEND!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSQ-Pm-J0K">
@@ -502,6 +502,7 @@
                             <outletCollection property="gestureRecognizers" destination="PZh-Be-jJe" appends="YES" id="IfI-bW-ehN"/>
                             <outletCollection property="gestureRecognizers" destination="aE5-1P-ftA" appends="YES" id="Div-yE-2vX"/>
                             <outletCollection property="gestureRecognizers" destination="N7c-Ua-Uyr" appends="YES" id="gBI-wd-KwP"/>
+                            <outletCollection property="gestureRecognizers" destination="zXT-vz-Xyo" appends="YES" id="dAY-6p-JkK"/>
                         </connections>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" id="otN-m4-N78"/>
@@ -512,6 +513,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="93K-ue-lRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="zXT-vz-Xyo">
+                    <connections>
+                        <action selector="swipeLeft:" destination="pRL-aY-NaV" id="swC-8i-EBx"/>
+                    </connections>
+                </swipeGestureRecognizer>
                 <swipeGestureRecognizer direction="left" id="PZh-Be-jJe">
                     <connections>
                         <action selector="swipeRight:" destination="pRL-aY-NaV" id="ZKk-JQ-Uyd"/>
