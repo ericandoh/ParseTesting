@@ -184,17 +184,49 @@ import UIKit
         
         return arr;
     }
+    class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
+        var individualRatio: Float;
+        var width: Int;
+        var height: Int;
+        var newImgList: Array<UIImage> = [];
+        var newSize: CGSize;
+        for (index, image: UIImage) in enumerate(images) {
+            
+            individualRatio = Float(image.size.width) / Float(image.size.height);
+            
+            if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio > WIDTH_HEIGHT_RATIO) {
+                //this image is horizontal, so we resize image width to match
+                newSize = CGSize(width: FULLSCREEN_WIDTH, height: Int(image.size.height) * FULLSCREEN_WIDTH / Int(image.size.width));
+                UIGraphicsBeginImageContext(newSize);
+                image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+                newImgList.append(UIGraphicsGetImageFromCurrentImageContext() as UIImage);
+                UIGraphicsEndImageContext();
+            }
+            else if (Int(image.size.height) > FULLSCREEN_HEIGHT && individualRatio < WIDTH_HEIGHT_RATIO) {
+                //this image is vertical, so we resize image height to match
+                newSize = CGSize(width: Int(image.size.width) * FULLSCREEN_HEIGHT / Int(image.size.height), height: FULLSCREEN_HEIGHT);
+                UIGraphicsBeginImageContext(newSize);
+                image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+                newImgList.append(UIGraphicsGetImageFromCurrentImageContext() as UIImage);
+                UIGraphicsEndImageContext();
+            }
+        }
+        return newImgList;
+    }
     class func uploadImage(image: UIImage, exclusivity: PostExclusivity, labels: String) {
         NSLog("Warning: This method should be deprecated; fix any calls to this method. Placeholder. ")
         var data = UIImagePNGRepresentation(image);
         uploadImage([image], exclusivity: exclusivity, labels: labels);
     }
-    class func uploadImage(images: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
+    class func uploadImage(imgs: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
         if (isAnonLogged()) {
             return;
         } else {
             
             //do preprocessing here to resize image to rendering specifications-WORK
+            
+            var images = preprocessImages(imgs);
+            
             
             var data = UIImagePNGRepresentation(images[0]);
             
@@ -452,6 +484,7 @@ import UIKit
                     if(index >= controller.notifList.count) {
                         var item = InAppNotification(dataObject: object);
                         //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
+                        //EXC_BAD_ACCESS (code=EXC_I386_GPFLT)
                         controller.notifList.append(item);
                     }
                     else {

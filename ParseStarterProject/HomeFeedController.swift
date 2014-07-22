@@ -14,7 +14,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
-    @IBOutlet var voteCounter: UILabel;
     @IBOutlet var frontImageView: UIImageView
     //@IBOutlet var backImageView: UIImageView      //deprecated
     
@@ -67,7 +66,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view.
         
         
-        self.view.bringSubviewToFront(frontImageView);
+        //self.view.bringSubviewToFront(frontImageView);
         
         commentView.hidden = true; //this should be set in storyboard but just in case
         refresh();
@@ -143,7 +142,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     func configureCurrent() {
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = loadedPosts[viewCounter];
-        NSLog("Post Counter \(postCounter)")
         if (postCounter == 0) {
             frontImageView!.image = currentPost!.image;
         }
@@ -252,7 +250,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
-        NSLog("Left");
         if (postCounter == 0) {
             return;
         }
@@ -266,12 +263,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     //is actually swipe left, but the new image moves in from the right
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        NSLog("Right");
-        //var location: CGPoint = sender.locationInView(self.view);
-        //location.x += 220;
-        
-        //animateImageMotion(location, vote: true);
-        //flip through individual images in album, or go to comments
         if (viewingComments) {
             return;
         }

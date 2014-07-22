@@ -36,6 +36,18 @@ let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
 //When HomeFeed is done with pictures, this picture is shown
 let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
 
+//width of a fullscreen image
+let FULLSCREEN_WIDTH = 320;
+
+//height of a fullscreen image
+let FULLSCREEN_HEIGHT = 568;
+
+//ratio of width to height
+let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
+
+//max size of an image
+let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
+
 
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks

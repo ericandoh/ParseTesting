@@ -131,7 +131,7 @@ class ImagePostStructure
                         }
                         });
                 }
-                if (postIndex >= imgFiles.count) {
+                if (postIndex - 1 >= imgFiles.count) {
                     finishFunction(nil, true);
                 }
                 if (imgFiles.count == 0) {
@@ -139,7 +139,7 @@ class ImagePostStructure
                 }
             }
             else {
-                if (postIndex >= images.count) {
+                if (postIndex - 1 >= images.count) {
                     finishFunction(nil, true);
                 }
                 else {

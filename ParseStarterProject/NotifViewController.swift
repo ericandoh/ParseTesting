@@ -13,14 +13,15 @@ import UIKit
 class NotifViewController: UITableViewController {
 
     //most recent notifications at start of array
-    var notifList: Array<InAppNotification?> = Array<InAppNotification?>();
-
+    //var notifList: Array<InAppNotification?> = Array<InAppNotification?>();
+    var notifList: Array<InAppNotification?> = [];
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        notifList = Array<InAppNotification>();
+        //notifList = Array<InAppNotification>();
     }
     
     override func viewDidAppear(animated: Bool) {
