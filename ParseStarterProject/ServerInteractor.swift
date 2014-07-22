@@ -273,7 +273,9 @@ import UIKit
     class func convertPostToID(input: Array<ImagePostStructure?>)->NSMutableArray {
         var output = NSMutableArray();
         for post: ImagePostStructure? in input {
-            output.addObject(post!.myObj.objectId);
+            if (post) {
+                output.addObject(post!.myObj.objectId);
+            }
         }
         return output;
     }
