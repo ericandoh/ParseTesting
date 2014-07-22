@@ -20,6 +20,9 @@
 		09ABC07F13A1D52D009C3FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC07E13A1D52D009C3FCF /* main.m */; };
 		09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */; };
 		09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09BEF34B13D51C3F001BBCDB /* Security.framework */; };
+		24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */; };
+		24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A7197DCFA200916814 /* NewLoginViewController.swift */; };
+		24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A9197DE71300916814 /* ServerInteractor.swift */; };
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
@@ -41,7 +44,6 @@
 		D9715D311964CD4C00BA3C74 /* FriendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */; };
 		D97E36E61977003700380A12 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97E36E51977003700380A12 /* SearchViewController.swift */; };
 		D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D97FCEBB1954E60A007D5EE6 /* Main.storyboard */; };
-		D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */; };
 		D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */; };
 		D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */ = {isa = PBXBuildFile; fileRef = D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */; };
 		D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98EA8561965CE180004BF43 /* FriendSingleViewController.swift */; };
@@ -55,7 +57,6 @@
 		D9A1E5B0196B8DBC00935062 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A1E5AF196B8DBC00935062 /* FacebookSDK.framework */; };
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
 		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
-		D9F89B17195CBC9C00849B1D /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */; };
 		D9F89B19195CCD9700849B1D /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B18195CCD9700849B1D /* StartController.swift */; };
 		D9F89B1B195CD89700849B1D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1A195CD89700849B1D /* SettingsViewController.swift */; };
 		D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1C195CE30600849B1D /* ImagePost.swift */; };
@@ -81,6 +82,9 @@
 		09ABC08013A1D52D009C3FCF /* ParseStarterProjectAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseStarterProjectAppDelegate.h; sourceTree = "<group>"; };
 		09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseStarterProjectAppDelegate.m; sourceTree = "<group>"; };
 		09BEF34B13D51C3F001BBCDB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUsernameSetupViewController.swift; sourceTree = "<group>"; };
+		24BA50A7197DCFA200916814 /* NewLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLoginViewController.swift; sourceTree = "<group>"; };
+		24BA50A9197DE71300916814 /* ServerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
 		2FCDD6AF14A573F500295AAC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4998650415BF305000803E05 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6332375315E438E900AE2736 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -107,8 +111,6 @@
 		D9715D301964CD4C00BA3C74 /* FriendRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendRequestViewController.swift; sourceTree = "<group>"; };
 		D97E36E51977003700380A12 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D97FCEBB1954E60A007D5EE6 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		D97FCEBE1954E63E007D5EE6 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		D97FCEC01954E63E007D5EE6 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SamplePFObjectOverride.h; sourceTree = "<group>"; };
@@ -126,7 +128,6 @@
 		D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewController.swift; sourceTree = "<group>"; };
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeedController.swift; sourceTree = "<group>"; };
-		D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
 		D9F89B18195CCD9700849B1D /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		D9F89B1A195CD89700849B1D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9F89B1C195CE30600849B1D /* ImagePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePost.swift; sourceTree = "<group>"; };
@@ -242,11 +243,11 @@
 		D97FCEBD1954E629007D5EE6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D97FCEBE1954E63E007D5EE6 /* LoginViewController.h */,
-				D97FCEBF1954E63E007D5EE6 /* LoginViewController.m */,
+				24BA50A7197DCFA200916814 /* NewLoginViewController.swift */,
 				D97FCEC01954E63E007D5EE6 /* SignUpViewController.h */,
 				D97FCEC11954E63E007D5EE6 /* SignUpViewController.m */,
 				D9130EC2197D957D0063E081 /* NewCameraViewController.swift */,
+				24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */,
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
 				D9F89B18195CCD9700849B1D /* StartController.swift */,
@@ -288,7 +289,7 @@
 			children = (
 				D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */,
 				D996F6B3195C9ACD009E97B0 /* InAppNotification.swift */,
-				D9F89B16195CBC9C00849B1D /* ServerInteractor.swift */,
+				24BA50A9197DE71300916814 /* ServerInteractor.swift */,
 				D92566641964A59F00189250 /* FriendEncapsulator.swift */,
 				D9A1E5AD196B4EDB00935062 /* PostComment.swift */,
 			);
@@ -373,16 +374,17 @@
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
 				D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */,
-				D97FCEC81954E63E007D5EE6 /* LoginViewController.m in Sources */,
+				24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */,
 				D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
+				24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */,
 				D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */,
-				D9F89B17195CBC9C00849B1D /* ServerInteractor.swift in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
+				24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */,
 				D9715D311964CD4C00BA3C74 /* FriendRequestViewController.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97E36E61977003700380A12 /* SearchViewController.swift in Sources */,

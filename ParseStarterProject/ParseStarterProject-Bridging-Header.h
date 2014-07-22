@@ -6,8 +6,8 @@
 
 #import <Parse/PFObject+Subclass.h>
 
-#import "LoginViewController.h"
-
 #import "SignUpViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
+
+#import <FacebookSDK/FacebookSDK.h>

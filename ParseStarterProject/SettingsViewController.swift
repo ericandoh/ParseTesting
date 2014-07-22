@@ -47,22 +47,28 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
             logOffButton.hidden = true;         //same as below
             settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
-        else {
-            if (ServerInteractor.isAnonLogged()) {
-                userNameLabel.text = "Not logged in";
-                logOffButton.setTitle("Sign In", forState: UIControlState.Normal)
-                self.userIcon.image = DEFAULT_USER_ICON;
-                friendsButton.hidden = true;
-            }
+       /* else {
+            var isLinkedToFacebook: Bool = PFFacebookUtils.isLinkedWithUser(PFUser.currentUser())
+            if (isLinkedToFacebook){
+                userNameLabel.text = ServerInteractor.getUserName()
+            }*/
             else {
-                mainUser = ServerInteractor.getCurrentUser();
-                // Do any additional setup after loading the view.
-                userNameLabel.text = ServerInteractor.getUserName();
-                mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
-                    self.userIcon.image = fetchedImage;
-                    });
+                if (ServerInteractor.isAnonLogged()) {
+                    userNameLabel.text = "Not logged in";
+                    logOffButton.setTitle("Sign In", forState: UIControlState.Normal)
+                    self.userIcon.image = DEFAULT_USER_ICON;
+                    friendsButton.hidden = true;
+                }
+                else {
+                    mainUser = ServerInteractor.getCurrentUser();
+                    // Do any additional setup after loading the view.
+                    userNameLabel.text = ServerInteractor.getUserName();
+                    mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
+                        self.userIcon.image = fetchedImage;
+                        });
+                }
             }
-        }
+        //}
         //start fetching submission posts for user, for first set here
         //loadedUpTo = 0;
         hitEnd = false;
