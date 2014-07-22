@@ -1,6 +1,13 @@
 // Playground - noun: a place where people can play
 
 import UIKit
+
+var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
+
+var array = str.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))
+array = array.filter({(obj: String)->Bool in obj != ""});
+array
+
 /*
 var str = "Hello, playground"
 "hello world"
@@ -51,8 +58,7 @@ while(iterations > 0) {
     tailPos
 }*/
 
-
-
+/*
 var someArray: Int[] = Int[](count: 3, repeatedValue: 0)
 someArray += [1,2,3];
 someArray.insert(3, atIndex: 0)
@@ -69,4 +75,4 @@ for a in someArray {
 var array = [1,2];
 array.removeLast();
 array.removeLast();
-array
+array*/

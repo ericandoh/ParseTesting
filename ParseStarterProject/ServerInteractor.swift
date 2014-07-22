@@ -12,11 +12,10 @@
 import UIKit
 
 @objc class ServerInteractor: NSObject {
-    class func someTypeMethod() {
-        
-    }
     //---------------User Login/Signup/Interaction Methods---------------------------------
     class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
+        var userNameLabel: UILabel
+        
         var user: PFUser = PFUser();
         user.username = username;
         user.password = password;
@@ -45,9 +44,9 @@ import UIKit
         });
         return true;
     }
-    class func loginUser(username: String, password: String, sender: NSObject)->Bool {
+    class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
-            var logController: LoginViewController = sender as LoginViewController;
+            var logController: NewLoginViewController = sender;
             if (user) {
                 //successful log in
                 ServerInteractor.initialUserChecks();
@@ -76,6 +75,7 @@ import UIKit
         });
     }
     
+    
     //loggin in with facebook
     class func loginWithFacebook(sender: NSObject) {
         //whats permissions
@@ -84,24 +84,52 @@ import UIKit
         let permissions: [AnyObject]? = ["user_about_me", "user_relationships"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
-            var logController: LoginViewController = sender as LoginViewController;
+            var logController: NewLoginViewController = sender as NewLoginViewController;
             if (error) {
                 NSLog("Error message: \(error!.description)");
             } else if !user {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
+                NSLog("Yay you worked!!!")
                 NSLog("Setting up initial stuff for user");
                 user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();
+                NSLog("DFJNVKJSNDFKJN")
                 ServerInteractor.initialUserChecks();
                 //user's first notification
+                NSLog("Got this far???")
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                NSLog("Lol can't touch me?")
                 user.saveEventually();
-                logController.successfulLogin();
+                //logController.successfulLogin();
+                NSLog("Are you seriously coming this far")
+                //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
+                logController.facebookLogin()
+                NSLog("WTF where's the error")
+
+                //var userID = userData.name
+                //userNameLabel.text = ServerInteractor.getUserName()
+                
+
+                //var request: FBRequest = FBRequest.requestForMe();
+
+                //var request3 = FBRequest.requestForMe();
+
+                /*request3.startWithCompletionHandler({
+                    (connection: FBRequestConnection!, result: NSObject!, error: NSError!) -> Void in
+                    if (!error) {
+                        var userData: NSDictionary = result as NSDictionary;
+                        var userName: String = userData["name"] as String;
+                    }
+                });*/
+                //var request = FBRequest.requestForMe();
+               // var request = PF_FBRequest.requestForMe();
+                //PFFacebookUtils.session();
                 
             } else {
                 //logController.failedLogin("User logged in through Facebook!")
+                NSLog("Why would you skip everything else???????")
                 ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }
@@ -151,11 +179,48 @@ import UIKit
         return FriendEncapsulator(friend: PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
-    class func uploadImage(image: UIImage, exclusivity: PostExclusivity) {
+    //separates + processes label string, and also uploads labels to server
+    class func separateLabels(labels: String)->Array<String> {
+        var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "));
+        arr = arr.filter({(obj: String)->Bool in obj != ""});
+        
+        
+        var query = PFQuery(className: "SearchTerm");
+        query.whereKey("term", containedIn: arr);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (!error) {
+                var foundLabel: String;
+                for object:PFObject in objects as [PFObject] {
+                    foundLabel = object["term"] as String;
+                    NSLog("\(foundLabel) already exists as label, incrementing")
+                    object.incrementKey("count");
+                    object.saveInBackground();
+                    arr.removeAtIndex(find(arr, foundLabel)!);
+                }
+                //comment below to force use of only our labels (so users cant add new labels?)
+                var newLabel: PFObject;
+                for label: String in arr {
+                    NSLog("Adding new label \(label)")
+                    newLabel = PFObject(className: "SearchTerm");
+                    newLabel["term"] = label;
+                    newLabel["count"] = 1;
+                    newLabel.ACL.setPublicReadAccess(true);
+                    newLabel.ACL.setPublicWriteAccess(true);
+                    newLabel.saveInBackground();
+                }
+            }
+        });
+        
+        
+        return arr;
+    }
+    
+    class func uploadImage(image: UIImage, exclusivity: PostExclusivity, labels: String) {
         if (isAnonLogged()) {
             return;
         } else {
-            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity);
+            var newPost = ImagePostStructure(image: image, exclusivity: exclusivity, labels: labels);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");
@@ -283,6 +348,33 @@ import UIKit
         }
     }
     
+    class func getSearchPosts(skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
+        var query = PFQuery(className:"ImagePost")
+        query.whereKey("labels", containsAllObjectsInArray: [term]);
+        query.limit = loadCount;
+        query.skip = skip;
+        query.orderByDescending("createdAt");
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if !error {
+                // The find succeeded.
+                
+                notifyQueryFinish(objects.count);
+                
+                // Do something with the found objects
+                var post: ImagePostStructure?;
+                for (index, object:PFObject!) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: object);
+                    post!.loadImage(finishFunction, index: index);
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+            }
+        }
+    }
+
+    
     class func readPost(post: ImagePostStructure) {
         var postID = post.myObj.objectId;
         PFUser.currentUser().addUniqueObject(postID, forKey: "viewHistory");
@@ -325,52 +417,6 @@ import UIKit
         });
         return nil; //useless statement to suppress useless stupid xcode thing
     }
-    //deprecated method - ignore
-    /*class func saveNotification(targetUser: PFUser, targetObject: PFObject)->Array<PFObject?>? {
-        
-        //targetObject.ACL.setPublicReadAccess(true);
-        //targetObject.ACL.setPublicWriteAccess(true);
-        
-        targetObject.ACL.setReadAccess(true, forUser: targetUser)
-        targetObject.ACL.setWriteAccess(true, forUser: targetUser)
-        
-        targetUser.addObject(targetObject, forKey: "notifs");
-        var notifArray = targetUser["notifs"] as Array<PFObject>
-        
-        NSLog("Notif size: \(notifArray.count)")
-        
-        if (notifArray.count > 20) {
-            
-            //find oldest item and delete it
-            var oldestDate: NSDate = notifArray[0].updatedAt;
-            var oldestItem: PFObject = notifArray[0];
-            var oldestIndex: Int = 0;
-            
-            var listItem: PFObject;
-            //had enumeration error: check this
-            for index: Int in 0..notifArray.count {
-                listItem = notifArray[index]
-                if (listItem.updatedAt != nil && listItem.updatedAt.compare(oldestDate) == NSComparisonResult.OrderedAscending) {
-                    //this is the oldest
-                    oldestItem = listItem;
-                    oldestDate = listItem.updatedAt;
-                    oldestIndex = index;
-                }
-            }
-            oldestItem.deleteInBackground();
-            notifArray.removeAtIndex(oldestIndex);
-            targetUser["notifs"] = notifArray;
-        }
-        targetUser.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)-> Void in
-            if (!error) {
-                //NSLog("Saved user successfully")
-            }
-            else {
-                NSLog("Soemthing is very very wrong")
-            }
-            });
-        return nil
-    }*/
     
     class func getNotifications(controller: NotifViewController) {
         if (isAnonLogged()) {
@@ -532,6 +578,7 @@ import UIKit
         }
         return returnList;
     }
+    
     class func checkAcceptNotifs() {
         //possibly move friend accepts here?
         
@@ -602,6 +649,22 @@ import UIKit
             else {
                 NSLog("Error: Could not fetch");
             }
+        });
+    }
+    //------------------Search methods---------------------------------------
+    class func getSearchTerms(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var query = PFQuery(className: "SearchTerm");
+        query.whereKey("term", containsString: term);
+        //query.orderByDescending("importance")
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!)->Void in
+            initFunc(objects.count);
+            var content: String;
+            for index: Int in 0..<objects.count {
+                content = (objects[index] as PFObject)["term"] as String;
+                receiveFunc(index, content);
+            }
+            endFunc();
         });
     }
 }
