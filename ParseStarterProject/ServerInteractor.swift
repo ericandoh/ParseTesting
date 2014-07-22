@@ -328,7 +328,8 @@ import UIKit
         var excludeList = convertPostToID(excludes);
 
         if (!isAnonLogged()) {
-            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
+            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
+            query.whereKey("author", notEqualTo: PFUser.currentUser().username);
         }
 
         /*
@@ -350,7 +351,6 @@ import UIKit
             //query.whereKey("objectId", notContainedIn: excludeList);
         }*/
         query.whereKey("objectId", notContainedIn: excludeList);
-        query.whereKey("author", notEqualTo: PFUser.currentUser().username);
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in

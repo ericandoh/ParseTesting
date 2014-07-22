@@ -818,12 +818,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayC-O0-7Dc">
-                                <rect key="frame" x="139" y="262" width="48" height="30"/>
-                                <state key="normal" title="Gallery">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Anonymous users cannot upload pictures" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="225" translatesAutoresizingMaskIntoConstraints="NO" id="KWN-6a-5fe">
                                 <rect key="frame" x="48" y="156" width="225" height="81"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -835,6 +829,18 @@
                                 <state key="normal" title="Camera">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="cameraAction:" destination="Sn1-Di-YON" eventType="touchUpInside" id="XUD-OV-TiS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayC-O0-7Dc">
+                                <rect key="frame" x="139" y="262" width="48" height="30"/>
+                                <state key="normal" title="Gallery">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="galleryAction:" destination="Sn1-Di-YON" eventType="touchUpInside" id="24B-Jy-e6z"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -843,6 +849,8 @@
                     <navigationItem key="navigationItem" title="Upload" id="Qtn-kN-udc"/>
                     <connections>
                         <outlet property="anonMessage" destination="KWN-6a-5fe" id="3SH-fb-Tds"/>
+                        <outlet property="cameraButton" destination="Nk0-uG-nJS" id="4ZO-et-Db8"/>
+                        <outlet property="galleryButton" destination="ayC-O0-7Dc" id="goL-m2-kX0"/>
                         <segue destination="gqO-OJ-AGi" kind="push" identifier="ImagePreview" id="OlG-2e-ZpL"/>
                     </connections>
                 </viewController>

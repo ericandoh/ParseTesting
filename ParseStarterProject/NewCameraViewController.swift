@@ -14,6 +14,8 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
 
     //outlets for anon user messages
     @IBOutlet var anonMessage: UILabel
+    @IBOutlet var cameraButton: UIButton
+    @IBOutlet var galleryButton: UIButton
     
     //outlets for choose gallery button, take picture button, other buttons
     
@@ -44,39 +46,22 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (ServerInteractor.isAnonLogged()) {
             //disable submissions here
             anonMessage.hidden = false;
+            cameraButton.hidden = true;
+            galleryButton.hidden = true;
             return;
         }
         anonMessage.hidden = true;  //this should be true by default;
         
-        //try to use camera immediately
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
-            imagePicker.delegate = self;
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
-            imagePicker.mediaTypes = [kUTTypeImage];
-            imagePicker.allowsEditing = false;
-            self.presentViewController(imagePicker, animated:false, completion:nil);
-            usingCamera = true;
-        }
-        else if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum)) {
-            var imagePicker: UIImagePickerController = UIImagePickerController();
-            imagePicker.delegate = self;
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-            var arr: Array<AnyObject> = [kUTTypeImage];
-            imagePicker.mediaTypes = arr;
-            imagePicker.allowsEditing = false;
-            self.presentViewController(imagePicker, animated:false, completion:nil);
-            usingCamera = false;
-        }
-        else {
-            
-            let alert: UIAlertController = UIAlertController(title: "No source found", message: "Could not find source of images on this device", preferredStyle: UIAlertControllerStyle.Alert);
+        //try (NOT) to use camera immediately
+        
+        
+        /*    let alert: UIAlertController = UIAlertController(title: "No source found", message: "Could not find source of images on this device", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
                 }));
             self.presentViewController(alert, animated: true, completion: nil)
             
-        }
+        */
 
         
         
@@ -90,6 +75,30 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     func receivePreviousImages(imgs: Array<UIImage>) {
         startedSegue = false;
         currImgs = imgs;
+    }
+    @IBAction func cameraAction(sender: AnyObject) {
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+            var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
+            imagePicker.delegate = self;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            imagePicker.mediaTypes = [kUTTypeImage];
+            imagePicker.allowsEditing = false;
+            self.presentViewController(imagePicker, animated:false, completion:nil);
+            usingCamera = true;
+        }
+    }
+    
+    @IBAction func galleryAction(sender: AnyObject) {
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum)) {
+            var imagePicker: UIImagePickerController = UIImagePickerController();
+            imagePicker.delegate = self;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            var arr: Array<AnyObject> = [kUTTypeImage];
+            imagePicker.mediaTypes = arr;
+            imagePicker.allowsEditing = false;
+            self.presentViewController(imagePicker, animated:false, completion:nil);
+            usingCamera = false;
+        }
     }
 
     
