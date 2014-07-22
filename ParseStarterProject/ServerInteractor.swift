@@ -14,6 +14,8 @@ import UIKit
 @objc class ServerInteractor: NSObject {
     //---------------User Login/Signup/Interaction Methods---------------------------------
     class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
+        var userNameLabel: UILabel
+        
         var user: PFUser = PFUser();
         user.username = username;
         user.password = password;
@@ -42,9 +44,9 @@ import UIKit
         });
         return true;
     }
-    class func loginUser(username: String, password: String, sender: NSObject)->Bool {
+    class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
-            var logController: LoginViewController = sender as LoginViewController;
+            var logController: NewLoginViewController = sender;
             if (user) {
                 //successful log in
                 ServerInteractor.initialUserChecks();
@@ -73,6 +75,7 @@ import UIKit
         });
     }
     
+    
     //loggin in with facebook
     class func loginWithFacebook(sender: NSObject) {
         //whats permissions
@@ -81,24 +84,52 @@ import UIKit
         let permissions: [AnyObject]? = ["user_about_me", "user_relationships"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
-            var logController: LoginViewController = sender as LoginViewController;
+            var logController: NewLoginViewController = sender as NewLoginViewController;
             if (error) {
                 NSLog("Error message: \(error!.description)");
             } else if !user {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
+                NSLog("Yay you worked!!!")
                 NSLog("Setting up initial stuff for user");
                 user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();
+                NSLog("DFJNVKJSNDFKJN")
                 ServerInteractor.initialUserChecks();
                 //user's first notification
+                NSLog("Got this far???")
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                NSLog("Lol can't touch me?")
                 user.saveEventually();
-                logController.successfulLogin();
+                //logController.successfulLogin();
+                NSLog("Are you seriously coming this far")
+                //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
+                logController.facebookLogin()
+                NSLog("WTF where's the error")
+
+                //var userID = userData.name
+                //userNameLabel.text = ServerInteractor.getUserName()
+                
+
+                //var request: FBRequest = FBRequest.requestForMe();
+
+                //var request3 = FBRequest.requestForMe();
+
+                /*request3.startWithCompletionHandler({
+                    (connection: FBRequestConnection!, result: NSObject!, error: NSError!) -> Void in
+                    if (!error) {
+                        var userData: NSDictionary = result as NSDictionary;
+                        var userName: String = userData["name"] as String;
+                    }
+                });*/
+                //var request = FBRequest.requestForMe();
+               // var request = PF_FBRequest.requestForMe();
+                //PFFacebookUtils.session();
                 
             } else {
                 //logController.failedLogin("User logged in through Facebook!")
+                NSLog("Why would you skip everything else???????")
                 ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }

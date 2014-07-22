@@ -8,7 +8,7 @@
 //
 //
 
-class FriendTableViewController: UITableViewController, UITableViewDataSource  {
+class FriendTableViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate  {
 
     var srcFriend: FriendEncapsulator?;
     
@@ -58,6 +58,10 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource  {
         // Return the number of rows in the section.
         // last cell is always editable
         return friendList.count + 1;
+    }
+    
+    override func tableView(tableView: UITableView!, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath!) -> String! {
+        return "Unfriend"
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
