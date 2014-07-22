@@ -12,7 +12,7 @@ import UIKit
 
 class SingleNotifViewController: UIViewController {
 
-    @IBOutlet var notifTextLabel: UILabel
+    @IBOutlet var notifTextLabel: UILabel!
     
     var notif: InAppNotification?;
     

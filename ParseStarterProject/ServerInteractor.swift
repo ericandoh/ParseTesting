@@ -271,9 +271,12 @@ import UIKit
     
     //helper function to convert an array of ImagePostStructures into an array of its objectID's
     class func convertPostToID(input: Array<ImagePostStructure?>)->NSMutableArray {
+        NSLog("We have \(input.count) things in our exclude list")
         var output = NSMutableArray();
         for post: ImagePostStructure? in input {
-            output.addObject(post!.myObj.objectId);
+            if (post) {
+                output.addObject(post!.objectIDString);
+            }
         }
         return output;
     }
@@ -326,11 +329,15 @@ import UIKit
                 // Do something with the found objects
                 notifyQueryFinish(objects.count);
                 
-                var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
-                    post!.loadImage(finishFunction, index: index);
+                //var post: ImagePostStructure;
+                for (index, object:PFObject!) in enumerate(objects! as Array<PFObject>) {
+                    //var pfObj: PFObject = object as PFObject;
+                    var post = ImagePostStructure(inputObj: object);
+                    NSLog("Post stuff \(post.myObj.objectId)");
+                    //post.loadImage(finishFunction, index: index);
+                    post.loadAllImages(finishFunction, index: index);
                 }
+                NSLog("Do we have a \((objects[0] as PFObject).objectId)");
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
@@ -360,8 +367,8 @@ import UIKit
                 
                 // Do something with the found objects
                 var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
+                for (index, object:AnyObject!) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: (object as PFObject));
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -386,8 +393,8 @@ import UIKit
                 
                 // Do something with the found objects
                 var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
+                for (index, object:AnyObject!) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: (object as PFObject));
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -591,7 +598,8 @@ import UIKit
         }
         else {
             NSLog("Updating an old account to have friends");
-            friendz = Array<PFUser?>();
+            //friendz = Array<PFUser?>();
+            friendz = [];
             unwrapUser!["friends"] = NSArray()
             unwrapUser!.saveInBackground();
         }

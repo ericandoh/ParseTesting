@@ -12,9 +12,9 @@ import UIKit
 
 class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet var commentView: UIView               //use this for hiding and showing
-    @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
-    @IBOutlet var frontImageView: UIImageView
+    @IBOutlet var commentView: UIView!               //use this for hiding and showing
+    @IBOutlet var commentTableView: UITableView!     //use this for specific table manipulations
+    @IBOutlet var frontImageView: UIImageView!
     //@IBOutlet var backImageView: UIImageView      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -98,12 +98,13 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
         
         //(loadedUpTo)*POST_LOAD_COUNT, == skip, but wont need cuz it is in excludes
+        
         ServerInteractor.getPost(POST_LOAD_COUNT, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         
         //ServerInteractor.getPost(getReturnList, sender: self, excludes: otherExcludes!);
     }
     func receiveNumQuery(size: Int) {
-        //NSLog("Query finished with size \(size)")
+        NSLog("Query finished with size \(size)")
         var needAmount: Int;
         if (size < POST_LOAD_COUNT) {
             hitEnd = true;
@@ -124,6 +125,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
         //called by getSubmissions for when image at index x is loaded in...
+        
         var realIndex: Int;
         if (hitEnd) {
             realIndex = index + (loadedUpTo * POST_LOAD_COUNT);
@@ -131,7 +133,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         else {
             realIndex = index + ((loadedUpTo - 1) * POST_LOAD_COUNT);
         }
-        //NSLog("Received image at index \(realIndex)")
         loadedPosts[realIndex] = loaded;
         
         //check if I need to refresh anything
@@ -140,8 +141,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     func configureCurrent() {
+        NSLog("Configuring");
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = loadedPosts[viewCounter];
+        
+        //NSLog("What is \(loadedPosts[viewCounter]!.myObj.objectId)");
+        
         if (postCounter == 0) {
             frontImageView!.image = currentPost!.image;
         }

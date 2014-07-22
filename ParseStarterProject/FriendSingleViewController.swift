@@ -12,8 +12,8 @@ import UIKit
 
 class FriendSingleViewController: UIViewController {
 
-    @IBOutlet var userIcon: UIImageView
-    @IBOutlet var friendName: UILabel
+    @IBOutlet var userIcon: UIImageView!
+    @IBOutlet var friendName: UILabel!
     var mainUser: FriendEncapsulator?;
     
     override func viewDidLoad() {

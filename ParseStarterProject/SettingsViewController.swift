@@ -12,13 +12,13 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-    @IBOutlet var userNameLabel: UILabel
-    @IBOutlet var logOffButton: UIButton
-    @IBOutlet var settingsButton: UIButton
-    @IBOutlet var myCollectionView: UICollectionView
-    @IBOutlet var friendsButton: UIButton
+    @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var logOffButton: UIButton!
+    @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var myCollectionView: UICollectionView!
+    @IBOutlet var friendsButton: UIButton!
     
-    @IBOutlet var userIcon: UIImageView
+    @IBOutlet var userIcon: UIImageView!
     
     var mainUser: FriendEncapsulator?;
     

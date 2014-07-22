@@ -12,7 +12,7 @@ import UIKit
 
 class FriendRequestViewController: UIViewController {
 
-    @IBOutlet var friendNameLabel: UILabel
+    @IBOutlet var friendNameLabel: UILabel!
     
     var notif: InAppNotification?;
     

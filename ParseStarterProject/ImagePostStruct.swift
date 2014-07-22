@@ -17,12 +17,21 @@ class ImagePostStructure
     var images: Array<UIImage>
     var myObj: PFObject
     var imagesLoaded: Bool = false;
+    
+    var objectIDString: String = "";
     //var user: PFUser()
+    
+    /*init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder);
+    }
+    */
     init(inputObj: PFObject) {
         //called when retrieving object (for viewing, etc)
-        myObj = inputObj;
+        self.myObj = inputObj;
+        objectIDString = inputObj.objectId;
         images = [];
     }
+    
     init(images: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
         //called when making a new post
         //myObj must be saved by caller
@@ -41,7 +50,7 @@ class ImagePostStructure
             imgArray.append(file);
         }
         //upload - relational data is saved as well
-        myObj = PFObject(className:"ImagePost");
+        self.myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = singleFile;     //separating this for sake of faster loading (since most ppl only see first img then move on)
         myObj["imageFiles"] = imgArray; //other images that may be in this file
         myObj["author"] = PFUser.currentUser().username;
@@ -50,6 +59,7 @@ class ImagePostStructure
         myObj["exclusive"] = exclusivity.toRaw();
         myObj["comments"] = [];
         
+        objectIDString = myObj.objectId;
         
         var labelArr = ServerInteractor.separateLabels(labels);
         myObj["labels"] = labelArr;
@@ -91,10 +101,21 @@ class ImagePostStructure
     func loadImage(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
         if (!image) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
-            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+            var me = self;
+            //var obj = self.myObj;
+            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!)->Void in
                 if (!error) {
                     //get file objects
                     self.image = UIImage(data: result);
+                    /*NSLog("What is self: \(self)");
+                    NSLog("What is me: \(me)");
+                    
+                    NSLog("Can I access me's obj indirectly \(obj)");
+                    
+                   // NSLog("Can I access me: \(me.myObj)")
+                    NSLog("Can I access self? \(self.myObj!)");
+                    NSLog("Testing \(self.myObj!.objectId)");*/
+
                     finishFunction(imgStruct: self, index: index);
                 }
             });
@@ -103,6 +124,10 @@ class ImagePostStructure
             finishFunction(imgStruct: self, index: index);
         }
     }
+    func getMyObj()->PFObject {
+        return myObj;
+    }
+    
     //loads all images, as I load I return images by index
     func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
         
@@ -148,6 +173,43 @@ class ImagePostStructure
             }
         }
     }
+    
+    
+    
+    //loads all images, as I load I return images by index
+    func loadAllImages(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
+        
+        var imgFile: PFFile = myObj["imageFile"] as PFFile;
+        var me = self;
+        var obj = self.myObj;
+        imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!)->Void in
+            if (!error) {
+                self.image = UIImage(data: result);
+                NSLog("We are using \(obj.objectId) we are so stupid!");
+                var imgFiles: Array<PFFile> = self.myObj["imageFiles"] as Array<PFFile>;
+                for (index, imgFile: PFFile) in enumerate(imgFiles) {
+                    imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                        if (!error) {
+                            //get file objects
+                            var fImage = UIImage(data: result);
+                            self.images.append(fImage);
+                        }
+                        if (index == imgFiles.count - 1) {
+                            self.imagesLoaded = true;
+                        }
+                        });
+                }
+                if (imgFiles.count == 0) {
+                    self.imagesLoaded = true;
+                }
+                finishFunction(imgStruct: self, index: index);
+            }
+        });
+    }
+    
+    
+    
+    
     func fetchComments(finishFunction: (input: NSArray)->Void) {
         var commentArray = myObj["comments"] as NSArray;
         finishFunction(input: commentArray);

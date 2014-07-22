@@ -19,10 +19,10 @@ let N_DEBUG_FLAG = true //currently not used, there is a separate DEBUG_FLAG in 
 let NOTIF_COUNT = 10
 
 //number of post-images to load at once
-let POST_LOAD_COUNT = 10
+let POST_LOAD_COUNT = 5 //was 10
 
 //number of posts to have before buffering next set of images
-let POST_LOAD_LIMIT = 20
+let POST_LOAD_LIMIT = 10    //was 20
 
 //maximum number of my own posts to load (when i query for my last submitted posts)
 let MYPOST_LOAD_COUNT = 10

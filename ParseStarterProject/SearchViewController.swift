@@ -9,7 +9,7 @@
 import UIKit
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
 
-    @IBOutlet var myTable: UITableView;
+    @IBOutlet var myTable: UITableView!;
     
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];

@@ -12,10 +12,10 @@ import UIKit
 
 class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet var commentView: UIView
-    @IBOutlet var postTitle: UILabel
-    @IBOutlet var imageView: UIImageView
-    @IBOutlet var commentTableView: UITableView
+    @IBOutlet var commentView: UIView!
+    @IBOutlet var postTitle: UILabel!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var commentTableView: UITableView!
 
     var notif: InAppNotification?;
     var imgPost: ImagePostStructure?;

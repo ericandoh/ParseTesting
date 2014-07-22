@@ -10,8 +10,8 @@ import UIKit
 
 class SearchCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet var postLabel: UILabel
-    @IBOutlet var imageView: UIImageView
+    @IBOutlet var postLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
     init(frame: CGRect) {
         super.init(frame: frame)
         // Initialization code

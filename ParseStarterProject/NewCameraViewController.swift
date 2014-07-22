@@ -13,7 +13,7 @@ import UIKit
 class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     //outlets for anon user messages
-    @IBOutlet var anonMessage: UILabel
+    @IBOutlet var anonMessage: UILabel!
     
     //outlets for choose gallery button, take picture button, other buttons
     
@@ -111,11 +111,11 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary) {
-        var mediaType: String = info[UIImagePickerControllerMediaType] as String;
+        var mediaType: NSString = info[UIImagePickerControllerMediaType] as NSString;
         self.startedSegue = true;
         self.dismissViewControllerAnimated(false, completion: {
             ()->Void in
-            if (mediaType == kUTTypeImage) {
+            if (mediaType == kUTTypeImage.__conversion()) {
                 var image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
                 //add code here to do something with image I just picked
     

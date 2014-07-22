@@ -13,10 +13,10 @@ import UIKit
 @objc
 class ImagePreviewController: UIViewController {
 
-    @IBOutlet var exclusiveOptionPanel: UISegmentedControl
-    @IBOutlet var imageView: UIImageView;
-    @IBOutlet var scrollView: UIScrollView
-    @IBOutlet var labelBar: UITextField
+    @IBOutlet var exclusiveOptionPanel: UISegmentedControl!
+    @IBOutlet var imageView: UIImageView!;
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var labelBar: UITextField!
     
     var receivedImages: Array<UIImage> = [];
     

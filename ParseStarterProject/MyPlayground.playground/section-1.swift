@@ -3,6 +3,42 @@
 import UIKit
 
 
+
+class Small {
+    var tiny: Int;
+    init() {
+        tiny = 5;
+    }
+    func runPrgm(prgm: (()->Void)->Void) {
+        prgm({()->Void in
+            self.tiny = 7
+            });
+    }
+}
+var a = Small();
+a.runPrgm({(pr: ()->Void)->Void in 5;
+                                    pr()});
+a.tiny;
+a.tiny = 6;
+/*
+func anotherPrgm() {
+    var a = Small();
+    runPrgm({()->Void in
+        a.tiny = 6;
+        
+        });
+    
+    a.tiny;
+}
+anotherPrgm();*/
+
+
+
+
+
+
+
+/*
 func wordNumberer(num: Int)->String {
     if (num > 1000000) {
         return "\(num / 1000000)M"
@@ -21,6 +57,10 @@ wordNumberer(10999);
 wordNumberer(409298);
 wordNumberer(50194809);
 wordNumberer(98682091809184604);
+
+*/
+
+
 
 
 
