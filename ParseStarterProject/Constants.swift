@@ -40,7 +40,7 @@ let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
 let FULLSCREEN_WIDTH = 320;
 
 //height of a fullscreen image
-let FULLSCREEN_HEIGHT = 568;
+let FULLSCREEN_HEIGHT = 518;
 
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);

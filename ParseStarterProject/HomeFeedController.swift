@@ -13,6 +13,9 @@ import UIKit
 class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var commentView: UIView               //use this for hiding and showing
+    @IBOutlet var descriptionPage: UIView
+    @IBOutlet var authorTextField: UILabel
+    @IBOutlet var descriptionTextField: UILabel
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var frontImageView: UIImageView
     //@IBOutlet var backImageView: UIImageView      //deprecated
@@ -147,6 +150,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else {
             var currentPostNum = postCounter;
+            var oldImg = self.frontImageView!.image;
             self.frontImageView!.image = LOADING_IMG;
             currentPost!.loadImages({(img: UIImage?, comments: Bool)->Void in
                 if (currentPostNum == self.postCounter) {
@@ -155,16 +159,26 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     if (comments) {
                         //we have comments! or error :(
                         self.viewingComments = true;
+                        self.frontImageView!.image = oldImg;
+                        self.startViewingComments(currentPost!);
                     }
                     else {
-                        self.frontImageView!.image = img!;
+                        if (img) {
+                            self.frontImageView!.image = img!;
+                        }
                     }
                 }
 
             }, postIndex: postCounter);
         }
     }
-    
+    func startViewingComments(currentPost: ImagePostStructure) {
+        
+        authorTextField.text = currentPost.myObj["author"] as String;
+        descriptionTextField.text = currentPost.myObj["description"] as String;
+        
+        descriptionPage.hidden = false;
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -197,7 +211,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //motion is true when motion == down
     func swipeAction(motion: Bool) {
         postCounter = 0;
-        viewingComments = false;
+        if (viewingComments) {
+            viewingComments = false;
+            descriptionPage.hidden = true;
+        }
         if (refreshNeeded) {
             if (motion) {
                 refresh();
@@ -255,6 +272,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         if (viewingComments) {
             viewingComments = false;
+            descriptionPage.hidden = true;
         }
         postCounter--;
         swipeSideAction();

@@ -221,39 +221,48 @@ import UIKit
         var height: Int;
         var newImgList: Array<UIImage> = [];
         var newSize: CGSize;
+        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(FULLSCREEN_HEIGHT));
         for (index, image: UIImage) in enumerate(images) {
-            
+            NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
-            
-            if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio > WIDTH_HEIGHT_RATIO) {
-                //this image is horizontal, so we resize image width to match
-                newSize = CGSize(width: FULLSCREEN_WIDTH, height: Int(image.size.height) * FULLSCREEN_WIDTH / Int(image.size.width));
-                UIGraphicsBeginImageContext(newSize);
-                image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
-                newImgList.append(UIGraphicsGetImageFromCurrentImageContext() as UIImage);
-                UIGraphicsEndImageContext();
-            }
-            else if (Int(image.size.height) > FULLSCREEN_HEIGHT && individualRatio < WIDTH_HEIGHT_RATIO) {
-                //this image is vertical, so we resize image height to match
+            var outputImg: UIImage?;
+            if (Int(image.size.height) > FULLSCREEN_HEIGHT && individualRatio > WIDTH_HEIGHT_RATIO) {
+                //this image is horizontal, so we resize image height to match
                 newSize = CGSize(width: Int(image.size.width) * FULLSCREEN_HEIGHT / Int(image.size.height), height: FULLSCREEN_HEIGHT);
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
-                newImgList.append(UIGraphicsGetImageFromCurrentImageContext() as UIImage);
+                outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
+                newImgList.append(outputImg!);
                 UIGraphicsEndImageContext();
             }
+            else if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio < WIDTH_HEIGHT_RATIO) {
+                //this image is vertical, so we resize image width to match
+                newSize = CGSize(width: FULLSCREEN_WIDTH, height: Int(image.size.height) * FULLSCREEN_WIDTH / Int(image.size.width));
+                UIGraphicsBeginImageContext(newSize);
+                image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+                outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
+                UIGraphicsEndImageContext();
+            }
+            else {
+                newImgList.append(image);
+                continue;
+            }
+            newImgList.append(outputImg!);
+            /*NSLog("Output image: W\(outputImg!.size.width) H\(outputImg!.size.height)")
+            var imageRef = CGImageCreateWithImageInRect(outputImg!.CGImage, cropRect);
+            var retImg: UIImage = UIImage(CGImage: imageRef);
+            CGImageRelease(imageRef);
+            NSLog("Final image: W\(retImg.size.width) H\(retImg.size.height)")
+            newImgList.append(retImg);*/
         }
         return newImgList;
     }
-    class func uploadImage(image: UIImage, exclusivity: PostExclusivity, labels: String) {
-        NSLog("Warning: This method should be deprecated; fix any calls to this method. Placeholder. ")
-        var data = UIImagePNGRepresentation(image);
-        uploadImage([image], exclusivity: exclusivity, labels: labels);
-    }
-    class func uploadImage(imgs: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
+    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String) {
+        var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
             return;
-        } else {
-            
+        }
+        else {
             //do preprocessing here to resize image to rendering specifications-WORK
             
             var images = preprocessImages(imgs);
@@ -265,7 +274,7 @@ import UIKit
             
             
             
-            var newPost = ImagePostStructure(images: images, exclusivity: exclusivity, labels: labels);
+            var newPost = ImagePostStructure(images: images, description: description, labels: labels);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");

@@ -13,10 +13,10 @@ import UIKit
 @objc
 class ImagePreviewController: UIViewController {
 
-    @IBOutlet var exclusiveOptionPanel: UISegmentedControl
     @IBOutlet var imageView: UIImageView;
     @IBOutlet var scrollView: UIScrollView
     @IBOutlet var labelBar: UITextField
+    @IBOutlet var textView: UITextView
     
     var receivedImages: Array<UIImage> = [];
     
@@ -32,7 +32,7 @@ class ImagePreviewController: UIViewController {
     //function triggered by pushing check button
     @IBAction func acceptImage(sender: UIButton) {
         //store image and submit (BACKEND)
-        var choice = exclusiveOptionPanel.selectedSegmentIndex;
+        /*var choice = exclusiveOptionPanel.selectedSegmentIndex;
         var exclusivity: PostExclusivity = PostExclusivity.EVERYONE;
         switch choice {
             case 1:
@@ -45,8 +45,9 @@ class ImagePreviewController: UIViewController {
                 exclusivity = PostExclusivity.FEMALE_ONLY;
             default:
                 exclusivity = PostExclusivity.EVERYONE;
-        }
-        ServerInteractor.uploadImage(receivedImages, exclusivity: exclusivity, labels: labelBar!.text);
+        }*/
+        var description = textView.text;
+        ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text);
     }
 
     override func didReceiveMemoryWarning() {

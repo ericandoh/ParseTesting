@@ -55,21 +55,22 @@ class NewLoginViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
        // self.performSegueWithIdentifier("SetUsernameSegue", sender: self)
-
-        if (segue!.identifier == "RegisterSegue") {
-            var next: SignUpViewController = segue!.destinationViewController as SignUpViewController
-            next.updateUserFields(self.userTextField.text, withPassword: self.passwordTextField.text)
-        }
-        else if (segue!.identifier == "SetUsername") {
-            NSLog("Are we goign soemwhere");
-            if (segue!.destinationViewController is FBUsernameSetupViewController) {
-                NSLog("Working as intended");
+        if (segue!.identifier) {
+            if (segue!.identifier == "RegisterSegue") {
+                var next: SignUpViewController = segue!.destinationViewController as SignUpViewController
+                next.updateUserFields(self.userTextField.text, withPassword: self.passwordTextField.text)
             }
-            else {
-                NSLog("Not wokring");
+            else if (segue!.identifier == "SetUsername") {
+                NSLog("Are we goign soemwhere");
+                if (segue!.destinationViewController is FBUsernameSetupViewController) {
+                    NSLog("Working as intended");
+                }
+                else {
+                    NSLog("Not wokring");
+                }
+                var nextLol: FBUsernameSetupViewController = segue!.destinationViewController as FBUsernameSetupViewController
+                NSLog("No we aint")
             }
-            var nextLol: FBUsernameSetupViewController = segue!.destinationViewController as FBUsernameSetupViewController
-            NSLog("No we aint")
         }
 
     }

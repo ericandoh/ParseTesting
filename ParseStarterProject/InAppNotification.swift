@@ -54,9 +54,11 @@ class InAppNotification {
                 case NotificationType.IMAGE_POST.toRaw():
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        var numLikes: Int = object["likes"] as Int
-                        self.messageString = "Your picture has gotten \(numLikes) likes!"
-                        listener.tableView.reloadData()
+                        if (!error) {
+                            var numLikes: Int = object["likes"] as Int
+                            self.messageString = "Your picture has gotten \(numLikes) likes!"
+                            listener.tableView.reloadData()
+                        }
                     });
                 case NotificationType.FRIEND_REQUEST.toRaw():
                     self.friendName = self.personalObj!["sender"] as String
