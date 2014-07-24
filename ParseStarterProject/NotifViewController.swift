@@ -20,7 +20,9 @@ class NotifViewController: UITableViewController {
         super.viewDidLoad()
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        }
         //notifList = Array<InAppNotification>();
     }
     

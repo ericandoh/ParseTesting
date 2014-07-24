@@ -287,6 +287,15 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         postCounter++;
         swipeSideAction();
     }
+    
+    @IBAction func sideMenu(sender: UIButton) {
+        if (self.parentViewController) {
+            NSLog("Opening menu");
+            var overlord = self.parentViewController as SideMenuManagingViewController;
+            overlord.openMenu();
+        }
+    }
+    
     func performBufferLog() {
         /*NSLog("----------Logging---------")
         NSLog("VC: \(self.viewCounter) LoadedSetCount: \(self.loadedSet.count)");

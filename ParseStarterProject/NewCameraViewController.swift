@@ -25,6 +25,9 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     
     var currImgs: Array<UIImage> = [];
     
+    var prevLabel: String = "";
+    var prevDescrip: String = "";
+    
     var startedSegue: Bool = false;
     
     /*init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)  {
@@ -32,6 +35,9 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }*/
     override func viewDidLoad()  {
         super.viewDidLoad();
+        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        }
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -39,6 +45,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (startedSegue) {
             startedSegue = false;
             return;
+            //ImagePreviewController.description();   //unreachable code to force
         }
 
         // Do any additional setup after loading the view.
@@ -72,9 +79,11 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    func receivePreviousImages(imgs: Array<UIImage>) {
+    func receivePreviousImages(imgs: Array<UIImage>, prevLabel: String, prevDescrip: String) {
         startedSegue = false;
         currImgs = imgs;
+        self.prevLabel = prevLabel;
+        self.prevDescrip = prevDescrip;
     }
     @IBAction func cameraAction(sender: AnyObject) {
         if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
@@ -111,7 +120,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (segue.destinationViewController is ImagePreviewController) {
             var nextController = segue.destinationViewController as ImagePreviewController;
             currImgs.append(pickedImage!);
-            nextController.receiveImage(currImgs);
+            nextController.receiveImage(currImgs, prevLabel: prevLabel, prevDescrip: prevDescrip);
         }
         else {
             NSLog("Destination View Controller mismatch???");

@@ -36,6 +36,7 @@
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */; };
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
+		D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */; };
 		D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
@@ -103,6 +104,7 @@
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
 		D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
+		D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuManagingViewController.swift; sourceTree = "<group>"; };
 		D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */,
 				D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */,
 				D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */,
+				D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */,
 				24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */,
 				D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */,
+				D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,

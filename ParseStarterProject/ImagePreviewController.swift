@@ -10,23 +10,29 @@
 
 import UIKit
 
-@objc
 class ImagePreviewController: UIViewController {
 
     @IBOutlet var imageView: UIImageView;
-    @IBOutlet var scrollView: UIScrollView
-    @IBOutlet var labelBar: UITextField
+    
+    @IBOutlet var labelBar: UITextField;
+    
     @IBOutlet var textView: UITextView
     
     var receivedImages: Array<UIImage> = [];
+    
+    var prevLabel: String = "";
+    var prevDescrip: String = "";
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         if receivedImages.count > 0 {
-            imageView.image = receivedImages[0];
+            NSLog("Received \(receivedImages.count)")
+            imageView.image = receivedImages[receivedImages.count - 1];
         }
+        labelBar.text = prevLabel;
+        textView.text = prevDescrip;
     }
     
     //function triggered by pushing check button
@@ -48,19 +54,33 @@ class ImagePreviewController: UIViewController {
         }*/
         var description = textView.text;
         ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text);
+        
+        if (self.navigationController) {
+            if (self.navigationController.parentViewController) {
+                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.openHome();
+            }
+        }
+    }
+    
+    @IBAction func reject(sender: AnyObject) {
+        if (self.navigationController) {
+            if (self.navigationController.parentViewController) {
+                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.openHome();
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func getMoreImages(sender: AnyObject) {
-        NSLog("Delete this method later");
-    }
     
-    @objc
-    func receiveImage(imageValues: Array<UIImage>) {
+    func receiveImage(imageValues: Array<UIImage>, prevLabel: String, prevDescrip: String) {
         receivedImages = imageValues;
+        self.prevLabel = prevLabel;
+        self.prevDescrip = prevDescrip;
     }
 
     
@@ -71,7 +91,7 @@ class ImagePreviewController: UIViewController {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         if (segue!.destinationViewController is NewCameraViewController) {
-            (segue!.destinationViewController as NewCameraViewController).receivePreviousImages(receivedImages);
+            (segue!.destinationViewController as NewCameraViewController).receivePreviousImages(receivedImages, prevLabel: labelBar.text, prevDescrip: textView.text);
         }
     }
     

@@ -92,9 +92,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
     
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        NSLog("Commiting edits at \(indexPath.row)")
         if (editingStyle == UITableViewCellEditingStyle.Delete && indexPath.row != 0) {
-            NSLog("Deleting!");
             
             var index = indexPath.row - 1;
             
@@ -105,7 +103,6 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
 
-            NSLog("it comes this far")
         }
     }
     

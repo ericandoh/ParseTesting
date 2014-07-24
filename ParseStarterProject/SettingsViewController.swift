@@ -37,6 +37,13 @@ class SettingsViewController: UIViewController, UICollectionViewDelegate, UIColl
     //isLoading
     var isLoading: Bool = false;
     
+    override func viewDidLoad()  {
+        super.viewDidLoad();
+        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        }
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         if (mainUser && mainUser!.username != ServerInteractor.getUserName()) {

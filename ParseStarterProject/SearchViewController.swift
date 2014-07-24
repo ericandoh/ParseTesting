@@ -17,6 +17,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        }
+        
         // Do any additional setup after loading the view.
     }
     override func didReceiveMemoryWarning() {

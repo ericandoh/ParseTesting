@@ -2,7 +2,7 @@
 
 import UIKit
 
-
+/*
 func wordNumberer(num: Int)->String {
     if (num > 1000000) {
         return "\(num / 1000000)M"
@@ -20,11 +20,10 @@ wordNumberer(10484);
 wordNumberer(10999);
 wordNumberer(409298);
 wordNumberer(50194809);
-wordNumberer(98682091809184604);
+wordNumberer(98682091809184604);*/
 
-
-
-
+var dictionary: [String: String] = [:];
+dictionary.keys
 
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 

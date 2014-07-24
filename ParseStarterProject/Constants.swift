@@ -48,6 +48,13 @@ let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
 //max size of an image
 let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
 
+//side menu bar items we will have
+//this references BOTH names to be shown + storyboard ID names
+let SIDE_MENU_ITEMS = ["Home", "Upload", "Notifications", "Search", "Profile"];
+
+//side menu bar width
+let BAR_WIDTH = 160.0;
+
 
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
