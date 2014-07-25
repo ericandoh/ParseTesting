@@ -268,6 +268,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
         if (postCounter == 0) {
+            (self.parentViewController as SideMenuManagingViewController).openMenu();
             return;
         }
         if (viewingComments) {

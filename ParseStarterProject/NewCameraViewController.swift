@@ -166,7 +166,13 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion:nil);
-        self.tabBarController.selectedIndex = 0;
+        //self.tabBarController.selectedIndex = 0;
+        if (self.navigationController) {
+            if (self.navigationController.parentViewController) {
+                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.openHome();
+            }
+        }
     }
 
 }

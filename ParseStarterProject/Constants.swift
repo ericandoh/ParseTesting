@@ -49,8 +49,12 @@ let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
 let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
 
 //side menu bar items we will have
-//this references BOTH names to be shown + storyboard ID names
+//this references ONLY storyboard ID names
 let SIDE_MENU_ITEMS = ["Home", "Upload", "Notifications", "Search", "Profile"];
+
+//side menu bar items we will have
+//this references ONLY the actual names to display on the side menu table
+let SIDE_MENU_NAMES = ["My Stash", "Upload", "Notifications", "Search", "My Profile"];
 
 //side menu bar width
 let BAR_WIDTH = 160.0;

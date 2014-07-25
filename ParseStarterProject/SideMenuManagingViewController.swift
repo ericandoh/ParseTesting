@@ -118,7 +118,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //switches over to correct context
     func displayContent(contentString: String) {
-        
+        if (contentString == currentlyShowing) {
+            hideSideBar({(success: Bool)->Void in });
+            return;
+        }
         
         var content: UIViewController;
         if (contains(self.viewControllerDictionary.keys, contentString)) {
@@ -177,6 +180,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //deprecated
     func cycleFromViewController(oldC: UIViewController, toViewController newC: UIViewController) {
+        NSLog("Something is calling a deprecated method, please fix");
         /*oldC.willMoveToParentViewController(nil);
         self.addChildViewController(newC);
         //newC.view.frame = new frame
@@ -196,13 +200,18 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 
             })*/
     }
+    //resets a window to the start, by forcing it to create a new instance when switched to
+    //this does NOT switch windows
+    func resetWindow(contentString: String) {
+        var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+        self.viewControllerDictionary[contentString] = content;
+    }
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
-        NSLog("\(SIDE_MENU_ITEMS.count)");
         return SIDE_MENU_ITEMS.count;
     }
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.text = SIDE_MENU_ITEMS[indexPath.row];
+        cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
