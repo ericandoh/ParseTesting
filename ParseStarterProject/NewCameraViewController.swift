@@ -14,6 +14,8 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
 
     //outlets for anon user messages
     @IBOutlet var anonMessage: UILabel
+    @IBOutlet var cameraButton: UIButton
+    @IBOutlet var galleryButton: UIButton
     
     //outlets for choose gallery button, take picture button, other buttons
     
@@ -23,6 +25,9 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     
     var currImgs: Array<UIImage> = [];
     
+    var prevLabel: String = "";
+    var prevDescrip: String = "";
+    
     var startedSegue: Bool = false;
     
     /*init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!)  {
@@ -30,6 +35,9 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }*/
     override func viewDidLoad()  {
         super.viewDidLoad();
+        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        }
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -37,6 +45,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (startedSegue) {
             startedSegue = false;
             return;
+            //ImagePreviewController.description();   //unreachable code to force
         }
 
         // Do any additional setup after loading the view.
@@ -44,39 +53,22 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (ServerInteractor.isAnonLogged()) {
             //disable submissions here
             anonMessage.hidden = false;
+            cameraButton.hidden = true;
+            galleryButton.hidden = true;
             return;
         }
         anonMessage.hidden = true;  //this should be true by default;
         
-        //try to use camera immediately
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
-            imagePicker.delegate = self;
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
-            imagePicker.mediaTypes = [kUTTypeImage];
-            imagePicker.allowsEditing = false;
-            self.presentViewController(imagePicker, animated:false, completion:nil);
-            usingCamera = true;
-        }
-        else if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum)) {
-            var imagePicker: UIImagePickerController = UIImagePickerController();
-            imagePicker.delegate = self;
-            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-            var arr: Array<AnyObject> = [kUTTypeImage];
-            imagePicker.mediaTypes = arr;
-            imagePicker.allowsEditing = false;
-            self.presentViewController(imagePicker, animated:false, completion:nil);
-            usingCamera = false;
-        }
-        else {
-            
-            let alert: UIAlertController = UIAlertController(title: "No source found", message: "Could not find source of images on this device", preferredStyle: UIAlertControllerStyle.Alert);
+        //try (NOT) to use camera immediately
+        
+        
+        /*    let alert: UIAlertController = UIAlertController(title: "No source found", message: "Could not find source of images on this device", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
                 }));
             self.presentViewController(alert, animated: true, completion: nil)
             
-        }
+        */
 
         
         
@@ -87,9 +79,35 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    func receivePreviousImages(imgs: Array<UIImage>) {
+    func receivePreviousImages(imgs: Array<UIImage>, prevLabel: String, prevDescrip: String) {
         startedSegue = false;
         currImgs = imgs;
+        self.prevLabel = prevLabel;
+        self.prevDescrip = prevDescrip;
+    }
+    @IBAction func cameraAction(sender: AnyObject) {
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+            var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
+            imagePicker.delegate = self;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            imagePicker.mediaTypes = [kUTTypeImage];
+            imagePicker.allowsEditing = false;
+            self.presentViewController(imagePicker, animated:false, completion:nil);
+            usingCamera = true;
+        }
+    }
+    
+    @IBAction func galleryAction(sender: AnyObject) {
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum)) {
+            var imagePicker: UIImagePickerController = UIImagePickerController();
+            imagePicker.delegate = self;
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            var arr: Array<AnyObject> = [kUTTypeImage];
+            imagePicker.mediaTypes = arr;
+            imagePicker.allowsEditing = false;
+            self.presentViewController(imagePicker, animated:false, completion:nil);
+            usingCamera = false;
+        }
     }
 
     
@@ -102,7 +120,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         if (segue.destinationViewController is ImagePreviewController) {
             var nextController = segue.destinationViewController as ImagePreviewController;
             currImgs.append(pickedImage!);
-            nextController.receiveImage(currImgs);
+            nextController.receiveImage(currImgs, prevLabel: prevLabel, prevDescrip: prevDescrip);
         }
         else {
             NSLog("Destination View Controller mismatch???");
@@ -148,7 +166,13 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion:nil);
-        self.tabBarController.selectedIndex = 0;
+        //self.tabBarController.selectedIndex = 0;
+        if (self.navigationController) {
+            if (self.navigationController.parentViewController) {
+                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.openHome();
+            }
+        }
     }
 
 }

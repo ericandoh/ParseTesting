@@ -23,7 +23,7 @@ class ImagePostStructure
         myObj = inputObj;
         images = [];
     }
-    init(images: Array<UIImage>, exclusivity: PostExclusivity, labels: String) {
+    init(images: Array<UIImage>, description: String, labels: String) {
         //called when making a new post
         //myObj must be saved by caller
         image = images[0];
@@ -47,7 +47,11 @@ class ImagePostStructure
         myObj["author"] = PFUser.currentUser().username;
         myObj["likes"] = 0;
         myObj["passes"] = 0;
-        myObj["exclusive"] = exclusivity.toRaw();
+        NSLog("Deprecated line here, please remove")
+        myObj["exclusive"] = PostExclusivity.EVERYONE.toRaw();//exclusivity.toRaw();
+        
+        myObj["description"] = description;
+
         myObj["comments"] = [];
         
         
