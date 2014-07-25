@@ -57,9 +57,10 @@ let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
 //String enums to describe type of notification (work need)
 enum NotificationType: String {
     case PLAIN_TEXT = "PlainText"
-    case FRIEND_REQUEST = "FriendRequest"
+    //case FRIEND_REQUEST = "FriendRequest"
     case FRIEND_ACCEPT = "FriendAccept"
     case IMAGE_POST = "ImagePost"
+    case FOLLOWER_NOTIF = "FollowerNotif"
 }
 
 //String enums to describe exclusivity of user post (work need)

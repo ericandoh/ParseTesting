@@ -29,7 +29,7 @@ import UIKit
             if (!error) {
                 //success!
                 //sees if user has pending items to process
-                ServerInteractor.initialUserChecks();
+                //ServerInteractor.initialUserChecks();
                 //user's first notification
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 signController.successfulSignUp();
@@ -49,7 +49,7 @@ import UIKit
             var logController: NewLoginViewController = sender;
             if (user) {
                 //successful log in
-                ServerInteractor.initialUserChecks();
+                //ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }
             else {
@@ -66,7 +66,7 @@ import UIKit
         PFUser.currentUser().fetchInBackgroundWithBlock({(user: PFObject!, error: NSError!)->Void in
             var start: StartController = sender as StartController;
             if (!error) {
-                ServerInteractor.initialUserChecks();
+               // ServerInteractor.initialUserChecks();
                 start.approveUser();
             }
             else {
@@ -96,7 +96,7 @@ import UIKit
                 user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();
                 NSLog("DFJNVKJSNDFKJN")
-                ServerInteractor.initialUserChecks();
+               // ServerInteractor.initialUserChecks();
                 //user's first notification
                 NSLog("Got this far???")
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
@@ -130,7 +130,7 @@ import UIKit
             } else {
                 //logController.failedLogin("User logged in through Facebook!")
                 NSLog("Why would you skip everything else???????")
-                ServerInteractor.initialUserChecks();
+                //ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }
         });
@@ -544,20 +544,20 @@ import UIKit
         ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
-    class func postFriendRequest(friendName: String, controller: UIViewController) {
+    class func postFollowerNotif(friendName: String, controller: UIViewController) {
         if (friendName == "") {
             (controller as SettingsViewController).notifyFailure("Please fill in a name");
             return;
         }
         
         var notifObj = PFObject(className:"Notification");
-        notifObj["type"] = NotificationType.FRIEND_REQUEST.toRaw();
+        notifObj["type"] = NotificationType.FOLLOWER_NOTIF.toRaw();
         ServerInteractor.processNotification(friendName, targetObject: notifObj, controller: controller);
         
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
     //note: the func return type is to suppress some stupid thing that happens when u have objc stuff in your swift header
-    class func postFriendAccept(friendName: String)->Array<AnyObject?>? {
+    /*class func postFriendAccept(friendName: String)->Array<AnyObject?>? {
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FRIEND_ACCEPT.toRaw();
@@ -565,7 +565,7 @@ import UIKit
         
         ServerInteractor.processNotification(friendName, targetObject: notifObj);
         return nil;
-    }
+    }*/
     //call this method when either accepting a friend inv or receiving a confirmation notification
     class func addAsFriend(friendName: String)->Array<NSObject?>? {
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
@@ -636,37 +636,8 @@ import UIKit
         return returnList;
     }
     
-    class func checkAcceptNotifs() {
-        //possibly move friend accepts here?
-        
-        //add method to clear user's viewed post history (for sake of less clutter)
-        //PFUser.currentUser()["viewHistory"] = NSArray();
-        //PFUser.currentUser().saveInBackground();
-        var queryForNotif = PFQuery(className: "Notification")
-        queryForNotif.whereKey("recipient", equalTo: PFUser.currentUser().username);
-        queryForNotif.orderByDescending("createdAt");
-        queryForNotif.findObjectsInBackgroundWithBlock({
-            (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
-                var object: PFObject;
-                for index: Int in 0..<objects.count {
-                    object = objects[index] as PFObject;
-                    if(!(object["viewed"] as Bool)) {
-                        if (object["type"]) {
-                            if ((object["type"] as String) == NotificationType.FRIEND_ACCEPT.toRaw()) {
-                                //accept the friend!
-                                ServerInteractor.addAsFriend(object["sender"] as String);
-                                //object["viewed"] = true;
-                            }
-                        }
-                        object.saveInBackground()
-                    }
-                }
-            }
-        });
-    }
     //checks that user should do whenever starting to use app on account
-    class func initialUserChecks() {
+    /*class func initialUserChecks() {
         //check and see if user has any notice for removal of friends
         var query = PFQuery(className: "BreakupNotice");
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
@@ -707,7 +678,7 @@ import UIKit
                 NSLog("Error: Could not fetch");
             }
         });
-    }
+    }*/
     //------------------Search methods---------------------------------------
     class func getSearchTerms(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
         var query = PFQuery(className: "SearchTerm");

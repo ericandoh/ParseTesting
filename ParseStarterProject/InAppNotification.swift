@@ -58,26 +58,11 @@ class InAppNotification {
                         self.messageString = "Your picture has gotten \(numLikes) likes!"
                         listener.tableView.reloadData()
                     });
-                case NotificationType.FRIEND_REQUEST.toRaw():
+                case NotificationType.FOLLOWER_NOTIF.toRaw():
                     self.friendName = self.personalObj!["sender"] as String
-                    self.messageString = "You have received a friend request from \(self.friendName).";
+                    self.messageString = "\(self.friendName) loves you now!";
                     listener.tableView.reloadData();
-                    /*var obj = self.personalObj!["sender"] as PFUser
-                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        self.friendName = object["username"] as String;
-                        self.messageString = "You have received a friend request from \(self.friendName).";
-                        listener.tableView.reloadData();
-                    });*/
-                case NotificationType.FRIEND_ACCEPT.toRaw():
-                    self.friendName = self.personalObj!["sender"] as String
-                    self.messageString = "\(self.friendName) has accepted your friend invitation! People love you now!"
-                    listener.tableView.reloadData();
-                    /*var obj = self.personalObj!["sender"] as PFUser
-                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        self.friendName = object["username"] as String
-                        self.messageString = "\(self.friendName) has accepted your friend invitation! People love you now!"
-                        listener.tableView.reloadData()
-                    });*/
+                    
                 default:
                     self.messageString = self.personalObj!["message"] as String
                     listener.tableView.reloadData()
@@ -120,15 +105,4 @@ class InAppNotification {
         return obj;
     }
     
-    func acceptFriend() {
-        //for accept notification objects
-        if (type != NotificationType.FRIEND_REQUEST.toRaw()) {
-            //Post should be a Friend Request Notification
-            NSLog("Cannot accept friend from a non-friend request notification!")
-        }
-        self.friendName = self.personalObj!["sender"] as String;
-        ServerInteractor.addAsFriend(self.friendName)
-        ServerInteractor.postFriendAccept(self.friendName)
-        self.personalObj!.deleteInBackground()
-    }
 }

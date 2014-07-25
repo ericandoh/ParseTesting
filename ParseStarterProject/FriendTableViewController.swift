@@ -61,7 +61,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
     }
     
     override func tableView(tableView: UITableView!, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath!) -> String! {
-        return "Unfriend"
+        return "Unfollow"
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
@@ -72,7 +72,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
         
         if(temp == 0) {
             //cell is marked with a plus
-            cell.textLabel.text = "Add friend";
+            cell.textLabel.text = "Add follower";
         }
         else {
             cell.textLabel.text = friendList[temp - 1]!.getName({self.tableView.reloadData()});
@@ -116,10 +116,11 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         NSLog("Selecting");
         if (indexPath.row == 0) {
-            let alert: UIAlertController = UIAlertController(title: "Add Friend", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
+            let alert: UIAlertController = UIAlertController(title: "Add Follower", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                ServerInteractor.postFriendRequest((alert.textFields[0] as UITextField).text, controller: self);
+                ServerInteractor.postFollowerNotif((alert.textFields[0] as UITextField).text, controller: self);
+                ServerInteractor.addAsFriend((alert.textFields[0] as UITextField).text);
                 }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
@@ -143,6 +144,9 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             
         }
     }
+    
+    
+    
     func notifyFailure(message: String) {
         
         var alert = UIAlertController(title: "Uh oh!", message: message, preferredStyle: UIAlertControllerStyle.Alert);
