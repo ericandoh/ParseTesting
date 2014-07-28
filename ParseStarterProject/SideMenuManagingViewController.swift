@@ -41,7 +41,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }*/
     
     @IBAction func swiped(sender: UISwipeGestureRecognizer) {
-        NSLog("Swiped");
         var location: CGPoint = sender.locationInView(self.view);
         if (location.x <= BAR_WIDTH) {
             self.openMenu();
@@ -63,11 +62,9 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         /*
         viewControllerDictionary[currentlyShowing] => current view controller, if you want to manipulate it
         */
-        NSLog("Old x: \(self.sideView.center.x)")
         var x = self.sideView.center.x + BAR_WIDTH;
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
-        NSLog("New x: \(x)");
         self.sideView.hidden = false;
         self.view.bringSubviewToFront(self.sideView);
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {

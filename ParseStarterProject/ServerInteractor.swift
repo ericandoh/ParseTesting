@@ -232,7 +232,6 @@ import UIKit
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
-                newImgList.append(outputImg!);
                 UIGraphicsEndImageContext();
             }
             else if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio < WIDTH_HEIGHT_RATIO) {
@@ -268,7 +267,7 @@ import UIKit
             var images = preprocessImages(imgs);
             
             
-            var data = UIImagePNGRepresentation(images[0]);
+            //var data = UIImagePNGRepresentation(images[0]);
             
             //end
             

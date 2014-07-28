@@ -28,7 +28,6 @@ class ImagePreviewController: UIViewController {
 
         // Do any additional setup after loading the view.
         if receivedImages.count > 0 {
-            NSLog("Received \(receivedImages.count)")
             imageView.image = receivedImages[receivedImages.count - 1];
         }
         labelBar.text = prevLabel;
@@ -55,9 +54,13 @@ class ImagePreviewController: UIViewController {
         var description = textView.text;
         ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text);
         
+        //reset submission page
+        
+        
         if (self.navigationController) {
             if (self.navigationController.parentViewController) {
                 var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                 overlord.openHome();
             }
         }
@@ -67,6 +70,7 @@ class ImagePreviewController: UIViewController {
         if (self.navigationController) {
             if (self.navigationController.parentViewController) {
                 var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                 overlord.openHome();
             }
         }
@@ -83,17 +87,43 @@ class ImagePreviewController: UIViewController {
         self.prevDescrip = prevDescrip;
     }
 
+    @IBAction func addMoreImages(sender: UIButton) {
+        sendBackImages();
+        self.navigationController.popViewControllerAnimated(true);
+    }
+    func sendBackImages() {
+        self.receivedImages = [];
+        var currentIndex = self.navigationController.viewControllers.count;
+        if (currentIndex >= 2) {
+            var prevController: UIViewController = self.navigationController.viewControllers[currentIndex - 2] as UIViewController;
+            if (prevController is ImagePickingViewController) {
+                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text);
+            }
+        }
+    }
+    override func viewWillDisappear(animated: Bool) {
+        if (self.navigationController.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
+            sendBackImages();
+        }
+        super.viewWillDisappear(animated);
+    }
+
     
+    
+/*
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        
+        //-------THIS METHOD DOES NOT RUN--------------
+        
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
-        if (segue!.destinationViewController is NewCameraViewController) {
-            (segue!.destinationViewController as NewCameraViewController).receivePreviousImages(receivedImages, prevLabel: labelBar.text, prevDescrip: textView.text);
+        if (segue!.destinationViewController is ImagePickingViewController) {
+            (segue!.destinationViewController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text);
         }
     }
-    
+    */
 
 }

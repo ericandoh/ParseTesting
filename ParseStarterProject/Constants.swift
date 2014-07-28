@@ -36,6 +36,9 @@ let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
 //When HomeFeed is done with pictures, this picture is shown
 let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
 
+//camera icon iamge
+let CAMERA_ICON = UIImage(named: "temp_camera_icon.jpg")
+
 //width of a fullscreen image
 let FULLSCREEN_WIDTH = 320;
 
@@ -52,13 +55,14 @@ let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
 //this references ONLY storyboard ID names
 let SIDE_MENU_ITEMS = ["Home", "Upload", "Notifications", "Search", "Profile"];
 
+let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
+
 //side menu bar items we will have
 //this references ONLY the actual names to display on the side menu table
 let SIDE_MENU_NAMES = ["My Stash", "Upload", "Notifications", "Search", "My Profile"];
 
 //side menu bar width
 let BAR_WIDTH = 160.0;
-
 
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks

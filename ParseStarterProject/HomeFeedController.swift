@@ -291,7 +291,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func sideMenu(sender: UIButton) {
         if (self.parentViewController) {
-            NSLog("Opening menu");
             var overlord = self.parentViewController as SideMenuManagingViewController;
             overlord.openMenu();
         }

@@ -5,10 +5,8 @@
 //  Created by Eric Oh on 7/21/14.
 //
 //
-
+/*
 import UIKit
-
-
 
 class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -19,7 +17,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     
     //outlets for choose gallery button, take picture button, other buttons
     
-    var usingCamera: Bool = false;;
+    var usingCamera: Bool = false;
     
     var pickedImage: UIImage?;
     
@@ -175,4 +173,4 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
 
-}
+}*/

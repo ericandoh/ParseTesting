@@ -24,6 +24,8 @@ wordNumberer(98682091809184604);*/
 
 var dictionary: [String: String] = [:];
 dictionary.keys
+var arr = [1,2,3];
+contains(arr, 3);
 
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 
