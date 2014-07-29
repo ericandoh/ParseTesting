@@ -135,7 +135,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             //I "think" this makes a copy from storyboard, lets hope I am right.
             var nextBoard : UIViewController = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle()).instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
             
-            (nextBoard as SettingsViewController).receiveUserInfo(friendList[index]!);
+            (nextBoard as UserProfileViewController).receiveUserInfo(friendList[index]!);
             
             self.navigationController.pushViewController(nextBoard, animated: true);
             

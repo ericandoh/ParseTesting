@@ -20,6 +20,8 @@
 		09ABC07F13A1D52D009C3FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC07E13A1D52D009C3FCF /* main.m */; };
 		09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */; };
 		09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09BEF34B13D51C3F001BBCDB /* Security.framework */; };
+		24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */; };
+		24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D541982EDD400AF90FD /* SettingsViewController.swift */; };
 		24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */; };
 		24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A7197DCFA200916814 /* NewLoginViewController.swift */; };
 		24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A9197DE71300916814 /* ServerInteractor.swift */; };
@@ -58,7 +60,6 @@
 		D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */; };
 		D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */; };
 		D9F89B19195CCD9700849B1D /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B18195CCD9700849B1D /* StartController.swift */; };
-		D9F89B1B195CD89700849B1D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1A195CD89700849B1D /* SettingsViewController.swift */; };
 		D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1C195CE30600849B1D /* ImagePost.swift */; };
 		D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
@@ -82,6 +83,8 @@
 		09ABC08013A1D52D009C3FCF /* ParseStarterProjectAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseStarterProjectAppDelegate.h; sourceTree = "<group>"; };
 		09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseStarterProjectAppDelegate.m; sourceTree = "<group>"; };
 		09BEF34B13D51C3F001BBCDB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		24B90D541982EDD400AF90FD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUsernameSetupViewController.swift; sourceTree = "<group>"; };
 		24BA50A7197DCFA200916814 /* NewLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLoginViewController.swift; sourceTree = "<group>"; };
 		24BA50A9197DE71300916814 /* ServerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
@@ -129,7 +132,6 @@
 		D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeedController.swift; sourceTree = "<group>"; };
 		D9F89B18195CCD9700849B1D /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
-		D9F89B1A195CD89700849B1D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D9F89B1C195CE30600849B1D /* ImagePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePost.swift; sourceTree = "<group>"; };
 		D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostStruct.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -210,8 +212,8 @@
 				D97FCEBD1954E629007D5EE6 /* Controllers */,
 				09ABC08013A1D52D009C3FCF /* ParseStarterProjectAppDelegate.h */,
 				09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */,
-				D97FCEBB1954E60A007D5EE6 /* Main.storyboard */,
 				D996F6B1195C9A0E009E97B0 /* Constants.swift */,
+				D97FCEBB1954E60A007D5EE6 /* Main.storyboard */,
 				D9CB01F9195B4FFA0009D402 /* MyPlayground.playground */,
 				09ABC07813A1D52D009C3FCF /* Supporting Files */,
 				D96401F219533AA200C48191 /* UnassignedCode */,
@@ -251,7 +253,8 @@
 				D9CB01F7195B462B0009D402 /* ImagePreviewController.swift */,
 				D9CB01FC195B9ECD0009D402 /* HomeFeedController.swift */,
 				D9F89B18195CCD9700849B1D /* StartController.swift */,
-				D9F89B1A195CD89700849B1D /* SettingsViewController.swift */,
+				24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */,
+				24B90D541982EDD400AF90FD /* SettingsViewController.swift */,
 				D996F6AF195C937A009E97B0 /* NotifViewController.swift */,
 				D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */,
 				D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */,
@@ -379,6 +382,7 @@
 				D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
+				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
@@ -388,10 +392,10 @@
 				24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97E36E61977003700380A12 /* SearchViewController.swift in Sources */,
-				D9F89B1B195CD89700849B1D /* SettingsViewController.swift in Sources */,
 				D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
+				24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
 				D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */,
 				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,

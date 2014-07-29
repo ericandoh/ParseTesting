@@ -25,6 +25,7 @@ class FriendEncapsulator {
         username = friendName;
         friendObj = nil;
     }
+    
     //gets the name of the user, fetches it if needed
     func getName(failFunction: ()->Void)->String {
         if (username != "") {
@@ -42,6 +43,7 @@ class FriendEncapsulator {
         }
         return username;
     }
+    
     func fetchImage(receiveAction:(UIImage)->Void) {
         if friendImg {
             receiveAction(friendImg!);

@@ -23,6 +23,7 @@ import UIKit
         
         user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
+        user["likedPosts"] = NSMutableArray();
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
@@ -279,7 +280,9 @@ import UIKit
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");
                 });*/
-            
+            //PFUser.currentUser().incrementKey("numPosts")
+            //PFUser.currentUser().saveEventually();
+
             newPost.myObj.saveInBackgroundWithBlock({
                 (succeeded: Bool, error: NSError!)->Void in
                 if (succeeded && !error) {
@@ -320,6 +323,44 @@ import UIKit
         return output;
     }
     
+    class func appendToLikedPosts(id: String) {
+        var likedPostsArray = PFUser.currentUser()["likedPosts"] as NSMutableArray
+        likedPostsArray.insertObject(id, atIndex: 0)
+        PFUser.currentUser()["likedPosts"] = likedPostsArray
+        PFUser.currentUser().saveInBackground()
+    }
+    
+    class func getLikedPosts(skip: Int, loadCount: Int, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
+        var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
+        //postsToGet = Array(postsToGet[skip...(skip + loadCount)])
+        var oldCPosts = postsToGet.bridgeToObjectiveC();
+        //postsToGet = stupidArray
+        if (oldCPosts.count - skip >= loadCount) {
+            oldCPosts = oldCPosts.subarrayWithRange(NSRange(location: skip, length: loadCount))
+        } else {
+            oldCPosts = oldCPosts.subarrayWithRange(NSRange(location: skip, length: oldCPosts.count - skip))
+        }
+        var query = PFQuery(className:"ImagePost")
+        NSLog("Okay")
+        query.whereKey("objectId", containedIn: oldCPosts)
+        NSLog("Okay yAY!")
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if !error {
+                NSLog("YAY")
+                notifyQueryFinish(objects.count);
+                    var post: ImagePostStructure?;
+                    for (index, object: PFObject!) in enumerate(objects!) {
+                        post = ImagePostStructure(inputObj: object);
+                        var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
+                        post!.loadImage(finishFunction, index: realIndex);
+                    }
+                } else {
+                    NSLog("oh no!")
+                }
+            }
+    }
+
     //return ImagePostStructure(image, likes)
     //counter = how many pages I've seen (used for pagination)
     //this method DOES fetch the images along with the data
@@ -402,7 +443,7 @@ import UIKit
                 
                 // Do something with the found objects
                 var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
+                for (index, object: PFObject!) in enumerate(objects!) {
                     post = ImagePostStructure(inputObj: object);
                     post!.loadImage(finishFunction, index: index);
                 }
@@ -555,7 +596,7 @@ import UIKit
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFollowerNotif(friendName: String, controller: UIViewController) {
         if (friendName == "") {
-            (controller as SettingsViewController).notifyFailure("Please fill in a name");
+            (controller as UserProfileViewController).notifyFailure("Please fill in a name");
             return;
         }
         

@@ -54,7 +54,6 @@ class ImagePostStructure
 
         myObj["comments"] = [];
         
-        
         var labelArr = ServerInteractor.separateLabels(labels);
         myObj["labels"] = labelArr;
         
@@ -71,7 +70,9 @@ class ImagePostStructure
         //increment like counter for this post
         myObj.incrementKey("likes")
         myObj.saveInBackground()
+        ServerInteractor.appendToLikedPosts(myObj.objectId)
     }
+
     func pass() {
         //increment pass counter for this post
         myObj.incrementKey("passes")
@@ -100,6 +101,9 @@ class ImagePostStructure
                     //get file objects
                     self.image = UIImage(data: result);
                     finishFunction(imgStruct: self, index: index);
+                }
+                else {
+                    NSLog("Error fetching image \(index)");
                 }
             });
         }
