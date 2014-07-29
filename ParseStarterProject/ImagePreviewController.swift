@@ -10,6 +10,16 @@
 
 import UIKit
 
+
+let BOX_START_Y = 436.0;
+let LABEL_BOX_HEIGHT = 40.0;
+let LABEL_SPACING = 5.0;
+let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
+
+class ShopButton: UIButton {
+    var shopIndex: Int = -1;
+}
+
 class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var labelBar: UITextField;
@@ -22,6 +32,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var mainView: UIView
     
+    @IBOutlet var scrollView: UIScrollView
+    
+    @IBOutlet var shopTheLookView: UIView
+    
+    @IBOutlet var shopTheLookConstraint: NSLayoutConstraint
     var movingWindow: Bool = false;
     
     var receivedImages: Array<UIImage> = [];
@@ -30,6 +45,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     var prevDescrip: String = "";
     
     var highlightOrder: Array<ImageIndex> = [];
+    
+    var shopTheLook: Array<ShopLook> = [];
+    
+    var shopButtons: Array<ShopButton> = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +59,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.text = prevDescrip;
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
+        scrollView.contentSize = CGSize(width: 320, height: 695);   //595
     }
     
     //function triggered by pushing check button
@@ -89,14 +109,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    func receiveImage(imageValues: Array<UIImage>, hOrder: Array<ImageIndex>, prevLabel: String, prevDescrip: String) {
+    func receiveImage(imageValues: Array<UIImage>, hOrder: Array<ImageIndex>, prevLabel: String, prevDescrip: String, prevShop: Array<ShopLook>) {
         receivedImages = imageValues;
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
         self.highlightOrder = hOrder;
+        self.shopTheLook = prevShop;
     }
 
     @IBAction func addMoreImages(sender: UIButton) {
+        NSLog("Deprecated!")
         sendBackImages(2);
         self.navigationController.popViewControllerAnimated(true);
     }
@@ -109,6 +131,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
             sideTableView.setEditing(false, animated: false);
             overlord.setSuppressed(false);
+            scrollView.scrollEnabled = true;
         }
         else {
             navigationTitle.setTitle("Stop Edits", forState: UIControlState.Normal);
@@ -116,6 +139,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             overlord.setSuppressed(true);
             var newOrigin = CGPoint(x: mainOrigin.x, y: mainOrigin.y + 20);
             movingWindow = true;
+            scrollView.scrollEnabled = false;
+            scrollView.setContentOffset(CGPointZero, animated: true);
             UIView.animateWithDuration(0.15, animations: {() in
                 self.mainView.frame.origin = newOrigin;
                 }, completion: {(success: Bool) in
@@ -163,13 +188,64 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    
+    @IBAction func addShopTheLook(sender: UIButton) {
+        let alert: UIAlertController = UIAlertController(title: "Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
+            field.placeholder = "Title/Short Description";
+        });
+        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
+            field.placeholder = "Link where I can get it!";
+            });
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            var title = (alert.textFields[0] as UITextField).text;
+            var urlLink = (alert.textFields[1] as UITextField).text;
+            self.addManualShopTheLook(ShopLook(title: title, urlLink: urlLink));
+            }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            //canceled
+            }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func whatIsShopTheLook(sender: UIButton) {
+        let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    func addManualShopTheLook(look: ShopLook) {
+        //function for pushing down stack
+        shopTheLook.append(look);
+        var oldY = BOX_START_Y + Double(shopTheLook.count - 1) * BOX_INCR_Y;
+        var newY = BOX_START_Y + Double(shopTheLook.count) * BOX_INCR_Y;
+        var newButton = ShopButton(frame: CGRectMake(10.0, oldY, 300.0, LABEL_BOX_HEIGHT));
+        newButton.setTitle(look.title, forState: UIControlState.Normal);
+        shopButtons.append(newButton);
+        newButton.backgroundColor = UIColor.redColor();
+        mainView.addSubview(newButton);
+        mainView.bringSubviewToFront(newButton);
+
+
+        shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y;
+
+        /*
+        //var frame: CGRect = shopTheLookView.frame;
+        shopTheLookView.removeFromSuperview();
+        //frame.origin.y = frame.origin.y + 40.0;
+        //NSLog("\(frame.origin.y)")
+        shopTheLookView.frame = CGRectMake(10.0, newY, 300.0, LABEL_BOX_HEIGHT);
+        shopTheLookView.backgroundColor = UIColor.blueColor();
+        mainView.addSubview(shopTheLookView);
+        mainView.bringSubviewToFront(shopTheLookView);*/
+    }
     func sendBackImages(seeBack: Int) {
         self.receivedImages = [];
         var currentIndex = self.navigationController.viewControllers.count;
         if (currentIndex >= seeBack) {
             var prevController: UIViewController = self.navigationController.viewControllers[currentIndex - seeBack] as UIViewController;
             if (prevController is ImagePickingViewController) {
-                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text, prevOrder: highlightOrder);
+                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text, prevOrder: highlightOrder, prevShop: shopTheLook);
             }
         }
     }

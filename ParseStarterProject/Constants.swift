@@ -47,6 +47,8 @@ let FULLSCREEN_HEIGHT = 518;
 
 let UPLOAD_TABLE_DELETE_LIMIT = 100.0;
 
+let SIDE_MENU_DIM = 0.5;
+
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
 

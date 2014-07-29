@@ -463,8 +463,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func viewComments(sender: UIButton) {
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath        
-        if (self.loadedPosts.count == 0 || (!self.loadedPosts[self.viewCounter])) {
+        if (self.loadedPosts.count == 0 || self.viewCounter >= self.loadedPosts.count || (!self.loadedPosts[self.viewCounter])) {
             //there is no image for this post - no posts on feed
+            //or i am at ending page (VC >= post count)
             //no post = no comments
             //this might happen due to network problems
             return;

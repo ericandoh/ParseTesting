@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
@@ -28,8 +29,8 @@
             <objects>
                 <viewController storyboardIdentifier="UserProfilePage" id="Ism-7q-CMJ" customClass="SettingsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Nfy-rg-YRm"/>
-                        <viewControllerLayoutGuide type="bottom" id="vQ2-VK-Tug"/>
+                        <viewControllerLayoutGuide type="top" id="sXG-M8-X8H"/>
+                        <viewControllerLayoutGuide type="bottom" id="Wda-xj-Qno"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Ec-Vo-ZiR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -192,8 +193,8 @@
             <objects>
                 <viewController id="KLW-Kf-YUh" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="748-1i-OFN"/>
-                        <viewControllerLayoutGuide type="bottom" id="oBf-zb-Oi1"/>
+                        <viewControllerLayoutGuide type="top" id="Sic-ci-0OA"/>
+                        <viewControllerLayoutGuide type="bottom" id="cMr-5o-0dE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dyb-1B-mrT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -237,8 +238,8 @@
             <objects>
                 <viewController id="Rfu-F6-5hC" customClass="ImagePickingViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Un6-eF-dQg"/>
-                        <viewControllerLayoutGuide type="bottom" id="xR7-kf-sQ7"/>
+                        <viewControllerLayoutGuide type="top" id="ycI-qK-lSI"/>
+                        <viewControllerLayoutGuide type="bottom" id="jK5-Ey-Dm2"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jZV-i1-a5h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -399,8 +400,8 @@
             <objects>
                 <viewController id="gyS-wk-cim" customClass="ImagePostNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mPB-ZG-W4z"/>
-                        <viewControllerLayoutGuide type="bottom" id="hSB-21-6UE"/>
+                        <viewControllerLayoutGuide type="top" id="52y-Xg-pQa"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Hj-GB-rwQ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="du7-1U-nIP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -484,8 +485,8 @@
             <objects>
                 <viewController id="geD-Vt-qQ8" customClass="SingleNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="AKS-nv-dsq"/>
-                        <viewControllerLayoutGuide type="bottom" id="6xD-vt-0LT"/>
+                        <viewControllerLayoutGuide type="top" id="f74-eD-Yoc"/>
+                        <viewControllerLayoutGuide type="bottom" id="7th-gM-voU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LcW-G4-FI1">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -514,8 +515,8 @@
             <objects>
                 <viewController storyboardIdentifier="Home" id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="O35-wX-9V0"/>
-                        <viewControllerLayoutGuide type="bottom" id="8qv-xl-lyB"/>
+                        <viewControllerLayoutGuide type="top" id="3bE-tw-3q8"/>
+                        <viewControllerLayoutGuide type="bottom" id="v8x-6Y-FYl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pI2-mo-dPH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -651,8 +652,8 @@
             <objects>
                 <viewController id="B0E-wR-fsK" customClass="FBUsernameSetupViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xOn-qX-R7J"/>
-                        <viewControllerLayoutGuide type="bottom" id="sBC-KN-rDd"/>
+                        <viewControllerLayoutGuide type="top" id="bMu-tX-yaP"/>
+                        <viewControllerLayoutGuide type="bottom" id="e2X-V9-vQ9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fhE-vx-S2V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -700,8 +701,8 @@
             <objects>
                 <viewController id="cfa-MP-8Gc" customClass="StartController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Mt1-FN-0cC"/>
-                        <viewControllerLayoutGuide type="bottom" id="9vw-Bb-ICi"/>
+                        <viewControllerLayoutGuide type="top" id="KLQ-sr-zh0"/>
+                        <viewControllerLayoutGuide type="bottom" id="vy2-4W-52w"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fBC-Qh-i7V">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -730,8 +731,8 @@
             <objects>
                 <viewController id="oQL-hX-F0F" customClass="SideMenuManagingViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="F8B-OD-Bd6"/>
-                        <viewControllerLayoutGuide type="bottom" id="eh2-jw-YRg"/>
+                        <viewControllerLayoutGuide type="top" id="z7h-M6-J5E"/>
+                        <viewControllerLayoutGuide type="bottom" id="ist-gp-Mes"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ACU-14-sjx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -775,6 +776,16 @@
                                     <outletCollection property="gestureRecognizers" destination="2aA-iN-R5F" appends="YES" id="Kbc-LV-vy5"/>
                                 </connections>
                             </view>
+                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2u-Cc-WbD">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickOutOfMenu:" destination="oQL-hX-F0F" eventType="touchUpInside" id="cnq-BC-XvO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -783,6 +794,7 @@
                     </view>
                     <connections>
                         <outlet property="contentArea" destination="Y6y-Mh-PYK" id="YSs-8W-OuE"/>
+                        <outlet property="outOfMenuButton" destination="c2u-Cc-WbD" id="KVy-52-zfT"/>
                         <outlet property="sideTableView" destination="p1A-64-2tQ" id="Wkf-8i-uNV"/>
                         <outlet property="sideView" destination="oBM-Ln-eoU" id="yNa-cb-r8k"/>
                     </connections>
@@ -824,8 +836,8 @@
             <objects>
                 <viewController id="Z5R-ca-bUH" customClass="NewLoginViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xbP-mn-DhC"/>
-                        <viewControllerLayoutGuide type="bottom" id="TTe-tL-92u"/>
+                        <viewControllerLayoutGuide type="top" id="kSO-Gc-Mbh"/>
+                        <viewControllerLayoutGuide type="bottom" id="17l-0w-PJK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EoO-cL-tcl">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -908,8 +920,8 @@
             <objects>
                 <viewController id="d93-87-W5i" customClass="SearchViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="gSZ-3F-Aw6"/>
-                        <viewControllerLayoutGuide type="bottom" id="m37-vn-99Y"/>
+                        <viewControllerLayoutGuide type="top" id="ReR-TV-mNd"/>
+                        <viewControllerLayoutGuide type="bottom" id="rIy-Mp-g7Y"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="tOl-9H-a9Q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -953,81 +965,13 @@
             </objects>
             <point key="canvasLocation" x="108" y="2408"/>
         </scene>
-        <!--Upload-->
-        <scene sceneID="4d5-08-bRc">
-            <objects>
-                <navigationController id="HVv-7F-ygJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Upload" id="B38-RU-4i9"/>
-                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="3PV-ka-a85">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Sn1-Di-YON" kind="relationship" relationship="rootViewController" id="4O5-Tr-1la"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aE7-wT-e3s" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2400" y="195"/>
-        </scene>
-        <!--Upload-->
-        <scene sceneID="GWN-jX-G5j">
-            <objects>
-                <viewController id="Sn1-Di-YON" customClass="NewCameraViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eGR-yR-606"/>
-                        <viewControllerLayoutGuide type="bottom" id="85c-jx-Rtc"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="f7i-Qk-eYg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Anonymous users cannot upload pictures" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="225" translatesAutoresizingMaskIntoConstraints="NO" id="KWN-6a-5fe">
-                                <rect key="frame" x="48" y="156" width="225" height="81"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nk0-uG-nJS">
-                                <rect key="frame" x="133" y="98" width="54" height="30"/>
-                                <state key="normal" title="Camera">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cameraAction:" destination="Sn1-Di-YON" eventType="touchUpInside" id="XUD-OV-TiS"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ayC-O0-7Dc">
-                                <rect key="frame" x="139" y="262" width="48" height="30"/>
-                                <state key="normal" title="Gallery">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="galleryAction:" destination="Sn1-Di-YON" eventType="touchUpInside" id="24B-Jy-e6z"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Upload" id="vdp-0I-E4W"/>
-                    <navigationItem key="navigationItem" title="Upload" id="Qtn-kN-udc"/>
-                    <connections>
-                        <outlet property="anonMessage" destination="KWN-6a-5fe" id="3SH-fb-Tds"/>
-                        <outlet property="cameraButton" destination="Nk0-uG-nJS" id="4ZO-et-Db8"/>
-                        <outlet property="galleryButton" destination="ayC-O0-7Dc" id="goL-m2-kX0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ygh-OF-Np9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2785" y="195"/>
-        </scene>
         <!--ImagePreview-->
         <scene sceneID="dJH-XE-0Yx">
             <objects>
                 <viewController restorationIdentifier="ImagePreview" storyboardIdentifier="ImagePreview" title="ImagePreview" id="gqO-OJ-AGi" userLabel="ImagePreview" customClass="ImagePreviewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EOU-cc-ypv"/>
-                        <viewControllerLayoutGuide type="bottom" id="mVt-U3-Xnw"/>
+                        <viewControllerLayoutGuide type="top" id="y6y-yY-045"/>
+                        <viewControllerLayoutGuide type="bottom" id="lHx-EV-sBv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SSB-6O-sm9">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -1039,83 +983,107 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8i-6h-3i3">
-                                <rect key="frame" x="0.0" y="70" width="320" height="498"/>
+                            <scrollView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="top" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uk-HZ-4aK">
+                                <rect key="frame" x="0.0" y="70" width="320" height="500"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="." translatesAutoresizingMaskIntoConstraints="NO" id="6vL-4S-BXh">
-                                        <rect key="frame" x="13" y="256" width="285" height="118"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
-                                        <rect key="frame" x="13" y="382" width="53" height="30"/>
-                                        <state key="normal" title="Submit!">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="acceptImage:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="SV3-n3-mC4"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Labels" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJj-Ib-5Pe">
-                                        <rect key="frame" x="13" y="165" width="51" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPH-Hz-9X3">
-                                        <rect key="frame" x="94" y="382" width="122" height="30"/>
-                                        <state key="normal" title="Add More Images">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addMoreImages:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="5ro-em-r1C"/>
-                                        </connections>
-                                    </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="plaid, cardigan, etc" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
-                                        <rect key="frame" x="13" y="189" width="285" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-Rw-cYU">
-                                        <rect key="frame" x="13" y="227" width="88" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
-                                        <rect key="frame" x="252" y="382" width="48" height="30"/>
-                                        <state key="normal" title="Cancel">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="reject:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="L8r-WC-7up"/>
-                                        </connections>
-                                    </button>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="ParseStarterProject" customModuleProvider="target">
-                                        <rect key="frame" x="85" y="-58" width="150" height="285"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideCell" id="0Es-dJ-V3Z" customClass="SideTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Es-dJ-V3Z" id="dWX-hD-r8l">
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                                <gestureRecognizers/>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8i-6h-3i3">
+                                        <rect key="frame" x="0.0" y="1" width="320" height="600"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="." translatesAutoresizingMaskIntoConstraints="NO" id="6vL-4S-BXh">
+                                                <rect key="frame" x="13" y="189" width="285" height="118"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJj-Ib-5Pe">
+                                                <rect key="frame" x="110" y="160" width="88" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tags" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-Rw-cYU">
+                                                <rect key="frame" x="142" y="315" width="36" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="ParseStarterProject" customModuleProvider="target">
+                                                <rect key="frame" x="85" y="-58" width="150" height="285"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideCell" id="0Es-dJ-V3Z" customClass="SideTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Es-dJ-V3Z" id="dWX-hD-r8l">
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                        <gestureRecognizers/>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="ehz-2P-1rt" appends="YES" id="ACZ-iJ-mrO"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
                                                 <connections>
-                                                    <outletCollection property="gestureRecognizers" destination="ehz-2P-1rt" appends="YES" id="ACZ-iJ-mrO"/>
+                                                    <outlet property="dataSource" destination="gqO-OJ-AGi" id="N5b-pB-YSX"/>
+                                                    <outlet property="delegate" destination="gqO-OJ-AGi" id="kaS-x3-Kls"/>
                                                 </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="gqO-OJ-AGi" id="N5b-pB-YSX"/>
-                                            <outlet property="delegate" destination="gqO-OJ-AGi" id="kaS-x3-Kls"/>
-                                        </connections>
-                                    </tableView>
+                                            </tableView>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="#brand #cute #style" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
+                                                <rect key="frame" x="13" y="344" width="285" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <view autoresizesSubviews="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="Lbc-TH-R0A">
+                                                <rect key="frame" x="10" y="436" width="300" height="150"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMw-4I-Q8A">
+                                                        <rect key="frame" x="0.0" y="5" width="250" height="30"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        <state key="normal" title="Add &quot;Shop The Look&quot; (opt)">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addShopTheLook:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="VZS-dg-Exr"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgF-7S-xwR">
+                                                        <rect key="frame" x="257" y="5" width="30" height="30"/>
+                                                        <state key="normal" title="?">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="whatIsShopTheLook:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="Pd8-Xv-IqY"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
+                                                        <rect key="frame" x="126" y="100" width="48" height="30"/>
+                                                        <state key="normal" title="Cancel">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="reject:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="L8r-WC-7up"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
+                                                        <rect key="frame" x="124" y="62" width="53" height="30"/>
+                                                        <state key="normal" title="Submit!">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="acceptImage:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="SV3-n3-mC4"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Lbc-TH-R0A" firstAttribute="top" secondItem="QDt-YK-rqw" secondAttribute="bottom" constant="62" id="ic9-Ro-agx"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -1136,6 +1104,9 @@
                         <outlet property="labelBar" destination="QDt-YK-rqw" id="avE-8q-fcY"/>
                         <outlet property="mainView" destination="v8i-6h-3i3" id="Ihv-7T-0NU"/>
                         <outlet property="navigationTitle" destination="Muk-yJ-gNs" id="1bC-oA-Tn5"/>
+                        <outlet property="scrollView" destination="3uk-HZ-4aK" id="3AU-to-HIy"/>
+                        <outlet property="shopTheLookConstraint" destination="ic9-Ro-agx" id="Gcp-nd-fAG"/>
+                        <outlet property="shopTheLookView" destination="Lbc-TH-R0A" id="hVz-Od-SO1"/>
                         <outlet property="sideTableView" destination="JvP-R4-WaX" id="A1p-TO-35F"/>
                         <outlet property="textView" destination="6vL-4S-BXh" id="qQK-9X-YQR"/>
                     </connections>
@@ -1149,13 +1120,13 @@
             </objects>
             <point key="canvasLocation" x="1924" y="1004"/>
         </scene>
-        <!--(Empty text)-->
+        <!--Register-->
         <scene sceneID="GbN-ib-ZeW">
             <objects>
-                <viewController id="vp5-wb-cPq" customClass="SignUpViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterScene" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vp5-wb-cPq" customClass="SignUpViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZFn-0Q-zTE"/>
-                        <viewControllerLayoutGuide type="bottom" id="4fd-TK-1GL"/>
+                        <viewControllerLayoutGuide type="top" id="NzS-xx-q4R"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Hu-95-juu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WHv-yr-geh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
@@ -1201,7 +1172,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="(Empty text)" id="szm-Ia-HJF">
+                    <navigationItem key="navigationItem" title="Register" id="szm-Ia-HJF">
                         <barButtonItem key="backBarButtonItem" title="Login" id="kxc-Rj-coV"/>
                     </navigationItem>
                     <connections>
@@ -1302,7 +1273,7 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="9oq-uE-35W"/>
-        <segue reference="8GE-Sz-0lp"/>
+        <segue reference="jrF-7g-MJv"/>
+        <segue reference="nLw-DS-sgH"/>
     </inferredMetricsTieBreakers>
 </document>

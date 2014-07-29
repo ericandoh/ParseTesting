@@ -53,7 +53,8 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     
     var prevLabel: String = "";
     var prevDescrip: String = "";
-    
+    var shopLook: Array<ShopLook> = [];
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -364,9 +365,10 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         self.performSegueWithIdentifier("ImagePreview", sender: self);
     }
     
-    func receivePreviousImages(prevLabel: String, prevDescrip: String, prevOrder: Array<ImageIndex>) {
+    func receivePreviousImages(prevLabel: String, prevDescrip: String, prevOrder: Array<ImageIndex>, prevShop: Array<ShopLook>) {
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
+        self.shopLook = prevShop;
         highlightOrder = prevOrder;
         for (index, item) in enumerate(currentAssets) {
             currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
@@ -389,7 +391,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         if (segue.destinationViewController is ImagePreviewController) {
             var nextController = segue.destinationViewController as ImagePreviewController;
             //currImgs.append(pickedImage!);
-            nextController.receiveImage(retList, hOrder: highlightOrder, prevLabel: prevLabel, prevDescrip: prevDescrip);
+            nextController.receiveImage(retList, hOrder: highlightOrder, prevLabel: prevLabel, prevDescrip: prevDescrip, prevShop: shopLook);
         }
         else {
             NSLog("Destination View Controller mismatch???");

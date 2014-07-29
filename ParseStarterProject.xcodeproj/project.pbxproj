@@ -43,6 +43,7 @@
 		D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */; };
 		D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0161986D2A5000A3037 /* SideTableView.swift */; };
 		D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */; };
+		D95EA01B19873FAE000A3037 /* ShopLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA01A19873FAE000A3037 /* ShopLook.swift */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
 		D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */; };
@@ -115,6 +116,7 @@
 		D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp_camera_icon.jpg; sourceTree = "<group>"; };
 		D95EA0161986D2A5000A3037 /* SideTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableView.swift; sourceTree = "<group>"; };
 		D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableViewCell.swift; sourceTree = "<group>"; };
+		D95EA01A19873FAE000A3037 /* ShopLook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLook.swift; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleNotifViewController.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */,
 				D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */,
 				D9F89B1C195CE30600849B1D /* ImagePost.swift */,
+				D95EA01A19873FAE000A3037 /* ShopLook.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */,
+				D95EA01B19873FAE000A3037 /* ShopLook.swift in Sources */,
 				D9715D2F1964CD3C00BA3C74 /* ImagePostNotifViewController.swift in Sources */,
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
