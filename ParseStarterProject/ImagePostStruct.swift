@@ -87,6 +87,9 @@ class ImagePostStructure
     func getPasses()->Int {
         return myObj["passes"] as Int
     }
+    func getImagesCount()->Int {
+        return (myObj["imageFiles"] as Array<PFFile>).count;
+    }
     func loadImage() {
         if (!image) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;

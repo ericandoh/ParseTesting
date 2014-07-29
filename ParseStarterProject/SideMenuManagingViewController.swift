@@ -45,7 +45,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBAction func swiped(sender: UISwipeGestureRecognizer) {
         var location: CGPoint = sender.locationInView(self.view);
-        if (location.x <= BAR_WIDTH) {
+        if (location.x <= TRIGGER_BAR_WIDTH) {
             self.openMenu();
         }
     }
@@ -235,6 +235,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
+        cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

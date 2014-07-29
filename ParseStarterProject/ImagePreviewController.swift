@@ -10,12 +10,6 @@
 
 import UIKit
 
-
-let BOX_START_Y = 436.0;
-let LABEL_BOX_HEIGHT = 40.0;
-let LABEL_SPACING = 5.0;
-let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
-
 class ShopButton: UIButton {
     var shopIndex: Int = -1;
 }
@@ -59,7 +53,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.text = prevDescrip;
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
-        scrollView.contentSize = CGSize(width: 320, height: 695);   //595
+        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595
     }
     
     //function triggered by pushing check button
@@ -217,9 +211,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func addManualShopTheLook(look: ShopLook) {
         //function for pushing down stack
         shopTheLook.append(look);
+        
+        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(shopTheLook.count) * BOX_INCR_Y);
+        
         var oldY = BOX_START_Y + Double(shopTheLook.count - 1) * BOX_INCR_Y;
         var newY = BOX_START_Y + Double(shopTheLook.count) * BOX_INCR_Y;
-        var newButton = ShopButton(frame: CGRectMake(10.0, oldY, 300.0, LABEL_BOX_HEIGHT));
+        var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
         newButton.setTitle(look.title, forState: UIControlState.Normal);
         shopButtons.append(newButton);
         newButton.backgroundColor = UIColor.redColor();

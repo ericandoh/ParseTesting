@@ -17,6 +17,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var authorTextField: UILabel
     @IBOutlet var descriptionTextField: UILabel
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
+    @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
     //@IBOutlet var backImageView: UIImageView      //deprecated
     
@@ -92,6 +93,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         loadSet();
     }
     //to load another set, if possible
+    //build in functionality HERE to make it load other posts (if not loading home screen posts)
     func loadSet() {
         if (isLoading) {
             return;
@@ -145,8 +147,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     func configureCurrent() {
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = loadedPosts[viewCounter];
+        pageCounter.text = String(postCounter + 1)+"/"+String(currentPost!.getImagesCount() + 2);
         if (postCounter == 0) {
             frontImageView!.image = currentPost!.image;
+            //stupid nonprogrammers and their 1-based counting system
         }
         else {
             var currentPostNum = postCounter;
@@ -230,6 +234,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //show end of file screen, refresh if needed
             refreshNeeded = true;
             frontImageView!.image = ENDING_IMG;
+            pageCounter.text = "0/0";
         }
         else if (viewCounter < 0) {
             //do nothing
