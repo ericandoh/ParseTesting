@@ -33,6 +33,7 @@
 		C4C51B591613CE0800959FDC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4C51B561613CE0800959FDC /* Default@2x.png */; };
 		D9125D05195C7E090082F97B /* horned-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D9125D04195C7E090082F97B /* horned-logo.png */; };
 		D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9130EC2197D957D0063E081 /* NewCameraViewController.swift */; };
+		D914F7F4198805DD00A59314 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */; };
 		D91C98D7196EF69A00E1DBEE /* testbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91C98D6196EF69A00E1DBEE /* testbackground.jpg */; };
 		D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */; };
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
@@ -40,6 +41,12 @@
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
 		D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */; };
 		D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */; };
+		D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */; };
+		D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */; };
+		D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */; };
+		D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0161986D2A5000A3037 /* SideTableView.swift */; };
+		D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */; };
+		D95EA01B19873FAE000A3037 /* ShopLook.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA01A19873FAE000A3037 /* ShopLook.swift */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
 		D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */; };
@@ -101,6 +108,7 @@
 		C4C51B561613CE0800959FDC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		D9125D04195C7E090082F97B /* horned-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "horned-logo.png"; sourceTree = "<group>"; };
 		D9130EC2197D957D0063E081 /* NewCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCameraViewController.swift; sourceTree = "<group>"; };
+		D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		D91C98D6196EF69A00E1DBEE /* testbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testbackground.jpg; sourceTree = "<group>"; };
 		D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
@@ -108,6 +116,12 @@
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
 		D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuManagingViewController.swift; sourceTree = "<group>"; };
 		D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
+		D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp_camera_icon.jpg; sourceTree = "<group>"; };
+		D95EA0161986D2A5000A3037 /* SideTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableView.swift; sourceTree = "<group>"; };
+		D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableViewCell.swift; sourceTree = "<group>"; };
+		D95EA01A19873FAE000A3037 /* ShopLook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLook.swift; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleNotifViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +279,11 @@
 				D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */,
 				D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */,
 				D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */,
+				D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */,
+				D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */,
+				D95EA0161986D2A5000A3037 /* SideTableView.swift */,
+				D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */,
+				D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -275,6 +294,7 @@
 				D97FCED31954E67D007D5EE6 /* SamplePFObjectOverride.h */,
 				D97FCED41954E67D007D5EE6 /* SamplePFObjectOverride.m */,
 				D9F89B1C195CE30600849B1D /* ImagePost.swift */,
+				D95EA01A19873FAE000A3037 /* ShopLook.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -282,6 +302,7 @@
 		D99B5FCF196DBB2500662A39 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */,
 				D99B5FCB196DA0FD00662A39 /* unknown_user.png */,
 			);
 			name = Defaults;
@@ -353,6 +374,7 @@
 				D9125D05195C7E090082F97B /* horned-logo.png in Resources */,
 				09ABC07C13A1D52D009C3FCF /* InfoPlist.strings in Resources */,
 				D99B5FCC196DA0FD00662A39 /* unknown_user.png in Resources */,
+				D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */,
 				D96402531953589600C48191 /* Images.xcassets in Resources */,
 				D96401F319533AA200C48191 /* UnassignedCode in Resources */,
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,
@@ -373,6 +395,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9CB01FD195B9ECD0009D402 /* HomeFeedController.swift in Sources */,
+				D914F7F4198805DD00A59314 /* FindFriendsViewController.swift in Sources */,
+				D95EA01B19873FAE000A3037 /* ShopLook.swift in Sources */,
 				D9715D2F1964CD3C00BA3C74 /* ImagePostNotifViewController.swift in Sources */,
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
@@ -380,6 +404,8 @@
 				24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */,
 				D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */,
 				D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */,
+				D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */,
+				D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
@@ -397,10 +423,12 @@
 				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
 				24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
+				D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */,
 				D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */,
 				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,
 				D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
+				D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

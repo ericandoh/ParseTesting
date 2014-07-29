@@ -92,23 +92,16 @@ import UIKit
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
-                NSLog("Yay you worked!!!")
-                NSLog("Setting up initial stuff for user");
                 user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();
-                NSLog("DFJNVKJSNDFKJN")
-               // ServerInteractor.initialUserChecks();
+                // ServerInteractor.initialUserChecks();
                 //user's first notification
-                NSLog("Got this far???")
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
-                NSLog("Lol can't touch me?")
                 user.saveEventually();
                 //logController.successfulLogin();
-                NSLog("Are you seriously coming this far")
                 //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
                 logController.facebookLogin()
-                NSLog("WTF where's the error")
-
+                
                 //var userID = userData.name
                 //userNameLabel.text = ServerInteractor.getUserName()
                 
@@ -130,7 +123,6 @@ import UIKit
                 
             } else {
                 //logController.failedLogin("User logged in through Facebook!")
-                NSLog("Why would you skip everything else???????")
                 //ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
             }
@@ -182,7 +174,7 @@ import UIKit
     //------------------Image Post related methods---------------------------------------
     //separates + processes label string, and also uploads labels to server
     class func separateLabels(labels: String)->Array<String> {
-        var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "));
+        var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", #"));
         arr = arr.filter({(obj: String)->Bool in obj != ""});
         
         
@@ -233,7 +225,6 @@ import UIKit
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
-                newImgList.append(outputImg!);
                 UIGraphicsEndImageContext();
             }
             else if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio < WIDTH_HEIGHT_RATIO) {
@@ -269,7 +260,7 @@ import UIKit
             var images = preprocessImages(imgs);
             
             
-            var data = UIImagePNGRepresentation(images[0]);
+            //var data = UIImagePNGRepresentation(images[0]);
             
             //end
             

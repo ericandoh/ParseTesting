@@ -14,9 +14,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet var contentArea: UIView
     @IBOutlet var sideView: UIView
     @IBOutlet var sideTableView: UITableView
+    @IBOutlet var outOfMenuButton: UIButton
     var viewControllerDictionary: Dictionary<String, UIViewController> = [:];
     var currentlyShowing: String = "";
     var menuOpen: Bool = true;
+    
+    var suppressMenu: Bool = false;
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -26,8 +29,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
         sideView.center = point;
-        
-        
+        outOfMenuButton.hidden = true;
+        outOfMenuButton.alpha = 0;
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
     
@@ -41,17 +44,30 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }*/
     
     @IBAction func swiped(sender: UISwipeGestureRecognizer) {
-        NSLog("Swiped");
         var location: CGPoint = sender.locationInView(self.view);
-        if (location.x <= BAR_WIDTH) {
+        if (location.x <= TRIGGER_BAR_WIDTH) {
             self.openMenu();
         }
     }
     @IBAction func swipeBack(sender: UISwipeGestureRecognizer) {
         hideSideBar();
     }
+    @IBAction func clickOutOfMenu(sender: UIButton) {
+        if (!menuOpen) {
+            //this button should be hidden
+            outOfMenuButton.hidden = true;
+            outOfMenuButton.alpha = 0;
+        }
+        else {
+            hideSideBar();
+        }
+    }
+    
     func openHome() {
         displayContentController(SIDE_MENU_ITEMS[0]);
+    }
+    func setSuppressed(suppressed: Bool) {
+        suppressMenu = suppressed;
     }
     
     func openMenu() {
@@ -59,20 +75,25 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             NSLog("Menu is already open what")
             return;
         }
+        if (suppressMenu) {
+            //Opening menu is suppressed;
+            return;
+        }
         menuOpen = true;
+        outOfMenuButton.hidden = false;
         /*
         viewControllerDictionary[currentlyShowing] => current view controller, if you want to manipulate it
         */
-        NSLog("Old x: \(self.sideView.center.x)")
         var x = self.sideView.center.x + BAR_WIDTH;
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
-        NSLog("New x: \(x)");
         self.sideView.hidden = false;
+        self.view.bringSubviewToFront(self.outOfMenuButton);
         self.view.bringSubviewToFront(self.sideView);
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             ()->Void in
             self.sideView.center = point;
+            self.outOfMenuButton.alpha = SIDE_MENU_DIM;
             }, completion: {
                 (success: Bool)->Void in
                 self.view.bringSubviewToFront(self.sideView);
@@ -83,13 +104,14 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     func hideSideBar(completions: (Bool)->Void) {
         if (menuOpen) {
+            outOfMenuButton.hidden = true;
             var x = self.sideView.center.x - BAR_WIDTH;
             var y = self.sideView.center.y;
             var point = CGPoint(x: x, y: y);
             UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 ()->Void in
                 self.sideView.center = point;
-                
+                self.outOfMenuButton.alpha = 0;
                 }, completion: {(success: Bool)->Void in
                     self.menuOpen = false;
                     completions(success);
@@ -101,6 +123,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //selects cell in our table and then switches
     func displayContentController(contentString: String) {
+        suppressMenu = false;
         var selectedRow = -1;
         if let selectedIndex = sideTableView.indexPathForSelectedRow() {
             selectedRow = sideTableView.indexPathForSelectedRow().row;
@@ -212,6 +235,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
+        cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

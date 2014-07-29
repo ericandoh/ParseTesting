@@ -31,11 +31,14 @@ class ImagePostStructure
         let singleFile = PFFile(name:"posted.png",data:singleData);
         
         self.images = images;
+        NSLog("\(self.images.count)");
         self.images.removeAtIndex(0);
+        NSLog("\(self.images.count)");
         imagesLoaded = true;
         
         var imgArray: Array<PFFile> = [];
         for image: UIImage in self.images {
+            NSLog("Making PF")
             let data = UIImagePNGRepresentation(image);
             let file = PFFile(name:"posted.png",data:data);
             imgArray.append(file);
@@ -44,6 +47,7 @@ class ImagePostStructure
         myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = singleFile;     //separating this for sake of faster loading (since most ppl only see first img then move on)
         myObj["imageFiles"] = imgArray; //other images that may be in this file
+        NSLog("Size of my image array: \(imgArray)");
         myObj["author"] = PFUser.currentUser().username;
         myObj["likes"] = 0;
         myObj["passes"] = 0;
@@ -83,6 +87,9 @@ class ImagePostStructure
     }
     func getPasses()->Int {
         return myObj["passes"] as Int
+    }
+    func getImagesCount()->Int {
+        return (myObj["imageFiles"] as Array<PFFile>).count;
     }
     func loadImage() {
         if (!image) {
