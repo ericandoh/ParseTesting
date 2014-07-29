@@ -41,6 +41,8 @@
 		D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */; };
 		D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */; };
 		D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */; };
+		D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0161986D2A5000A3037 /* SideTableView.swift */; };
+		D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */; };
 		D96401F319533AA200C48191 /* UnassignedCode in Resources */ = {isa = PBXBuildFile; fileRef = D96401F219533AA200C48191 /* UnassignedCode */; };
 		D96402531953589600C48191 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D96402521953589600C48191 /* Images.xcassets */; };
 		D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */; };
@@ -111,6 +113,8 @@
 		D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
 		D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp_camera_icon.jpg; sourceTree = "<group>"; };
+		D95EA0161986D2A5000A3037 /* SideTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableView.swift; sourceTree = "<group>"; };
+		D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableViewCell.swift; sourceTree = "<group>"; };
 		D96401F219533AA200C48191 /* UnassignedCode */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UnassignedCode; sourceTree = "<group>"; };
 		D96402521953589600C48191 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D9715D2C1964CD1D00BA3C74 /* SingleNotifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleNotifViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 				D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */,
 				D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */,
 				D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */,
+				D95EA0161986D2A5000A3037 /* SideTableView.swift */,
+				D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -405,10 +411,12 @@
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
+				D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */,
 				D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */,
 				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,
 				D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
+				D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

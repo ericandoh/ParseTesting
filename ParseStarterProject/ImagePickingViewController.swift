@@ -15,6 +15,7 @@ let SAVED_PHOTOS_NAME = "Saved Photos"
 struct ImageIndex: Equatable {
     var groupNum: Int;
     var index: Int;
+    var asset: ALAsset?;
 }
 func == (lhs: ImageIndex, rhs: ImageIndex)->Bool {
     return lhs.groupNum == rhs.groupNum && lhs.index == rhs.index;
@@ -113,11 +114,11 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         
         currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1));
         
-        for (loc, check: ImageIndex) in enumerate(highlightOrder) {
+        /*for (loc, check: ImageIndex) in enumerate(highlightOrder) {
             if (check.groupNum == groupSelected) {
                 currentAssets[check.index].highlighted = loc;
             }
-        }
+        }*/
         var currentGroup = assetGroups[groupSelected];
         currentGroup.enumerateAssetsUsingBlock({
             (result, index, stop) in
@@ -127,6 +128,14 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
             }
             self.currentAssets[index].asset = result;
             self.myCollectionView.reloadData();
+            if (index == numAssets - 1) {
+                for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
+                    if (check.groupNum == self.groupSelected) {
+                        self.currentAssets[check.index].highlighted = loc;
+                        self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
+                    }
+                }
+            }
             });
         
         
@@ -203,7 +212,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         if (self.currentAssets[row].highlighted != -1) {
             cell.backgroundColor = UIColor.yellowColor();
             
-            cell.label.text = String(find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row))! + 1);   //for those damn nonprogrammer people
+            cell.label.text = String(find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, asset: nil))! + 1);   //for those damn nonprogrammer people
         }
         else {
             cell.backgroundColor = UIColor.redColor();
@@ -225,11 +234,11 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
             var assetItem: AssetItem =  self.currentAssets[row];
             assetItem.highlighted = highlightOrder.count;
             self.currentAssets[row] = assetItem;
-            highlightOrder.append(ImageIndex(groupNum: groupSelected, index: row));
+            highlightOrder.append(ImageIndex(groupNum: groupSelected, index: row, asset: self.currentAssets[row].asset));
         }
         else {
             //unhighlight
-            var loc = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row));
+            var loc = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, asset: nil));
             highlightOrder.removeAtIndex(loc!);
             var assetItem: AssetItem =  self.currentAssets[row];
             assetItem.highlighted = -1;
@@ -276,25 +285,26 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
                             }
                             else {
                                 //do stuff with image
-                                
-                                self.groupSelected = self.savedPhotoIndex;
-                                //just added an image, so should shift all currently selected images by one index
-                                for (index, imageIndex) in enumerate(self.highlightOrder) {
-                                    if (imageIndex.groupNum == self.savedPhotoIndex && imageIndex.index != -1) {
-                                        self.highlightOrder[index] = ImageIndex(groupNum: self.savedPhotoIndex, index: imageIndex.index + 1);
-                                    }
-                                }
-                                self.loadImagesForCurrent();
-                                var name = self.getGalleryFullName(self.savedPhotoIndex);
-                                self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
-                                
-                                /*self.assetLibrary!.assetForURL(assertURL, resultBlock: {(asset: ALAsset!) in
+                                self.assetLibrary!.assetForURL(assertURL, resultBlock: {(asset: ALAsset!) in
                                     //we have our asset
+                                    
+                                    self.groupSelected = self.savedPhotoIndex;
+                                    //just added an image, so should shift all currently selected images by one index
+                                    for (index, imageIndex) in enumerate(self.highlightOrder) {
+                                        if (imageIndex.groupNum == self.savedPhotoIndex && imageIndex.index != -1) {
+                                            self.highlightOrder[index] = ImageIndex(groupNum: self.savedPhotoIndex, index: imageIndex.index + 1, asset: asset);
+                                        }
+                                    }
+                                    self.loadImagesForCurrent();
+                                    var name = self.getGalleryFullName(self.savedPhotoIndex);
+                                    self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
+                                    
+                                    
                                     
                                     }, failureBlock: {(error: NSError!) in
                                         //we have our error
                                         self.imageSavingError("Failed to load asset after saving");
-                                    });*/
+                                    });
                             }
                         })
                     
@@ -335,23 +345,39 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     
     @IBAction func nextButton(sender: UIButton) {
         //var retImgList: Array<UIImage> = [];
+        if (highlightOrder.count == 0) {
+            //no images selected
+            return;
+        }
+        
         retList = [];
         var groupSelected: Int;
         var row: Int;
-        var asset: AssetItem;
+        var asset: ALAsset;
         for index:ImageIndex in highlightOrder {
             groupSelected = index.groupNum;
             row = index.index;
-            asset = self.currentAssets[row];
-            retList.append(UIImage(CGImage: asset.asset!.defaultRepresentation().fullResolutionImage().takeUnretainedValue()));
+            asset = index.asset!; //self.currentAssets[row];
+            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue()));
         }
         //call some function to segue and get ready to pass this list on
         self.performSegueWithIdentifier("ImagePreview", sender: self);
     }
     
-    func receivePreviousImages(prevLabel: String, prevDescrip: String) {
+    func receivePreviousImages(prevLabel: String, prevDescrip: String, prevOrder: Array<ImageIndex>) {
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
+        highlightOrder = prevOrder;
+        for (index, item) in enumerate(currentAssets) {
+            currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
+        }
+        for (index, item) in enumerate(highlightOrder) {
+            if (item.groupNum == groupSelected) {
+                currentAssets[item.index] = AssetItem(asset: currentAssets[item.index].asset, highlighted: index);
+            }
+        }
+        loadImagesForCurrent();
+        //myTableView.reloadData();
     }
     
     // #pragma mark - Navigation
@@ -363,7 +389,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         if (segue.destinationViewController is ImagePreviewController) {
             var nextController = segue.destinationViewController as ImagePreviewController;
             //currImgs.append(pickedImage!);
-            nextController.receiveImage(retList, prevLabel: prevLabel, prevDescrip: prevDescrip);
+            nextController.receiveImage(retList, hOrder: highlightOrder, prevLabel: prevLabel, prevDescrip: prevDescrip);
         }
         else {
             NSLog("Destination View Controller mismatch???");

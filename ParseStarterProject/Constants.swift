@@ -45,6 +45,8 @@ let FULLSCREEN_WIDTH = 320;
 //height of a fullscreen image
 let FULLSCREEN_HEIGHT = 518;
 
+let UPLOAD_TABLE_DELETE_LIMIT = 100.0;
+
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
 

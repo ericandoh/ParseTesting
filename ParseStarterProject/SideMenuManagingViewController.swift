@@ -18,6 +18,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     var currentlyShowing: String = "";
     var menuOpen: Bool = true;
     
+    var suppressMenu: Bool = false;
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         // Do any additional setup after loading the view.
@@ -52,10 +54,17 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     func openHome() {
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
+    func setSuppressed(suppressed: Bool) {
+        suppressMenu = suppressed;
+    }
     
     func openMenu() {
         if (menuOpen) {
             NSLog("Menu is already open what")
+            return;
+        }
+        if (suppressMenu) {
+            //Opening menu is suppressed;
             return;
         }
         menuOpen = true;
@@ -98,6 +107,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //selects cell in our table and then switches
     func displayContentController(contentString: String) {
+        suppressMenu = false;
         var selectedRow = -1;
         if let selectedIndex = sideTableView.indexPathForSelectedRow() {
             selectedRow = sideTableView.indexPathForSelectedRow().row;
