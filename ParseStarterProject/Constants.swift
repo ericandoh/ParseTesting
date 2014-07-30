@@ -30,7 +30,7 @@ let POST_LOAD_LIMIT = 20
 
 //maximum number of my own posts to load (when i query for my last submitted posts)
 //no post load limit count - buffer as I read collectionView
-let MYPOST_LOAD_COUNT = 10
+let MYPOST_LOAD_COUNT = 15
 
 //maximum number of search results to load at once
 let SEARCH_LOAD_COUNT = 20;

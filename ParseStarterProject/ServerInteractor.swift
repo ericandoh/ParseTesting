@@ -321,8 +321,9 @@ import UIKit
         PFUser.currentUser().saveInBackground()
     }
     
-    class func getLikedPosts(skip: Int, loadCount: Int, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
-        var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
+    class func getLikedPosts(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
+        var postsToGet = user.friendObj!["likedPosts"] as Array<String>;
+        //var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
         //postsToGet = Array(postsToGet[skip...(skip + loadCount)])
         var oldCPosts = postsToGet.bridgeToObjectiveC();
         //postsToGet = stupidArray
@@ -332,13 +333,10 @@ import UIKit
             oldCPosts = oldCPosts.subarrayWithRange(NSRange(location: skip, length: oldCPosts.count - skip))
         }
         var query = PFQuery(className:"ImagePost")
-        NSLog("Okay")
         query.whereKey("objectId", containedIn: oldCPosts)
-        NSLog("Okay yAY!")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
-                NSLog("YAY")
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
                     for (index, object: PFObject!) in enumerate(objects!) {

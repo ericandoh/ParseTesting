@@ -23,6 +23,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     var swiperNoSwipe: Bool = false;
     
+    /*
     //the posts I have loaded
     var loadedPosts: Array<ImagePostStructure?> = [];
     
@@ -37,6 +38,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     //isLoading
     var isLoading: Bool = false;
+    */
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -47,6 +49,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var refreshNeeded: Bool = false;
     
     var viewingComments: Bool = false;
+    
+    var postLoadCount = POST_LOAD_COUNT;
     
     /*
     //first set has images to display, viewCounter tells me where in array I am currently viewing
@@ -65,6 +69,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
     
+    var imgBuffer: CustomImageBuffer?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -78,85 +84,52 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidAppear(animated: Bool) {
         //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
-        loadSet();
+        self.imgBuffer!.loadSet();
+    }
+    func syncWithImagePostDelegate(theirBuffer: CustomImageBuffer, selectedAt: Int) {
+        viewCounter = selectedAt;
+        postCounter = 0;
+        refreshNeeded = false;
+        viewingComments = false;
+        imgBuffer = theirBuffer;
+        //frontImageView!.image = LOADING_IMG;
     }
     //to refresh all images in feed
     func refresh() {
-        loadedPosts = [];
-        loadedUpTo = 0;
-        endLoadCount = 0;
-        hitEnd = false;
-        isLoading = false;
         viewCounter = 0;
+        postCounter = 0;
         refreshNeeded = false;
+        viewingComments = false;
         frontImageView!.image = LOADING_IMG;
-        loadSet();
+        if (imgBuffer) {
+            imgBuffer!.resetData();
+            self.imgBuffer!.loadSet();
+        }
+        else {
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil);
+            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, configureCellFunction: configureCurrent);
+        }
     }
     //to load another set, if possible
     //build in functionality HERE to make it load other posts (if not loading home screen posts)
-    func loadSet() {
-        if (isLoading) {
+    
+    func configureCurrent(index: Int) {
+        if (index != viewCounter) {
             return;
         }
-        isLoading = true;
-        
-        var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
-        
-        //(loadedUpTo)*POST_LOAD_COUNT, == skip, but wont need cuz it is in excludes
-        ServerInteractor.getPost(POST_LOAD_COUNT, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
-        
-        //ServerInteractor.getPost(getReturnList, sender: self, excludes: otherExcludes!);
-    }
-    func receiveNumQuery(size: Int) {
-        //NSLog("Query finished with size \(size)")
-        var needAmount: Int;
-        if (size < POST_LOAD_COUNT) {
-            hitEnd = true;
-            endLoadCount = size;
-            needAmount = (loadedUpTo * POST_LOAD_COUNT) + endLoadCount;
-        }
-        else {
-            endLoadCount = 0;
-            loadedUpTo += 1;
-            needAmount = loadedUpTo * POST_LOAD_COUNT;
-        }
-        if (loadedPosts.count < needAmount) {
-            loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
-        }
-        //myCollectionView.reloadData();
-        isLoading = false;
-    }
-    
-    func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
-        //called by getSubmissions for when image at index x is loaded in...
-        var realIndex: Int;
-        if (hitEnd) {
-            realIndex = index + (loadedUpTo * POST_LOAD_COUNT);
-        }
-        else {
-            realIndex = index + ((loadedUpTo - 1) * POST_LOAD_COUNT);
-        }
-        //NSLog("Received image at index \(realIndex)")
-        loadedPosts[realIndex] = loaded;
-        
-        //check if I need to refresh anything
-        if (realIndex == viewCounter) {
-            configureCurrent();
-        }
-    }
-    func configureCurrent() {
+
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
-        var currentPost = loadedPosts[viewCounter];
-        pageCounter.text = String(postCounter + 1)+"/"+String(currentPost!.getImagesCount() + 2);
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+        pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         if (postCounter == 0) {
-            frontImageView!.image = currentPost!.image;
+            frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
         else {
             var currentPostNum = postCounter;
             var oldImg = self.frontImageView!.image;
             self.frontImageView!.image = LOADING_IMG;
-            currentPost!.loadImages({(img: UIImage?, comments: Bool)->Void in
+            currentPost.loadImages({(img: UIImage?, comments: Bool)->Void in
                 if (currentPostNum == self.postCounter) {
                     //i haven't swiped more in that time
                     
@@ -164,7 +137,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                         //we have comments! or error :(
                         self.viewingComments = true;
                         self.frontImageView!.image = oldImg;
-                        self.startViewingComments(currentPost!);
+                        self.startViewingComments(currentPost);
                     }
                     else {
                         if (img) {
@@ -230,7 +203,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        if (viewCounter >= loadedPosts.count) {
+        if (viewCounter >= imgBuffer!.numItems()) {
             //show end of file screen, refresh if needed
             refreshNeeded = true;
             frontImageView!.image = ENDING_IMG;
@@ -240,9 +213,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //do nothing
             viewCounter = 0;
         }
-        else if (loadedPosts[viewCounter]) {
+        else if (imgBuffer!.isLoadedAt(viewCounter)) {
             //might also need to see if image itself is loaded (depending on changes for deallocing)
-            configureCurrent();
+            configureCurrent(viewCounter);
         }
         else {
             //cell will get fetched, wait
@@ -250,8 +223,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         //load more if necessary
-        if ((!hitEnd) && loadedPosts.count - viewCounter < POST_LOAD_LIMIT) {
-            loadSet();
+        if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+            imgBuffer!.loadSet();
         }
         /*else if () {
             //method for unloading images at start of list - to save memory
@@ -266,14 +239,19 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             postCounter = 0;
             return;
         }
-        if (loadedPosts[viewCounter]) {
-            configureCurrent();
+        if (imgBuffer!.isLoadedAt(viewCounter)) {
+            configureCurrent(viewCounter);
         }
     }
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
         if (postCounter == 0) {
-            (self.parentViewController as SideMenuManagingViewController).openMenu();
+            if (self.navigationController) {
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+            }
+            else {
+                (self.parentViewController as SideMenuManagingViewController).openMenu();
+            }
             return;
         }
         if (viewingComments) {
@@ -295,9 +273,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func sideMenu(sender: UIButton) {
-        if (self.parentViewController) {
-            var overlord = self.parentViewController as SideMenuManagingViewController;
-            overlord.openMenu();
+        if (self.navigationController) {
+            (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+        }
+        else if (self.parentViewController) {
+            (self.parentViewController as SideMenuManagingViewController).openMenu();
         }
     }
     
@@ -460,15 +440,15 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     @IBAction func likePost(sender: UIButton) {
-        if (loadedPosts[viewCounter]) {
-            loadedPosts[viewCounter]!.like();
+        if (imgBuffer!.isLoadedAt(viewCounter)) {
+            imgBuffer!.getImagePostAt(viewCounter).like();
         }
     }
     
     @IBAction func viewComments(sender: UIButton) {
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath        
-        if (self.loadedPosts.count == 0 || self.viewCounter >= self.loadedPosts.count || (!self.loadedPosts[self.viewCounter])) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
             //there is no image for this post - no posts on feed
             //or i am at ending page (VC >= post count)
             //no post = no comments
@@ -482,7 +462,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         NSLog("Comments for \(self.viewCounter)")
         self.commentList = Array<PostComment>();
         
-        var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!
+        var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
         
         currentPost.fetchComments({(input: NSArray)->Void in
             for index in 0..<input.count {
@@ -530,7 +510,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //set alert text field size bigger - this doesn't work, we need a UITextView
             alert.addAction(UIAlertAction(title: "Comment!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 
-                var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!;
+                var currentPost: ImagePostStructure = self.imgBuffer!.getImagePostAt(self.viewCounter);
                 
                 //textFields[0].text
                 currentPost.addComment((alert.textFields[0] as UITextField).text);
