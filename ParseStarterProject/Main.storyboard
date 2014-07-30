@@ -1041,6 +1041,7 @@
                     <connections>
                         <outlet property="myCollectionView" destination="i9W-9H-mbV" id="rTK-Iq-2LH"/>
                         <outlet property="myTable" destination="U2k-kU-9IY" id="V7s-1d-3Yy"/>
+                        <outlet property="searchBar" destination="tLh-HH-SRl" id="tP2-VG-1ZY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ho-M2-km2" userLabel="First Responder" sceneMemberID="firstResponder"/>

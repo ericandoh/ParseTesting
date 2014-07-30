@@ -79,7 +79,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NSLog("Loaded");
         // Do any additional setup after loading the view.
         
         
@@ -97,7 +96,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
         super.viewDidAppear(animated);
-        NSLog("Appeared")
         if (self.navigationController) {
             self.navigationController.setNavigationBarHidden(true, animated: animated);
         }
@@ -128,13 +126,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         refreshNeeded = false;
         viewingComments = false;
         imgBuffer = theirBuffer;
-        NSLog("\(imgBuffer!.numItems()) items i have matey");
         //frontImageView!.image = LOADING_IMG;
         imgBuffer!.switchContext(HOME_OWNER, nil, configureCellFunction: configureCurrent);
     }
     //to refresh all images in feed
     func refresh() {
-        NSLog("Refrshed");
         viewCounter = 0;
         postCounter = 0;
         refreshNeeded = false;

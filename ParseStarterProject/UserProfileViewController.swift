@@ -59,10 +59,10 @@ class UserProfileViewController: UIViewController {
         //self.navigationItem.titleView = CGRect(0, 0, 40, 40)
         userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
         userIcon!.layer.cornerRadius = (userIcon!.frame.size.width) / 2
-        NSLog("\(userIcon!.layer.cornerRadius)")
+        //NSLog("\(userIcon!.layer.cornerRadius)")
         userIcon!.layer.masksToBounds = true
         userIcon!.layer.borderWidth = 0
-        NSLog("\(userIcon!.frame.size.width)")
+        //NSLog("\(userIcon!.frame.size.width)")
         //userIcon!.image = DEFAULT_USER_ICON;
         //self.navigationItem.titleView = userIcon
         userIcon!.frame = CGRectMake(20, -5, 40, 40);
@@ -74,7 +74,7 @@ class UserProfileViewController: UIViewController {
                 var newUserIcon: UIImage = self.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                NSLog("\(self.userIcon!.layer.cornerRadius)")
+                //NSLog("\(self.userIcon!.layer.cornerRadius)")
                 });
             //logOffButton.hidden = true;         //same as below
             settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
@@ -101,11 +101,11 @@ class UserProfileViewController: UIViewController {
                     var newUserIcon = self.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                    NSLog("\(self.userIcon!.layer.cornerRadius)")
-                    NSLog("\(self.userIcon!.frame.size.width)")
+                    //NSLog("\(self.userIcon!.layer.cornerRadius)")
+                    //NSLog("\(self.userIcon!.frame.size.width)")
                     self.userIcon!.layer.masksToBounds = true
                     self.userIcon!.layer.borderWidth = 0
-                    NSLog("\(self.userIcon!.frame.size.width)")
+                    //NSLog("\(self.userIcon!.frame.size.width)")
                     //userIcon!.image = DEFAULT_USER_ICON;
                     //self.navigationItem.titleView = self.userIcon;
                     self.navigationItem.titleView = view;

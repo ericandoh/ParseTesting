@@ -142,7 +142,6 @@ class CustomImageBuffer: NSObject {
         }
     }
     func resetData() {
-        NSLog("Data reset")
         loadedPosts = [];
         loadedUpTo = 0;
         endLoadCount = 0;
@@ -165,7 +164,6 @@ class CustomImageBuffer: NSObject {
         return hitEnd;
     }
     func receiveNumQuery(size: Int) {
-        NSLog("Received");
         var needAmount: Int;
         if (size < postLoadCount) {
             hitEnd = true;
@@ -203,8 +201,6 @@ class CustomImageBuffer: NSObject {
         isLoading = false;  //still loading cells in, but setting indexes are ok
     }
     func numItems() -> Int {
-        NSLog("I have \(loadedPosts.count) items");
-        NSLog("Returning \(loadedUpTo * postLoadCount + endLoadCount)");
         return loadedUpTo * postLoadCount + endLoadCount;
     }
     

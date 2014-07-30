@@ -11,6 +11,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 
     @IBOutlet var myTable: UITableView;
     @IBOutlet var myCollectionView: UICollectionView
+    @IBOutlet var searchBar: UISearchBar
     
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
@@ -68,7 +69,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     //------------search bar functions---------------
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         if (searchText == "") {
-            NSLog("Reloading");
             collectionDelegateSearch!.resetData();
             collectionDelegateMain!.resetData();
             collectionDelegateMain!.initialSetup();
@@ -83,6 +83,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             doingSearch = true;
             myTable.hidden = false;
             myCollectionView.hidden = true;
+            if (collectionDelegateSearch) {
+                collectionDelegateSearch!.resetData();
+            }
+            collectionDelegateMain!.resetData();
             //add animations here
             
             
@@ -139,6 +143,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         }
         else {
             searchResult = searchTermList[indexPath.row - 1];
+            searchBar.text = searchResult;
         }
         //update my collectionviewdelegate to instead do a search
         
@@ -151,8 +156,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
         }
         collectionDelegateSearch!.setSearch(searchResult);
-        collectionDelegateSearch!.resetData();
-        collectionDelegateMain!.resetData();
+        //collectionDelegateSearch!.resetData();
+        //collectionDelegateMain!.resetData();
         collectionDelegateSearch!.initialSetup();
         
         //self.performSegueWithIdentifier("SearchSegue", sender: self);

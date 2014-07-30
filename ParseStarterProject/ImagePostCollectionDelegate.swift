@@ -131,7 +131,6 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     }
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         //open home feed here
-        NSLog("Not Yet Implemented!");
         var newHome = owner.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
         newHome.syncWithImagePostDelegate(self.imgBuffer, selectedAt: indexPath.row);
         owner.navigationController.pushViewController(newHome, animated: true);
