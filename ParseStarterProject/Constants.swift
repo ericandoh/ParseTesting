@@ -54,6 +54,9 @@ let CAMERA_ICON = UIImage(named: "temp_camera_icon.jpg")
 //default images
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
 
+//close button image for Shop The Look while uploading
+let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
+
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
@@ -87,6 +90,8 @@ let LABEL_BOX_HEIGHT = 40.0;            //individual box heights
 let LABEL_SPACING = 5.0;                //spacing between each box
 let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
 let BOX_WIDTH = 300.0;                  //width of box
+let BOX_CLOSE_WIDTH = 40.0;             //size of X
+let BOX_WIDTH_ONE = BOX_WIDTH - BOX_CLOSE_WIDTH;
 let BOX_LEFT_MARGIN = (Double(FULLSCREEN_WIDTH) - BOX_WIDTH) / 2.0
 let SCROLLFIELD_DEFAULT_HEIGHT = 595.0; //height of scrollfield when no shoplooks
 //----end shop the look------

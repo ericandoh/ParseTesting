@@ -10,7 +10,10 @@
 
 import UIKit
 
-class ShopButton: UIButton {
+class ShopButton: UIView {
+    var shopIndex: Int = -1;
+}
+class ShopTextButton: UIButton {
     var shopIndex: Int = -1;
 }
 
@@ -67,21 +70,39 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             
             for (index, look) in enumerate(shopTheLook) {
                 var oldY = BOX_START_Y + Double(index) * BOX_INCR_Y;
-                var newY = BOX_START_Y + Double(index + 1) * BOX_INCR_Y;
                 var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
-                newButton.setTitle(look.title, forState: UIControlState.Normal);
-                newButton.backgroundColor = UIColor.redColor();
-                shopButtons.append(newButton);
-                mainView.addSubview(newButton);
+                featurizeShopButton(index, shopButton: newButton);
             }
-            shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y * Double(shopTheLook.count);
-            mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y * Double(shopTheLook.count);
-            
-            
         }
         
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
+    }
+    
+    //called when a new shopbutton is made, and featurizes the button
+    func featurizeShopButton(index: Int, shopButton: ShopButton) {
+        shopButton.shopIndex = index;
+        var but1 = ShopTextButton(frame: CGRectMake(0, 0, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
+        var but2 = ShopTextButton(frame: CGRectMake(BOX_WIDTH_ONE, 0, BOX_CLOSE_WIDTH, LABEL_BOX_HEIGHT));
+        but1.shopIndex = index;
+        but2.shopIndex = index;
+        
+        but1.addTarget(self, action: "editShopTheLook:", forControlEvents: UIControlEvents.TouchDown);
+        but2.addTarget(self, action: "removeShopTheLook:", forControlEvents: UIControlEvents.TouchDown);
+        but1.setTitle(shopTheLook[index].title, forState: UIControlState.Normal);
+        but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+        but1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
+        but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
+        shopButton.backgroundColor = UIColor.blackColor();
+        
+        shopButton.addSubview(but1);
+        shopButton.addSubview(but2);
+        
+        shopButtons.append(shopButton);
+        mainView.addSubview(shopButton);
+        
+        shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y;
+        mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y;
     }
     
     //function triggered by pushing check button
@@ -247,6 +268,59 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             }));
         self.presentViewController(alert, animated: true, completion: nil)
     }
+    func editShopTheLook(sender: UIButton!) {
+        var thisButton = sender as ShopTextButton;
+        let index = thisButton.shopIndex;
+        let alert: UIAlertController = UIAlertController(title: "Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
+            field.placeholder = "Title/Short Description";
+            });
+        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
+            field.placeholder = "Link where I can get it!";
+            });
+        (alert.textFields[0] as UITextField).text = shopTheLook[index].title;
+        (alert.textFields[1] as UITextField).text = shopTheLook[index].urlLink;
+        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            var title = (alert.textFields[0] as UITextField).text;
+            var urlLink = (alert.textFields[1] as UITextField).text;
+            self.shopTheLook[index] = ShopLook(title: title, urlLink: urlLink);
+            thisButton.setTitle(title, forState: UIControlState.Normal);
+            }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            //canceled
+            }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    func removeShopTheLook(sender: UIButton!) {
+        let thisButton = sender as ShopTextButton;
+        let index = thisButton.shopIndex;
+        let alert: UIAlertController = UIAlertController(title: "Delete?", message: "Delete this ShopTheLook?", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "Delete!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            
+            
+            for i in (index+1)...(self.shopButtons.count - 1) {
+                var oldY = BOX_START_Y + Double(i - 1) * BOX_INCR_Y;
+                self.shopButtons[i].frame = CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
+                self.shopButtons[i].shopIndex = i-1;
+                (self.shopButtons[i].subviews[0] as ShopTextButton).shopIndex = i - 1;
+                (self.shopButtons[i].subviews[1] as ShopTextButton).shopIndex = i - 1;
+            }
+            
+            var button = self.shopButtons.removeAtIndex(index)
+            self.shopTheLook.removeAtIndex(index);
+            button.removeFromSuperview();
+            
+            self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - BOX_INCR_Y;
+            self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - BOX_INCR_Y;
+            
+            self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(self.shopTheLook.count) * BOX_INCR_Y);
+            }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            //canceled
+            }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     
     @IBAction func whatIsShopTheLook(sender: UIButton) {
         let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
@@ -262,16 +336,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         var oldY = BOX_START_Y + Double(shopTheLook.count - 1) * BOX_INCR_Y;
         var newY = BOX_START_Y + Double(shopTheLook.count) * BOX_INCR_Y;
         var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
-        newButton.setTitle(look.title, forState: UIControlState.Normal);
-        shopButtons.append(newButton);
-        newButton.backgroundColor = UIColor.redColor();
-        mainView.addSubview(newButton);
-        mainView.bringSubviewToFront(newButton);
-
-
-        shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y;
-        mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y;
-
+        
+        featurizeShopButton(shopTheLook.count - 1, shopButton: newButton);
+        
         /*
         //var frame: CGRect = shopTheLookView.frame;
         shopTheLookView.removeFromSuperview();
