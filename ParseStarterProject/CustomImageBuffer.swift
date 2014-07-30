@@ -32,19 +32,23 @@ class CustomImageBuffer: NSObject {
     
     var serverFunction2: ((loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?;
     
+    var serverFunction3: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?;
+    
     var refreshFunction: (()->Void)?;
     
     var configureCellFunction: ((index: Int)->Void)?;
     
     var user: FriendEncapsulator?;
     
-    var postLoadCount = MYPOST_LOAD_COUNT;
+    var postLoadCount = POST_LOAD_COUNT;
     
-    //whether im loading image posts by exclude or by order
+    //whether im loading image posts by exclude or by order (or by search?!?)
     //this does NOT differentiate between home screen or other screens!
     var loaderType: Int = 0;
     
     var owner: String;
+
+    var searchTerm: String = "";
     
     init(disableOnAnon: Bool, user: FriendEncapsulator?, owner: String) {
         self.disableOnAnon = disableOnAnon;
@@ -53,7 +57,7 @@ class CustomImageBuffer: NSObject {
         self.owner = owner;
         //loadedPosts = [];
     }
-    func initialSetup(serverFunction: (skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void,
+    func initialSetup(serverFunction: ((skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?,
         refreshFunction: ()->Void,
         configureCellFunction: (index: Int)->Void) {
         
@@ -71,14 +75,34 @@ class CustomImageBuffer: NSObject {
             loadSet();
         }
     }
-    func initialSetup2(serverFunction: (loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void, configureCellFunction: (index: Int)->Void) {
+    func initialSetup2(serverFunction: (loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void,
+        refreshFunction: (()->Void)?,
+        configureCellFunction: (index: Int)->Void) {
             
             self.loaderType = 1;        //loads already existing arrays in order
             self.serverFunction2 = serverFunction;
+            self.refreshFunction = refreshFunction;
             self.configureCellFunction = configureCellFunction;
-        
-            self.postLoadCount = POST_LOAD_COUNT;
-        
+            if (disableOnAnon && ServerInteractor.isAnonLogged()) {
+                loadedUpTo = 0;
+                hitEnd = true;
+                endLoadCount = 0;
+            }
+            else {
+                loadSet();
+            }
+    }
+    func initialSetup3(serverFunction: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?,
+        refreshFunction: (()->Void)?,
+        configureCellFunction: (index: Int)->Void,
+        term: String
+        ) {
+            
+            self.loaderType = 2;        //loads a search term with the thing
+            self.serverFunction3 = serverFunction;
+            self.refreshFunction = refreshFunction;
+            self.configureCellFunction = configureCellFunction;
+            self.searchTerm = term;
             if (disableOnAnon && ServerInteractor.isAnonLogged()) {
                 loadedUpTo = 0;
                 hitEnd = true;
@@ -109,12 +133,16 @@ class CustomImageBuffer: NSObject {
         if (loaderType == 0) {
             serverFunction!(skip: (loadedUpTo)*postLoadCount, loadCount: postLoadCount, user: user!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
-        else {
+        else if (loaderType == 1) {
             var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
             serverFunction2!(loadCount: postLoadCount, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
+        else if (loaderType == 2) {
+            serverFunction3!(skip: (loadedUpTo)*postLoadCount, loadCount: postLoadCount, term: searchTerm, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+        }
     }
     func resetData() {
+        NSLog("Data reset")
         loadedPosts = [];
         loadedUpTo = 0;
         endLoadCount = 0;
@@ -137,6 +165,7 @@ class CustomImageBuffer: NSObject {
         return hitEnd;
     }
     func receiveNumQuery(size: Int) {
+        NSLog("Received");
         var needAmount: Int;
         if (size < postLoadCount) {
             hitEnd = true;
@@ -174,6 +203,8 @@ class CustomImageBuffer: NSObject {
         isLoading = false;  //still loading cells in, but setting indexes are ok
     }
     func numItems() -> Int {
+        NSLog("I have \(loadedPosts.count) items");
+        NSLog("Returning \(loadedUpTo * postLoadCount + endLoadCount)");
         return loadedUpTo * postLoadCount + endLoadCount;
     }
     

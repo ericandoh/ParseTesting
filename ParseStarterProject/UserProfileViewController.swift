@@ -136,6 +136,7 @@ class UserProfileViewController: UIViewController {
             collectionDelegatePosts!.initialSetup();
             //collectionDelegate!.loadSet()
         } else {
+            collectionDelegatePosts!.resetData();
             collectionDelegatePosts!.loadSet()
         }
     }
@@ -150,6 +151,7 @@ class UserProfileViewController: UIViewController {
             //collectionDelegate!.loadSet()
         } else {
             options = 2
+            collectionDelegateLikes!.resetData();
             collectionDelegateLikes!.loadSet()
         }
     }

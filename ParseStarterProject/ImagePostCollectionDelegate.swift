@@ -15,37 +15,20 @@ import UIKit
 let COLLECTION_OWNER = "COLLECTION";
 
 class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDataSource {
-    /*
-    //the posts I have loaded
-    var loadedPosts: Array<ImagePostStructure?> = [];
     
-    //how many sets I have loaded up to
-    var loadedUpTo: Int = 0;
-    
-    //how many images are loaded in our last set (only valid when hitEnd = true)
-    var endLoadCount: Int = 0;
-    
-    //set to true when I have already loaded in last set of stuff
-    var hitEnd: Bool = false;
-    
-    //isLoading
-    var isLoading: Bool = false;
-    
-    //whether to disable loading if anonymous is logged in
-    var disableOnAnon: Bool = false;
-    */
-
     var myCollectionView: UICollectionView;
     
     var owner: UIViewController;
     
-    var serverFunction: (skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void;
-    /*
-    var user: FriendEncapsulator?;
+    var serverFunction: ((skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?;
     
-    var postLoadCount = MYPOST_LOAD_COUNT;*/
+    var serverFunction2: ((loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?;
+    
+    var serverFunction3: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?;
     
     var imgBuffer: CustomImageBuffer;
+
+    var searchTerm: String = "";    //for search term collections only
     
     /*
         Sample Usage:
@@ -53,6 +36,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
             var cdel = ImagePostCollectionDelegate(true, collectionView: self.myCollectionView, ServerInteractor.getPosts, self);
             cdel.initialSetup();
     */
+    //for user profile stuff
     init(disableOnAnon: Bool, collectionView: UICollectionView,
         serverFunction: (skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void, sender: UIViewController, user: FriendEncapsulator?) {
         
@@ -61,15 +45,42 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.serverFunction = serverFunction;
             self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: user, owner: COLLECTION_OWNER);
     }
+    //for search, when showing popular feeds
+    init(disableOnAnon: Bool, collectionView: UICollectionView,
+        serverFunction2: (serverFunction: (loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
+            
+            self.myCollectionView = collectionView;
+            self.owner = sender;
+            self.serverFunction2 = serverFunction2;
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: nil, owner: COLLECTION_OWNER);
+    }
+    init(disableOnAnon: Bool, collectionView: UICollectionView,
+        serverFunction3: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
+            
+            self.myCollectionView = collectionView;
+            self.owner = sender;
+            self.serverFunction3 = serverFunction3;
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: nil, owner: COLLECTION_OWNER);
+    }
     
     //call this after init, this triggers it to be active
     func initialSetup() {
         self.myCollectionView.dataSource = self;
         self.myCollectionView.delegate = self;
         
-        self.imgBuffer.initialSetup(serverFunction, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell);
+        if (serverFunction) {
+            self.imgBuffer.initialSetup(serverFunction, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell);
+        }
+        else if (serverFunction2) {
+            self.imgBuffer.initialSetup2(serverFunction2!, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell);
+        }
+        else if (serverFunction3) {
+            self.imgBuffer.initialSetup3(serverFunction3!, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell, term: searchTerm);
+        }
     }
-    
+    func setSearch(term: String) {
+        searchTerm = term;
+    }
     func resetData() {
         self.imgBuffer.resetData();
     }
