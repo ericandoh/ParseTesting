@@ -585,6 +585,12 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shop The Look - First Box" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hen-Ln-E9c">
+                                        <rect key="frame" x="20" y="291" width="280" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.42999999999999999" colorSpace="calibratedWhite"/>
                             </view>
@@ -641,6 +647,7 @@
                         <outlet property="descriptionTextField" destination="bjV-eP-TEr" id="BvZ-ZC-yyK"/>
                         <outlet property="frontImageView" destination="JEl-EV-uT7" id="bDh-7b-Eew"/>
                         <outlet property="pageCounter" destination="7Zw-G9-3Mn" id="w0W-fd-QPP"/>
+                        <outlet property="shopTheLookBoxReference" destination="hen-Ln-E9c" id="Ud5-bS-XLV"/>
                         <outlet property="topLeftButton" destination="QSF-nY-e17" id="0ga-pQ-XRk"/>
                     </connections>
                 </viewController>

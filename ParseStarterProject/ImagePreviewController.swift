@@ -53,7 +53,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.text = prevDescrip;
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
-        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595
+        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
     }
     
     //function triggered by pushing check button

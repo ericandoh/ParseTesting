@@ -24,27 +24,13 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var topLeftButton: UIButton
     
+    @IBOutlet var shopTheLookBoxReference: UILabel
     
-    //@IBOutlet var backImageView: UIImageView      //deprecated
+    
+    
+    var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
-    
-    /*
-    //the posts I have loaded
-    var loadedPosts: Array<ImagePostStructure?> = [];
-    
-    //how many sets I have loaded up to
-    var loadedUpTo: Int = 0;
-    
-    //how many images are loaded in our last set (only valid when hitEnd = true)
-    var endLoadCount: Int = 0;
-    
-    //set to true when I have already loaded in last set of stuff
-    var hitEnd: Bool = false;
-    
-    //isLoading
-    var isLoading: Bool = false;
-    */
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -91,6 +77,13 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             frontImageView!.image = LOADING_IMG;
             topLeftButton.setTitle("Back", forState: UIControlState.Normal);
         }
+        
+        var frame: CGRect = frontImageView.frame;
+        backImageView = UIImageView(frame: frame);
+        backImageView!.hidden = true;
+        backImageView!.alpha = 0;
+        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
     }
     override func viewDidAppear(animated: Bool) {
         //frontImageView!.image = LOADING_IMG;
@@ -145,10 +138,80 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
         }
     }
+    
+    func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        self.backImageView!.image = toImage;
+        self.backImageView!.alpha = 0;
+        self.backImageView!.hidden = false;
+        if (fromDirection == CompassDirection.STAY) {
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.EAST) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x + Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.WEST) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x - Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.NORTH) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - Double(FULLSCREEN_WIDTH));
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.SOUTH) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + Double(FULLSCREEN_WIDTH));
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+    }
+    
     //to load another set, if possible
     //build in functionality HERE to make it load other posts (if not loading home screen posts)
-    
     func configureCurrent(index: Int) {
+        configureCurrent(index, fromDirection: CompassDirection.STAY);
+    }
+    func configureCurrent(index: Int, fromDirection: CompassDirection) {
         if (index != viewCounter) {
             return;
         }
@@ -157,13 +220,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         if (postCounter == 0) {
-            frontImageView!.image = currentPost.image;
+            switchImage(currentPost.image!, fromDirection: fromDirection);
+            //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
         else {
             var currentPostNum = postCounter;
             var oldImg = self.frontImageView!.image;
-            self.frontImageView!.image = LOADING_IMG;
+            //self.frontImageView!.image = LOADING_IMG;
             currentPost.loadImages({(img: UIImage?, comments: Bool)->Void in
                 if (currentPostNum == self.postCounter) {
                     //i haven't swiped more in that time
@@ -171,12 +235,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     if (comments) {
                         //we have comments! or error :(
                         self.viewingComments = true;
-                        self.frontImageView!.image = oldImg;
+                        //self.frontImageView!.image = oldImg;
                         self.startViewingComments(currentPost);
                     }
                     else {
                         if (img) {
-                            self.frontImageView!.image = img!;
+                            self.switchImage(img!, fromDirection: fromDirection);
                         }
                     }
                 }
@@ -189,7 +253,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         authorTextField.text = currentPost.myObj["author"] as String;
         descriptionTextField.text = currentPost.myObj["description"] as String;
         
+        descriptionPage.alpha = 0;
         descriptionPage.hidden = false;
+        UIView.animateWithDuration(0.3, animations: {() in
+            self.descriptionPage.alpha = 1;
+            });
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -225,7 +293,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         postCounter = 0;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.hidden = true;
+            descriptionPage.alpha = 1;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.descriptionPage.alpha = 0;
+                }, completion: {(success: Bool) in
+                    self.descriptionPage.hidden = true;
+                });
         }
         if (refreshNeeded) {
             if (motion) {
@@ -246,7 +319,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             }
             else {
                 refreshNeeded = true;
-                frontImageView!.image = ENDING_IMG;
+                switchImage(ENDING_IMG, fromDirection: CompassDirection.SOUTH);
+                //frontImageView!.image = ENDING_IMG;
                 pageCounter.text = "0/0";
             }
         }
@@ -256,7 +330,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         else if (imgBuffer!.isLoadedAt(viewCounter)) {
             //might also need to see if image itself is loaded (depending on changes for deallocing)
-            configureCurrent(viewCounter);
+            if (motion) {
+                configureCurrent(viewCounter, fromDirection: CompassDirection.SOUTH);
+            }
+            else {
+                configureCurrent(viewCounter, fromDirection: CompassDirection.NORTH);
+            }
         }
         else {
             //cell will get fetched, wait
@@ -274,14 +353,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }*/
         
     }
-    func swipeSideAction() {
+    func swipeSideAction(direction: CompassDirection) {
         if (refreshNeeded) {
             //we are at eof
             postCounter = 0;
             return;
         }
         if (imgBuffer!.isLoadedAt(viewCounter)) {
-            configureCurrent(viewCounter);
+            configureCurrent(viewCounter, fromDirection: direction);
         }
     }
     
@@ -295,12 +374,19 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             }
             return;
         }
+        postCounter--;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.hidden = true;
+            descriptionPage.alpha = 1;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.descriptionPage.alpha = 0;
+                }, completion: {(success: Bool) in
+                    self.descriptionPage.hidden = true;
+                });
+            swipeSideAction(CompassDirection.STAY);
+            return;
         }
-        postCounter--;
-        swipeSideAction();
+        swipeSideAction(CompassDirection.WEST);
         
     }
     
@@ -310,7 +396,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             return;
         }
         postCounter++;
-        swipeSideAction();
+        swipeSideAction(CompassDirection.EAST);
     }
     
     @IBAction func sideMenu(sender: UIButton) {

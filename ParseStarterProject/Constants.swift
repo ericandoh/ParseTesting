@@ -119,6 +119,15 @@ enum NotificationType: String {
     case FOLLOWER_NOTIF = "FollowerNotif"
 }
 
+//Int enums to describe direction (of swipe, for home feed)
+enum CompassDirection: Int {
+    case STAY = 0;
+    case NORTH = 1;
+    case EAST = 2;
+    case SOUTH = 3;
+    case WEST = 4;
+}
+
 //String enums to describe exclusivity of user post (work need)
 //this enum is deprecated!
 enum PostExclusivity: String {
