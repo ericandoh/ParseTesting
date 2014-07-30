@@ -445,7 +445,8 @@ import UIKit
     
     class func getSearchPosts(skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("labels", containsAllObjectsInArray: [term]);
+        var twoTermz = term.lowercaseString;
+        query.whereKey("labels", containsAllObjectsInArray: [twoTermz]);
         query.limit = loadCount;
         query.skip = skip;
         query.orderByDescending("createdAt");
@@ -720,8 +721,9 @@ import UIKit
     }*/
     //------------------Search methods---------------------------------------
     class func getSearchTerms(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var twoTermz = term.lowercaseString;
         var query = PFQuery(className: "SearchTerm");
-        query.whereKey("term", containsString: term);
+        query.whereKey("term", containsString: twoTermz);
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in

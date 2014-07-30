@@ -38,6 +38,7 @@
 		D914F7FF198854A400A59314 /* CustomImageBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7FE198854A400A59314 /* CustomImageBuffer.swift */; };
 		D91C98D7196EF69A00E1DBEE /* testbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91C98D6196EF69A00E1DBEE /* testbackground.jpg */; };
 		D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */; };
+		D923E4CB1989A00A00C12429 /* deleteSwipeInfoBar.png in Resources */ = {isa = PBXBuildFile; fileRef = D923E4CA1989A00A00C12429 /* deleteSwipeInfoBar.png */; };
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */; };
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
@@ -115,6 +116,7 @@
 		D914F7FE198854A400A59314 /* CustomImageBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageBuffer.swift; sourceTree = "<group>"; };
 		D91C98D6196EF69A00E1DBEE /* testbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testbackground.jpg; sourceTree = "<group>"; };
 		D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
+		D923E4CA1989A00A00C12429 /* deleteSwipeInfoBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteSwipeInfoBar.png; sourceTree = "<group>"; };
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
 		D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 			children = (
 				D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */,
 				D99B5FCB196DA0FD00662A39 /* unknown_user.png */,
+				D923E4CA1989A00A00C12429 /* deleteSwipeInfoBar.png */,
 			);
 			name = Defaults;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				C4C51B571613CE0800959FDC /* Default.png in Resources */,
 				D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */,
 				D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */,
+				D923E4CB1989A00A00C12429 /* deleteSwipeInfoBar.png in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,
 				C4C51B591613CE0800959FDC /* Default@2x.png in Resources */,
 				D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */,

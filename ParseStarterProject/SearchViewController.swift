@@ -69,7 +69,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     //------------search bar functions---------------
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         if (searchText == "") {
-            collectionDelegateSearch!.resetData();
+            if (collectionDelegateSearch) {
+                collectionDelegateSearch!.resetData();
+            }
             collectionDelegateMain!.resetData();
             collectionDelegateMain!.initialSetup();
         }

@@ -31,6 +31,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet var shopTheLookView: UIView
     
     @IBOutlet var shopTheLookConstraint: NSLayoutConstraint
+    
+    @IBOutlet var mainWindowConstraint: NSLayoutConstraint
+    
+    @IBOutlet var slideDownConstraint: NSLayoutConstraint
+    
+    @IBOutlet var backDirectionImage: UIImageView
+    
+    
     var movingWindow: Bool = false;
     
     var receivedImages: Array<UIImage> = [];
@@ -51,9 +59,29 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         
         labelBar.text = prevLabel;
         textView.text = prevDescrip;
+        
+        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
+        
+        if (shopTheLook.count > 0) {
+            scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(shopTheLook.count) * BOX_INCR_Y);
+            
+            for (index, look) in enumerate(shopTheLook) {
+                var oldY = BOX_START_Y + Double(index) * BOX_INCR_Y;
+                var newY = BOX_START_Y + Double(index + 1) * BOX_INCR_Y;
+                var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
+                newButton.setTitle(look.title, forState: UIControlState.Normal);
+                newButton.backgroundColor = UIColor.redColor();
+                shopButtons.append(newButton);
+                mainView.addSubview(newButton);
+            }
+            shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y * Double(shopTheLook.count);
+            mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y * Double(shopTheLook.count);
+            
+            
+        }
+        
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
-        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
     }
     
     //function triggered by pushing check button
@@ -126,16 +154,33 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             sideTableView.setEditing(false, animated: false);
             overlord.setSuppressed(false);
             scrollView.scrollEnabled = true;
+            self.slideDownConstraint.constant = self.slideDownConstraint.constant - 30;
+            UIView.animateWithDuration(0.2, animations: {() in
+                self.backDirectionImage.alpha = 0;
+                }, completion: {(success: Bool) in
+                    self.backDirectionImage.hidden = true;
+                });
+            /*UIView.animateWithDuration(0.15, animations: {() in
+                self.slideDownConstraint.constant = self.slideDownConstraint.constant - 40;
+                });*/
         }
         else {
             navigationTitle.setTitle("Stop Edits", forState: UIControlState.Normal);
             sideTableView.setEditing(true, animated: false);
             overlord.setSuppressed(true);
             var newOrigin = CGPoint(x: mainOrigin.x, y: mainOrigin.y + 20);
-            movingWindow = true;
             scrollView.scrollEnabled = false;
             scrollView.setContentOffset(CGPointZero, animated: true);
-            UIView.animateWithDuration(0.15, animations: {() in
+            self.slideDownConstraint.constant = self.slideDownConstraint.constant + 30;
+            backDirectionImage.alpha = 0;
+            backDirectionImage.hidden = false;
+            UIView.animateWithDuration(0.2, animations: {() in
+                self.backDirectionImage.alpha = 1;
+                });
+            /*UIView.animateWithDuration(0.15, animations: {() in
+                self.slideDownConstraint.constant = self.slideDownConstraint.constant + 40;
+            });*/
+            /*UIView.animateWithDuration(0.15, animations: {() in
                 self.mainView.frame.origin = newOrigin;
                 }, completion: {(success: Bool) in
                     UIView.animateWithDuration(0.15, delay: 1.2, options: nil, animations: {() in
@@ -143,7 +188,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                         }, completion: {(success: Bool) in
                             self.movingWindow = false;
                         });
-                });
+                });*/
         }
     }
     
@@ -153,6 +198,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (!sideTableView.editing) {
             return;
         }
+        NSLog("\(point.x)")
         if (point.x > UPLOAD_TABLE_DELETE_LIMIT) {
             return;
         }
@@ -203,7 +249,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func whatIsShopTheLook(sender: UIButton) {
-        let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
+        let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -211,7 +257,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func addManualShopTheLook(look: ShopLook) {
         //function for pushing down stack
         shopTheLook.append(look);
-        
         scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(shopTheLook.count) * BOX_INCR_Y);
         
         var oldY = BOX_START_Y + Double(shopTheLook.count - 1) * BOX_INCR_Y;
@@ -225,6 +270,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
 
 
         shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y;
+        mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y;
 
         /*
         //var frame: CGRect = shopTheLookView.frame;

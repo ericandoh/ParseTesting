@@ -82,7 +82,7 @@ let BAR_WIDTH = 225.0;
 let TRIGGER_BAR_WIDTH = 200.0;
 
 //numbers for shop the look boxes in upload flow
-let BOX_START_Y = 436.0;                //starting y pos of shop look boxes
+let BOX_START_Y = 412.0;                //starting y pos of shop look boxes
 let LABEL_BOX_HEIGHT = 40.0;            //individual box heights
 let LABEL_SPACING = 5.0;                //spacing between each box
 let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
