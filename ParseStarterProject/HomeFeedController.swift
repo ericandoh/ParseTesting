@@ -26,6 +26,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var shopTheLookBoxReference: UILabel
     
+    @IBOutlet var homeLookTable: UITableView
+    
+    @IBOutlet var shopTheLookPrefacer: UILabel
     
     
     var backImageView: UIImageView?;      //deprecated
@@ -62,6 +65,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var commentList: Array<PostComment> = [];
     
     var imgBuffer: CustomImageBuffer?;
+    
+    var currentShopDelegate: ShopLookDelegate?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -250,8 +255,19 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func startViewingComments(currentPost: ImagePostStructure) {
         
-        authorTextField.text = currentPost.myObj["author"] as String;
-        descriptionTextField.text = currentPost.myObj["description"] as String;
+        authorTextField.text = currentPost.getAuthor();
+        descriptionTextField.text = currentPost.getDescription();
+        currentPost.fetchShopLooks({
+            (input: Array<ShopLook>) in
+            self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
+            self.currentShopDelegate!.initialSetup(self.homeLookTable);
+            if (input.count == 0) {
+                self.shopTheLookPrefacer.hidden = true;
+            }
+            else {
+                self.shopTheLookPrefacer.hidden = false;
+            }
+            });
         
         descriptionPage.alpha = 0;
         descriptionPage.hidden = false;

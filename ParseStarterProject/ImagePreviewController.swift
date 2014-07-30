@@ -123,7 +123,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                 exclusivity = PostExclusivity.EVERYONE;
         }*/
         var description = textView.text;
-        ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text);
+        ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
         
         //reset submission page
         
@@ -338,16 +338,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
         
         featurizeShopButton(shopTheLook.count - 1, shopButton: newButton);
-        
-        /*
-        //var frame: CGRect = shopTheLookView.frame;
-        shopTheLookView.removeFromSuperview();
-        //frame.origin.y = frame.origin.y + 40.0;
-        //NSLog("\(frame.origin.y)")
-        shopTheLookView.frame = CGRectMake(10.0, newY, 300.0, LABEL_BOX_HEIGHT);
-        shopTheLookView.backgroundColor = UIColor.blueColor();
-        mainView.addSubview(shopTheLookView);
-        mainView.bringSubviewToFront(shopTheLookView);*/
     }
     func sendBackImages(seeBack: Int) {
         self.receivedImages = [];

@@ -249,7 +249,7 @@ import UIKit
         }
         return newImgList;
     }
-    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String) {
+    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
             return;
@@ -266,7 +266,7 @@ import UIKit
             
             
             
-            var newPost = ImagePostStructure(images: images, description: description, labels: labels);
+            var newPost = ImagePostStructure(images: images, description: description, labels: labels, looks: looks);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");

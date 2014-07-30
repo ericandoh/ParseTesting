@@ -23,7 +23,7 @@ class ImagePostStructure
         myObj = inputObj;
         images = [];
     }
-    init(images: Array<UIImage>, description: String, labels: String) {
+    init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
         image = images[0];
@@ -60,6 +60,12 @@ class ImagePostStructure
         
         var labelArr = ServerInteractor.separateLabels(labels);
         myObj["labels"] = labelArr;
+        
+        var looksArray = NSMutableArray();
+        for look: ShopLook in looks {
+            looksArray.addObject(look.toDictionary());
+        }
+        myObj["shopLooks"] = looksArray;
         
         
         //setting permissions to public
@@ -166,6 +172,20 @@ class ImagePostStructure
     func fetchComments(finishFunction: (input: NSArray)->Void) {
         var commentArray = myObj["comments"] as NSArray;
         finishFunction(input: commentArray);
+    }
+    func getAuthor()->String {
+        return myObj["author"] as String;
+    }
+    func getDescription()->String {
+        return myObj["description"] as String;
+    }
+    func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
+        var lookArray = myObj["shopLooks"] as NSArray;
+        var retList: Array<ShopLook> = [];
+        for object in lookArray {
+            retList.append(ShopLook.fromDictionary(object));
+        }
+        finishFunction(input: retList);
     }
     func addComment(comment: String) {
         var commentArray = myObj["comments"] as NSMutableArray;
