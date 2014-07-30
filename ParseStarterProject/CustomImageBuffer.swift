@@ -44,10 +44,13 @@ class CustomImageBuffer: NSObject {
     //this does NOT differentiate between home screen or other screens!
     var loaderType: Int = 0;
     
-    init(disableOnAnon: Bool, user: FriendEncapsulator?) {
+    var owner: String;
+    
+    init(disableOnAnon: Bool, user: FriendEncapsulator?, owner: String) {
         self.disableOnAnon = disableOnAnon;
         self.user = user;
         hitEnd = false;
+        self.owner = owner;
         //loadedPosts = [];
     }
     func initialSetup(serverFunction: (skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void,
@@ -85,6 +88,13 @@ class CustomImageBuffer: NSObject {
                 loadSet();
             }
     }
+    func switchContext(owner: String,
+        refreshFunction: (()->Void)?,
+        configureCellFunction: (index: Int)->Void) {
+        self.owner = owner;
+        self.refreshFunction = refreshFunction
+        self.configureCellFunction = configureCellFunction;
+    }
     func loadSet() {
         if (isLoading) {
             return;
@@ -115,6 +125,9 @@ class CustomImageBuffer: NSObject {
         return loadedPosts[index]!;
     }
     func isLoadedAt(index: Int)->Bool {
+        if (index >= loadedPosts.count) {
+            return false;
+        }
         if (loadedPosts[index]) {
             return true;
         }

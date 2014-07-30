@@ -12,6 +12,8 @@
 
 import UIKit
 
+let COLLECTION_OWNER = "COLLECTION";
+
 class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDataSource {
     /*
     //the posts I have loaded
@@ -57,7 +59,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.myCollectionView = collectionView;
         self.owner = sender;
         self.serverFunction = serverFunction;
-        self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: user);
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: user, owner: COLLECTION_OWNER);
     }
     
     //call this after init, this triggers it to be active
@@ -72,13 +74,16 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.imgBuffer.resetData();
     }
     func loadSet() {
+        if (self.owner != COLLECTION_OWNER) {
+            imgBuffer.refreshFunction = {() in self.myCollectionView.reloadData();};
+            imgBuffer.configureCellFunction = checkConfigCell;
+        }
         self.imgBuffer.loadSet();
     }
     
     //configures current cell at index with the appropriate post in loadedPosts
     //assumes post at index is already fetched from server
     func checkConfigCell(index: Int) {
-        
         for path : AnyObject in myCollectionView.indexPathsForVisibleItems() {
             if ((path as NSIndexPath).row == index) {
                 var cell: SinglePostCollectionViewCell = myCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as SinglePostCollectionViewCell;

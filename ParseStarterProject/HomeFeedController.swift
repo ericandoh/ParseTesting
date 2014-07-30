@@ -10,6 +10,8 @@
 
 import UIKit
 
+let HOME_OWNER = "HOME";
+
 class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var commentView: UIView               //use this for hiding and showing
@@ -19,6 +21,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
+    
+    @IBOutlet var topLeftButton: UIButton
+    
+    
     //@IBOutlet var backImageView: UIImageView      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -77,15 +83,43 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         //self.view.bringSubviewToFront(frontImageView);
-        
         commentView.hidden = true; //this should be set in storyboard but just in case
-        refresh();
+        if (!imgBuffer) {
+            refresh();
+        }
+        else {
+            frontImageView!.image = LOADING_IMG;
+            topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+        }
     }
     override func viewDidAppear(animated: Bool) {
         //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
+        super.viewDidAppear(animated);
+        if (self.navigationController) {
+            self.navigationController.setNavigationBarHidden(true, animated: animated);
+        }
+        
+        if (imgBuffer) {
+            if (imgBuffer!.isLoadedAt(viewCounter)) {
+                configureCurrent(viewCounter);
+            }
+        }
         self.imgBuffer!.loadSet();
     }
+    override func viewWillDisappear(animated: Bool) {
+        if (self.navigationController) {
+            self.navigationController.setNavigationBarHidden(false, animated: animated);
+        }
+    }
+    /*override func viewWillDisappear(animated: Bool) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
+                var lastIndex = self.navigationController.viewControllers.count - 1;
+            }
+        }
+        super.viewWillDisappear(animated);
+    }*/
     func syncWithImagePostDelegate(theirBuffer: CustomImageBuffer, selectedAt: Int) {
         viewCounter = selectedAt;
         postCounter = 0;
@@ -93,6 +127,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         viewingComments = false;
         imgBuffer = theirBuffer;
         //frontImageView!.image = LOADING_IMG;
+        imgBuffer!.switchContext(HOME_OWNER, nil, configureCellFunction: configureCurrent);
     }
     //to refresh all images in feed
     func refresh() {
@@ -106,7 +141,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             self.imgBuffer!.loadSet();
         }
         else {
-            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil);
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
             self.imgBuffer!.initialSetup2(ServerInteractor.getPost, configureCellFunction: configureCurrent);
         }
     }
@@ -205,9 +240,15 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         if (viewCounter >= imgBuffer!.numItems()) {
             //show end of file screen, refresh if needed
-            refreshNeeded = true;
-            frontImageView!.image = ENDING_IMG;
-            pageCounter.text = "0/0";
+            if (self.navigationController) {
+                viewCounter = imgBuffer!.numItems() - 1;
+                return;
+            }
+            else {
+                refreshNeeded = true;
+                frontImageView!.image = ENDING_IMG;
+                pageCounter.text = "0/0";
+            }
         }
         else if (viewCounter < 0) {
             //do nothing
@@ -274,7 +315,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func sideMenu(sender: UIButton) {
         if (self.navigationController) {
-            (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+            //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+            self.navigationController.popViewControllerAnimated(true);
         }
         else if (self.parentViewController) {
             (self.parentViewController as SideMenuManagingViewController).openMenu();

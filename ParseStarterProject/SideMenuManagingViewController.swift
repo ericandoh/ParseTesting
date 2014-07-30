@@ -149,6 +149,9 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         var content: UIViewController;
         if (contains(self.viewControllerDictionary.keys, contentString)) {
             content = self.viewControllerDictionary[contentString]!;
+            if (content is UINavigationController) {
+                (content as UINavigationController).popToRootViewControllerAnimated(false);
+            }
         }
         else {
             content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
