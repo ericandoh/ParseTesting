@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
@@ -149,7 +150,6 @@
                         <outlet property="numberLikes" destination="KEW-iB-HzR" id="8fh-YG-FLs"/>
                         <outlet property="numberPosts" destination="PFl-y1-MRd" id="xu4-Ix-GpQ"/>
                         <outlet property="settingsButton" destination="fIu-Ms-9co" id="kNB-tG-uhk"/>
-                        <segue destination="gyS-wk-cim" kind="push" identifier="ImagePostSegue" id="9oq-uE-35W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Emp-ZB-3wh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -398,98 +398,12 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Notifications" id="qW7-za-K02"/>
                     <connections>
-                        <segue destination="gyS-wk-cim" kind="push" identifier="ImagePostSegue" id="nLw-DS-sgH"/>
                         <segue destination="geD-Vt-qQ8" kind="push" identifier="DefaultNotifSegue" id="wc2-zM-IBv"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OVX-Xn-NXP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="591" y="2390"/>
-        </scene>
-        <!--Image Post Notif View Controller-->
-        <scene sceneID="BK4-Rb-pqy">
-            <objects>
-                <viewController id="gyS-wk-cim" customClass="ImagePostNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="52y-Xg-pQa"/>
-                        <viewControllerLayoutGuide type="bottom" id="1Hj-GB-rwQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="du7-1U-nIP">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sNR-nK-ccc">
-                                <rect key="frame" x="20" y="58" width="280" height="310"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MY POST" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a4c-Pr-0oR">
-                                <rect key="frame" x="122" y="20" width="76" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stats About My Post........" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvs-87-1Zf">
-                                <rect key="frame" x="62" y="376" width="197" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jDG-Kj-OMh">
-                                <rect key="frame" x="118" y="430" width="84" height="30"/>
-                                <state key="normal" title="Comments?">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="comments:" destination="gyS-wk-cim" eventType="touchUpInside" id="pFA-jl-Yvc"/>
-                                </connections>
-                            </button>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvE-Jd-ZUI">
-                                <rect key="frame" x="12" y="42" width="297" height="506"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="laO-Tp-H3O">
-                                        <rect key="frame" x="-32" y="-38" width="110" height="44"/>
-                                        <state key="normal" title="Exit">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="Exit:" destination="gyS-wk-cim" eventType="touchUpInside" id="dri-d6-yJD"/>
-                                            <action selector="exit:" destination="gyS-wk-cim" eventType="touchUpInside" id="ALH-q9-MCi"/>
-                                            <action selector="exitComments:" destination="gyS-wk-cim" eventType="touchUpInside" id="sL5-hj-T3O"/>
-                                        </connections>
-                                    </button>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jSi-ic-7zq">
-                                        <rect key="frame" x="0.0" y="31" width="297" height="484"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="Gcj-zd-Dqf">
-                                                <rect key="frame" x="0.0" y="0.0" width="297" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gcj-zd-Dqf" id="9wx-gG-1It">
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="gyS-wk-cim" id="pjO-f4-P3Q"/>
-                                            <outlet property="delegate" destination="gyS-wk-cim" id="8Pg-Zg-9sC"/>
-                                        </connections>
-                                    </tableView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="0Cn-2G-0fc"/>
-                    <connections>
-                        <outlet property="commentTableView" destination="jSi-ic-7zq" id="aYY-Wc-5DQ"/>
-                        <outlet property="commentView" destination="fvE-Jd-ZUI" id="Snz-vY-g3J"/>
-                        <outlet property="imageView" destination="sNR-nK-ccc" id="x3i-Q0-zdS"/>
-                        <outlet property="postTitle" destination="a4c-Pr-0oR" id="6hX-Ae-5mh"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WFz-AN-Bz6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1439" y="3847"/>
         </scene>
         <!--Single Notif View Controller-->
         <scene sceneID="cxR-Vz-ipw">
@@ -1324,63 +1238,6 @@
             </objects>
             <point key="canvasLocation" x="160" y="1665"/>
         </scene>
-        <!--Search Term-->
-        <scene sceneID="0Jx-sY-FqE">
-            <objects>
-                <collectionViewController id="wqJ-32-64x" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" id="5gM-OS-t3g">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hjH-01-0eB">
-                            <size key="itemSize" width="84" height="84"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchResultCell" id="0Qi-VY-pfh" customClass="SearchCollectionViewCell" customModule="ParseStarterProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0KG-Yr-wLj">
-                                            <rect key="frame" x="0.0" y="0.0" width="84" height="84"/>
-                                        </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFk-sw-j0U">
-                                            <rect key="frame" x="20" y="43" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <color key="backgroundColor" red="0.97940802419999995" green="1" blue="0.6694487938" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <outlet property="imageView" destination="0KG-Yr-wLj" id="qt1-Sp-GVj"/>
-                                    <outlet property="postLabel" destination="rFk-sw-j0U" id="hLG-nw-olp"/>
-                                </connections>
-                            </collectionViewCell>
-                        </cells>
-                        <connections>
-                            <outlet property="dataSource" destination="wqJ-32-64x" id="mfg-0n-jvm"/>
-                            <outlet property="delegate" destination="wqJ-32-64x" id="txF-XW-Qid"/>
-                        </connections>
-                    </collectionView>
-                    <navigationItem key="navigationItem" title="Search Term" id="Dok-14-fqN">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="PFo-8u-raN"/>
-                    </navigationItem>
-                    <connections>
-                        <segue destination="gyS-wk-cim" kind="push" identifier="ImagePostSegue" id="Wy0-oh-tsk"/>
-                    </connections>
-                </collectionViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CqT-Uq-7Du" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="160" y="3115"/>
-        </scene>
     </scenes>
     <resources>
         <image name="deleteSwipeInfoBar.png" width="290" height="35"/>
@@ -1395,7 +1252,6 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Wy0-oh-tsk"/>
         <segue reference="jrF-7g-MJv"/>
     </inferredMetricsTieBreakers>
 </document>

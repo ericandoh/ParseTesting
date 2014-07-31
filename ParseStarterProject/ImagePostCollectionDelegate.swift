@@ -85,7 +85,8 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.imgBuffer.resetData();
     }
     func loadSet() {
-        if (self.owner != COLLECTION_OWNER) {
+        if (imgBuffer.owner != COLLECTION_OWNER) {
+            imgBuffer.owner = COLLECTION_OWNER;
             imgBuffer.refreshFunction = {() in self.myCollectionView.reloadData();};
             imgBuffer.configureCellFunction = checkConfigCell;
         }
@@ -141,7 +142,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
             if (path.row == imgBuffer.numItems() - 1) {
-                imgBuffer.loadSet();
+                self.loadSet();
                 return;
             }
         }

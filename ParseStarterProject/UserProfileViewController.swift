@@ -200,7 +200,7 @@ class UserProfileViewController: UIViewController {
                     (segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
                 }
             }
-            else if (segue!.identifier == "ImagePostSegue") {
+            /*else if (segue!.identifier == "ImagePostSegue") {
                 if (mainUser) {
                     var indexPaths: [NSIndexPath] = myCollectionView.indexPathsForSelectedItems() as [NSIndexPath];
                     if (indexPaths.count > 0) {
@@ -214,7 +214,7 @@ class UserProfileViewController: UIViewController {
                     }
                     //(segue!.destinationViewController as ImagePostNotifViewController).receiveImagePost(loadedPosts[lastSelect]!);
                 }
-            }
+            }*/
         }
     }
     

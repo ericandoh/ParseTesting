@@ -9,7 +9,7 @@
 //
 
 import UIKit
-
+/*
 class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet var commentView: UIView
@@ -169,4 +169,4 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     }
 
 
-}
+}*/

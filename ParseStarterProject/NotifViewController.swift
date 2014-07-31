@@ -122,15 +122,15 @@ class NotifViewController: UITableViewController {
         
         let notifObj: InAppNotification = notifList[temp]!;
         
-        if (id == "ImagePostSegue") {
+        /*if (id == "ImagePostSegue") {
             var destination = segue!.destinationViewController as ImagePostNotifViewController;
             destination.receiveNotifObject(notifObj);
-        }
+        }*/
         /*else if (id == "FriendRequestSegue") {
             var destination = segue!.destinationViewController as FriendRequestViewController;
             destination.receiveNotifObject(notifObj);
         }*/
-        else {
+        if (segue!.destinationViewController is SingleNotifViewController) {
             var destination = segue!.destinationViewController as SingleNotifViewController;
             destination.receiveNotifObject(notifObj);
         }
