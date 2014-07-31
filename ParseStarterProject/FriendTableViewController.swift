@@ -111,7 +111,6 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        NSLog("Selecting");
         if (indexPath.row == 0) {
             let alert: UIAlertController = UIAlertController(title: "Add Follower", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);

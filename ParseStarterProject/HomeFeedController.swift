@@ -74,6 +74,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (self.navigationController) {
+            //self.navigationController.setNavigationBarHidden(true, animated: false);
+            self.navigationController.navigationBar.hidden = true;
+            self.navigationController.navigationBar.translucent = true;
+        }
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
         
@@ -286,12 +292,13 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                 self.shopTheLookPrefacer.hidden = false;
             }
             });
-        
-        descriptionPage.alpha = 0;
-        descriptionPage.hidden = false;
-        UIView.animateWithDuration(0.3, animations: {() in
-            self.descriptionPage.alpha = 1;
-            });
+        if (descriptionPage.hidden) {
+            descriptionPage.alpha = 0;
+            descriptionPage.hidden = false;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.descriptionPage.alpha = 1;
+                });
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -304,6 +311,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
         viewCounter--;
+        if (viewCounter < 0) {
+            viewCounter = 0;
+            return;
+        }
         swipeAction(false);
     }
     
@@ -327,12 +338,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         postCounter = 0;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.alpha = 1;
-            UIView.animateWithDuration(0.3, animations: {() in
-                self.descriptionPage.alpha = 0;
-                }, completion: {(success: Bool) in
-                    self.descriptionPage.hidden = true;
-                });
+            if (!descriptionPage.hidden) {
+                descriptionPage.alpha = 1;
+                UIView.animateWithDuration(0.3, animations: {() in
+                    self.descriptionPage.alpha = 0;
+                    }, completion: {(success: Bool) in
+                        self.descriptionPage.hidden = true;
+                    });
+            }
         }
         if (refreshNeeded) {
             if (motion) {
@@ -411,12 +424,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         postCounter--;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.alpha = 1;
-            UIView.animateWithDuration(0.3, animations: {() in
-                self.descriptionPage.alpha = 0;
-                }, completion: {(success: Bool) in
-                    self.descriptionPage.hidden = true;
-                });
+            if (!descriptionPage.hidden) {
+                descriptionPage.alpha = 1;
+                UIView.animateWithDuration(0.3, animations: {() in
+                    self.descriptionPage.alpha = 0;
+                    }, completion: {(success: Bool) in
+                        self.descriptionPage.hidden = true;
+                    });
+            }
             swipeSideAction(CompassDirection.STAY);
             return;
         }
@@ -435,12 +450,18 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func sideMenu(sender: UIButton) {
         if (self.navigationController) {
-            //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-            self.navigationController.popViewControllerAnimated(true);
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
         }
-        else if (self.parentViewController) {
-            (self.parentViewController as SideMenuManagingViewController).openMenu();
-        }
+        //else if (self.parentViewController) {
+            //(self.parentViewController as SideMenuManagingViewController).openMenu();
+        //}
     }
     
     func performBufferLog() {
@@ -621,7 +642,6 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         commentView.hidden = false;
         self.view.bringSubviewToFront(commentView);
         
-        NSLog("Comments for \(self.viewCounter)")
         self.commentList = Array<PostComment>();
         
         var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)

@@ -30,15 +30,22 @@ enum ExternalViewLink: String {
 
 
 class LinkFilledTextView: UITextView {
+    
     var owner: UIViewController;
+    var canRespond: Bool = false;
+    
     init(frame: CGRect, textContainer: NSTextContainer!, owner: UIViewController) {
         self.owner = owner;
         super.init(frame: frame, textContainer: textContainer);
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
+        self.userInteractionEnabled = false;
+        //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
     }
     override func awakeFromNib() {
         super.awakeFromNib();
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
+        self.userInteractionEnabled = false;
+        //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
     }
     /*init(frame: CGRect) {
     super.init(frame: frame);
@@ -128,11 +135,20 @@ class LinkFilledTextView: UITextView {
     }
     */
     func setTextAfterAttributing(text: String) {
-        self.attributedText = LinkFilledTextView.convertToAttributed(text);
+        self.attributedText = self.convertToAttributed(text);
+    }
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
+        var txtView = object as UITextView;
+        var topoffset = (txtView.bounds.size.height - txtView.contentSize.height * txtView.zoomScale)/2.0;
+        topoffset = ( topoffset < 0.0 ? 0.0 : topoffset );
+        txtView.contentOffset = CGPoint(x: 0, y: -topoffset);
+    }
+    override func canBecomeFirstResponder() -> Bool  {
+        return canRespond;
     }
     //function that takes in a string of regular text that is embedded with tags/author links
     //and converts to an attributed text.
-    class func convertToAttributed(text: String)->NSAttributedString {
+    func convertToAttributed(text: String)->NSAttributedString {
 
         var attributedString = NSMutableAttributedString();
         
@@ -153,11 +169,15 @@ class LinkFilledTextView: UITextView {
                 let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
                 let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+                canRespond = true;
+                self.userInteractionEnabled = true;
             }
             else if (individualString.hasPrefix("@")) {
                 let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
                 let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+                canRespond = true;
+                self.userInteractionEnabled = true;
             }
             else {
                 let font = UIFont(name: "Futura", size:14.0);

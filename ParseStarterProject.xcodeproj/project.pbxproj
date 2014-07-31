@@ -46,6 +46,7 @@
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
 		D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */; };
 		D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */; };
+		D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */; };
 		D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */; };
 		D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */; };
 		D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */; };
@@ -126,6 +127,7 @@
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
 		D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuManagingViewController.swift; sourceTree = "<group>"; };
 		D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
+		D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTextTableViewCell.swift; sourceTree = "<group>"; };
 		D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
 		D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp_camera_icon.jpg; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				D914F7FE198854A400A59314 /* CustomImageBuffer.swift */,
 				D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */,
 				D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */,
+				D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,
 				D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
+				D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */,
 				D914F7FF198854A400A59314 /* CustomImageBuffer.swift in Sources */,
 				D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */,
 			);

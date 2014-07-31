@@ -100,7 +100,7 @@ let SCROLLFIELD_DEFAULT_HEIGHT = 595.0; //height of scrollfield when no shoplook
 
 //side menu bar items we will have
 //this references ONLY storyboard ID names
-let SIDE_MENU_ITEMS = ["Home", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
+let SIDE_MENU_ITEMS = ["HomeNav", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
 
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;

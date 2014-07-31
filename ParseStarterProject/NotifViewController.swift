@@ -60,7 +60,32 @@ class NotifViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
+        
+        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        
+        // Configure the cell...
+        
+        var temp = indexPath!.row;
+        
+        
+        var member: InAppNotification = notifList[temp] as InAppNotification;
+        
+        if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: true, sender: self)
+        }
+        else {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+    
+        
+        //cell.textLabel.text = member.messageString;
+        
+
+        
+        /*let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
         
@@ -70,7 +95,7 @@ class NotifViewController: UITableViewController {
         var member: InAppNotification = notifList[temp] as InAppNotification;
         
         
-        cell.textLabel.text = member.messageString;
+        cell.textLabel.text = member.messageString;*/
         
         return cell
     }
