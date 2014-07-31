@@ -26,6 +26,9 @@ var dictionary: [String: String] = [:];
 dictionary.keys
 var arr = [1,2,3];
 contains(arr, 3);
+for x in "H" {
+    var y: String = String(x)
+}
 
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 

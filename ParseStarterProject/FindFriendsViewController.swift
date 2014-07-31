@@ -10,9 +10,10 @@ import UIKit
 
 class FindFriendsViewController: UIViewController {
 
+    @IBOutlet var someTextField: LinkFilledTextView
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        someTextField.owner = self;
         // Do any additional setup after loading the view.
     }
 

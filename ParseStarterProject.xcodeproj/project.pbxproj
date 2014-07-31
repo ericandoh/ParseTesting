@@ -42,6 +42,7 @@
 		D923E4CD1989B3E900C12429 /* ShopLookDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */; };
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */; };
+		D94185F7198AA7BD00844697 /* LinkFilledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */; };
 		D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */; };
 		D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */; };
 		D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */; };
@@ -121,6 +122,7 @@
 		D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookDelegate.swift; sourceTree = "<group>"; };
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
 		D93F7DB619705257001340DB /* SinglePostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostCollectionViewCell.swift; sourceTree = "<group>"; };
+		D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkFilledTextView.swift; sourceTree = "<group>"; };
 		D945DA0C19632B4D00347F45 /* FriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewController.swift; sourceTree = "<group>"; };
 		D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuManagingViewController.swift; sourceTree = "<group>"; };
 		D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				D914F7FC19883CD000A59314 /* ImagePostCollectionDelegate.swift */,
 				D914F7FE198854A400A59314 /* CustomImageBuffer.swift */,
 				D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */,
+				D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */,
 				D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */,
 				D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */,
+				D94185F7198AA7BD00844697 /* LinkFilledTextView.swift in Sources */,
 				D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,

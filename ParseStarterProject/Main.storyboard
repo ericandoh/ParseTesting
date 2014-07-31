@@ -681,7 +681,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oXe-hZ-1Ih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2654" y="2446"/>
+            <point key="canvasLocation" x="-266" y="102"/>
         </scene>
         <!--Side Menu Managing View Controller-->
         <scene sceneID="Pcq-HU-qzW">
@@ -768,12 +768,12 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-246" y="921"/>
+            <point key="canvasLocation" x="-382" y="925"/>
         </scene>
         <!--Find Friends View Controller-->
         <scene sceneID="su8-22-FyD">
             <objects>
-                <viewController storyboardIdentifier="FindFriends" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Anw-Wq-Q2x" customClass="FindFriendsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FindFriendsView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Anw-Wq-Q2x" customClass="FindFriendsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TGF-PO-hWA"/>
                         <viewControllerLayoutGuide type="bottom" id="he7-gx-ORq"/>
@@ -788,13 +788,54 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gO8-7N-RON" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                <rect key="frame" x="40" y="220" width="240" height="208"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="All the things are wow ">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="#really">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" so wow @meepmeep ">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="#soawesome">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" I can't even #penguin">
+                                        <attributes>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="fCv-Ra-qvs"/>
+                    <connections>
+                        <outlet property="someTextField" destination="gO8-7N-RON" id="jUk-i9-ej9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4h4-PF-91E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246" y="1665"/>
+            <point key="canvasLocation" x="-240" y="2390"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7rx-NE-EN6">
@@ -901,7 +942,7 @@
         <!--Search-->
         <scene sceneID="Ya9-qu-hy2">
             <objects>
-                <viewController id="d93-87-W5i" customClass="SearchViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchWindow" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d93-87-W5i" customClass="SearchViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ReR-TV-mNd"/>
                         <viewControllerLayoutGuide type="bottom" id="rIy-Mp-g7Y"/>
@@ -1222,6 +1263,22 @@
             <point key="canvasLocation" x="1008" y="408"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="2Nr-T7-4Of">
+            <objects>
+                <navigationController storyboardIdentifier="FindFriends" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ft1-bS-2Wy" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XnW-6g-Dao">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Anw-Wq-Q2x" kind="relationship" relationship="rootViewController" id="Twg-46-788"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ifc-qS-Ehz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-240" y="1665"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="nh0-Dw-MyR">
             <objects>
                 <navigationController storyboardIdentifier="Search" id="kUu-Ja-GDJ" sceneMemberID="viewController">
@@ -1252,6 +1309,6 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jrF-7g-MJv"/>
+        <segue reference="8GE-Sz-0lp"/>
     </inferredMetricsTieBreakers>
 </document>

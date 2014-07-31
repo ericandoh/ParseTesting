@@ -33,6 +33,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getPost, sender: self);
         collectionDelegateMain!.initialSetup();
+        
+        if (currentTerm != "") {
+            startSearch(currentTerm);
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,6 +84,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             myTable.hidden = true;
             myCollectionView.hidden = false;
             //add animations here;
+            self.navigationController.navigationBar.topItem.title = "Search";
         }
         else if (!doingSearch && searchText != "") {
             doingSearch = true;
@@ -145,10 +150,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         }
         else {
             searchResult = searchTermList[indexPath.row - 1];
-            searchBar.text = searchResult;
         }
-        //update my collectionviewdelegate to instead do a search
-        
+        startSearch(searchResult);
+        //self.performSegueWithIdentifier("SearchSegue", sender: self);
+    }
+    func startSearch(searchResult: String) {
+        //starts a search with a term
+        currentTerm = searchResult;
+        searchBar.text = searchResult;  //set the search bar to match the search query
+        self.navigationController.navigationBar.topItem.title = searchResult;
         doingSearch = false;
         myTable.hidden = true;
         myCollectionView.hidden = false;
@@ -157,12 +167,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (!collectionDelegateSearch) {
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
         }
+        //update my collectionviewdelegate to instead do a search
         collectionDelegateSearch!.setSearch(searchResult);
         //collectionDelegateSearch!.resetData();
         //collectionDelegateMain!.resetData();
         collectionDelegateSearch!.initialSetup();
-        
-        //self.performSegueWithIdentifier("SearchSegue", sender: self);
     }
-    
 }
