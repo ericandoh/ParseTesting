@@ -20,7 +20,14 @@
 
 import UIKit
 
-import UIKit
+let TYPE_TAG = "EXTERNAL_VIEW_LINK";
+
+enum ExternalViewLink: String {
+    case DEFAULT = "Default";
+    case USER = "User";
+    case TAG = "Tag";
+}
+
 
 class LinkFilledTextView: UITextView {
     var owner: UIViewController;
@@ -39,8 +46,46 @@ class LinkFilledTextView: UITextView {
     //self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"))
     }*/
     func getPressedWordWithRecognizer(recognizer: UIGestureRecognizer) {
+        
         var textView = recognizer.view as UITextView;
+        var layoutManager = textView.layoutManager;
         var point: CGPoint = recognizer.locationInView(textView);
+        
+        point.x -= textView.textContainerInset.left;
+        point.y -= textView.textContainerInset.top;
+        
+        var characterIndex = layoutManager.characterIndexForPoint(point, inTextContainer: textView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil);
+        
+        if (characterIndex < textView.textStorage.length) {
+            var range = NSRangePointer.alloc(2);
+            var value: AnyObject! = textView.attributedText.attribute(TYPE_TAG, atIndex: characterIndex, effectiveRange: range);
+            //NSLog((value as String)+" was clicked");
+            //NSLog("\(range.memory.length) for \(range.memory.location)");
+            var realText = text.substringFromIndex(range.memory.location).substringToIndex(range.memory.length);
+            //NSLog(realText);
+            var typeOfString = ExternalViewLink.fromRaw(value as String)!;
+            if (typeOfString == ExternalViewLink.TAG) {
+                var searchTerm = realText.substringFromIndex(1);
+                
+                var nextBoard : UIViewController = self.owner.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
+                (nextBoard as SearchViewController).currentTerm = searchTerm;
+                self.owner.navigationController.pushViewController(nextBoard, animated: true);
+            }
+            else if (typeOfString == ExternalViewLink.USER) {
+                var friendName = realText.substringFromIndex(1);
+                var friend = FriendEncapsulator(friendName: friendName);
+                friend.exists({(exist: Bool) in
+                    if (exist) {
+                        var nextBoard : UIViewController = self.owner.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                        (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                        self.owner.navigationController.pushViewController(nextBoard, animated: true);
+                    }
+                    });
+            }
+        }
+        
+        /*
+        
         var tapPosition: UITextPosition = textView.closestPositionToPoint(point);
         var textRange: UITextRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, withGranularity: UITextGranularity.Word, inDirection: UITextDirection.bridgeFromObjectiveC(UITextLayoutDirection.Right.toRaw()));
         var text: String = textView.textInRange(textRange);
@@ -71,7 +116,7 @@ class LinkFilledTextView: UITextView {
             var nextBoard : UIViewController = self.owner.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
             (nextBoard as SearchViewController).currentTerm = searchTerm;
             self.owner.navigationController.pushViewController(nextBoard, animated: true);
-        }
+        }*/
     }
     
     /*
@@ -82,7 +127,47 @@ class LinkFilledTextView: UITextView {
     // Drawing code
     }
     */
-    class func convertToAttributed(text: String) {
+    func setTextAfterAttributing(text: String) {
+        self.attributedText = LinkFilledTextView.convertToAttributed(text);
+    }
+    //function that takes in a string of regular text that is embedded with tags/author links
+    //and converts to an attributed text.
+    class func convertToAttributed(text: String)->NSAttributedString {
+
+        var attributedString = NSMutableAttributedString();
+        
+        var error: NSError?;
+        
+        var pattern = "(#.+?\\b)|(@.+?\\b)|(.+?(?=#|@|$))";
+        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+        
+        var matches = regex.matchesInString(text, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(text))) as [NSTextCheckingResult];
+        
+        
+        var attributedStringPiece: NSAttributedString;
+        for match in matches {
+            match.range;
+            //var piece = aString.substringWithRange();
+            var individualString: String = text.substringFromIndex(match.range.location).substringToIndex(match.range.length);
+            if (individualString.hasPrefix("#")) {
+                let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
+                let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font];
+                attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+            }
+            else if (individualString.hasPrefix("@")) {
+                let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
+                let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font];
+                attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+            }
+            else {
+                let font = UIFont(name: "Futura", size:14.0);
+                let attrDict = [TYPE_TAG: ExternalViewLink.DEFAULT.toRaw(), NSFontAttributeName: font];
+                attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+            }
+            attributedString.appendAttributedString(attributedStringPiece);
+        }
+        
+        return attributedString;
         /*
         NSFont *font = [NSFont fontWithName:@"Palatino-Roman" size:14.0];
         NSDictionary *attrsDictionary =

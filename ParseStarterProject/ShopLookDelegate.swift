@@ -21,6 +21,12 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
     func initialSetup(tableView: UITableView) {
         tableView.delegate = self;
         tableView.dataSource = self;
+        if (shopLooks.count == 0) {
+            tableView.hidden = true;
+        }
+        else {
+            tableView.hidden = false;
+        }
         tableView.reloadData();
     }
     

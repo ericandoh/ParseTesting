@@ -30,6 +30,25 @@ for x in "H" {
     var y: String = String(x)
 }
 
+//var aString = "hello #omg #lol @hi seriously $really troll'ed";
+var aString = "@balabala420 seriously dude??? cmon man #firstworldanarchist is really good sub for @eric #developers are serious #hash1 #hash2 #hash3 @reference";
+
+var error: NSError?;
+
+var pattern = "(#.+?\\b)|(@.+?\\b)|(.+?(?=#|@|$))";
+var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+
+var matches = regex.matchesInString(aString, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(aString))) as [NSTextCheckingResult];
+
+matches.count;
+var results: [String] = [];
+for match in matches {
+    match.range;
+    //var piece = aString.substringWithRange();
+    results.append(aString.substringFromIndex(match.range.location).substringToIndex(match.range.length));
+}
+results;
+
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 
 var array = str.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", "))

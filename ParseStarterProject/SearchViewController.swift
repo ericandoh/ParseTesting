@@ -158,7 +158,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //starts a search with a term
         currentTerm = searchResult;
         searchBar.text = searchResult;  //set the search bar to match the search query
-        self.navigationController.navigationBar.topItem.title = searchResult;
+        //self.navigationController.navigationBar.topItem.title = searchResult;
+        self.title = searchResult;
         doingSearch = false;
         myTable.hidden = true;
         myCollectionView.hidden = false;

@@ -492,12 +492,13 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Short description about this product that goes on and on...." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="bjV-eP-TEr">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJD-gT-aSa" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
                                         <rect key="frame" x="20" y="70" width="280" height="142"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Shop The Look" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hen-Ln-E9c">
                                         <rect key="frame" x="20" y="220" width="280" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -571,7 +572,7 @@
                         <outlet property="commentTableView" destination="fo0-LW-af7" id="m8R-j2-wch"/>
                         <outlet property="commentView" destination="XHX-nM-lHZ" id="uT0-An-rQF"/>
                         <outlet property="descriptionPage" destination="RcL-Em-b9e" id="sdC-oL-gTt"/>
-                        <outlet property="descriptionTextField" destination="bjV-eP-TEr" id="BvZ-ZC-yyK"/>
+                        <outlet property="descriptionTextField" destination="sJD-gT-aSa" id="eQN-cN-XFB"/>
                         <outlet property="frontImageView" destination="JEl-EV-uT7" id="bDh-7b-Eew"/>
                         <outlet property="homeLookTable" destination="OMB-5F-de4" id="OiE-Wl-Fs5"/>
                         <outlet property="pageCounter" destination="7Zw-G9-3Mn" id="w0W-fd-QPP"/>
@@ -770,7 +771,7 @@
             </objects>
             <point key="canvasLocation" x="-382" y="925"/>
         </scene>
-        <!--Find Friends View Controller-->
+        <!--Find Friends-->
         <scene sceneID="su8-22-FyD">
             <objects>
                 <viewController storyboardIdentifier="FindFriendsView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Anw-Wq-Q2x" customClass="FindFriendsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -788,47 +789,16 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gO8-7N-RON" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="This text will be replaced" translatesAutoresizingMaskIntoConstraints="NO" id="gO8-7N-RON" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
                                 <rect key="frame" x="40" y="220" width="240" height="208"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="All the things are wow ">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="#really">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" so wow @meepmeep ">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="#soawesome">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" I can't even #penguin">
-                                        <attributes>
-                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fCv-Ra-qvs"/>
+                    <navigationItem key="navigationItem" title="Find Friends" id="fCv-Ra-qvs"/>
                     <connections>
                         <outlet property="someTextField" destination="gO8-7N-RON" id="jUk-i9-ej9"/>
                     </connections>

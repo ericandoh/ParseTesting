@@ -17,7 +17,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView
     @IBOutlet var authorTextField: UILabel
-    @IBOutlet var descriptionTextField: UILabel
+    //@IBOutlet var descriptionTextField: UILabel
+    
+    @IBOutlet var descriptionTextField: LinkFilledTextView
+    
+    
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
@@ -71,7 +75,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        descriptionTextField.owner = self;
         
         //self.view.bringSubviewToFront(frontImageView);
         commentView.hidden = true; //this should be set in storyboard but just in case
@@ -95,7 +99,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //check if page needs a refresh
         super.viewDidAppear(animated);
         if (self.navigationController) {
-            self.navigationController.setNavigationBarHidden(true, animated: animated);
+            //self.navigationController.setNavigationBarHidden(true, animated: false);
+            self.navigationController.navigationBar.hidden = true;
+            self.navigationController.navigationBar.translucent = true;
         }
         
         if (imgBuffer) {
@@ -107,7 +113,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     override func viewWillDisappear(animated: Bool) {
         if (self.navigationController) {
-            self.navigationController.setNavigationBarHidden(false, animated: animated);
+            //self.navigationController.setNavigationBarHidden(false, animated: false);
+            self.navigationController.navigationBar.hidden = false;
+            //self.navigationController.navigationBar.translucent = false;
         }
     }
     /*override func viewWillDisappear(animated: Bool) {
@@ -265,7 +273,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     func startViewingComments(currentPost: ImagePostStructure) {
         
         authorTextField.text = currentPost.getAuthor();
-        descriptionTextField.text = currentPost.getDescription();
+        //descriptionTextField.text = currentPost.getDescription();
+        descriptionTextField.setTextAfterAttributing(currentPost.getDescription());
         currentPost.fetchShopLooks({
             (input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
