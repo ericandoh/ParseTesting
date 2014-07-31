@@ -56,6 +56,7 @@ class InAppNotification {
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (!error) {
                             var numLikes: Int = object["likes"] as Int
+                            //if one person, say "Person" has liked your photo, else "_" people have liked it!
                             self.messageString = "Your picture has gotten \(numLikes) likes!"
                             listener.tableView.reloadData()
                         }

@@ -10,6 +10,8 @@
 
 import UIKit
 
+let NOTIF_OWNER = "NOTIF"
+
 class NotifViewController: UITableViewController {
 
     //most recent notifications at start of array
@@ -79,7 +81,20 @@ class NotifViewController: UITableViewController {
         var member: InAppNotification = notifList[temp] as InAppNotification;
 
         if (member.type == NotificationType.IMAGE_POST.toRaw()) {
-            self.performSegueWithIdentifier("ImagePostSegue", sender: self);
+            member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
+                if (!error) {
+                    var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
+                    var onlyImagePost = ImagePostStructure(inputObj: obj);
+                    imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
+                    var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+                    newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
+                    self.navigationController.pushViewController(newHome, animated: true);
+                }
+                else {
+                    NSLog("App Notification object couldn't be found");
+                }
+                });
+            //self.performSegueWithIdentifier("ImagePostSegue", sender: self);
         }
         /*else if (member.type == NotificationType.FRIEND_REQUEST.toRaw()) {
             self.performSegueWithIdentifier("FriendRequestSegue", sender: self);

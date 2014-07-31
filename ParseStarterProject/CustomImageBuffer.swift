@@ -112,6 +112,24 @@ class CustomImageBuffer: NSObject {
                 loadSet();
             }
     }
+    func initialSetup4(refreshFunction: (()->Void)?,
+        configureCellFunction: (index: Int)->Void,
+        alreadyLoadedPosts: Array<ImagePostStructure?>
+        ) {
+            
+            self.loaderType = 3;        //loads a search term with the thing
+            self.refreshFunction = refreshFunction;
+            self.configureCellFunction = configureCellFunction;
+            if (disableOnAnon && ServerInteractor.isAnonLogged()) {
+                loadedUpTo = 0;
+                hitEnd = true;
+                endLoadCount = 0;
+            }
+            else {
+                self.loadedPosts = alreadyLoadedPosts;
+                loadSet();
+            }
+    }
     func switchContext(owner: String,
         refreshFunction: (()->Void)?,
         configureCellFunction: (index: Int)->Void) {
@@ -140,9 +158,25 @@ class CustomImageBuffer: NSObject {
         else if (loaderType == 2) {
             serverFunction3!(skip: (loadedUpTo)*postLoadCount, loadCount: postLoadCount, term: searchTerm, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
+        else if (loaderType == 3) {
+            //everything (should) already be loaded
+            hitEnd = true;
+            isLoading = false;
+            endLoadCount = (loadedPosts.count) % postLoadCount;
+            var divisible = loadedPosts.count - endLoadCount;
+            loadedUpTo = divisible / postLoadCount;
+            if (refreshFunction) {
+                refreshFunction!();
+            }
+            for realIndex in 0...self.loadedPosts.count {
+                self.configureCellFunction!(index: realIndex);
+            }
+        }
     }
     func resetData() {
-        loadedPosts = [];
+        if (loaderType != 3) {
+            loadedPosts = [];
+        }
         loadedUpTo = 0;
         endLoadCount = 0;
         hitEnd = false;

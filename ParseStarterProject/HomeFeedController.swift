@@ -225,7 +225,16 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         if (postCounter == 0) {
-            switchImage(currentPost.image!, fromDirection: fromDirection);
+            if (currentPost.image) {
+                //most of time should go here
+                switchImage(currentPost.image!, fromDirection: fromDirection);
+            }
+            else {
+                NSLog("Caution");
+                currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
+                    self.switchImage(currentPost.image!, fromDirection: fromDirection);
+                }, index: 0);
+            }
             //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
