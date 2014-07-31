@@ -21,6 +21,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     
     var suppressMenu: Bool = false;
     
+    var needRemove: Array<UIViewController> = [];
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         // Do any additional setup after loading the view.
@@ -195,6 +197,14 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                         old.view.removeFromSuperview();
                     });
             }
+            if (self.needRemove.count > 0) {
+                for removeVC in self.needRemove {
+                    removeVC.willMoveToParentViewController(nil);
+                    removeVC.removeFromParentViewController();
+                    removeVC.view.removeFromSuperview();
+                }
+            }
+            
             self.currentlyShowing = contentString;
             self.sideView.hidden = true;
             });
@@ -229,6 +239,9 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     //resets a window to the start, by forcing it to create a new instance when switched to
     //this does NOT switch windows
     func resetWindow(contentString: String) {
+        if (self.viewControllerDictionary[contentString]) {
+            needRemove.append(self.viewControllerDictionary[contentString]!);
+        }
         var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
         self.viewControllerDictionary[contentString] = content;
     }

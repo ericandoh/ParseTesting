@@ -219,7 +219,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (!sideTableView.editing) {
             return;
         }
-        NSLog("\(point.x)")
         if (point.x > UPLOAD_TABLE_DELETE_LIMIT) {
             return;
         }
