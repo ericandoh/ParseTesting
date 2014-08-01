@@ -69,25 +69,38 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.myCollectionView.delegate = self;
         
         if (serverFunction) {
-            self.imgBuffer.initialSetup(serverFunction, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell);
+            self.imgBuffer.initialSetup(serverFunction, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell);
         }
         else if (serverFunction2) {
-            self.imgBuffer.initialSetup2(serverFunction2!, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell);
+            self.imgBuffer.initialSetup2(serverFunction2!, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell);
         }
         else if (serverFunction3) {
-            self.imgBuffer.initialSetup3(serverFunction3!, refreshFunction: {() in self.myCollectionView.reloadData();}, configureCellFunction: checkConfigCell, term: searchTerm);
+            self.imgBuffer.initialSetup3(serverFunction3!, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell, term: searchTerm);
         }
+    }
+    func myRefreshFunction() {
+        var refreshStart = imgBuffer.newlyLoadedStart;
+        var refreshEnd = imgBuffer.newlyLoadedEnd;
+        var indexPaths: Array<NSIndexPath> = [];
+        for i in refreshStart...(refreshEnd-1) {
+            indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
+            
+        }
+        self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
+        //self.myCollectionView.reloadItemsAtIndexPaths(indexPaths);
+        //self.myCollectionView.reloadData();
     }
     func setSearch(term: String) {
         searchTerm = term;
     }
     func resetData() {
         self.imgBuffer.resetData();
+        myCollectionView.reloadData();
     }
     func loadSet() {
         if (imgBuffer.owner != COLLECTION_OWNER) {
             imgBuffer.owner = COLLECTION_OWNER;
-            imgBuffer.refreshFunction = {() in self.myCollectionView.reloadData();};
+            imgBuffer.refreshFunction = myRefreshFunction;
             imgBuffer.configureCellFunction = checkConfigCell;
         }
         self.imgBuffer.loadSet();
@@ -111,6 +124,9 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         //configure cell to set image here, etc.
         cell.postLabel.text = "Cell \(index)"
         cell.imageView.image = post.image;
+        UIView.animateWithDuration(0.1, animations: {() in
+            cell.alpha = 1;
+            });
     }
     
     
@@ -120,12 +136,14 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell: SinglePostCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PostCell", forIndexPath: indexPath) as SinglePostCollectionViewCell;
         
+        cell.alpha = 0;
         if (imgBuffer.isLoadedAt(indexPath.row)) {
             //load in cell
             configureCell(cell, index: indexPath.row)
         }
         else {
             //cell will get fetched, wait
+            
         }
         
         return cell;
@@ -141,7 +159,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
             return;
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
-            if (path.row == imgBuffer.numItems() - 1) {
+            if (path.row >= (imgBuffer.numItems() - 1 - CELLS_BEFORE_RELOAD)) {
                 self.loadSet();
                 return;
             }

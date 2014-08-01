@@ -35,6 +35,9 @@ let POST_LOAD_LIMIT = 20
 //maximum number of search results to load at once
 let SEARCH_LOAD_COUNT = 20;
 
+//how many cells I should have before it starts rendering more
+let CELLS_BEFORE_RELOAD = 9;
+
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
 //but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)

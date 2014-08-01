@@ -50,6 +50,11 @@ class CustomImageBuffer: NSObject {
 
     var searchTerm: String = "";
     
+    //this variables are only active right after a call to receiveNumQuery
+    //used by higher up functions to refresh appropriate sections only
+    var newlyLoadedStart: Int = 0;
+    var newlyLoadedEnd: Int = 0;
+    
     //whenever the buffer is reset, previous calls to functions must be invalidated
     //this variable lets me know (for delayed calls) if my callback is modifying at the correct state 
     //(i.e. callback from old function after I reset gets called, makes sure my state is consistent
@@ -202,6 +207,9 @@ class CustomImageBuffer: NSObject {
         return hitEnd;
     }
     func receiveNumQuery(size: Int) {
+        
+        newlyLoadedStart = loadedPosts.count;
+        
         var needAmount: Int;
         if (size < postLoadCount) {
             hitEnd = true;
@@ -216,6 +224,7 @@ class CustomImageBuffer: NSObject {
         if (loadedPosts.count < needAmount) {
             loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
         }
+        newlyLoadedEnd = needAmount;
         //myCollectionView.reloadData();
         if (refreshFunction) {
             refreshFunction!();
