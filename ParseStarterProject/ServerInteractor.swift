@@ -658,25 +658,60 @@ import UIKit
         var friendObj: PFObject = PFObject(className: "Friendship")
         friendObj.ACL.setPublicReadAccess(true)
         friendObj.ACL.setPublicWriteAccess(true)
-        friendObj["following"] = PFUser.currentUser().username
-        friendObj["follower"] = followerName
+        friendObj["follower"] = PFUser.currentUser().username
+        friendObj["following"] = followerName
         friendObj.saveEventually()
     }
     
-    class func findFollowing(followerName: String) {
+    class func findFollowers(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("following", equalTo: followerName)
+        NSLog("\(followerName)")
+        var followerList: Array<FriendEncapsulator?> = [];
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+                //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+                NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
+                for object in objects {
+                    var following = object["follower"] as String
+                    var friend = FriendEncapsulator(friendName: following)
+                    followerList.append(friend)
+                    NSLog("\(object) yaya lolololl")
+                    
+                    NSLog("\(following)")
+                    NSLog("\(objects.count)")
+                    NSLog("YAY WORK")
+                }
+            NSLog("O'RLLY")
+            retFunction(retList: followerList)
+            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
+            });
+    }
+    
+    class func findFollowing(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: followerName)
         NSLog("\(followerName)")
+        var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
-                NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
-                for object in objects {
-                    NSLog("\(object) yaya lolololl")
-                    var following = object["following"]
-                    NSLog("\(following)")
-                }
+            //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
+            for object in objects {
+                var follower = object["following"] as String
+                var friend = FriendEncapsulator(friendName: follower)
+                followerList.append(friend)
+                NSLog("\(object) yaya lolololl")
+                NSLog("\(follower)")
+                NSLog("\(objects.count)")
+                NSLog("YAY WORK")
+            }
+            NSLog("O'RLLY")
+            retFunction(retList: followerList)
+            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
             });
     }
+
     
 
     //call this method when either removing a friend inv directly or when u receive
@@ -713,6 +748,35 @@ import UIKit
         }
         return nil;
     }
+    
+    class func removeFollower(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+        PFUser.currentUser().removeObject(friendName, forKey: "following");
+        PFUser.currentUser().saveInBackground();
+        if (!isHeartBroken) {
+            //do NOT use processNotification - we don't want to post a notification
+            
+            
+            var query: PFQuery = PFUser.query();
+            query.whereKey("username", equalTo: friendName)
+            var currentUserName = PFUser.currentUser().username;
+            query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+                if (objects.count > 0) {
+                    var targetUser = objects[0] as PFUser;
+                    var breakupObj = PFObject(className:"BreakupNotice")
+                    breakupObj["sender"] = PFUser.currentUser().username;
+                    breakupObj["recipient"] = friendName;
+                    
+                    breakupObj.ACL.setReadAccess(true, forUser: targetUser)
+                    breakupObj.ACL.setWriteAccess(true, forUser: targetUser)
+                    
+                    breakupObj.saveInBackground();
+                    //send notification object
+                }
+                });
+        }
+        return nil;
+    }
+
     
     //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {

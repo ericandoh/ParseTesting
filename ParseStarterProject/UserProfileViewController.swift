@@ -10,13 +10,14 @@ import Foundation
 
 import UIKit
 
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var settingsButton: UIButton
     @IBOutlet var myCollectionView: UICollectionView
     @IBOutlet var friendsButton: UIButton
     @IBOutlet var numberPosts: UILabel
     @IBOutlet var numberLikes: UILabel
     
+    @IBOutlet var followerTableView: UITableView
     var mainUser: FriendEncapsulator?;
     
     /*
@@ -43,11 +44,16 @@ class UserProfileViewController: UIViewController {
     var collectionDelegatePosts: ImagePostCollectionDelegate?;
     var collectionDelegateLikes: ImagePostCollectionDelegate?;
 
+    var friendList: Array<FriendEncapsulator?> = [];
+    
     override func viewDidLoad()  {
         super.viewDidLoad();
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
+        followerTableView.allowsMultipleSelectionDuringEditing = false
+        
+        followerTableView.allowsSelectionDuringEditing = true
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -131,10 +137,12 @@ class UserProfileViewController: UIViewController {
             //collectionDelegatePosts!.resetData()
             //collectionDelegate!.serverFunction = ServerInteractor.getSubmissions;
             options = 1
-            collectionDelegateLikes!.resetData();
+            //collectionDelegateLikes!.resetData();
             collectionDelegatePosts!.resetData();
             collectionDelegatePosts!.initialSetup();
             //collectionDelegate!.loadSet()
+            myCollectionView.hidden = false
+            followerTableView.hidden = true
         } else {
             collectionDelegatePosts!.resetData();
             collectionDelegatePosts!.loadSet()
@@ -144,16 +152,62 @@ class UserProfileViewController: UIViewController {
     
     @IBAction func userLikes(sender: AnyObject) {
         if (options != 2) {
-            collectionDelegatePosts!.resetData();
+            //collectionDelegatePosts!.resetData();
             collectionDelegateLikes!.resetData()
             collectionDelegateLikes!.initialSetup();
             options = 2
+            myCollectionView.hidden = false
+            followerTableView.hidden = true
             //collectionDelegate!.loadSet()
         } else {
             options = 2
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes!.loadSet()
         }
+    }
+    
+    @IBAction func userFollowing(sender: UIButton) {
+        if (options != 3) {
+            options = 3
+            myCollectionView.hidden = true
+            followerTableView.hidden = false
+            getFollowing()
+        }
+    }
+    
+    
+    @IBAction func userFollowers(sender: UIButton) {
+        if (options != 4) {
+            options = 4
+            myCollectionView.hidden = true
+            followerTableView.hidden = false
+            getFollowers()
+        }
+
+    }
+    
+    func getFollowers() {
+        ServerInteractor.findFollowers(mainUser!.username,
+            retFunction: {
+            (retList: Array<FriendEncapsulator?>) in
+                self.friendList = retList
+            self.reloadDatums();
+            }) //--> change this to getFriends(srcFriend)
+    }
+    
+    func getFollowing() {
+        ServerInteractor.findFollowing(mainUser!.username,
+            retFunction: {
+                (retList: Array<FriendEncapsulator?>) in
+                self.friendList = retList
+                self.reloadDatums();
+            }) //--> change this to getFriends(srcFriend)
+    }
+
+    func reloadDatums() {
+        NSLog("d")
+        self.followerTableView.reloadData();
+        NSLog("n")
     }
     
     
@@ -197,7 +251,7 @@ class UserProfileViewController: UIViewController {
         if (segue && segue!.identifier != nil) {
             if (segue!.identifier == "SeeFriendsSegue") {
                 if (mainUser) {
-                    (segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
+                    //(segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
                 }
             }
             /*else if (segue!.identifier == "ImagePostSegue") {
@@ -222,5 +276,41 @@ class UserProfileViewController: UIViewController {
         //Test1: Tries posting a notification
         ServerInteractor.postDefaultNotif("Test submission post");
         //lets also try adding to user field
+    }
+    //--------------------------TableView Functions-------------------------
+    
+    
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        NSLog("a \(friendList.count)")
+        return friendList.count;
+    }
+    
+    /*func tableView(tableView: UITableView!, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath!) -> String! {
+        if (options == 3){
+            return "Block"
+        }
+        return "Unfollow"
+    }*/
+    
+    
+    
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        NSLog("WTF")
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("FollowerCell", forIndexPath: indexPath) as UITableViewCell
+        NSLog("WTF1")
+
+        
+        var temp = indexPath!.row;
+        NSLog("ds")
+        
+        if (friendList[temp]) {
+            cell.textLabel.text = friendList[temp]!.username;
+        }
+        
+        cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        
+        return cell
+        
     }
 }
