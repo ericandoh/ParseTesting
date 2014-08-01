@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428298428.199374"
+            timestampString = "428357371.308518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
-            landmarkName = "ServerInteractor"
-            landmarkType = "3">
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "getLikedPosts(_:loadCount:notifyQueryFinish:finishFunction:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428348490.111787"
+            timestampString = "428357371.308518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "getLikedPosts(_:loadCount:notifyQueryFinish:finishFunction:)"
             landmarkType = "5">
          </BreakpointContent>

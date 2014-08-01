@@ -15,15 +15,19 @@ import UIKit
     //---------------User Login/Signup/Interaction Methods---------------------------------
     class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
         var userNameLabel: UILabel
-        
+        var friendObj: PFObject = PFObject(className: "Friendship")
         var user: PFUser = PFUser();
+        friendObj.ACL.setPublicReadAccess(true)
+        friendObj.ACL.setPublicWriteAccess(true)
         user.username = username;
         user.password = password;
         user.email = email;
         
-        user["friends"] = NSArray();
+        initialiseUser(user)
+        
+        /*user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
-        user["likedPosts"] = NSMutableArray();
+        user["likedPosts"] = NSMutableArray();*/
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
             var signController: SignUpViewController = sender as SignUpViewController;
@@ -45,6 +49,13 @@ import UIKit
         });
         return true;
     }
+    
+    class func initialiseUser(user: PFUser) {
+        user["friends"] = NSArray();
+        user["viewHistory"] = NSArray();
+        user["likedPosts"] = NSMutableArray();
+    }
+    
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: NewLoginViewController = sender;
@@ -92,8 +103,9 @@ import UIKit
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
-                user["friends"] = NSArray();
-                user["viewHistory"] = NSArray();
+                self.initialiseUser(user)
+                /*user["friends"] = NSArray();
+                user["viewHistory"] = NSArray();*/
                 // ServerInteractor.initialUserChecks();
                 //user's first notification
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
@@ -613,7 +625,33 @@ import UIKit
         PFUser.currentUser().saveEventually();
         return nil;
     }
-    //call this method when either removing a friend inv directly or when u receive 
+    
+    class func addAsFollower(followerName: String) {
+        var friendObj: PFObject = PFObject(className: "Friendship")
+        friendObj.ACL.setPublicReadAccess(true)
+        friendObj.ACL.setPublicWriteAccess(true)
+        friendObj["following"] = PFUser.currentUser().username
+        friendObj["follower"] = followerName
+        friendObj.saveEventually()
+    }
+    
+    class func findFollowing(followerName: String) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: followerName)
+        NSLog("\(followerName)")
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+                NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
+                for object in objects {
+                    NSLog("\(object) yaya lolololl")
+                    var following = object["following"]
+                    NSLog("\(following)")
+                }
+            });
+    }
+    
+
+    //call this method when either removing a friend inv directly or when u receive
     //a (hidden) removefriend notif
     //isHeartBroken: if false, must send (hidden) notif obj to user I am unfriending
     //isHeartBroken: if true, is the user who has just been broken up with. no need to notify friend

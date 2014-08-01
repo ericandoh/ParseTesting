@@ -19,6 +19,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
+    
+    @IBOutlet var likePostOutlet: UIButton
     //@IBOutlet var backImageView: UIImageView      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -47,6 +49,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     var refreshNeeded: Bool = false;
     
     var viewingComments: Bool = false;
+    
+    var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
     
     /*
     //first set has images to display, viewCounter tells me where in array I am currently viewing
@@ -463,6 +467,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         if (loadedPosts[viewCounter]) {
             loadedPosts[viewCounter]!.like();
         }
+        //likePostOutlet.hidden = true
     }
     
     @IBAction func viewComments(sender: UIButton) {
@@ -486,7 +491,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         currentPost.fetchComments({(input: NSArray)->Void in
             for index in 0..<input.count {
-                self.commentList.append(PostComment(content: (input[index] as String)));
+                self.commentList.append(PostComment(content: (input[input.count - (index + 1)] as String)));
             }
             self.commentTableView.reloadData();
         });
@@ -517,7 +522,12 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             cell.textLabel.text = "Add Comment";
         }
         else {
+            
             cell.textLabel.text = commentList[index - 1].commentString;
+            mainUser.fetchImage({(image: UIImage)->Void in
+                cell.imageView.image = image;
+                });
+            //cell.imageView.image = PFUser.currentUser()["userIcon"] as UIImage
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
@@ -538,7 +548,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in
                     for index in 0..<input.count {
-                        self.commentList.append(PostComment(content: (input[index] as String)));
+                        self.commentList.append(PostComment(content: (input[input.count - (index + 1)] as String)));
                     }
                     self.commentTableView.reloadData();
                 });

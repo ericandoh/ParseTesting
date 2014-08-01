@@ -57,6 +57,7 @@ class ImagePostStructure
         myObj["description"] = description;
 
         myObj["comments"] = [];
+        myObj["commentAuthor"] = [];
         
         var labelArr = ServerInteractor.separateLabels(labels);
         myObj["labels"] = labelArr;
@@ -168,9 +169,12 @@ class ImagePostStructure
         finishFunction(input: commentArray);
     }
     func addComment(comment: String) {
+        //var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
         var commentArray = myObj["comments"] as NSMutableArray;
         commentArray.insertObject(PFUser.currentUser().username + ": " + comment, atIndex: 0);
         myObj["comments"] = commentArray;
+        //commentAuthorArray.insertObject(PFUser.currentUser().username, atIndex: 0)
+        //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
     }
 }
