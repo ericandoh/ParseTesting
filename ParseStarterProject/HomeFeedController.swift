@@ -10,35 +10,34 @@
 
 import UIKit
 
+let HOME_OWNER = "HOME";
+
 class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView
     @IBOutlet var authorTextField: UILabel
-    @IBOutlet var descriptionTextField: UILabel
+    //@IBOutlet var descriptionTextField: UILabel
+    
+    @IBOutlet var descriptionTextField: LinkFilledTextView
+    
+    
     @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
     
-    @IBOutlet var likePostOutlet: UIButton
-    //@IBOutlet var backImageView: UIImageView      //deprecated
+    @IBOutlet var topLeftButton: UIButton
+    
+    @IBOutlet var shopTheLookBoxReference: UILabel
+    
+    @IBOutlet var homeLookTable: UITableView
+    
+    @IBOutlet var shopTheLookPrefacer: UILabel
+    
+    
+    var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
-    
-    //the posts I have loaded
-    var loadedPosts: Array<ImagePostStructure?> = [];
-    
-    //how many sets I have loaded up to
-    var loadedUpTo: Int = 0;
-    
-    //how many images are loaded in our last set (only valid when hitEnd = true)
-    var endLoadCount: Int = 0;
-    
-    //set to true when I have already loaded in last set of stuff
-    var hitEnd: Bool = false;
-    
-    //isLoading
-    var isLoading: Bool = false;
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -50,7 +49,11 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     var viewingComments: Bool = false;
     
+
     var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
+
+    var postLoadCount = POST_LOAD_COUNT;
+
     
     /*
     //first set has images to display, viewCounter tells me where in array I am currently viewing
@@ -69,110 +72,208 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     //an array of comments which will be populated when loading app
     var commentList: Array<PostComment> = [];
     
+    var imgBuffer: CustomImageBuffer?;
+    
+    var currentShopDelegate: ShopLookDelegate?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        if (self.navigationController) {
+            //self.navigationController.setNavigationBarHidden(true, animated: false);
+            self.navigationController.navigationBar.hidden = true;
+            self.navigationController.navigationBar.translucent = true;
+            //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
+        }
+        // Do any additional setup after loading the view.
+        descriptionTextField.owner = self;
         
         //self.view.bringSubviewToFront(frontImageView);
-        
         commentView.hidden = true; //this should be set in storyboard but just in case
-        refresh();
+        if (!imgBuffer) {
+            refresh();
+        }
+        else {
+            frontImageView!.image = LOADING_IMG;
+            topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+        }
+        
+        var frame: CGRect = frontImageView.frame;
+        backImageView = UIImageView(frame: frame);
+        backImageView!.hidden = true;
+        backImageView!.alpha = 0;
+        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
     }
     override func viewDidAppear(animated: Bool) {
         //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
-        loadSet();
+        super.viewDidAppear(animated);
+        if (self.navigationController) {
+            //self.navigationController.setNavigationBarHidden(true, animated: false);
+            self.navigationController.navigationBar.hidden = true;
+            self.navigationController.navigationBar.translucent = true;
+        }
+        
+        if (imgBuffer) {
+            if (imgBuffer!.isLoadedAt(viewCounter)) {
+                configureCurrent(viewCounter);
+            }
+        }
+        //self.imgBuffer!.loadSet();
+    }
+    override func viewWillDisappear(animated: Bool) {
+        if (self.navigationController) {
+            //self.navigationController.setNavigationBarHidden(false, animated: false);
+            self.navigationController.navigationBar.hidden = false;
+            //self.navigationController.navigationBar.translucent = false;
+        }
+    }
+    /*override func viewWillDisappear(animated: Bool) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
+                var lastIndex = self.navigationController.viewControllers.count - 1;
+            }
+        }
+        super.viewWillDisappear(animated);
+    }*/
+    func syncWithImagePostDelegate(theirBuffer: CustomImageBuffer, selectedAt: Int) {
+        viewCounter = selectedAt;
+        postCounter = 0;
+        refreshNeeded = false;
+        viewingComments = false;
+        imgBuffer = theirBuffer;
+        //frontImageView!.image = LOADING_IMG;
+        imgBuffer!.switchContext(HOME_OWNER, nil, configureCellFunction: configureCurrent);
     }
     //to refresh all images in feed
     func refresh() {
-        loadedPosts = [];
-        loadedUpTo = 0;
-        endLoadCount = 0;
-        hitEnd = false;
-        isLoading = false;
         viewCounter = 0;
+        postCounter = 0;
         refreshNeeded = false;
+        viewingComments = false;
         frontImageView!.image = LOADING_IMG;
-        loadSet();
-    }
-    //to load another set, if possible
-    //build in functionality HERE to make it load other posts (if not loading home screen posts)
-    func loadSet() {
-        if (isLoading) {
-            return;
-        }
-        isLoading = true;
-        
-        var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
-        
-        //(loadedUpTo)*POST_LOAD_COUNT, == skip, but wont need cuz it is in excludes
-        ServerInteractor.getPost(POST_LOAD_COUNT, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
-        
-        //ServerInteractor.getPost(getReturnList, sender: self, excludes: otherExcludes!);
-    }
-    func receiveNumQuery(size: Int) {
-        //NSLog("Query finished with size \(size)")
-        var needAmount: Int;
-        if (size < POST_LOAD_COUNT) {
-            hitEnd = true;
-            endLoadCount = size;
-            needAmount = (loadedUpTo * POST_LOAD_COUNT) + endLoadCount;
+        if (imgBuffer) {
+            imgBuffer!.resetData();
+            self.imgBuffer!.loadSet();
         }
         else {
-            endLoadCount = 0;
-            loadedUpTo += 1;
-            needAmount = loadedUpTo * POST_LOAD_COUNT;
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
+            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
         }
-        if (loadedPosts.count < needAmount) {
-            loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
-        }
-        //myCollectionView.reloadData();
-        isLoading = false;
     }
     
-    func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
-        //called by getSubmissions for when image at index x is loaded in...
-        var realIndex: Int;
-        if (hitEnd) {
-            realIndex = index + (loadedUpTo * POST_LOAD_COUNT);
+    func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        self.backImageView!.image = toImage;
+        self.backImageView!.alpha = 0;
+        self.backImageView!.hidden = false;
+        if (fromDirection == CompassDirection.STAY) {
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
         }
-        else {
-            realIndex = index + ((loadedUpTo - 1) * POST_LOAD_COUNT);
+        else if (fromDirection == CompassDirection.EAST) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x + Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
         }
-        //NSLog("Received image at index \(realIndex)")
-        loadedPosts[realIndex] = loaded;
-        
-        //check if I need to refresh anything
-        if (realIndex == viewCounter) {
-            configureCurrent();
+        else if (fromDirection == CompassDirection.WEST) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x - Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.NORTH) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - Double(FULLSCREEN_WIDTH));
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
+        }
+        else if (fromDirection == CompassDirection.SOUTH) {
+            var oldOrig = self.backImageView!.frame.origin;
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + Double(FULLSCREEN_WIDTH));
+            self.backImageView!.frame.origin = newOrig;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.alpha = 1;
+                }, completion: {(success: Bool) in
+                    self.frontImageView!.image = toImage;
+                    self.backImageView!.alpha = 0;
+                    self.backImageView!.hidden = true;
+                });
         }
     }
-    func configureCurrent() {
+    
+    //to load another set, if possible
+    //build in functionality HERE to make it load other posts (if not loading home screen posts)
+    func configureCurrent(index: Int) {
+        configureCurrent(index, fromDirection: CompassDirection.STAY);
+    }
+    func configureCurrent(index: Int, fromDirection: CompassDirection) {
+        if (index != viewCounter) {
+            return;
+        }
+
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
-        var currentPost = loadedPosts[viewCounter];
-        pageCounter.text = String(postCounter + 1)+"/"+String(currentPost!.getImagesCount() + 2);
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+        pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         if (postCounter == 0) {
-            frontImageView!.image = currentPost!.image;
+            if (currentPost.image) {
+                //most of time should go here
+                switchImage(currentPost.image!, fromDirection: fromDirection);
+            }
+            else {
+                NSLog("Current Post's image is not loaded despite assumption that it is");
+                currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
+                    self.switchImage(currentPost.image!, fromDirection: fromDirection);
+                }, index: 0);
+            }
+            //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
         else {
             var currentPostNum = postCounter;
             var oldImg = self.frontImageView!.image;
-            self.frontImageView!.image = LOADING_IMG;
-            currentPost!.loadImages({(img: UIImage?, comments: Bool)->Void in
+            //self.frontImageView!.image = LOADING_IMG;
+            currentPost.loadImages({(img: UIImage?, comments: Bool)->Void in
                 if (currentPostNum == self.postCounter) {
                     //i haven't swiped more in that time
                     
                     if (comments) {
                         //we have comments! or error :(
                         self.viewingComments = true;
-                        self.frontImageView!.image = oldImg;
-                        self.startViewingComments(currentPost!);
+                        //self.frontImageView!.image = oldImg;
+                        self.startViewingComments(currentPost);
                     }
                     else {
                         if (img) {
-                            self.frontImageView!.image = img!;
+                            self.switchImage(img!, fromDirection: fromDirection);
                         }
                     }
                 }
@@ -182,10 +283,27 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func startViewingComments(currentPost: ImagePostStructure) {
         
-        authorTextField.text = currentPost.myObj["author"] as String;
-        descriptionTextField.text = currentPost.myObj["description"] as String;
-        
-        descriptionPage.hidden = false;
+        authorTextField.text = currentPost.getAuthor();
+        //descriptionTextField.text = currentPost.getDescription();
+        descriptionTextField.setTextAfterAttributing(currentPost.getDescriptionWithTag());
+        currentPost.fetchShopLooks({
+            (input: Array<ShopLook>) in
+            self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
+            self.currentShopDelegate!.initialSetup(self.homeLookTable);
+            if (input.count == 0) {
+                self.shopTheLookPrefacer.hidden = true;
+            }
+            else {
+                self.shopTheLookPrefacer.hidden = false;
+            }
+            });
+        if (descriptionPage.hidden) {
+            descriptionPage.alpha = 0;
+            descriptionPage.hidden = false;
+            UIView.animateWithDuration(0.3, animations: {() in
+                self.descriptionPage.alpha = 1;
+                });
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -198,6 +316,10 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
         viewCounter--;
+        if (viewCounter < 0) {
+            viewCounter = 0;
+            return;
+        }
         swipeAction(false);
     }
     
@@ -221,7 +343,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         postCounter = 0;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.hidden = true;
+            if (!descriptionPage.hidden) {
+                descriptionPage.alpha = 1;
+                UIView.animateWithDuration(0.3, animations: {() in
+                    self.descriptionPage.alpha = 0;
+                    }, completion: {(success: Bool) in
+                        self.descriptionPage.hidden = true;
+                    });
+            }
         }
         if (refreshNeeded) {
             if (motion) {
@@ -234,19 +363,31 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         
-        if (viewCounter >= loadedPosts.count) {
+        if (viewCounter >= imgBuffer!.numItems()) {
             //show end of file screen, refresh if needed
-            refreshNeeded = true;
-            frontImageView!.image = ENDING_IMG;
-            pageCounter.text = "0/0";
+            if (self.navigationController) {
+                viewCounter = imgBuffer!.numItems() - 1;
+                return;
+            }
+            else {
+                refreshNeeded = true;
+                switchImage(ENDING_IMG, fromDirection: CompassDirection.SOUTH);
+                //frontImageView!.image = ENDING_IMG;
+                pageCounter.text = "0/0";
+            }
         }
         else if (viewCounter < 0) {
             //do nothing
             viewCounter = 0;
         }
-        else if (loadedPosts[viewCounter]) {
+        else if (imgBuffer!.isLoadedAt(viewCounter)) {
             //might also need to see if image itself is loaded (depending on changes for deallocing)
-            configureCurrent();
+            if (motion) {
+                configureCurrent(viewCounter, fromDirection: CompassDirection.SOUTH);
+            }
+            else {
+                configureCurrent(viewCounter, fromDirection: CompassDirection.NORTH);
+            }
         }
         else {
             //cell will get fetched, wait
@@ -254,8 +395,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         //load more if necessary
-        if ((!hitEnd) && loadedPosts.count - viewCounter < POST_LOAD_LIMIT) {
-            loadSet();
+        if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+            imgBuffer!.loadSet();
         }
         /*else if () {
             //method for unloading images at start of list - to save memory
@@ -264,28 +405,42 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         }*/
         
     }
-    func swipeSideAction() {
+    func swipeSideAction(direction: CompassDirection) {
         if (refreshNeeded) {
             //we are at eof
             postCounter = 0;
             return;
         }
-        if (loadedPosts[viewCounter]) {
-            configureCurrent();
+        if (imgBuffer!.isLoadedAt(viewCounter)) {
+            configureCurrent(viewCounter, fromDirection: direction);
         }
     }
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
         if (postCounter == 0) {
-            (self.parentViewController as SideMenuManagingViewController).openMenu();
+            if (self.navigationController) {
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+            }
+            else {
+                (self.parentViewController as SideMenuManagingViewController).openMenu();
+            }
             return;
         }
+        postCounter--;
         if (viewingComments) {
             viewingComments = false;
-            descriptionPage.hidden = true;
+            if (!descriptionPage.hidden) {
+                descriptionPage.alpha = 1;
+                UIView.animateWithDuration(0.3, animations: {() in
+                    self.descriptionPage.alpha = 0;
+                    }, completion: {(success: Bool) in
+                        self.descriptionPage.hidden = true;
+                    });
+            }
+            swipeSideAction(CompassDirection.STAY);
+            return;
         }
-        postCounter--;
-        swipeSideAction();
+        swipeSideAction(CompassDirection.WEST);
         
     }
     
@@ -295,14 +450,23 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             return;
         }
         postCounter++;
-        swipeSideAction();
+        swipeSideAction(CompassDirection.EAST);
     }
     
     @IBAction func sideMenu(sender: UIButton) {
-        if (self.parentViewController) {
-            var overlord = self.parentViewController as SideMenuManagingViewController;
-            overlord.openMenu();
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
         }
+        //else if (self.parentViewController) {
+            //(self.parentViewController as SideMenuManagingViewController).openMenu();
+        //}
     }
     
     func performBufferLog() {
@@ -464,8 +628,8 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     @IBAction func likePost(sender: UIButton) {
-        if (loadedPosts[viewCounter]) {
-            loadedPosts[viewCounter]!.like();
+        if (imgBuffer!.isLoadedAt(viewCounter)) {
+            imgBuffer!.getImagePostAt(viewCounter).like();
         }
         //likePostOutlet.hidden = true
     }
@@ -473,7 +637,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func viewComments(sender: UIButton) {
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath        
-        if (self.loadedPosts.count == 0 || self.viewCounter >= self.loadedPosts.count || (!self.loadedPosts[self.viewCounter])) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
             //there is no image for this post - no posts on feed
             //or i am at ending page (VC >= post count)
             //no post = no comments
@@ -484,10 +648,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         commentView.hidden = false;
         self.view.bringSubviewToFront(commentView);
         
-        NSLog("Comments for \(self.viewCounter)")
         self.commentList = Array<PostComment>();
         
-        var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!
+        var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
         
         currentPost.fetchComments({(input: NSArray)->Void in
             for index in 0..<input.count {
@@ -540,7 +703,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //set alert text field size bigger - this doesn't work, we need a UITextView
             alert.addAction(UIAlertAction(title: "Comment!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 
-                var currentPost: ImagePostStructure = self.loadedPosts[self.viewCounter]!;
+                var currentPost: ImagePostStructure = self.imgBuffer!.getImagePostAt(self.viewCounter);
                 
                 //textFields[0].text
                 currentPost.addComment((alert.textFields[0] as UITextField).text);

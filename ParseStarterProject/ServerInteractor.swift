@@ -184,10 +184,39 @@ import UIKit
         return FriendEncapsulator(friend: PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
+    
+    
+    class func extractStrings(description: String)->Array<String> {
+        
+        var retList: Array<String> = [];
+        var error: NSError?;
+        
+        var pattern = "(#.+?\\b)|(.+?(?=#|$))";
+        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+        
+        var matches = regex.matchesInString(description, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(description))) as [NSTextCheckingResult];
+        
+        var attributedStringPiece: NSAttributedString;
+        for match in matches {
+            //var piece = aString.substringWithRange();
+            var individualString: String = description.substringFromIndex(match.range.location).substringToIndex(match.range.length);
+            if (individualString.hasPrefix("#")) {
+                retList.append(individualString.substringFromIndex(1));
+            }
+        }
+        return retList;
+    }
+    
     //separates + processes label string, and also uploads labels to server
-    class func separateLabels(labels: String)->Array<String> {
+    class func separateLabels(labels: String, labelsFromDescription: Array<String>)->Array<String> {
         var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", #"));
         arr = arr.filter({(obj: String)->Bool in obj != ""});
+        
+        for otherLabel in labelsFromDescription {
+            if (!contains(arr, otherLabel)) {
+                arr.append(otherLabel);
+            }
+        }
         
         
         var query = PFQuery(className: "SearchTerm");
@@ -261,7 +290,7 @@ import UIKit
         }
         return newImgList;
     }
-    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String) {
+    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
             return;
@@ -278,7 +307,7 @@ import UIKit
             
             
             
-            var newPost = ImagePostStructure(images: images, description: description, labels: labels);
+            var newPost = ImagePostStructure(images: images, description: description, labels: labels, looks: looks);
             var sender = PFUser.currentUser().username;     //in case user logs out while object is still saving
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");
@@ -333,8 +362,9 @@ import UIKit
         PFUser.currentUser().saveInBackground()
     }
     
-    class func getLikedPosts(skip: Int, loadCount: Int, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
-        var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
+    class func getLikedPosts(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
+        var postsToGet = user.friendObj!["likedPosts"] as Array<String>;
+        //var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
         //postsToGet = Array(postsToGet[skip...(skip + loadCount)])
         var oldCPosts = postsToGet.bridgeToObjectiveC();
         //postsToGet = stupidArray
@@ -344,13 +374,10 @@ import UIKit
             oldCPosts = oldCPosts.subarrayWithRange(NSRange(location: skip, length: oldCPosts.count - skip))
         }
         var query = PFQuery(className:"ImagePost")
-        NSLog("Okay")
         query.whereKey("objectId", containedIn: oldCPosts)
-        NSLog("Okay yAY!")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if !error {
-                NSLog("YAY")
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
                     for (index, object: PFObject!) in enumerate(objects!) {
@@ -459,7 +486,8 @@ import UIKit
     
     class func getSearchPosts(skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("labels", containsAllObjectsInArray: [term]);
+        var twoTermz = term.lowercaseString;
+        query.whereKey("labels", containsAllObjectsInArray: [twoTermz]);
         query.limit = loadCount;
         query.skip = skip;
         query.orderByDescending("createdAt");
@@ -760,8 +788,9 @@ import UIKit
     }*/
     //------------------Search methods---------------------------------------
     class func getSearchTerms(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var twoTermz = term.lowercaseString;
         var query = PFQuery(className: "SearchTerm");
-        query.whereKey("term", containsString: term);
+        query.whereKey("term", containsString: twoTermz);
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in

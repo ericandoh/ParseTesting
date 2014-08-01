@@ -10,6 +10,8 @@
 
 import UIKit
 
+let NOTIF_OWNER = "NOTIF"
+
 class NotifViewController: UITableViewController {
 
     //most recent notifications at start of array
@@ -58,7 +60,32 @@ class NotifViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
+        
+        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        
+        // Configure the cell...
+        
+        var temp = indexPath!.row;
+        
+        
+        var member: InAppNotification = notifList[temp] as InAppNotification;
+        
+        if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: true, sender: self)
+        }
+        else {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+    
+        
+        //cell.textLabel.text = member.messageString;
+        
+
+        
+        /*let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
 
         // Configure the cell...
         
@@ -68,7 +95,7 @@ class NotifViewController: UITableViewController {
         var member: InAppNotification = notifList[temp] as InAppNotification;
         
         
-        cell.textLabel.text = member.messageString;
+        cell.textLabel.text = member.messageString;*/
         
         return cell
     }
@@ -79,7 +106,20 @@ class NotifViewController: UITableViewController {
         var member: InAppNotification = notifList[temp] as InAppNotification;
 
         if (member.type == NotificationType.IMAGE_POST.toRaw()) {
-            self.performSegueWithIdentifier("ImagePostSegue", sender: self);
+            member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
+                if (!error) {
+                    var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
+                    var onlyImagePost = ImagePostStructure(inputObj: obj);
+                    imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
+                    var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+                    newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
+                    self.navigationController.pushViewController(newHome, animated: true);
+                }
+                else {
+                    NSLog("App Notification object couldn't be found");
+                }
+                });
+            //self.performSegueWithIdentifier("ImagePostSegue", sender: self);
         }
         /*else if (member.type == NotificationType.FRIEND_REQUEST.toRaw()) {
             self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
@@ -107,15 +147,15 @@ class NotifViewController: UITableViewController {
         
         let notifObj: InAppNotification = notifList[temp]!;
         
-        if (id == "ImagePostSegue") {
+        /*if (id == "ImagePostSegue") {
             var destination = segue!.destinationViewController as ImagePostNotifViewController;
             destination.receiveNotifObject(notifObj);
-        }
+        }*/
         /*else if (id == "FriendRequestSegue") {
             var destination = segue!.destinationViewController as FriendRequestViewController;
             destination.receiveNotifObject(notifObj);
         }*/
-        else {
+        if (segue!.destinationViewController is SingleNotifViewController) {
             var destination = segue!.destinationViewController as SingleNotifViewController;
             destination.receiveNotifObject(notifObj);
         }

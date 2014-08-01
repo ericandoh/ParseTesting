@@ -56,13 +56,14 @@ class InAppNotification {
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (!error) {
                             var numLikes: Int = object["likes"] as Int
+                            //if one person, say "Person" has liked your photo, else "_" people have liked it!
                             self.messageString = "Your picture has gotten \(numLikes) likes!"
                             listener.tableView.reloadData()
                         }
                     });
                 case NotificationType.FOLLOWER_NOTIF.toRaw():
                     self.friendName = self.personalObj!["sender"] as String
-                    self.messageString = "\(self.friendName) loves you now!";
+                    self.messageString = "@\(self.friendName) started following you!";
                     listener.tableView.reloadData();
                     
                 default:
@@ -76,6 +77,16 @@ class InAppNotification {
             listener.tableView.reloadData();
         }
     }
+    
+    func getSender()->FriendEncapsulator {
+        if (type != NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            //Post does not have image associated with it
+            NSLog("Cannot retrieve follower from non-follower post notification")
+        }
+        var obj: String = self.personalObj!["sender"] as String
+        return FriendEncapsulator(friendName: obj);
+    }
+    
     func getImage(receiveAction:(UIImage)->Void) {
         if (type != NotificationType.IMAGE_POST.toRaw()) {
             //Post does not have image associated with it

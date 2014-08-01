@@ -43,7 +43,28 @@ class FriendEncapsulator {
         }
         return username;
     }
-    
+    func exists(result: (Bool)->Void) {
+        var query = PFUser.query();
+        query.whereKey("username", equalTo: self.username);
+        query.limit = 1;
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (!error && objects.count > 0)  {
+                self.friendObj = objects[0] as? PFUser;
+                result(true);
+            }
+            else if (error) {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+                result(false);
+            }
+            else if (objects.count == 0) {
+                //NSLog("Can't find user: \(self.username)")
+                result(false);
+            }
+        }
+
+    }
     func fetchImage(receiveAction:(UIImage)->Void) {
         if friendImg {
             receiveAction(friendImg!);

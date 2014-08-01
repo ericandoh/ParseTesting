@@ -23,7 +23,7 @@ class ImagePostStructure
         myObj = inputObj;
         images = [];
     }
-    init(images: Array<UIImage>, description: String, labels: String) {
+    init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
         image = images[0];
@@ -59,8 +59,15 @@ class ImagePostStructure
         myObj["comments"] = [];
         myObj["commentAuthor"] = [];
         
-        var labelArr = ServerInteractor.separateLabels(labels);
+        var descriptionLabels: Array<String> = ServerInteractor.extractStrings(description);
+        var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
         myObj["labels"] = labelArr;
+        
+        var looksArray = NSMutableArray();
+        for look: ShopLook in looks {
+            looksArray.addObject(look.toDictionary());
+        }
+        myObj["shopLooks"] = looksArray;
         
         
         //setting permissions to public
@@ -167,6 +174,27 @@ class ImagePostStructure
     func fetchComments(finishFunction: (input: NSArray)->Void) {
         var commentArray = myObj["comments"] as NSArray;
         finishFunction(input: commentArray);
+    }
+    func getAuthor()->String {
+        return myObj["author"] as String;
+    }
+    func getDescriptionWithTag()->String {
+        var mainBody = myObj["description"] as String;
+        var tags = myObj["labels"] as Array<String>;
+        for tag in tags {
+            if !(mainBody.lowercaseString.rangeOfString("#"+tag)) {
+                mainBody = mainBody + " #" + tag;
+            }
+        }
+        return mainBody;
+    }
+    func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
+        var lookArray = myObj["shopLooks"] as NSArray;
+        var retList: Array<ShopLook> = [];
+        for object in lookArray {
+            retList.append(ShopLook.fromDictionary(object));
+        }
+        finishFunction(input: retList);
     }
     func addComment(comment: String) {
         //var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray

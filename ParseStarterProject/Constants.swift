@@ -23,17 +23,20 @@ let NOTIF_COUNT = 10
 //number of post-images to load at once
 //more posts to load = slower start time, faster flip time consistency
 //less posts to load = faster start time, increased inconsistency in page loads
-let POST_LOAD_COUNT = 10
+let POST_LOAD_COUNT = 15    //used to be 10
 
 //number of posts to have before buffering next set of images
 let POST_LOAD_LIMIT = 20
 
 //maximum number of my own posts to load (when i query for my last submitted posts)
 //no post load limit count - buffer as I read collectionView
-let MYPOST_LOAD_COUNT = 10
+//let MYPOST_LOAD_COUNT = 15
 
 //maximum number of search results to load at once
 let SEARCH_LOAD_COUNT = 20;
+
+//how many cells I should have before it starts rendering more
+let CELLS_BEFORE_RELOAD = 9;
 
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
@@ -53,6 +56,9 @@ let CAMERA_ICON = UIImage(named: "temp_camera_icon.jpg")
 
 //default images
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
+
+//close button image for Shop The Look while uploading
+let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 //----------------------------Width/Height Constants---------------------------------
 
@@ -82,11 +88,13 @@ let BAR_WIDTH = 225.0;
 let TRIGGER_BAR_WIDTH = 200.0;
 
 //numbers for shop the look boxes in upload flow
-let BOX_START_Y = 436.0;                //starting y pos of shop look boxes
+let BOX_START_Y = 412.0;                //starting y pos of shop look boxes
 let LABEL_BOX_HEIGHT = 40.0;            //individual box heights
 let LABEL_SPACING = 5.0;                //spacing between each box
 let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
 let BOX_WIDTH = 300.0;                  //width of box
+let BOX_CLOSE_WIDTH = 40.0;             //size of X
+let BOX_WIDTH_ONE = BOX_WIDTH - BOX_CLOSE_WIDTH;
 let BOX_LEFT_MARGIN = (Double(FULLSCREEN_WIDTH) - BOX_WIDTH) / 2.0
 let SCROLLFIELD_DEFAULT_HEIGHT = 595.0; //height of scrollfield when no shoplooks
 //----end shop the look------
@@ -95,7 +103,7 @@ let SCROLLFIELD_DEFAULT_HEIGHT = 595.0; //height of scrollfield when no shoplook
 
 //side menu bar items we will have
 //this references ONLY storyboard ID names
-let SIDE_MENU_ITEMS = ["Home", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
+let SIDE_MENU_ITEMS = ["HomeNav", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
 
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
@@ -117,6 +125,15 @@ enum NotificationType: String {
     case FRIEND_ACCEPT = "FriendAccept"
     case IMAGE_POST = "ImagePost"
     case FOLLOWER_NOTIF = "FollowerNotif"
+}
+
+//Int enums to describe direction (of swipe, for home feed)
+enum CompassDirection: Int {
+    case STAY = 0;
+    case NORTH = 1;
+    case EAST = 2;
+    case SOUTH = 3;
+    case WEST = 4;
 }
 
 //String enums to describe exclusivity of user post (work need)
