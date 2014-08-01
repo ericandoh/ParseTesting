@@ -35,11 +35,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         myTable.hidden = true;
         
         collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getPost, sender: self);
-        collectionDelegateMain!.initialSetup();
-        
         if (currentTerm != "") {
             startSearch(currentTerm);
         }
+        else {
+            collectionDelegateMain!.initialSetup();
+        }
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
