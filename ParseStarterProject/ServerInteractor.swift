@@ -172,10 +172,39 @@ import UIKit
         return FriendEncapsulator(friend: PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
+    
+    
+    class func extractStrings(description: String)->Array<String> {
+        
+        var retList: Array<String> = [];
+        var error: NSError?;
+        
+        var pattern = "(#.+?\\b)|(.+?(?=#|$))";
+        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+        
+        var matches = regex.matchesInString(description, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(description))) as [NSTextCheckingResult];
+        
+        var attributedStringPiece: NSAttributedString;
+        for match in matches {
+            //var piece = aString.substringWithRange();
+            var individualString: String = description.substringFromIndex(match.range.location).substringToIndex(match.range.length);
+            if (individualString.hasPrefix("#")) {
+                retList.append(individualString.substringFromIndex(1));
+            }
+        }
+        return retList;
+    }
+    
     //separates + processes label string, and also uploads labels to server
-    class func separateLabels(labels: String)->Array<String> {
+    class func separateLabels(labels: String, labelsFromDescription: Array<String>)->Array<String> {
         var arr = labels.componentsSeparatedByCharactersInSet(NSCharacterSet(charactersInString: ", #"));
         arr = arr.filter({(obj: String)->Bool in obj != ""});
+        
+        for otherLabel in labelsFromDescription {
+            if (!contains(arr, otherLabel)) {
+                arr.append(otherLabel);
+            }
+        }
         
         
         var query = PFQuery(className: "SearchTerm");

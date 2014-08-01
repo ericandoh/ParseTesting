@@ -280,7 +280,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         
         authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
-        descriptionTextField.setTextAfterAttributing(currentPost.getDescription());
+        descriptionTextField.setTextAfterAttributing(currentPost.getDescriptionWithTag());
         currentPost.fetchShopLooks({
             (input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);

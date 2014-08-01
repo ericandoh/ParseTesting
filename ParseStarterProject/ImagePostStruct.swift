@@ -58,7 +58,8 @@ class ImagePostStructure
 
         myObj["comments"] = [];
         
-        var labelArr = ServerInteractor.separateLabels(labels);
+        var descriptionLabels: Array<String> = ServerInteractor.extractStrings(description);
+        var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
         myObj["labels"] = labelArr;
         
         var looksArray = NSMutableArray();
@@ -176,8 +177,15 @@ class ImagePostStructure
     func getAuthor()->String {
         return myObj["author"] as String;
     }
-    func getDescription()->String {
-        return myObj["description"] as String;
+    func getDescriptionWithTag()->String {
+        var mainBody = myObj["description"] as String;
+        var tags = myObj["labels"] as Array<String>;
+        for tag in tags {
+            if !(mainBody.lowercaseString.rangeOfString("#"+tag)) {
+                mainBody = mainBody + " #" + tag;
+            }
+        }
+        return mainBody;
     }
     func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
         var lookArray = myObj["shopLooks"] as NSArray;

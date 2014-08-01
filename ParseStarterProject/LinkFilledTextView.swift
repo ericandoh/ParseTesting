@@ -162,7 +162,6 @@ class LinkFilledTextView: UITextView {
         
         var attributedStringPiece: NSAttributedString;
         for match in matches {
-            match.range;
             //var piece = aString.substringWithRange();
             var individualString: String = text.substringFromIndex(match.range.location).substringToIndex(match.range.length);
             if (individualString.hasPrefix("#")) {
