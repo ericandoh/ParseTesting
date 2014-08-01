@@ -79,6 +79,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             //self.navigationController.setNavigationBarHidden(true, animated: false);
             self.navigationController.navigationBar.hidden = true;
             self.navigationController.navigationBar.translucent = true;
+            //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
         }
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
@@ -244,7 +245,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                 switchImage(currentPost.image!, fromDirection: fromDirection);
             }
             else {
-                NSLog("Caution");
+                NSLog("Current Post's image is not loaded despite assumption that it is");
                 currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
                     self.switchImage(currentPost.image!, fromDirection: fromDirection);
                 }, index: 0);
