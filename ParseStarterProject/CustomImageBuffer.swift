@@ -50,6 +50,10 @@ class CustomImageBuffer: NSObject {
 
     var searchTerm: String = "";
     
+    //whenever the buffer is reset, previous calls to functions must be invalidated
+    //this variable lets me know (for delayed calls) if my callback is modifying at the correct state 
+    //(i.e. callback from old function after I reset gets called, makes sure my state is consistent
+    
     init(disableOnAnon: Bool, user: FriendEncapsulator?, owner: String) {
         self.disableOnAnon = disableOnAnon;
         self.user = user;

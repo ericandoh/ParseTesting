@@ -19,7 +19,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     var collectionDelegateSearch: ImagePostCollectionDelegate?;
     var collectionDelegateMain: ImagePostCollectionDelegate?;
     
-    var doingSearch: Bool = false;
+    //0 - is looking at popular
+    //1 - showing text fields + table
+    //2 - showing collection view of search results
+    var doingSearch: Int = 0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,30 +76,53 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     //------------search bar functions---------------
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         if (searchText == "") {
-            if (collectionDelegateSearch) {
-                collectionDelegateSearch!.resetData();
-            }
-            collectionDelegateMain!.resetData();
-            collectionDelegateMain!.initialSetup();
-        }
-        if (doingSearch && searchText == "") {
-            doingSearch = false;
-            myTable.hidden = true;
-            myCollectionView.hidden = false;
-            //add animations here;
-            self.navigationController.navigationBar.topItem.title = "Search";
-        }
-        else if (!doingSearch && searchText != "") {
-            doingSearch = true;
-            myTable.hidden = false;
-            myCollectionView.hidden = true;
-            if (collectionDelegateSearch) {
-                collectionDelegateSearch!.resetData();
-            }
-            collectionDelegateMain!.resetData();
-            //add animations here
             
-            
+            //no need to do jack when 0
+            if (doingSearch == 1) {
+                /*if (collectionDelegateSearch) {
+                    collectionDelegateSearch!.resetData();
+                }*/
+                collectionDelegateMain!.resetData();
+                collectionDelegateMain!.initialSetup();
+                
+                doingSearch = 0;
+                myTable.hidden = true;
+                myCollectionView.hidden = false;
+                self.navigationController.navigationBar.topItem.title = "Search";
+            }
+            else if (doingSearch == 2) {
+                /*if (collectionDelegateSearch) {
+                    collectionDelegateSearch!.resetData();
+                }*/
+                collectionDelegateMain!.resetData();
+                collectionDelegateMain!.initialSetup();
+                
+                doingSearch = 0;
+                //myTable.hidden = true;
+                //myCollectionView.hidden = false;
+                //add animations here;
+                self.navigationController.navigationBar.topItem.title = "Search";
+            }
+        }
+        else if (searchText != "") {
+            if (doingSearch == 0) {
+                //start a new search
+                doingSearch = 1;
+                myTable.hidden = false;
+                myCollectionView.hidden = true;
+                /*if (collectionDelegateSearch) {
+                    collectionDelegateSearch!.resetData();
+                }
+                collectionDelegateMain!.resetData();*/
+            }
+            else if (doingSearch == 1) {
+                //do nothing
+            }
+            else if (doingSearch == 2) {
+                doingSearch = 1;
+                myTable.hidden = false;
+                myCollectionView.hidden = true;
+            }
         }
 
         currentTerm = searchText;
@@ -160,7 +186,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         searchBar.text = searchResult;  //set the search bar to match the search query
         //self.navigationController.navigationBar.topItem.title = searchResult;
         self.title = searchResult;
-        doingSearch = false;
+        doingSearch = 2;
         myTable.hidden = true;
         myCollectionView.hidden = false;
         
@@ -168,10 +194,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (!collectionDelegateSearch) {
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
         }
+        else {
+            collectionDelegateSearch!.resetData();
+        }
         //update my collectionviewdelegate to instead do a search
         collectionDelegateSearch!.setSearch(searchResult);
         //collectionDelegateSearch!.resetData();
-        //collectionDelegateMain!.resetData();
+        collectionDelegateMain!.resetData();
         collectionDelegateSearch!.initialSetup();
     }
 }
