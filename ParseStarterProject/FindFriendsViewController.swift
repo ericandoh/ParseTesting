@@ -13,9 +13,9 @@ let SEARCH_CELL_IDENTIFIER = "SearchFriendCell";
 
 class FindFriendsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
-    @IBOutlet var suggestedFriendsTableView: UITableView
-    @IBOutlet var searchFriendsTableView: UITableView
-    @IBOutlet var searchBar: UISearchBar
+    @IBOutlet var suggestedFriendsTableView: UITableView!
+    @IBOutlet var searchFriendsTableView: UITableView!
+    @IBOutlet var searchBar: UISearchBar!
     
     var isSearching: Bool = false;
     var searchTermList: Array<String> = [];

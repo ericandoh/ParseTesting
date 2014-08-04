@@ -12,7 +12,11 @@ class SideTableViewCell: UITableViewCell {
     
     var cellImage: UIImageView?;
     
-    init(style: UITableViewCellStyle, reuseIdentifier: String) {
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder);
+    }
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         // Initialization code
         //var currentFrame: CGRect = self.frame;
@@ -24,7 +28,7 @@ class SideTableViewCell: UITableViewCell {
         // Initialization code
         
         var currentFrame: CGRect = self.frame;
-        if (cellImage) {
+        if (cellImage != nil) {
             
         }
         else {

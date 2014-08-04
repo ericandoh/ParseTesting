@@ -28,10 +28,10 @@ struct AssetItem {
 
 class ImagePickingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet var optionsView: UIView
-    @IBOutlet var myCollectionView: UICollectionView
-    @IBOutlet var myTableView: UITableView
-    @IBOutlet var navigationTitle: UIButton
+    @IBOutlet var optionsView: UIView!
+    @IBOutlet var myCollectionView: UICollectionView!
+    @IBOutlet var myTableView: UITableView!
+    @IBOutlet var navigationTitle: UIButton!
     
     var assetLibrary: ALAssetsLibrary?;
     
@@ -267,7 +267,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary) {
-        var mediaType: String = info[UIImagePickerControllerMediaType] as String;
+        var mediaType: NSString = info[UIImagePickerControllerMediaType] as NSString;
         self.dismissViewControllerAnimated(false, completion: {
             ()->Void in
             if (mediaType == "") {//kUTTypeImage) {

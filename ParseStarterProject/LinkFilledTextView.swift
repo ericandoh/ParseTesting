@@ -31,12 +31,20 @@ enum ExternalViewLink: String {
 
 class LinkFilledTextView: UITextView {
     
-    var owner: UIViewController;
+    var owner: UIViewController?;
     var canRespond: Bool = false;
     
+    required init(coder aDecoder: NSCoder!) {
+        super.init(coder: aDecoder);
+        //self.owner = owner;
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
+        self.userInteractionEnabled = false;
+        //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+    }
+    
     init(frame: CGRect, textContainer: NSTextContainer!, owner: UIViewController) {
-        self.owner = owner;
         super.init(frame: frame, textContainer: textContainer);
+        self.owner = owner;
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
@@ -68,24 +76,27 @@ class LinkFilledTextView: UITextView {
             var value: AnyObject! = textView.attributedText.attribute(TYPE_TAG, atIndex: characterIndex, effectiveRange: range);
             //NSLog((value as String)+" was clicked");
             //NSLog("\(range.memory.length) for \(range.memory.location)");
-            var realText = text.substringFromIndex(range.memory.location).substringToIndex(range.memory.length);
+            
+            var realText: NSString = (text as NSString).substringFromIndex(range.memory.location) as NSString
+            
+            realText = realText.substringToIndex(range.memory.length);
             //NSLog(realText);
             var typeOfString = ExternalViewLink.fromRaw(value as String)!;
             if (typeOfString == ExternalViewLink.TAG) {
                 var searchTerm = realText.substringFromIndex(1);
                 
-                var nextBoard : UIViewController = self.owner.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
+                var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
                 (nextBoard as SearchViewController).currentTerm = searchTerm;
-                self.owner.navigationController.pushViewController(nextBoard, animated: true);
+                self.owner!.navigationController.pushViewController(nextBoard, animated: true);
             }
             else if (typeOfString == ExternalViewLink.USER) {
                 var friendName = realText.substringFromIndex(1);
                 var friend = FriendEncapsulator(friendName: friendName);
                 friend.exists({(exist: Bool) in
                     if (exist) {
-                        var nextBoard : UIViewController = self.owner.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                        var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                         (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                        self.owner.navigationController.pushViewController(nextBoard, animated: true);
+                        self.owner!.navigationController.pushViewController(nextBoard, animated: true);
                     }
                     });
             }
@@ -137,7 +148,8 @@ class LinkFilledTextView: UITextView {
     func setTextAfterAttributing(text: String) {
         self.attributedText = self.convertToAttributed(text);
     }
-    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
+    override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafeMutablePointer<()>) {
+    //override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
         var txtView = object as UITextView;
         var topoffset = (txtView.bounds.size.height - txtView.contentSize.height * txtView.zoomScale)/2.0;
         topoffset = ( topoffset < 0.0 ? 0.0 : topoffset );
@@ -163,7 +175,7 @@ class LinkFilledTextView: UITextView {
         var attributedStringPiece: NSAttributedString;
         for match in matches {
             //var piece = aString.substringWithRange();
-            var individualString: String = text.substringFromIndex(match.range.location).substringToIndex(match.range.length);
+            var individualString: String = ((text as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length);
             if (individualString.hasPrefix("#")) {
                 let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
                 let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font];

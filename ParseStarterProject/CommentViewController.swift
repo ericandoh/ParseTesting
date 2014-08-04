@@ -10,10 +10,10 @@ import UIKit
 
 class CommentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet var commentTextField: UITextField
-    @IBOutlet var commentTableView: UITableView
+    @IBOutlet var commentTextField: UITextField!
+    @IBOutlet var commentTableView: UITableView!
     
-    @IBOutlet var backImgView: UIImageView
+    @IBOutlet var backImgView: UIImageView!
     var commentList: Array<PostComment> = [];
     
     var postImageList: Dictionary<String, UIImage> = [:];
@@ -28,7 +28,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
-        if (currentPost) {
+        if (currentPost != nil) {
             self.commentList = Array<PostComment>();
             currentPost!.fetchComments({(authorInput: NSArray, input: NSArray)->Void in
                 for index in 0..<input.count {
@@ -93,7 +93,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         //NSLog("Comment by \(author) saying \(commentList[index].commentString)")
         cell.textLabel.text = commentList[index].author + ": " + commentList[index].commentString;
         
-        if (postImageList[author]) {
+        if (postImageList[author] != nil) {
             cell.imageView.image = postImageList[author];
         }
         else {

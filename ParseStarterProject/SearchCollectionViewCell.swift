@@ -10,13 +10,13 @@ import UIKit
 
 class SearchCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet var postLabel: UILabel
-    @IBOutlet var imageView: UIImageView
-    init(frame: CGRect) {
+    @IBOutlet var postLabel: UILabel!
+    @IBOutlet var imageView: UIImageView!
+    override init(frame: CGRect) {
         super.init(frame: frame)
         // Initialization code
     }
-    init(coder aDecoder: NSCoder!)  {
+    required init(coder aDecoder: NSCoder!)  {
         super.init(coder: aDecoder);
     }
 }

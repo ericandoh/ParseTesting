@@ -31,7 +31,7 @@ class FriendEncapsulator {
         if (username != "") {
             return username;
         }
-        if (friendObj) {
+        if (friendObj != nil) {
             if (friendObj!.isDataAvailable()) {
                 username = friendObj!.username;
             }
@@ -66,10 +66,10 @@ class FriendEncapsulator {
 
     }
     func fetchImage(receiveAction:(UIImage)->Void) {
-        if friendImg {
+        if (friendImg != nil) {
             receiveAction(friendImg!);
         }
-        else if (friendObj) {
+        else if (friendObj != nil) {
             //fetch friend + get image
             if (!(friendObj!["userIcon"])) {
                 receiveAction(DEFAULT_USER_ICON);

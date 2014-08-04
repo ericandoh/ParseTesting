@@ -68,7 +68,7 @@ class NotifViewController: UITableViewController {
         var temp = indexPath!.row;
         
         
-        var member: InAppNotification = notifList[temp] as InAppNotification;
+        var member: InAppNotification = notifList[temp]! as InAppNotification;
         
         if (member.type == NotificationType.IMAGE_POST.toRaw()) {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
@@ -103,7 +103,7 @@ class NotifViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var temp = indexPath.row;
         
-        var member: InAppNotification = notifList[temp] as InAppNotification;
+        var member: InAppNotification = notifList[temp]! as InAppNotification;
 
         if (member.type == NotificationType.IMAGE_POST.toRaw()) {
             member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in

@@ -11,10 +11,10 @@ import UIKit
 class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     
-    @IBOutlet var contentArea: UIView
-    @IBOutlet var sideView: UIView
-    @IBOutlet var sideTableView: UITableView
-    @IBOutlet var outOfMenuButton: UIButton
+    @IBOutlet var contentArea: UIView!
+    @IBOutlet var sideView: UIView!
+    @IBOutlet var sideTableView: UITableView!
+    @IBOutlet var outOfMenuButton: UIButton!
     var viewControllerDictionary: Dictionary<String, UIViewController> = [:];
     var currentlyShowing: String = "";
     var menuOpen: Bool = true;
@@ -27,7 +27,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad();
         // Do any additional setup after loading the view.
         menuOpen = false;
-        var x = self.sideView.center.x - BAR_WIDTH;
+        var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
         sideView.center = point;
@@ -47,7 +47,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBAction func swiped(sender: UISwipeGestureRecognizer) {
         var location: CGPoint = sender.locationInView(self.view);
-        if (location.x <= TRIGGER_BAR_WIDTH) {
+        if (location.x <= CGFloat(TRIGGER_BAR_WIDTH)) {
             self.openMenu();
         }
     }
@@ -86,7 +86,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         /*
         viewControllerDictionary[currentlyShowing] => current view controller, if you want to manipulate it
         */
-        var x = self.sideView.center.x + BAR_WIDTH;
+        var x = self.sideView.center.x + CGFloat(BAR_WIDTH);
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
         self.sideView.hidden = false;
@@ -170,7 +170,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             self.view.addSubview(content.view);
             content.didMoveToParentViewController(self);*/
             
-            if (!self.viewControllerDictionary[self.currentlyShowing]) {
+            if (self.viewControllerDictionary[self.currentlyShowing] == nil) {
                 self.addChildViewController(content);
                 content.view.frame = self.contentArea.frame;
                 self.view.addSubview(content.view);
@@ -239,7 +239,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     //resets a window to the start, by forcing it to create a new instance when switched to
     //this does NOT switch windows
     func resetWindow(contentString: String) {
-        if (self.viewControllerDictionary[contentString]) {
+        if (self.viewControllerDictionary[contentString] != nil) {
             needRemove.append(self.viewControllerDictionary[contentString]!);
         }
         var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;

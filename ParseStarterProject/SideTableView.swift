@@ -10,18 +10,18 @@ import UIKit
 
 class SideTableView: UITableView {
 
-    init(coder aDecoder: NSCoder!)  {
+    required init(coder aDecoder: NSCoder!)  {
         super.init(coder: aDecoder);
         rotateWithFramePreserved();
     }
-    init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         // Initialization code
         rotateWithFramePreserved();
     }
     func rotateWithFramePreserved() {
         var currentFrame: CGRect = self.frame;
-        self.transform = CGAffineTransformMakeRotation(-M_PI / 2);
+        self.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI) / 2);
         self.frame = CGRectMake(currentFrame.origin.y, currentFrame.origin.x, currentFrame.height, currentFrame.width);
         self.frame = currentFrame;
     }

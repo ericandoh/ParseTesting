@@ -9,9 +9,9 @@
 import UIKit
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
 
-    @IBOutlet var myTable: UITableView;
-    @IBOutlet var myCollectionView: UICollectionView
-    @IBOutlet var searchBar: UISearchBar
+    @IBOutlet var myTable: UITableView!;
+    @IBOutlet var myCollectionView: UICollectionView!
+    @IBOutlet var searchBar: UISearchBar!
     
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
@@ -194,7 +194,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         myCollectionView.hidden = false;
         
         //change context to searching for term
-        if (!collectionDelegateSearch) {
+        if (collectionDelegateSearch == nil) {
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
         }
         else {

@@ -63,40 +63,40 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
-let FULLSCREEN_WIDTH = 320;
+let FULLSCREEN_WIDTH: CGFloat = CGFloat(320);
 
 //height of a fullscreen image
-let FULLSCREEN_HEIGHT = 518;
+let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
 
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
-let UPLOAD_TABLE_DELETE_LIMIT = 100.0;
+let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
 //how dim the right side of the menu becomes when side menu (left) is triggered and pulled out
 //you can change hue in storyboard
-let SIDE_MENU_DIM = 0.5;
+let SIDE_MENU_DIM = CGFloat(0.5);
 
 //ratio of width to height
-let WIDTH_HEIGHT_RATIO = Float(FULLSCREEN_WIDTH) / Float(FULLSCREEN_HEIGHT);
+let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(FULLSCREEN_HEIGHT);
 
 //max size of an image
 let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
 
 //side menu bar width
-let BAR_WIDTH = 225.0;
+let BAR_WIDTH = CGFloat(225.0);
 
 //from where swiping left triggers side menu bar
-let TRIGGER_BAR_WIDTH = 200.0;
+let TRIGGER_BAR_WIDTH = CGFloat(200.0);
 
 //numbers for shop the look boxes in upload flow
-let BOX_START_Y = 412.0;                //starting y pos of shop look boxes
-let LABEL_BOX_HEIGHT = 40.0;            //individual box heights
-let LABEL_SPACING = 5.0;                //spacing between each box
+let BOX_START_Y = CGFloat(412.0);                //starting y pos of shop look boxes
+let LABEL_BOX_HEIGHT = CGFloat(40.0);            //individual box heights
+let LABEL_SPACING = CGFloat(5.0);                //spacing between each box
 let BOX_INCR_Y = LABEL_BOX_HEIGHT + LABEL_SPACING;
-let BOX_WIDTH = 300.0;                  //width of box
-let BOX_CLOSE_WIDTH = 40.0;             //size of X
+let BOX_WIDTH = CGFloat(300.0);                  //width of box
+let BOX_CLOSE_WIDTH = CGFloat(40.0);             //size of X
 let BOX_WIDTH_ONE = BOX_WIDTH - BOX_CLOSE_WIDTH;
-let BOX_LEFT_MARGIN = (Double(FULLSCREEN_WIDTH) - BOX_WIDTH) / 2.0
-let SCROLLFIELD_DEFAULT_HEIGHT = 595.0; //height of scrollfield when no shoplooks
+let BOX_LEFT_MARGIN = ((FULLSCREEN_WIDTH) - BOX_WIDTH) / CGFloat(2.0)
+let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(595.0); //height of scrollfield when no shoplooks
 //----end shop the look------
 
 //----------------------------Side Bar Constants---------------------------------

@@ -12,7 +12,7 @@ import UIKit
 
 class SingleNotifViewController: UIViewController {
 
-    @IBOutlet var notifTextLabel: UILabel
+    @IBOutlet var notifTextLabel: UILabel!
     
     var notif: InAppNotification?;
     
@@ -20,7 +20,7 @@ class SingleNotifViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if notif {
+        if (notif != nil) {
             notifTextLabel.text = notif!.messageString;
         }   
     }

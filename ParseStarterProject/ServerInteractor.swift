@@ -208,9 +208,9 @@ import UIKit
         var attributedStringPiece: NSAttributedString;
         for match in matches {
             //var piece = aString.substringWithRange();
-            var individualString: String = description.substringFromIndex(match.range.location).substringToIndex(match.range.length);
+            var individualString: String = ((description as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length);
             if (individualString.hasPrefix("#")) {
-                retList.append(individualString.substringFromIndex(1));
+                retList.append((individualString as NSString).substringFromIndex(1));
             }
         }
         return retList;
@@ -269,17 +269,17 @@ import UIKit
             NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
             var outputImg: UIImage?;
-            if (Int(image.size.height) > FULLSCREEN_HEIGHT && individualRatio > WIDTH_HEIGHT_RATIO) {
+            if (CGFloat(image.size.height) > FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
                 //this image is horizontal, so we resize image height to match
-                newSize = CGSize(width: Int(image.size.width) * FULLSCREEN_HEIGHT / Int(image.size.height), height: FULLSCREEN_HEIGHT);
+                newSize = CGSize(width: CGFloat(image.size.width) * FULLSCREEN_HEIGHT / CGFloat(image.size.height), height: FULLSCREEN_HEIGHT);
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
                 UIGraphicsEndImageContext();
             }
-            else if (Int(image.size.width) > FULLSCREEN_WIDTH && individualRatio < WIDTH_HEIGHT_RATIO) {
+            else if (CGFloat(image.size.width) > FULLSCREEN_WIDTH && CGFloat(individualRatio) < WIDTH_HEIGHT_RATIO) {
                 //this image is vertical, so we resize image width to match
-                newSize = CGSize(width: FULLSCREEN_WIDTH, height: Int(image.size.height) * FULLSCREEN_WIDTH / Int(image.size.width));
+                newSize = CGSize(width: FULLSCREEN_WIDTH, height: CGFloat(image.size.height) * FULLSCREEN_WIDTH / CGFloat(image.size.width));
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
@@ -357,7 +357,7 @@ import UIKit
     class func convertPostToID(input: Array<ImagePostStructure?>)->NSMutableArray {
         var output = NSMutableArray();
         for post: ImagePostStructure? in input {
-            if (post) {
+            if (post != nil) {
                 output.addObject(post!.myObj.objectId);
             }
         }
@@ -387,7 +387,7 @@ import UIKit
         var postsToGet = user.friendObj!["likedPosts"] as Array<String>;
         //var postsToGet = PFUser.currentUser()["likedPosts"] as Array<String>;
         //postsToGet = Array(postsToGet[skip...(skip + loadCount)])
-        var oldCPosts = postsToGet.bridgeToObjectiveC();
+        var oldCPosts = postsToGet as NSArray;
         //postsToGet = stupidArray
         if (oldCPosts.count - skip >= loadCount) {
             oldCPosts = oldCPosts.subarrayWithRange(NSRange(location: skip, length: loadCount))
@@ -401,8 +401,8 @@ import UIKit
             if !error {
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
-                    for (index, object: PFObject!) in enumerate(objects!) {
-                        post = ImagePostStructure(inputObj: object);
+                    for (index, object) in enumerate(objects!) {
+                        post = ImagePostStructure(inputObj: object as PFObject);
                         var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
                         post!.loadImage(finishFunction, index: realIndex);
                     }
@@ -461,8 +461,8 @@ import UIKit
                 notifyQueryFinish(objects.count);
                 
                 var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: (object as PFObject));
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -494,8 +494,8 @@ import UIKit
                 
                 // Do something with the found objects
                 var post: ImagePostStructure?;
-                for (index, object: PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -521,8 +521,8 @@ import UIKit
                 
                 // Do something with the found objects
                 var post: ImagePostStructure?;
-                for (index, object:PFObject!) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object);
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure(inputObj: object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -563,7 +563,7 @@ import UIKit
                 targetObject.saveInBackground();
                 
             }
-            else if (controller) {
+            else if (controller != nil) {
                 if(objects.count == 0) {
                     (controller! as FriendTableViewController).notifyFailure("No such user exists!");
                 }
@@ -810,13 +810,13 @@ import UIKit
         var unwrapUser = user.friendObj;
         var returnList: Array<FriendEncapsulator?> = [];
         var friendz: NSArray;
-        if (unwrapUser!.allKeys().bridgeToObjectiveC().containsObject("friends")) {
+        if ((unwrapUser!.allKeys() as NSArray).containsObject("friends")) {
             //if this runs, the code will break catastrophically, just initialize "friends" with registration
             friendz = unwrapUser!["friends"] as NSArray;
         }
         else {
             NSLog("Updating an old account to have friends");
-            friendz = Array<PFUser?>();
+            friendz = NSArray();
             unwrapUser!["friends"] = NSArray()
             unwrapUser!.saveInBackground();
         }

@@ -174,7 +174,7 @@ class CustomImageBuffer: NSObject {
             endLoadCount = (loadedPosts.count) % postLoadCount;
             var divisible = loadedPosts.count - endLoadCount;
             loadedUpTo = divisible / postLoadCount;
-            if (refreshFunction) {
+            if (refreshFunction != nil) {
                 refreshFunction!();
             }
             for realIndex in 0...self.loadedPosts.count {
@@ -198,7 +198,7 @@ class CustomImageBuffer: NSObject {
         if (index >= loadedPosts.count) {
             return false;
         }
-        if (loadedPosts[index]) {
+        if (loadedPosts[index] != nil) {
             return true;
         }
         return false;
@@ -226,7 +226,7 @@ class CustomImageBuffer: NSObject {
         }
         newlyLoadedEnd = needAmount;
         //myCollectionView.reloadData();
-        if (refreshFunction) {
+        if (refreshFunction != nil) {
             refreshFunction!();
         }
     }

@@ -110,7 +110,7 @@ class ImagePostStructure
         return ServerInteractor.likedBefore(myObj.objectId);
     }
     func loadImage() {
-        if (!image) {
+        if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                 //get file objects
@@ -119,7 +119,7 @@ class ImagePostStructure
         }
     }
     func loadImage(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
-        if (!image) {
+        if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                 if (!error) {
@@ -201,7 +201,7 @@ class ImagePostStructure
         var mainBody = myObj["description"] as String;
         var tags = myObj["labels"] as Array<String>;
         for tag in tags {
-            if !(mainBody.lowercaseString.rangeOfString("#"+tag)) {
+            if (mainBody.lowercaseString.rangeOfString("#"+tag) == nil) {
                 mainBody = mainBody + " #" + tag;
             }
         }
