@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6185.7" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6181.2"/>
     </dependencies>
     <scenes>
-        <!--User Profile-->
+        <!--Navigation Controller-->
         <scene sceneID="Lnv-1g-THV">
             <objects>
                 <navigationController storyboardIdentifier="Profile" id="94M-If-egL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="User Profile" id="gsD-fE-muu"/>
-                    <navigationItem key="navigationItem" id="Iro-r5-g3C"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="f7V-TS-HWx">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f7V-TS-HWx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -23,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="1008" y="1665"/>
         </scene>
-        <!--User Profile-->
+        <!--User Profile View Controller-->
         <scene sceneID="HDz-ta-5fb">
             <objects>
                 <viewController storyboardIdentifier="UserProfilePage" id="Ism-7q-CMJ" customClass="UserProfileViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -32,11 +31,11 @@
                         <viewControllerLayoutGuide type="bottom" id="Wda-xj-Qno"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Ec-Vo-ZiR">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="XgZ-I1-U6x">
-                                <rect key="frame" x="4" y="65" width="311" height="391"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="448"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <inset key="scrollIndicatorInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pj8-Y1-oHL">
@@ -73,23 +72,8 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-2s-oeW">
-                                <rect key="frame" x="10" y="35" width="39" height="30"/>
-                                <state key="normal" title="Posts">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="userPosts:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="dCg-OG-NKg"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFl-y1-MRd">
-                                <rect key="frame" x="88" y="14" width="33" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3rd-ZN-2US">
-                                <rect key="frame" x="4" y="65" width="312" height="428"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="448"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowerCell" id="BIF-3d-nGH">
@@ -106,19 +90,19 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOL." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEW-iB-HzR">
-                                <rect key="frame" x="12" y="14" width="37" height="21"/>
+                                <rect key="frame" x="12" y="66" width="37" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owb-PJ-Vgj">
-                                <rect key="frame" x="168" y="14" width="10" height="21"/>
+                                <rect key="frame" x="168" y="66" width="10" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yc1-Dg-9Fm">
-                                <rect key="frame" x="85" y="35" width="36" height="30"/>
+                                <rect key="frame" x="85" y="87" width="36" height="30"/>
                                 <state key="normal" title="Likes">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -126,8 +110,23 @@
                                     <action selector="userLikes:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="hzm-Tk-mDe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-2s-oeW">
+                                <rect key="frame" x="10" y="87" width="39" height="30"/>
+                                <state key="normal" title="Posts">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="userPosts:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="dCg-OG-NKg"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFl-y1-MRd">
+                                <rect key="frame" x="88" y="66" width="33" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wve-Yj-gpT">
-                                <rect key="frame" x="140" y="35" width="66" height="30"/>
+                                <rect key="frame" x="140" y="87" width="66" height="30"/>
                                 <state key="normal" title="Following">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -136,7 +135,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88N-x2-sgK">
-                                <rect key="frame" x="220" y="35" width="66" height="30"/>
+                                <rect key="frame" x="220" y="87" width="66" height="30"/>
                                 <state key="normal" title="Followers">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -145,7 +144,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4Q-Ke-Wnj">
-                                <rect key="frame" x="248" y="14" width="10" height="21"/>
+                                <rect key="frame" x="248" y="66" width="10" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -153,7 +152,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="User Profile" id="mBe-pH-Rwx"/>
                     <navigationItem key="navigationItem" id="19Q-uH-hUr">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Su4-M6-yrE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
@@ -223,7 +221,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cMr-5o-0dE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dyb-1B-mrT">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jN4-ev-5hU">
@@ -383,12 +381,11 @@
             </objects>
             <point key="canvasLocation" x="1439" y="2390"/>
         </scene>
-        <!--Notifications-->
+        <!--Navigation Controller-->
         <scene sceneID="Zst-hV-oVj">
             <objects>
                 <navigationController storyboardIdentifier="Notifications" id="Z9q-9c-yfZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notifications" id="fho-x3-OLt"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="UOD-BN-x2b">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="UOD-BN-x2b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -405,7 +402,7 @@
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -470,7 +467,7 @@
                         <viewControllerLayoutGuide type="bottom" id="7th-gM-voU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LcW-G4-FI1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sample Notification Detail" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="iyb-f4-XZt">
@@ -1410,7 +1407,6 @@
         <scene sceneID="nh0-Dw-MyR">
             <objects>
                 <navigationController storyboardIdentifier="Search" id="kUu-Ja-GDJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="search" id="me3-2A-rfE"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lb1-AX-xje">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
