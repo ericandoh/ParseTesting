@@ -81,12 +81,13 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     func myRefreshFunction() {
         var refreshStart = imgBuffer.newlyLoadedStart;
         var refreshEnd = imgBuffer.newlyLoadedEnd;
-        var indexPaths: Array<NSIndexPath> = [];
-        for i in refreshStart...(refreshEnd-1) {
-            indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
-            
+        if (refreshEnd - 1 >= refreshStart) {
+            var indexPaths: Array<NSIndexPath> = [];
+            for i in refreshStart...(refreshEnd-1) {
+                indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
+            }
+            self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
         }
-        self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
         //self.myCollectionView.reloadItemsAtIndexPaths(indexPaths);
         //self.myCollectionView.reloadData();
     }
