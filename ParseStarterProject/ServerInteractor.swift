@@ -108,6 +108,15 @@ import UIKit
                 user["viewHistory"] = NSArray();*/
                 // ServerInteractor.initialUserChecks();
                 //user's first notification
+                
+                //https://parse.com/questions/how-can-i-find-parse-users-that-are-facebook-friends-with-the-current-user
+                /*FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection, result: NSObject!, error: NSError!) in
+                    if (!error) {
+                        PFUser.currentUser()["fbID"] = result["id"];
+                        PFUser.currentUser().saveInBackground();
+                    }
+                    });*/
+                
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 user.saveEventually();
                 //logController.successfulLogin();
@@ -354,12 +363,24 @@ import UIKit
         }
         return output;
     }
-    
     class func appendToLikedPosts(id: String) {
         var likedPostsArray = PFUser.currentUser()["likedPosts"] as NSMutableArray
         likedPostsArray.insertObject(id, atIndex: 0)
         PFUser.currentUser()["likedPosts"] = likedPostsArray
         PFUser.currentUser().saveInBackground()
+    }
+    class func removeFromLikedPosts(id: String) {
+        var likedPostsArray = PFUser.currentUser()["likedPosts"] as NSMutableArray
+        likedPostsArray.removeObject(id);
+        PFUser.currentUser()["likedPosts"] = likedPostsArray
+        PFUser.currentUser().saveInBackground()
+    }
+    class func likedBefore(id: String)->Bool {
+        var likedPostsArray = PFUser.currentUser()["likedPosts"] as Array<String>;
+        if (contains(likedPostsArray, id)) {
+            return true;
+        }
+        return false;
     }
     
     class func getLikedPosts(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {
@@ -866,5 +887,71 @@ import UIKit
             }
             endFunc();
         });
+    }
+    class func getSearchUsers(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var twoTermz = term.lowercaseString;
+        var query = PFUser.query();
+        query.whereKey("username", containsString: twoTermz);
+        //query.orderByDescending("importance")
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!)->Void in
+            initFunc(objects.count);
+            var content: String;
+            for index: Int in 0..<objects.count {
+                content = (objects[index] as PFObject)["username"] as String;
+                receiveFunc(index, content);
+            }
+            endFunc();
+            });
+    }
+    //http://stackoverflow.com/questions/24752627/accessing-ios-address-book-with-swift-array-count-of-zero
+    class func extractABAddressBookRef(abRef: Unmanaged<ABAddressBookRef>!) -> ABAddressBookRef? {
+        if let ab = abRef {
+            return Unmanaged<NSObject>.fromOpaque(ab.toOpaque()).takeUnretainedValue()
+        }
+        return nil
+    }
+    class func getSearchContacts(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        var addressBook: ABAddressBookRef?;
+        if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.NotDetermined) {
+            NSLog("Requesting authorization")
+            var errorRef: Unmanaged<CFError>? = nil
+            addressBook = ServerInteractor.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
+            ABAddressBookRequestAccessWithCompletion(addressBook, { success, error in
+                if success {
+                    ServerInteractor.getContactNames()
+                }
+                else {
+                    NSLog("error")
+                }
+                })
+        }
+        else if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.Denied || ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.Restricted) {
+            NSLog("Access denied")
+        }
+        else if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.Authorized) {
+            ServerInteractor.getContactNames();
+        }
+    }
+    class func getContactNames() {
+        var errorRef: Unmanaged<CFError>?
+        var addressBook: ABAddressBookRef? = extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
+        var contactList: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
+        println("records in the array \(contactList.count)")
+        for record:ABRecordRef in contactList {
+            var contactPerson: ABRecordRef = record
+            var fName = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty);
+            //fName.takeRetainedValue();
+            //var firstName: String = fName as NSString;
+            //var lName: String = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue() as NSString;
+            //kABPersonPhoneProperty, kABPersonEmailProperty
+            
+            var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
+            //var firstName: String = "";
+            //var lastName: String = "";
+            //firstName = fName as NSString;
+            //lastName = lName as NSString;
+            println ("contactName \(contactName)")
+        }
     }
 }

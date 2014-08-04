@@ -12,9 +12,9 @@ import UIKit
 
 let HOME_OWNER = "HOME";
 
-class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeFeedController: UIViewController {
     
-    @IBOutlet var commentView: UIView               //use this for hiding and showing
+    //@IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView
     @IBOutlet var authorTextField: UILabel
     //@IBOutlet var descriptionTextField: UILabel
@@ -22,7 +22,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var descriptionTextField: LinkFilledTextView
     
     
-    @IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
+    //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel
     @IBOutlet var frontImageView: UIImageView
     
@@ -34,7 +34,9 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var shopTheLookPrefacer: UILabel
     
+    @IBOutlet var likeButton: UIButton
     
+    @IBOutlet var commentsButton: UIButton
     var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -70,7 +72,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     */
     
     //an array of comments which will be populated when loading app
-    var commentList: Array<PostComment> = [];
+    //var commentList: Array<PostComment> = [];
     
     var imgBuffer: CustomImageBuffer?;
     
@@ -89,7 +91,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         descriptionTextField.owner = self;
         
         //self.view.bringSubviewToFront(frontImageView);
-        commentView.hidden = true; //this should be set in storyboard but just in case
+        //commentView.hidden = true; //this should be set in storyboard but just in case
         if (!imgBuffer) {
             refresh();
         }
@@ -243,6 +245,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+        
+        if (currentPost.isLikedByUser()) {
+            likeButton.setTitle("Liked!", forState: UIControlState.Normal);
+        }
+        else {
+            likeButton.setTitle("Like", forState: UIControlState.Normal);
+        }
+        
         if (postCounter == 0) {
             if (currentPost.image) {
                 //most of time should go here
@@ -268,7 +278,7 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
                     if (comments) {
                         //we have comments! or error :(
                         self.viewingComments = true;
-                        //self.frontImageView!.image = oldImg;
+                        self.frontImageView!.image = oldImg;
                         self.startViewingComments(currentPost);
                     }
                     else {
@@ -629,7 +639,14 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func likePost(sender: UIButton) {
         if (imgBuffer!.isLoadedAt(viewCounter)) {
-            imgBuffer!.getImagePostAt(viewCounter).like();
+            var post = imgBuffer!.getImagePostAt(viewCounter);
+            post.like();
+            if (post.isLikedByUser()) {
+                likeButton.setTitle("Liked!", forState: UIControlState.Normal);
+            }
+            else {
+                likeButton.setTitle("Like", forState: UIControlState.Normal);
+            }
         }
         //likePostOutlet.hidden = true
     }
@@ -645,27 +662,42 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
             return;
         }
         //hide the table view that already exists and re-show it once it is loaded with correct comments
-        commentView.hidden = false;
-        self.view.bringSubviewToFront(commentView);
+        //commentView.hidden = false;
+        //self.view.bringSubviewToFront(commentView);
         
-        self.commentList = Array<PostComment>();
+        //self.commentList = Array<PostComment>();
         
-        var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
         
-        currentPost.fetchComments({(input: NSArray)->Void in
+        
+        
+        
+        /*currentPost.fetchComments({(input: NSArray)->Void in
             for index in 0..<input.count {
                 self.commentList.append(PostComment(content: (input[input.count - (index + 1)] as String)));
             }
             self.commentTableView.reloadData();
-        });
+        });*/
+        self.performSegueWithIdentifier("ViewCommentsSegue", sender: self);
     }
-    @IBAction func exitComments(sender: UIButton) {
+    
+    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+        if (segue!.identifier == "ViewCommentsSegue") {
+            if (segue!.destinationViewController is CommentViewController) {
+                var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
+                var currentImg = frontImageView.image;
+                (segue!.destinationViewController as CommentViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg);
+            }
+        }
+    }
+    
+    /*@IBAction func exitComments(sender: UIButton) {
         commentView.hidden = true;
         //animate this?
-    }
+    }*/
 
     //--------------------TableView delegate methods-------------------------
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    
+    /*func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
@@ -742,5 +774,5 @@ class HomeFeedController: UIViewController, UITableViewDelegate, UITableViewData
         var maxSize: CGSize = CGSizeMake(cell.width, 9999);
         var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
         return expectedSize.height + 20;
-    }
+    }*/
 }

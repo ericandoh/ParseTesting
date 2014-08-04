@@ -11,8 +11,10 @@
 //
 
 class PostComment: NSObject {
+    var author: String
     var commentString: String;
-    init(content: String) {
+    init(author: String, content: String) {
+        self.author = author;
         commentString = content;
     }
 }

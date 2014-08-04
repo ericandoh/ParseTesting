@@ -80,9 +80,16 @@ class ImagePostStructure
     }
     func like() {
         //increment like counter for this post
-        myObj.incrementKey("likes")
+        if (isLikedByUser()) {
+            //myObj.decrementKey("likes")
+            myObj.incrementKey("likes", byAmount: -1);
+            ServerInteractor.removeFromLikedPosts(myObj.objectId);
+        }
+        else {
+            myObj.incrementKey("likes")
+            ServerInteractor.appendToLikedPosts(myObj.objectId)
+        }
         myObj.saveInBackground()
-        ServerInteractor.appendToLikedPosts(myObj.objectId)
     }
 
     func pass() {
@@ -98,6 +105,9 @@ class ImagePostStructure
     }
     func getImagesCount()->Int {
         return (myObj["imageFiles"] as Array<PFFile>).count;
+    }
+    func isLikedByUser()->Bool {
+        return ServerInteractor.likedBefore(myObj.objectId);
     }
     func loadImage() {
         if (!image) {
@@ -171,9 +181,18 @@ class ImagePostStructure
             }
         }
     }
-    func fetchComments(finishFunction: (input: NSArray)->Void) {
+    func fetchComments(finishFunction: (authorInput: NSArray, input: NSArray)->Void) {
+        var commentAuthorArray = NSArray();
+        if (myObj["commentAuthor"]) {
+            commentAuthorArray = myObj["commentAuthor"] as NSArray
+        }
         var commentArray = myObj["comments"] as NSArray;
-        finishFunction(input: commentArray);
+        if (commentArray.count > commentAuthorArray.count) {
+            var myArray = commentAuthorArray as Array<String>;
+            myArray += Array<String>(count: commentArray.count - commentAuthorArray.count, repeatedValue: "");
+            commentAuthorArray = myArray as NSArray;
+        }
+        finishFunction(authorInput: commentAuthorArray, input: commentArray);
     }
     func getAuthor()->String {
         return myObj["author"] as String;
@@ -196,13 +215,16 @@ class ImagePostStructure
         }
         finishFunction(input: retList);
     }
-    func addComment(comment: String) {
-        //var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
+    func addComment(comment: String)->PostComment {
+        var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
         var commentArray = myObj["comments"] as NSMutableArray;
-        commentArray.insertObject(PFUser.currentUser().username + ": " + comment, atIndex: 0);
+        var author = PFUser.currentUser().username;
+        commentAuthorArray.insertObject(author, atIndex: commentAuthorArray.count)
+        commentArray.insertObject(comment, atIndex: commentArray.count);
+        myObj["commentAuthor"] = commentAuthorArray
         myObj["comments"] = commentArray;
-        //commentAuthorArray.insertObject(PFUser.currentUser().username, atIndex: 0)
         //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
+        return PostComment(author: author, content: comment);
     }
 }

@@ -47,6 +47,7 @@
 		D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */; };
 		D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */; };
 		D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */; };
+		D956BAFC198FE2C1009CE92E /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956BAFB198FE2C1009CE92E /* CommentViewController.swift */; };
 		D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */; };
 		D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */; };
 		D95EA0151986B55D000A3037 /* temp_camera_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */; };
@@ -128,6 +129,7 @@
 		D94B03E01981873F002E9152 /* SideMenuManagingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuManagingViewController.swift; sourceTree = "<group>"; };
 		D95301C819774A0E00FFC5F8 /* SearchResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsController.swift; sourceTree = "<group>"; };
 		D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTextTableViewCell.swift; sourceTree = "<group>"; };
+		D956BAFB198FE2C1009CE92E /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
 		D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D95EA0141986B55D000A3037 /* temp_camera_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = temp_camera_icon.jpg; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				D95EA0161986D2A5000A3037 /* SideTableView.swift */,
 				D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */,
 				D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */,
+				D956BAFB198FE2C1009CE92E /* CommentViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
+				D956BAFC198FE2C1009CE92E /* CommentViewController.swift in Sources */,
 				D914F7FD19883CD000A59314 /* ImagePostCollectionDelegate.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
