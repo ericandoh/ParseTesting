@@ -15,28 +15,28 @@ let HOME_OWNER = "HOME";
 class HomeFeedController: UIViewController {
     
     //@IBOutlet var commentView: UIView               //use this for hiding and showing
-    @IBOutlet var descriptionPage: UIView
-    @IBOutlet var authorTextField: UILabel
+    @IBOutlet var descriptionPage: UIView!
+    @IBOutlet var authorTextField: UILabel!
     //@IBOutlet var descriptionTextField: UILabel
     
-    @IBOutlet var descriptionTextField: LinkFilledTextView
+    @IBOutlet var descriptionTextField: LinkFilledTextView!
     
     
     //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
-    @IBOutlet var pageCounter: UILabel
-    @IBOutlet var frontImageView: UIImageView
+    @IBOutlet var pageCounter: UILabel!
+    @IBOutlet var frontImageView: UIImageView!
     
-    @IBOutlet var topLeftButton: UIButton
+    @IBOutlet var topLeftButton: UIButton!
     
-    @IBOutlet var shopTheLookBoxReference: UILabel
+    @IBOutlet var shopTheLookBoxReference: UILabel!
     
-    @IBOutlet var homeLookTable: UITableView
+    @IBOutlet var homeLookTable: UITableView!
     
-    @IBOutlet var shopTheLookPrefacer: UILabel
+    @IBOutlet var shopTheLookPrefacer: UILabel!
     
-    @IBOutlet var likeButton: UIButton
+    @IBOutlet var likeButton: UIButton!
     
-    @IBOutlet var commentsButton: UIButton
+    @IBOutlet var commentsButton: UIButton!
     var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -92,7 +92,7 @@ class HomeFeedController: UIViewController {
         
         //self.view.bringSubviewToFront(frontImageView);
         //commentView.hidden = true; //this should be set in storyboard but just in case
-        if (!imgBuffer) {
+        if (imgBuffer == nil) {
             refresh();
         }
         else {
@@ -117,7 +117,7 @@ class HomeFeedController: UIViewController {
             self.navigationController.navigationBar.translucent = true;
         }
         
-        if (imgBuffer) {
+        if ((imgBuffer) != nil) {
             if (imgBuffer!.isLoadedAt(viewCounter)) {
                 configureCurrent(viewCounter);
             }
@@ -155,7 +155,7 @@ class HomeFeedController: UIViewController {
         refreshNeeded = false;
         viewingComments = false;
         frontImageView!.image = LOADING_IMG;
-        if (imgBuffer) {
+        if (imgBuffer != nil) {
             imgBuffer!.resetData();
             self.imgBuffer!.loadSet();
         }
@@ -180,7 +180,7 @@ class HomeFeedController: UIViewController {
         }
         else if (fromDirection == CompassDirection.EAST) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x + Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            var newOrig = CGPoint(x: oldOrig.x + CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -193,7 +193,7 @@ class HomeFeedController: UIViewController {
         }
         else if (fromDirection == CompassDirection.WEST) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x - Double(FULLSCREEN_WIDTH), y: oldOrig.y);
+            var newOrig = CGPoint(x: oldOrig.x - CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -206,7 +206,7 @@ class HomeFeedController: UIViewController {
         }
         else if (fromDirection == CompassDirection.NORTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - Double(FULLSCREEN_WIDTH));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(FULLSCREEN_WIDTH));
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -219,7 +219,7 @@ class HomeFeedController: UIViewController {
         }
         else if (fromDirection == CompassDirection.SOUTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + Double(FULLSCREEN_WIDTH));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(FULLSCREEN_WIDTH));
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -254,7 +254,7 @@ class HomeFeedController: UIViewController {
         }
         
         if (postCounter == 0) {
-            if (currentPost.image) {
+            if (currentPost.image != nil) {
                 //most of time should go here
                 switchImage(currentPost.image!, fromDirection: fromDirection);
             }
@@ -282,7 +282,7 @@ class HomeFeedController: UIViewController {
                         self.startViewingComments(currentPost);
                     }
                     else {
-                        if (img) {
+                        if (img != nil) {
                             self.switchImage(img!, fromDirection: fromDirection);
                         }
                     }

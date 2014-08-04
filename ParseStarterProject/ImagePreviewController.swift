@@ -19,27 +19,27 @@ class ShopTextButton: UIButton {
 
 class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet var labelBar: UITextField;
+    @IBOutlet var labelBar: UITextField!;
     
-    @IBOutlet var textView: UITextView
+    @IBOutlet var textView: UITextView!
     
-    @IBOutlet var navigationTitle: UIButton
+    @IBOutlet var navigationTitle: UIButton!
     
-    @IBOutlet var sideTableView: SideTableView
+    @IBOutlet var sideTableView: SideTableView!
     
-    @IBOutlet var mainView: UIView
+    @IBOutlet var mainView: UIView!
     
-    @IBOutlet var scrollView: UIScrollView
+    @IBOutlet var scrollView: UIScrollView!
     
-    @IBOutlet var shopTheLookView: UIView
+    @IBOutlet var shopTheLookView: UIView!
     
-    @IBOutlet var shopTheLookConstraint: NSLayoutConstraint
+    @IBOutlet var shopTheLookConstraint: NSLayoutConstraint!
     
-    @IBOutlet var mainWindowConstraint: NSLayoutConstraint
+    @IBOutlet var mainWindowConstraint: NSLayoutConstraint!
     
-    @IBOutlet var slideDownConstraint: NSLayoutConstraint
+    @IBOutlet var slideDownConstraint: NSLayoutConstraint!
     
-    @IBOutlet var backDirectionImage: UIImageView
+    @IBOutlet var backDirectionImage: UIImageView!
     
     
     var movingWindow: Bool = false;
@@ -66,10 +66,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
         if (shopTheLook.count > 0) {
-            scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(shopTheLook.count) * BOX_INCR_Y);
+            scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * BOX_INCR_Y);
             
             for (index, look) in enumerate(shopTheLook) {
-                var oldY = BOX_START_Y + Double(index) * BOX_INCR_Y;
+                var oldY = BOX_START_Y + CGFloat(index) * BOX_INCR_Y;
                 var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
                 featurizeShopButton(index, shopButton: newButton);
             }
@@ -298,7 +298,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             
             
             for i in (index+1)...(self.shopButtons.count - 1) {
-                var oldY = BOX_START_Y + Double(i - 1) * BOX_INCR_Y;
+                var oldY = BOX_START_Y + CGFloat(i - 1) * BOX_INCR_Y;
                 self.shopButtons[i].frame = CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
                 self.shopButtons[i].shopIndex = i-1;
                 (self.shopButtons[i].subviews[0] as ShopTextButton).shopIndex = i - 1;
@@ -312,7 +312,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - BOX_INCR_Y;
             self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - BOX_INCR_Y;
             
-            self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(self.shopTheLook.count) * BOX_INCR_Y);
+            self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * BOX_INCR_Y);
             }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             //canceled
@@ -330,10 +330,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func addManualShopTheLook(look: ShopLook) {
         //function for pushing down stack
         shopTheLook.append(look);
-        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + Double(shopTheLook.count) * BOX_INCR_Y);
+        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * BOX_INCR_Y);
         
-        var oldY = BOX_START_Y + Double(shopTheLook.count - 1) * BOX_INCR_Y;
-        var newY = BOX_START_Y + Double(shopTheLook.count) * BOX_INCR_Y;
+        var oldY = BOX_START_Y + CGFloat(shopTheLook.count - 1) * BOX_INCR_Y;
+        var newY = BOX_START_Y + CGFloat(shopTheLook.count) * BOX_INCR_Y;
         var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
         
         featurizeShopButton(shopTheLook.count - 1, shopButton: newButton);
@@ -349,7 +349,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     override func viewWillDisappear(animated: Bool) {
-        if (self.navigationController.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
+        if ((self.navigationController.viewControllers as NSArray).indexOfObject(self) == NSNotFound) {
             sendBackImages(1);
         }
         super.viewWillDisappear(animated);

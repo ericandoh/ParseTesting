@@ -11,13 +11,13 @@ import Foundation
 import UIKit
 
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet var settingsButton: UIButton
-    @IBOutlet var myCollectionView: UICollectionView
-    @IBOutlet var friendsButton: UIButton
-    @IBOutlet var numberPosts: UILabel
-    @IBOutlet var numberLikes: UILabel
+    @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var myCollectionView: UICollectionView!
+    @IBOutlet var friendsButton: UIButton!
+    @IBOutlet var numberPosts: UILabel!
+    @IBOutlet var numberLikes: UILabel!
     
-    @IBOutlet var followerTableView: UITableView
+    @IBOutlet var followerTableView: UITableView!
     var mainUser: FriendEncapsulator?;
     
     /*
@@ -59,7 +59,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         numberPosts.text = String(PFUser.currentUser()["numPosts"] as Int)
-        numberLikes.text = String(PFUser.currentUser()["likedPosts"].count)
+        numberLikes.text = String(PFUser.currentUser()["likedPosts"].count as Int)
         var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
         var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
         //self.navigationItem.titleView = CGRect(0, 0, 40, 40)
@@ -73,7 +73,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //self.navigationItem.titleView = userIcon
         userIcon!.frame = CGRectMake(20, -5, 40, 40);
         //self.navigationItem.titleView.frame = CGRectMake(-10, -10, 40, 40)
-        if (mainUser && mainUser!.username != ServerInteractor.getUserName()) {
+        if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
@@ -248,9 +248,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
-        if (segue && segue!.identifier != nil) {
+        if (segue != nil && segue!.identifier != nil) {
             if (segue!.identifier == "SeeFriendsSegue") {
-                if (mainUser) {
+                if (mainUser != nil) {
                     //(segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
                 }
             }
@@ -304,7 +304,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         var temp = indexPath!.row;
         NSLog("ds")
         
-        if (friendList[temp]) {
+        if (friendList[temp] != nil) {
             cell.textLabel.text = friendList[temp]!.username;
         }
         

@@ -11,17 +11,17 @@ import Foundation
 class NewLoginViewController: UIViewController {
     
     
-    @IBOutlet var userTextField: UITextField
+    @IBOutlet var userTextField: UITextField!
     
-    @IBOutlet var passwordTextField: UITextField
+    @IBOutlet var passwordTextField: UITextField!
     
-    init(coder decoder: NSCoder!) {
+    /*init(coder decoder: NSCoder!) {
         super.init(coder: decoder);
     }
     
     init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil);
-    }
+    }*/
     
     @IBAction func immediateBrowsing(sender: AnyObject) {
         self.performSegueWithIdentifier("JumpIn", sender: self)

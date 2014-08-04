@@ -12,8 +12,8 @@ import UIKit
 
 class FriendSingleViewController: UIViewController {
 
-    @IBOutlet var userIcon: UIImageView
-    @IBOutlet var friendName: UILabel
+    @IBOutlet var userIcon: UIImageView!
+    @IBOutlet var friendName: UILabel!
     var mainUser: FriendEncapsulator?;
     
     override func viewDidLoad() {
@@ -21,7 +21,7 @@ class FriendSingleViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        if (mainUser) {
+        if (mainUser != nil) {
             friendName.text = mainUser!.getName({self.friendName.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
                 self.userIcon.image = image;

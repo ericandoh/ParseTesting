@@ -10,23 +10,23 @@ import UIKit
 
 class UserTextTableViewCell: UITableViewCell {
 
-    @IBOutlet var userImage: UIImageView;
+    @IBOutlet var userImage: UIImageView!;
     
-    @IBOutlet var descriptionBox: LinkFilledTextView
+    @IBOutlet var descriptionBox: LinkFilledTextView!
     
-    @IBOutlet var leadingConstraint: NSLayoutConstraint
-    @IBOutlet var sideConstraint: NSLayoutConstraint
+    @IBOutlet var leadingConstraint: NSLayoutConstraint!
+    @IBOutlet var sideConstraint: NSLayoutConstraint!
     
-    @IBOutlet var nextAction: UIButton
+    @IBOutlet var nextAction: UIButton!
     
     var friend: FriendEncapsulator?;
     
     var owner: UIViewController?;
 
-    init(style: UITableViewCellStyle, reuseIdentifier: String) {
+    /*override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         // Initialization code
-    }
+    }*/
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,7 +45,7 @@ class UserTextTableViewCell: UITableViewCell {
         //clicking on the message is handled by the linkfilledtextview
         //clicking on the (optional) right button allows you to follow that user
         owner = sender;
-        if (involvedUser) {
+        if (involvedUser != nil) {
             leadingConstraint.constant = 68;
             involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
                 self.userImage!.image = fetchedImage;

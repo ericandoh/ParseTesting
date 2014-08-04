@@ -68,13 +68,13 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         self.myCollectionView.dataSource = self;
         self.myCollectionView.delegate = self;
         
-        if (serverFunction) {
+        if (serverFunction != nil) {
             self.imgBuffer.initialSetup(serverFunction, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell);
         }
-        else if (serverFunction2) {
+        else if (serverFunction2 != nil) {
             self.imgBuffer.initialSetup2(serverFunction2!, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell);
         }
-        else if (serverFunction3) {
+        else if (serverFunction3 != nil) {
             self.imgBuffer.initialSetup3(serverFunction3!, refreshFunction: myRefreshFunction, configureCellFunction: checkConfigCell, term: searchTerm);
         }
     }
