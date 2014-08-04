@@ -144,6 +144,15 @@ enum PostExclusivity: String {
     case MALE_ONLY = "male"
     case FEMALE_ONLY = "female"
 }
+
+enum UserType: String {
+    case DEFAULT = "default"
+    case FACEBOOK = "facebook"
+    case ANON = "anon"
+}
+
+var RELEVANT_TYPES = [UserType.DEFAULT.toRaw(), UserType.FACEBOOK.toRaw()];
+
 //enum.toRaw() for raw value
 
 //other default images below this line

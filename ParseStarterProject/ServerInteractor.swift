@@ -23,7 +23,7 @@ import UIKit
         user.password = password;
         user.email = email;
         
-        initialiseUser(user)
+        initialiseUser(user, type: UserType.DEFAULT);
         
         /*user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
@@ -50,10 +50,11 @@ import UIKit
         return true;
     }
     
-    class func initialiseUser(user: PFUser) {
+    class func initialiseUser(user: PFUser, type: UserType) {
         user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
+        user["userType"] = type.toRaw();
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
@@ -103,7 +104,7 @@ import UIKit
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
-                self.initialiseUser(user)
+                self.initialiseUser(user, type: UserType.FACEBOOK)
                 /*user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();*/
                 // ServerInteractor.initialUserChecks();
@@ -898,6 +899,7 @@ import UIKit
         var twoTermz = term.lowercaseString;
         var query = PFUser.query();
         query.whereKey("username", containsString: twoTermz);
+        query.whereKey("userType", containedIn: RELEVANT_TYPES);
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
@@ -961,8 +963,14 @@ import UIKit
         }
     }
     
-    class func getFBFriendUsers(receiveFunction: (Array<FriendEncapsulator>)->Void) {
-        var friends = Array<FriendEncapsulator>();
+    class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        if (PFUser.currentUser()["fbID"] == nil) {
+            NSLog("This account is not linked to fb!");
+            initFunc(0);
+            endFunc();
+            return;
+        }
+        
         FBRequestConnection.startForMyFriendsWithCompletionHandler({
             (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
             if (error == nil) {
@@ -975,12 +983,13 @@ import UIKit
                 query.whereKey("fbID", containedIn: friendIds);
                 query.findObjectsInBackgroundWithBlock({
                     (objects: [AnyObject]!, error: NSError!) in
+                    initFunc(objects.count);
                     for index: Int in 0..<objects.count {
                         var content = (objects[index] as PFObject)["username"] as String;
-                        var friend = FriendEncapsulator(friendName: content);
-                        friends.append(friend);
+                        //var friend = FriendEncapsulator(friendName: content);
+                        receiveFunc(index, content);
                     }
-                    receiveFunction(friends);
+                    endFunc();
                 });
             }
         });
