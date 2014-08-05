@@ -58,6 +58,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         followerTableView.allowsMultipleSelectionDuringEditing = false
         
         followerTableView.allowsSelectionDuringEditing = true
+        
+        self.followerTableView.rowHeight = UITableViewAutomaticDimension;
+        self.followerTableView.estimatedRowHeight = 60.0;
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -325,17 +328,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        NSLog("WTF")
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowerCell", forIndexPath: indexPath) as UITableViewCell
-        NSLog("WTF1")
-
+        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("FollowerCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
-        var temp = indexPath!.row;
-        NSLog("ds")
+        // Configure the cell...
         
-        if (friendList[temp] != nil) {
-            cell.textLabel.text = friendList[temp]!.username;
+        var index: Int = indexPath.row;
+        
+        if (friendList[index] != nil) {
+            var text = friendList[index]!.username;
+            cell.extraConfigurations(friendList[index], message: text, enableFriending: true, sender: self);
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;

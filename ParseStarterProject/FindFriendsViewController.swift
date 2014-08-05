@@ -29,6 +29,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         //self.navigationController.navigationBar.topItem.title = "Find Friends";
         // Do any additional setup after loading the view.
+        self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
+        self.searchFriendsTableView.estimatedRowHeight = 60.0;
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -109,18 +111,26 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier(SEARCH_CELL_IDENTIFIER, forIndexPath: indexPath) as UITableViewCell
         
+        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        
+        // Configure the cell...
         var index: Int = indexPath.row;
+        
+        if (index < searchTermList.count && searchTermList[index] != nil) {
+            //to avoid race conditions
+            var author = searchTermList[index]!.username;
+            var text = author;
+            cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: true, sender: self);
+        }
+        
+        
         
         //if (index == 0) {
             //cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
         //}
         //else {
-        if (index < searchTermList.count) {
-            //to avoid race conditions
-            cell.textLabel.text = searchTermList[index]?.username;
-        }
+        
         //}
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;

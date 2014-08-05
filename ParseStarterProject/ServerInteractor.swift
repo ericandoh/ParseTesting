@@ -103,7 +103,7 @@ import UIKit
         //whats permissions
         //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
         //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
-        let permissions: [AnyObject]? = ["user_about_me", "user_relationships"];
+        let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: NewLoginViewController = sender as NewLoginViewController;
@@ -1103,7 +1103,26 @@ import UIKit
             endFunc();
             return;
         }
-        
+        /*if ((FBSession.activeSession().permissions as NSArray).indexOfObject("user_friends") == NSNotFound) {
+            FBSession.activeSession().requestNewReadPermissions(["user_friends"], completionHandler: {
+                (session: FBSession!, error: NSError!) in
+                if (error == nil) {
+                    if ((FBSession.activeSession().permissions as NSArray).indexOfObject("user_friends") == NSNotFound) {
+                        //permissions not found!
+                        NSLog("FB Permissions rejected");
+                    }
+                    else {
+                        //all good, continue
+                        self.lookforFBFriendsAndSet(initFunc, receiveFunc: receiveFunc, endFunc: endFunc);
+                    }
+                }
+                else {
+                    NSLog("FB Requesting error, handling it!");
+                }
+            });
+
+        }
+        else {*/
         FBRequestConnection.startForMyFriendsWithCompletionHandler({
             (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
             if (error == nil) {
