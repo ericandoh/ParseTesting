@@ -94,7 +94,7 @@ class LinkFilledTextView: UITextView {
             }
             else if (typeOfString == ExternalViewLink.USER) {
                 var friendName = realText.substringFromIndex(1);
-                var friend = FriendEncapsulator(friendName: friendName);
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(friendName);
                 friend.exists({(exist: Bool) in
                     if (exist) {
                         var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;

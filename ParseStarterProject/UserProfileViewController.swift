@@ -2,7 +2,7 @@
 //  UserProfileViewController.swift
 //  ParseStarterProject
 //
-//  Created by temp on 7/25/14.
+//  Created by Bala on 7/25/14.
 //
 //
 

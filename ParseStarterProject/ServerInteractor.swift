@@ -13,15 +13,24 @@ import UIKit
 
 @objc class ServerInteractor: NSObject {
     //---------------User Login/Signup/Interaction Methods---------------------------------
-    class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
+    class func registerUser(username: String, email: String, password: String, firstName: String, lastName: String, sender: NSObject)->Bool {
+        var signController: SignUpViewController = sender as SignUpViewController;
+        if (username.hasPrefix("_")) {
+            signController.failedSignUp("Usernames cannot begin with _");
+            return false;
+        }
+        
         var userNameLabel: UILabel
-        var friendObj: PFObject = PFObject(className: "Friendship")
+        //var friendObj: PFObject = PFObject(className: "Friendship")
         var user: PFUser = PFUser();
-        friendObj.ACL.setPublicReadAccess(true)
-        friendObj.ACL.setPublicWriteAccess(true)
+        //friendObj.ACL.setPublicReadAccess(true)
+        //friendObj.ACL.setPublicWriteAccess(true)
         user.username = username;
         user.password = password;
         user.email = email;
+        
+        user["personFirstName"] = firstName;
+        user["personLastName"] = lastName;
         
         initialiseUser(user, type: UserType.DEFAULT);
         
@@ -30,7 +39,6 @@ import UIKit
         user["likedPosts"] = NSMutableArray();*/
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
-            var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
                 //success!
                 //sees if user has pending items to process
@@ -55,7 +63,7 @@ import UIKit
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
-        user["numPosts"] = 0
+        user["numPosts"] = 0;
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
@@ -114,12 +122,15 @@ import UIKit
                 //https://parse.com/questions/how-can-i-find-parse-users-that-are-facebook-friends-with-the-current-user
                 FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
                     if (error == nil) {
+                        PFUser.currentUser()["personFirstName"] = result["first_name"];
+                        PFUser.currentUser()["personLastName"] = result["last_name"];
                         PFUser.currentUser()["fbID"] = result["id"];
-                        PFUser.currentUser().saveInBackground();
+                        
+                        ServerInteractor.setRandomUsernameAndSave((result["first_name"] as String).lowercaseString);
                     }
                     });
                 
-                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                
                 user.saveEventually();
                 //logController.successfulLogin();
                 //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
@@ -147,6 +158,8 @@ import UIKit
             } else {
                 FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
                     if (error == nil) {
+                        PFUser.currentUser()["personFirstName"] = result["first_name"];
+                        PFUser.currentUser()["personLastName"] = result["last_name"];
                         PFUser.currentUser()["fbID"] = result["id"];
                         PFUser.currentUser().saveInBackground();
                     }
@@ -157,8 +170,34 @@ import UIKit
             }
         });
     }
-    
-    
+    class func setRandomUsernameAndSave(firstName: String) {
+        
+        var query: PFQuery = PFQuery(className: "SearchTerm");
+        query.whereKey("term", equalTo: firstName);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+                if (error==nil) {
+                    if (objects.count > 0) {
+                        var termObj = objects[0] as PFObject
+                        var termCount = termObj["count"] as Int;
+                        PFUser.currentUser().username = "_"+firstName + String(termCount);
+                        termObj.incrementKey("count");
+                        PFUser.currentUser().saveInBackground();
+                        termObj.saveInBackground();
+                    }
+                    else {
+                        PFUser.currentUser().username = "_"+firstName;
+                        ServerInteractor.makeNewTerm(firstName);
+                        PFUser.currentUser().saveInBackground();
+                    }
+                    ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                } else {
+                    NSLog("oh no!")
+                }
+        });
+    }
+
+
     //logged in as anonymous user does NOT count
     //use this to check whether to go to signup/login screen or directly to home
     class func isUserLogged()->Bool {
@@ -198,7 +237,7 @@ import UIKit
     }
     //used in friend display panels to handle my user screen vs other user screens
     class func getCurrentUser()->FriendEncapsulator {
-        return FriendEncapsulator(friend: PFUser.currentUser());
+        return FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
     
@@ -250,21 +289,23 @@ import UIKit
                     arr.removeAtIndex(find(arr, foundLabel)!);
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
-                var newLabel: PFObject;
                 for label: String in arr {
-                    NSLog("Adding new label \(label)")
-                    newLabel = PFObject(className: "SearchTerm");
-                    newLabel["term"] = label;
-                    newLabel["count"] = 1;
-                    newLabel.ACL.setPublicReadAccess(true);
-                    newLabel.ACL.setPublicWriteAccess(true);
-                    newLabel.saveInBackground();
+                    ServerInteractor.makeNewTerm(label);
                 }
             }
         });
         
         
         return arr;
+    }
+    class func makeNewTerm(label: String) {
+        NSLog("Adding new label \(label)")
+        var newLabel = PFObject(className: "SearchTerm");
+        newLabel["term"] = label;
+        newLabel["count"] = 1;
+        newLabel.ACL.setPublicReadAccess(true);
+        newLabel.ACL.setPublicWriteAccess(true);
+        newLabel.saveInBackground();
     }
     
     
@@ -423,7 +464,7 @@ import UIKit
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
                     for (index, object) in enumerate(objects!) {
-                        post = ImagePostStructure(inputObj: object as PFObject);
+                        post = ImagePostStructure.dequeueImagePost(object as PFObject);
                         var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
                         post!.loadImage(finishFunction, index: realIndex);
                     }
@@ -483,7 +524,7 @@ import UIKit
                 
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: (object as PFObject));
+                    post = ImagePostStructure.dequeueImagePost((object as PFObject));
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -516,7 +557,7 @@ import UIKit
                 // Do something with the found objects
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object as PFObject);
+                    post = ImagePostStructure.dequeueImagePost(object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -543,7 +584,7 @@ import UIKit
                 // Do something with the found objects
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object as PFObject);
+                    post = ImagePostStructure.dequeueImagePost(object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -691,11 +732,13 @@ import UIKit
     }*/
     //call this method when either accepting a friend inv or receiving a confirmation notification
     class func addAsFriend(friendName: String)->Array<NSObject?>? {
+        NSLog("Wrong method being called, please remove!")
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
         PFUser.currentUser().saveEventually();
         return nil;
     }
     
+    //follow a user
     class func addAsFollower(followerName: String) {
         var friendObj: PFObject = PFObject(className: "Friendship")
         friendObj.ACL.setPublicReadAccess(true)
@@ -704,68 +747,63 @@ import UIKit
         friendObj["following"] = followerName
         friendObj.saveEventually()
     }
+    class func removeAsFollower(followingName: String) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: PFUser.currentUser().username)
+        query.whereKey("following", equalTo: followingName)
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                if (objects.count > 0) {
+                    (objects[0] as PFObject).deleteInBackground();
+                }
+            }
+        });
+
+    }
     
     class func findFollowers(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("following", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
                 //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-                NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
                 for object in objects {
                     var following = object["follower"] as String
-                    var friend = FriendEncapsulator(friendName: following)
+                    var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
                     followerList.append(friend)
-                    NSLog("\(object) yaya lolololl")
-                    
-                    NSLog("\(following)")
-                    NSLog("\(objects.count)")
-                    NSLog("YAY WORK")
                 }
-            NSLog("O'RLLY")
-            retFunction(retList: followerList)
-            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
+                retFunction(retList: followerList)
             });
     }
     
     class func findFollowing(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
-                var friend = FriendEncapsulator(friendName: follower)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
                 followerList.append(friend)
-                NSLog("\(object) yaya lolololl")
-                NSLog("\(follower)")
-                NSLog("\(objects.count)")
-                NSLog("YAY WORK")
             }
-            NSLog("O'RLLY")
             retFunction(retList: followerList)
-            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
             });
     }
     
     class func findNumFollowing(followerName: String, retFunction: (Int)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
-                var friend = FriendEncapsulator(friendName: follower)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
                 followerList.append(friend)
             }
             retFunction(followerList.count)
@@ -776,19 +814,39 @@ import UIKit
     class func findNumFollowers(followerName: String, retFunction: (Int)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("following", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var following = object["follower"] as String
-                var friend = FriendEncapsulator(friendName: following)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
                 followerList.append(friend)
             }
             retFunction(followerList.count)
             //return (followerList.count)
+        });
+        //return followerList.count
+    }
+    
+    //returns if I am already following user X
+    class func amFollowingUser(followingName: String, retFunction: (Int)->Void) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: PFUser.currentUser().username)
+        query.whereKey("following", equalTo: followingName)
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                if (objects.count > 0) {
+                    retFunction(1);
+                }
+                else {
+                    retFunction(0);
+                }
+            }
+            else {
+                retFunction(-1);
+            }
         });
         //return followerList.count
     }
@@ -861,7 +919,7 @@ import UIKit
     
     //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {
-        return getFriends(FriendEncapsulator(friend: PFUser.currentUser()));
+        return getFriends(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()));
     }
     
     //gets me a list of my friends!
@@ -883,7 +941,7 @@ import UIKit
         var friend: String;
         for index in 0..<friendz.count {
             friend = friendz[index] as String;
-            returnList.append(FriendEncapsulator(friendName: friend));
+            returnList.append(FriendEncapsulator.dequeueFriendEncapsulator(friend));
         }
         return returnList;
     }
@@ -980,7 +1038,7 @@ import UIKit
             addressBook = ServerInteractor.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
             ABAddressBookRequestAccessWithCompletion(addressBook, { success, error in
                 if success {
-                    ServerInteractor.getContactNames()
+                    ServerInteractor.getContactNames(initFunc, receiveFunc, endFunc)
                 }
                 else {
                     NSLog("error")
@@ -991,29 +1049,51 @@ import UIKit
             NSLog("Access denied")
         }
         else if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.Authorized) {
-            ServerInteractor.getContactNames();
+            ServerInteractor.getContactNames(initFunc, receiveFunc, endFunc);
         }
     }
-    class func getContactNames() {
+    class func getContactNames(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
         var errorRef: Unmanaged<CFError>?
         var addressBook: ABAddressBookRef? = extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
         var contactList: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
-        println("records in the array \(contactList.count)")
+        //println("records in the array \(contactList.count)")
+        
+        var arrayOfQueries: Array<PFQuery> = [];
+        
         for record:ABRecordRef in contactList {
             var contactPerson: ABRecordRef = record
-            var fName = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty);
-            //fName.takeRetainedValue();
-            //var firstName: String = fName as NSString;
-            //var lName: String = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue() as NSString;
+            
+            var fName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty).takeRetainedValue();
+            var firstName: String = fName as NSString;
+            
+            var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
+            var lastName: String = lName as NSString;
             //kABPersonPhoneProperty, kABPersonEmailProperty
             
-            var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
+            //var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
             //var firstName: String = "";
             //var lastName: String = "";
             //firstName = fName as NSString;
             //lastName = lName as NSString;
-            println ("contactName \(contactName)")
+            //println ("contactName \(contactName)")
+            var query: PFQuery = PFUser.query();
+            query.whereKey("personFirstName", equalTo: fName);
+            query.whereKey("personLastName", equalTo: lName);
+            arrayOfQueries.append(query);
         }
+        
+        var combinedQuery = PFQuery.orQueryWithSubqueries(arrayOfQueries);
+        
+        combinedQuery.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) in
+            initFunc(objects.count);
+            for index: Int in 0..<objects.count {
+                var content = (objects[index] as PFObject)["username"] as String;
+                //var friend = FriendEncapsulator(friendName: content);
+                receiveFunc(index, content);
+            }
+            endFunc();
+        });
     }
     
     class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {

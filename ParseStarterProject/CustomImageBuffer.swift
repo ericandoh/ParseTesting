@@ -195,7 +195,7 @@ class CustomImageBuffer: NSObject {
         return loadedPosts[index]!;
     }
     func isLoadedAt(index: Int)->Bool {
-        if (index >= loadedPosts.count) {
+        if (index >= loadedPosts.count || index < 0) {
             return false;
         }
         if (loadedPosts[index] != nil) {

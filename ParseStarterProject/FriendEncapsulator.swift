@@ -9,6 +9,8 @@
 //
 //
 
+var friendDictionary: [String: FriendEncapsulator] = [:];
+
 //made solely for FriendTableViewController pretty much (so far) and SettingsVC (which is basically a user profile right now?)
 class FriendEncapsulator {
     var friendObj: PFUser?
@@ -25,6 +27,33 @@ class FriendEncapsulator {
         username = friendName;
         friendObj = nil;
     }
+    
+    class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
+        var friendExist: FriendEncapsulator? = friendDictionary[friend.username];
+        if (friendExist != nil) {
+            if (friendExist!.friendObj == nil) {
+                friendExist!.friendObj = friend;
+            }
+            return friendExist!;
+        }
+        else {
+            var newFriendToMake = FriendEncapsulator(friend: friend);
+            friendDictionary[friend.username] = newFriendToMake;
+            return newFriendToMake;
+        }
+    }
+    class func dequeueFriendEncapsulator(friendName: String)->FriendEncapsulator {
+        var friendExist: FriendEncapsulator? = friendDictionary[friendName];
+        if (friendExist != nil) {
+            return friendExist!;
+        }
+        else {
+            var newFriendToMake = FriendEncapsulator(friendName: friendName);
+            friendDictionary[friendName] = newFriendToMake;
+            return newFriendToMake;
+        }
+    }
+    
     
     //gets the name of the user, fetches it if needed
     func getName(failFunction: ()->Void)->String {

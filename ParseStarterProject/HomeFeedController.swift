@@ -52,9 +52,11 @@ class HomeFeedController: UIViewController {
     var viewingComments: Bool = false;
     
 
-    var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
+    var mainUser: FriendEncapsulator = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
 
     var postLoadCount = POST_LOAD_COUNT;
+    
+    var needLoadOnCurrent: Bool = false;
 
     
     /*
@@ -253,21 +255,51 @@ class HomeFeedController: UIViewController {
             likeButton.setTitle("Like", forState: UIControlState.Normal);
         }
         
+        currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
+        
         if (postCounter == 0) {
             if (currentPost.image != nil) {
                 //most of time should go here
+                needLoadOnCurrent = false;
                 switchImage(currentPost.image!, fromDirection: fromDirection);
             }
             else {
                 NSLog("Current Post's image is not loaded despite assumption that it is");
+                needLoadOnCurrent = true;
+                self.switchImage(LOADING_IMG, fromDirection: fromDirection);
                 currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
-                    self.switchImage(currentPost.image!, fromDirection: fromDirection);
+                    if (self.needLoadOnCurrent && index == self.postCounter) {
+                        //this should be 0 (postCounter will be 0)
+                        self.switchImage(currentPost.image!, fromDirection: CompassDirection.STAY);
+                        self.needLoadOnCurrent = false;
+                    }
                 }, index: 0);
             }
+            //start loading the rest of images while user is still looking at first image
+            
             //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
         else {
+            
+            if (currentPost.isRestLoaded()) {
+                needLoadOnCurrent = false;
+                if (currentPost.isViewingComments(postCounter)) {
+                    self.viewingComments = true;
+                    //self.frontImageView!.image = oldImg;
+                    self.startViewingComments(currentPost);
+                }
+                else {
+                    self.switchImage(currentPost.getImageAt(postCounter), fromDirection: fromDirection);
+                }
+            }
+            else {
+                //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
+                self.needLoadOnCurrent = true;
+                self.switchImage(LOADING_IMG, fromDirection: fromDirection);
+            }
+            //else, just wait for configureRest to do its job!
+            /*
             var currentPostNum = postCounter;
             var oldImg = self.frontImageView!.image;
             //self.frontImageView!.image = LOADING_IMG;
@@ -288,7 +320,25 @@ class HomeFeedController: UIViewController {
                     }
                 }
 
-            }, postIndex: postCounter);
+            }, postIndex: postCounter);*/
+        }
+    }
+    func configureRest(indexAtTimeOfRequest: Int) {
+        if(!needLoadOnCurrent) {
+            return;
+        }
+        if (indexAtTimeOfRequest == viewCounter) {
+            //im still on the same image post, phew!
+            var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+            if (currentPost.isViewingComments(postCounter)) {
+                self.viewingComments = true;
+                //self.frontImageView!.image = oldImg;
+                self.startViewingComments(currentPost);
+            }
+            else if (postCounter != 0) {
+                needLoadOnCurrent = false;
+                self.switchImage(currentPost.getImageAt(postCounter), fromDirection: CompassDirection.STAY);
+            }
         }
     }
     func startViewingComments(currentPost: ImagePostStructure) {

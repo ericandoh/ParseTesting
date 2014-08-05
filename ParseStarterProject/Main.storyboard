@@ -403,7 +403,7 @@
         <scene sceneID="GIw-Di-XCD">
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -413,28 +413,43 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFD-ai-3cA" id="M4i-vK-vSd">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-BI-tpi">
-                                            <rect key="frame" x="5" y="3" width="60" height="60"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-BI-tpi">
+                                            <rect key="frame" x="5" y="5" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="DeZ-hV-oj0"/>
+                                                <constraint firstAttribute="width" constant="60" id="Tke-Am-tZj"/>
+                                            </constraints>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRu-qY-fEM">
-                                            <rect key="frame" x="268" y="13" width="46" height="40"/>
-                                            <state key="normal" title=">>">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                            <rect key="frame" x="73" y="13" width="179" height="36"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRu-qY-fEM">
+                                            <rect key="frame" x="266" y="13" width="46" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="sFv-ad-bjT"/>
+                                                <constraint firstAttribute="height" constant="40" id="vjz-qW-yiG"/>
+                                            </constraints>
+                                            <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
                                                 <action selector="nextActionCalled:" destination="oFD-ai-3cA" eventType="touchUpInside" id="HXe-uB-KTJ"/>
                                             </connections>
                                         </button>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
-                                            <rect key="frame" x="73" y="17" width="179" height="32"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lDr-BI-tpi" secondAttribute="bottom" constant="5" id="5Sv-CV-pzE"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PRu-qY-fEM" secondAttribute="bottom" constant="5" id="B8K-ze-zLI"/>
                                         <constraint firstItem="8LH-sn-HLL" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="73" id="CFb-uS-aMS"/>
+                                        <constraint firstItem="lDr-BI-tpi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="IDZ-Xj-wuQ"/>
+                                        <constraint firstItem="8LH-sn-HLL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="c1P-3e-2Vy"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8LH-sn-HLL" secondAttribute="bottom" constant="5" id="hZ9-mF-UEW"/>
+                                        <constraint firstItem="PRu-qY-fEM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="puK-Gs-MLW"/>
                                         <constraint firstAttribute="trailing" secondItem="8LH-sn-HLL" secondAttribute="trailing" constant="68" id="sr1-0u-Tqj"/>
+                                        <constraint firstItem="lDr-BI-tpi" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="5" id="vCn-e7-rjI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -1030,17 +1045,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Username/Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YXt-kU-S3A">
-                                <rect key="frame" x="97" y="104" width="127" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3XB-iU-lhk">
-                                <rect key="frame" x="117" y="192" width="76" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLe-AF-DLT">
                                 <rect key="frame" x="132" y="297" width="57" height="30"/>
                                 <state key="normal" title="Register">
@@ -1077,15 +1081,15 @@
                                     <action selector="loginWithFacebook:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="M3U-Qa-EoZ"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nWM-np-dhM">
-                                <rect key="frame" x="20" y="144" width="280" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lCD-Hm-x7k">
-                                <rect key="frame" x="25" y="232" width="275" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lCD-Hm-x7k">
+                                <rect key="frame" x="23" y="210" width="275" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nWM-np-dhM">
+                                <rect key="frame" x="20" y="159" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1372,33 +1376,33 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="testbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-8p-XWM">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <color key="backgroundColor" red="0.2085041613880515" green="0.083648768521413855" blue="0.39323580994897955" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IjE-rg-ihq">
-                                <rect key="frame" x="20" y="201" width="280" height="30"/>
+                                <rect key="frame" x="20" y="231" width="280" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aaT-tM-w4u">
-                                <rect key="frame" x="20" y="239" width="280" height="30"/>
+                                <rect key="frame" x="20" y="269" width="280" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4NY-eO-D54">
-                                <rect key="frame" x="20" y="277" width="280" height="30"/>
+                                <rect key="frame" x="20" y="307" width="280" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Register" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rer-Vu-dhF">
-                                <rect key="frame" x="74" y="124" width="173" height="33"/>
+                                <rect key="frame" x="74" y="70" width="173" height="33"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-eE-nru">
-                                <rect key="frame" x="88" y="324" width="145" height="30"/>
+                                <rect key="frame" x="88" y="345" width="145" height="30"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                 <state key="normal" title="Sign me up!">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1408,6 +1412,16 @@
                                     <action selector="signUpPressed:" destination="vp5-wb-cPq" eventType="touchUpInside" id="YgD-jY-wI7"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name (only visible to my friends)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3gA-Ra-gte">
+                                <rect key="frame" x="20" y="193" width="280" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name (only visible to my friends)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ooZ-cS-oIq">
+                                <rect key="frame" x="20" y="155" width="280" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1416,6 +1430,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="aaT-tM-w4u" id="urv-WT-ZQl"/>
+                        <outlet property="firstNameTextField" destination="ooZ-cS-oIq" id="eVr-gE-pLi"/>
+                        <outlet property="lastNameTextField" destination="3gA-Ra-gte" id="PHb-kw-7v6"/>
                         <outlet property="passwordTextField" destination="4NY-eO-D54" id="JmL-xC-7iY"/>
                         <outlet property="userTextField" destination="IjE-rg-ihq" id="Uhg-zi-UpD"/>
                         <segue destination="oQL-hX-F0F" kind="modal" identifier="JumpIn" id="jrF-7g-MJv"/>

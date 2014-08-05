@@ -2,7 +2,7 @@
 //  NewLoginViewController.swift
 //  ParseStarterProject
 //
-//  Created by temp on 7/21/14.
+//  Created by Bala on 7/21/14.
 //
 //
 

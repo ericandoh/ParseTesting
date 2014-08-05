@@ -11,6 +11,8 @@
 
 //decided to encapsulate rather than override PFObject so changing code is easier, I can load images semantics, etc.
 
+var imagePostDictionary: [String: ImagePostStructure] = [:];
+
 class ImagePostStructure
 {
     var image: UIImage?
@@ -74,6 +76,19 @@ class ImagePostStructure
         //might want to change this for exclusivity posts?
         myObj.ACL.setPublicReadAccess(true);
         myObj.ACL.setPublicWriteAccess(true);
+        
+        imagePostDictionary[myObj.objectId] = self;
+    }
+    class func dequeueImagePost(inputObj: PFObject)->ImagePostStructure {
+        var postExist: ImagePostStructure? = imagePostDictionary[inputObj.objectId];
+        if (postExist != nil) {
+            return postExist!;
+        }
+        else {
+            var newPostToMake = ImagePostStructure(inputObj: inputObj);
+            imagePostDictionary[inputObj.objectId] = newPostToMake;
+            return newPostToMake;
+        }
     }
     func save() {
         myObj.saveInBackground()
@@ -136,6 +151,52 @@ class ImagePostStructure
             finishFunction(imgStruct: self, index: index);
         }
     }
+    
+    func loadRestIfNeeded(callBack: (Int)->Void, snapShotViewCounter: Int) {
+        if (imagesLoaded) {
+            callBack(snapShotViewCounter);
+        }
+        else {
+            var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
+            if (imgFiles.count == 0) {
+                self.imagesLoaded = true;
+                callBack(snapShotViewCounter);
+            }
+            for (index, imgFile: PFFile) in enumerate(imgFiles) {
+                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                    if (!error) {
+                        //get file objects
+                        var fImage = UIImage(data: result);
+                        self.images.append(fImage);
+                    }
+                    if (self.images.count == imgFiles.count) {
+                        self.imagesLoaded = true;
+                        callBack(snapShotViewCounter);
+                    }
+                });
+            }
+        }
+    }
+    func isRestLoaded()->Bool {
+        return imagesLoaded;
+    }
+    func isViewingComments(postCounter: Int)->Bool {
+        //4 images=>1/5,2/5,3/5,4/5,5/5
+        //images.count = 3
+        return imagesLoaded && (postCounter >= (images.count + 1));
+    }
+    
+    //this function ASSUMES we have already gone through protocol for loading images!
+    func getImageAt(index: Int)->UIImage {
+        if (index == 0) {
+            return self.image!;
+        }
+        else {
+            return self.images[index - 1];
+        }
+    }
+    
+    //deprecated
     //loads all images, as I load I return images by index
     func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
         
@@ -216,8 +277,12 @@ class ImagePostStructure
         finishFunction(input: retList);
     }
     func addComment(comment: String)->PostComment {
-        var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
-        var commentArray = myObj["comments"] as NSMutableArray;
+        var commentAuthorArray: NSMutableArray = [];
+        var commentArray: NSMutableArray = [];
+        if (myObj["commentAuthor"] != nil) {
+            commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
+            commentArray = myObj["comments"] as NSMutableArray;
+        }
         var author = PFUser.currentUser().username;
         commentAuthorArray.insertObject(author, atIndex: commentAuthorArray.count)
         commentArray.insertObject(comment, atIndex: commentArray.count);
