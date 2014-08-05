@@ -750,7 +750,7 @@ import UIKit
             friendObj["follower"] = PFUser.currentUser().username
             friendObj["following"] = followerName
             friendObj.saveEventually()
-            var followingsArray: NSMutableArray = []
+            var followingsArray: NSMutableArray = PFUser.currentUser()["followings"] as NSMutableArray;
             followingsArray.insertObject(followerName, atIndex: 0)
             PFUser.currentUser()["followings"] = followingsArray
             PFUser.currentUser().saveEventually()
