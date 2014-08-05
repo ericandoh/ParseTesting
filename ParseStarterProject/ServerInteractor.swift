@@ -237,7 +237,7 @@ import UIKit
     }
     //used in friend display panels to handle my user screen vs other user screens
     class func getCurrentUser()->FriendEncapsulator {
-        return FriendEncapsulator(friend: PFUser.currentUser());
+        return FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
     }
     //------------------Image Post related methods---------------------------------------
     
@@ -757,7 +757,7 @@ import UIKit
                 NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
                 for object in objects {
                     var following = object["follower"] as String
-                    var friend = FriendEncapsulator(friendName: following)
+                    var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
                     followerList.append(friend)
                     NSLog("\(object) yaya lolololl")
                     
@@ -782,7 +782,7 @@ import UIKit
             NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
-                var friend = FriendEncapsulator(friendName: follower)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
                 followerList.append(friend)
                 NSLog("\(object) yaya lolololl")
                 NSLog("\(follower)")
@@ -806,7 +806,7 @@ import UIKit
             NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
-                var friend = FriendEncapsulator(friendName: follower)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
                 followerList.append(friend)
             }
             retFunction(followerList.count)
@@ -825,7 +825,7 @@ import UIKit
             NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var following = object["follower"] as String
-                var friend = FriendEncapsulator(friendName: following)
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
                 followerList.append(friend)
             }
             retFunction(followerList.count)
@@ -902,7 +902,7 @@ import UIKit
     
     //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {
-        return getFriends(FriendEncapsulator(friend: PFUser.currentUser()));
+        return getFriends(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()));
     }
     
     //gets me a list of my friends!
@@ -924,7 +924,7 @@ import UIKit
         var friend: String;
         for index in 0..<friendz.count {
             friend = friendz[index] as String;
-            returnList.append(FriendEncapsulator(friendName: friend));
+            returnList.append(FriendEncapsulator.dequeueFriendEncapsulator(friend));
         }
         return returnList;
     }

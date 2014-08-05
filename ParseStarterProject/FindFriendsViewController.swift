@@ -92,7 +92,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         //yTable.reloadData();
     }
     func receiveStringResult(index: Int, classifier: String) {
-        searchTermList[index] = FriendEncapsulator(friendName: classifier);
+        searchTermList[index] = FriendEncapsulator.dequeueFriendEncapsulator(classifier);
     }
     func endStringQuery() {
         searchFriendsTableView.reloadData();

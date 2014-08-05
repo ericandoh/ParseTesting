@@ -52,9 +52,11 @@ class UserTextTableViewCell: UITableViewCell {
                 //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.userImage!.image = fetchedImage;
                 self.userImage!.autoresizingMask = UIViewAutoresizing.None;
-                self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
+                //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
+                self.userImage!.layer.cornerRadius = (40.0) / 2
+                //self.userImage!.layer.cornerRadius = (40.0) / 2
                 self.userImage!.layer.masksToBounds = true
-                self.userImage!.layer.borderWidth = 0
+                //self.userImage!.layer.borderWidth = 0
                 //self.userImage!.clipsToBounds = true;
                 });
             friend = involvedUser;
@@ -79,12 +81,12 @@ class UserTextTableViewCell: UITableViewCell {
         descriptionBox.scrollEnabled = false;
         
         
-        descriptionBox.sizeToFit();
-        var frame = self.contentView.frame;
+        //descriptionBox.sizeToFit();
+        //var frame = self.contentView.frame;
         
         //var sysSize = self.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize);
         
-        frame.size.height = max(60, descriptionBox.frame.height);
+        //frame.size.height = max(60, descriptionBox.frame.height);
         
         self.backgroundColor = UIColor.clearColor();
         self.contentView.backgroundColor = UIColor.clearColor();

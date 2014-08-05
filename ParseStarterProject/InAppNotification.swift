@@ -84,7 +84,7 @@ class InAppNotification {
             NSLog("Cannot retrieve follower from non-follower post notification")
         }
         var obj: String = self.personalObj!["sender"] as String
-        return FriendEncapsulator(friendName: obj);
+        return FriendEncapsulator.dequeueFriendEncapsulator(obj);
     }
     
     func getImage(receiveAction:(UIImage)->Void) {

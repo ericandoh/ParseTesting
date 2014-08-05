@@ -52,7 +52,7 @@ class HomeFeedController: UIViewController {
     var viewingComments: Bool = false;
     
 
-    var mainUser: FriendEncapsulator = FriendEncapsulator(friend: PFUser.currentUser());
+    var mainUser: FriendEncapsulator = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
 
     var postLoadCount = POST_LOAD_COUNT;
     

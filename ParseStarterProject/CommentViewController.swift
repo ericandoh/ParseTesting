@@ -96,7 +96,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         //NSLog("Comment by \(author) saying \(commentList[index].commentString)")
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
-        cell.extraConfigurations(FriendEncapsulator(friendName: author), message: text, enableFriending: false, sender: self);
+        cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false, sender: self);
         /*if (member.type == NotificationType.IMAGE_POST.toRaw()) {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
