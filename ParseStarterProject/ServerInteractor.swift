@@ -55,6 +55,7 @@ import UIKit
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
+        user["numPosts"] = 0
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {

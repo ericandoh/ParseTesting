@@ -317,6 +317,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             ServerInteractor.addAsFollower(mainUser!.username)
             ServerInteractor.postFollowerNotif(mainUser!.username, controller: self);
+            //settingsButton.setImage(ENDING_IMG, forState: UIControlState.Normal)
         } else {
             self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
         }

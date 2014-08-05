@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428357371.308518"
+            timestampString = "428899855.238884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "uploadImage(_:description:labels:looks:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428357371.308518"
+            timestampString = "428899855.238884"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
-            landmarkName = "convertPostToID(_:)"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
+            landmarkName = "uploadImage(_:description:labels:looks:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
