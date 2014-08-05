@@ -80,7 +80,6 @@ class UserTextTableViewCell: UITableViewCell {
         
         
         descriptionBox.sizeToFit();
-        NSLog("-->\(descriptionBox.frame.height)")
         var frame = self.contentView.frame;
         
         //var sysSize = self.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize);
