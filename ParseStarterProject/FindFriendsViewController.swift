@@ -18,7 +18,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet var searchBar: UISearchBar!
     
     var isSearching: Bool = false;
-    var searchTermList: Array<String> = [];
+    var searchTermList: Array<FriendEncapsulator?> = [];
     var currentTerm: String = "";
     
     override func viewDidLoad() {
@@ -44,9 +44,26 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
     @IBAction func findFriendsFromFB(sender: UIButton) {
+        if (!self.isSearching) {
+            self.isSearching = true;
+            self.searchFriendsTableView.hidden = false;
+            self.view.bringSubviewToFront(searchFriendsTableView);
+        }
+        searchTermList = [];
+        self.currentTerm = "Friends From Facebook";
+        self.searchBar.text = self.currentTerm;
+        ServerInteractor.getFBFriendUsers(receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     
     @IBAction func findFriendsFromContacts(sender: UIButton) {
+        if (!self.isSearching) {
+            self.isSearching = true;
+            self.searchFriendsTableView.hidden = false;
+            self.view.bringSubviewToFront(searchFriendsTableView);
+        }
+        searchTermList = [];
+        self.currentTerm = "Friends From Contacts";
+        self.searchBar.text = self.currentTerm;
         ServerInteractor.getSearchContacts(receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     
@@ -70,12 +87,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         ServerInteractor.getSearchUsers(searchText, receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     func receiveSizeOfQuery(size: Int) {
-        searchTermList = Array<String>(count: size, repeatedValue: "");
+        searchTermList = Array<FriendEncapsulator?>(count: size, repeatedValue: nil);
         //here or in endStringQuery?
         //yTable.reloadData();
     }
     func receiveStringResult(index: Int, classifier: String) {
-        searchTermList[index] = classifier;
+        searchTermList[index] = FriendEncapsulator(friendName: classifier);
     }
     func endStringQuery() {
         searchFriendsTableView.reloadData();
@@ -101,7 +118,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         else {
             if (index - 1 < searchTermList.count) {
                 //to avoid race conditions
-                cell.textLabel.text = searchTermList[index - 1];
+                cell.textLabel.text = searchTermList[index - 1]?.username;
             }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -110,17 +127,19 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
         var searchResult: String = "";
+        var friend: FriendEncapsulator?;
         if (index == 0) {
             searchResult = currentTerm;
+            friend = FriendEncapsulator(friendName: searchResult);
         }
         else {
-            searchResult = searchTermList[indexPath.row - 1];
+            friend = searchTermList[indexPath.row - 1];
         }
         //startSearch(searchResult);
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
         
-        var friend = FriendEncapsulator(friendName: searchResult);
-        friend.exists({(exist: Bool) in
+        //var friend = FriendEncapsulator(friendName: searchResult);
+        friend!.exists({(exist: Bool) in
             if (exist) {
                 self.searchBar.text = "";
                 self.isSearching = false;
@@ -128,7 +147,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.searchFriendsTableView.hidden = true;
                 
                 var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-                (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
                 self.navigationController.pushViewController(nextBoard, animated: true);
             }
             else {

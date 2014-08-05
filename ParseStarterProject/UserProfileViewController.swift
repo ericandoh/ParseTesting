@@ -81,7 +81,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
-                var newUserIcon: UIImage = self.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+                //self.userIcon.image = image;
+                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
                 self.userIcon!.layer.masksToBounds = true
@@ -110,7 +111,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 // Do any additional setup after loading the view.
                 userLabel.text = ServerInteractor.getUserName();
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
-                    var newUserIcon = self.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
+                    //self.userIcon.image = fetchedImage;
+                    var newUserIcon = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
                     self.userIcon!.layer.masksToBounds = true
@@ -247,15 +249,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         image.size.height = self.navigationController.navigationBar.frame.size.height
         image.size.width = self.navigationController.navigationBar.frame.size.width
     }*/
-    
-    func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        var rect: CGRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        image.drawInRect(rect)
-        var newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
+        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <scenes>
@@ -644,16 +645,59 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Uc-do-kG6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3xQ-yU-YJs">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3xQ-yU-YJs">
                                 <rect key="frame" x="0.0" y="65" width="320" height="442"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="M1W-Hd-U9k">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="M1W-Hd-U9k" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M1W-Hd-U9k" id="ndu-hP-mSs">
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PBi-mx-kd5">
+                                                    <rect key="frame" x="8" y="0.0" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="CP1-rm-yN6"/>
+                                                        <constraint firstAttribute="height" constant="40" id="JI0-Xk-fTw"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                                    <rect key="frame" x="76" y="8" width="176" height="44"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJg-uy-80K">
+                                                    <rect key="frame" x="274" y="15" width="30" height="30"/>
+                                                    <state key="normal" title=">">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="nextActionCalled:" destination="M1W-Hd-U9k" eventType="touchUpInside" id="rZE-vb-qQm"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="PBi-mx-kd5" firstAttribute="leading" secondItem="ndu-hP-mSs" secondAttribute="leading" constant="8" id="6wS-g2-Lx9"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PBi-mx-kd5" secondAttribute="bottom" constant="5" id="CRO-hS-AqO"/>
+                                                <constraint firstAttribute="bottom" secondItem="DCX-5b-TkF" secondAttribute="bottom" constant="7.5" id="LNv-6X-eAl"/>
+                                                <constraint firstAttribute="trailing" secondItem="DCX-5b-TkF" secondAttribute="trailing" constant="68" id="PSg-9u-CBf"/>
+                                                <constraint firstItem="DCX-5b-TkF" firstAttribute="top" secondItem="ndu-hP-mSs" secondAttribute="top" constant="8" id="SrD-L7-wzq"/>
+                                                <constraint firstItem="PBi-mx-kd5" firstAttribute="top" relation="greaterThanOrEqual" secondItem="ndu-hP-mSs" secondAttribute="top" constant="5" id="esf-i1-21v"/>
+                                                <constraint firstItem="DCX-5b-TkF" firstAttribute="leading" secondItem="ndu-hP-mSs" secondAttribute="leading" constant="76" id="mYN-wC-Avo"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="descriptionBox" destination="DCX-5b-TkF" id="bhE-6D-ubF"/>
+                                            <outlet property="leadingConstraint" destination="mYN-wC-Avo" id="npG-zi-MFv"/>
+                                            <outlet property="nextAction" destination="lJg-uy-80K" id="kPV-2z-GLx"/>
+                                            <outlet property="sideConstraint" destination="PSg-9u-CBf" id="AiO-k9-MFK"/>
+                                            <outlet property="userImage" destination="PBi-mx-kd5" id="ghy-Xy-TV4"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

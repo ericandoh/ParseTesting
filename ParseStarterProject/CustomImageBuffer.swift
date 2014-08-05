@@ -23,7 +23,7 @@ class CustomImageBuffer: NSObject {
     var hitEnd: Bool = false;
     
     //isLoading
-    var isLoading: Bool = false;
+    var isLoading: Int = 0;
     
     //whether to disable loading if anonymous is logged in
     var disableOnAnon: Bool = false;
@@ -147,10 +147,10 @@ class CustomImageBuffer: NSObject {
         self.configureCellFunction = configureCellFunction;
     }
     func loadSet() {
-        if (isLoading) {
+        if (isLoading != 0) {
             return;
         }
-        isLoading = true;
+        isLoading = 1;
         //loadedUpTo += 1;
         //loadedPosts += Array<ImagePostStructure?>(count: postLoadCount, repeatedValue: nil);
         //start loading next set of postLoadCount here
@@ -208,6 +208,11 @@ class CustomImageBuffer: NSObject {
     }
     func receiveNumQuery(size: Int) {
         
+        if (isLoading != 1) {
+            return;
+        }
+        isLoading = 2;
+        
         newlyLoadedStart = loadedPosts.count;
         
         var needAmount: Int;
@@ -233,6 +238,9 @@ class CustomImageBuffer: NSObject {
     
     func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
         //called by getSubmissions for when image at index x is loaded in...
+        if (isLoading != 2) {
+            return;
+        }
         var realIndex: Int;
         if (hitEnd) {
             realIndex = index + (loadedUpTo * postLoadCount);
@@ -244,8 +252,10 @@ class CustomImageBuffer: NSObject {
         
         self.configureCellFunction!(index: realIndex);
         
-        
-        isLoading = false;  //still loading cells in, but setting indexes are ok
+        if (realIndex == loadedPosts.count - 1) {
+            isLoading = 0;
+        }
+        //isLoading = false;  //still loading cells in, but setting indexes are ok
     }
     func numItems() -> Int {
         return loadedUpTo * postLoadCount + endLoadCount;

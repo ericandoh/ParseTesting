@@ -23,7 +23,7 @@ import UIKit
         user.password = password;
         user.email = email;
         
-        initialiseUser(user)
+        initialiseUser(user, type: UserType.DEFAULT);
         
         /*user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
@@ -50,10 +50,11 @@ import UIKit
         return true;
     }
     
-    class func initialiseUser(user: PFUser) {
+    class func initialiseUser(user: PFUser, type: UserType) {
         user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
+        user["userType"] = type.toRaw();
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
@@ -97,25 +98,25 @@ import UIKit
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: NewLoginViewController = sender as NewLoginViewController;
-            if (error) {
+            if (error != nil) {
                 NSLog("Error message: \(error!.description)");
             } else if !user {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
-                self.initialiseUser(user)
+                self.initialiseUser(user, type: UserType.FACEBOOK)
                 /*user["friends"] = NSArray();
                 user["viewHistory"] = NSArray();*/
                 // ServerInteractor.initialUserChecks();
                 //user's first notification
                 
                 //https://parse.com/questions/how-can-i-find-parse-users-that-are-facebook-friends-with-the-current-user
-                /*FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection, result: NSObject!, error: NSError!) in
-                    if (!error) {
+                FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
+                    if (error == nil) {
                         PFUser.currentUser()["fbID"] = result["id"];
                         PFUser.currentUser().saveInBackground();
                     }
-                    });*/
+                    });
                 
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 user.saveEventually();
@@ -143,6 +144,12 @@ import UIKit
                 //PFFacebookUtils.session();
                 
             } else {
+                FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
+                    if (error == nil) {
+                        PFUser.currentUser()["fbID"] = result["id"];
+                        PFUser.currentUser().saveInBackground();
+                    }
+                });
                 //logController.failedLogin("User logged in through Facebook!")
                 //ServerInteractor.initialUserChecks();
                 logController.successfulLogin();
@@ -173,7 +180,7 @@ import UIKit
     class func logInAnon() {
         PFAnonymousUtils.logInWithBlock {
             (user: PFUser!, error: NSError!) -> Void in
-            if error {
+            if (error != nil) {
                 NSLog("Anonymous login failed.")
             } else {
                 NSLog("Anonymous user logged in.")
@@ -258,6 +265,19 @@ import UIKit
         
         return arr;
     }
+    
+    
+    //used by certain classes to resize the user icon to the correct specifications
+    class func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        var rect: CGRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        image.drawInRect(rect)
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
         var individualRatio: Float;
         var width: Int;
@@ -398,7 +418,7 @@ import UIKit
         query.whereKey("objectId", containedIn: oldCPosts)
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error==nil) {
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
                     for (index, object) in enumerate(objects!) {
@@ -567,7 +587,7 @@ import UIKit
                 if(objects.count == 0) {
                     (controller! as FriendTableViewController).notifyFailure("No such user exists!");
                 }
-                else if (error) {
+                else if (error != nil) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
                     (controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
                 }
@@ -931,6 +951,7 @@ import UIKit
         var twoTermz = term.lowercaseString;
         var query = PFUser.query();
         query.whereKey("username", containsString: twoTermz);
+        query.whereKey("userType", containedIn: RELEVANT_TYPES);
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
@@ -992,5 +1013,37 @@ import UIKit
             //lastName = lName as NSString;
             println ("contactName \(contactName)")
         }
+    }
+    
+    class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+        if (PFUser.currentUser()["fbID"] == nil) {
+            NSLog("This account is not linked to fb!");
+            initFunc(0);
+            endFunc();
+            return;
+        }
+        
+        FBRequestConnection.startForMyFriendsWithCompletionHandler({
+            (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
+            if (error == nil) {
+                var friendObjs = result.objectForKey("data") as NSArray;
+                var friendIds = NSMutableArray(capacity: friendObjs.count);
+                for friendObject in friendObjs {
+                    friendIds.addObject(friendObject.objectForKey("id"));
+                }
+                var query: PFQuery = PFUser.query();
+                query.whereKey("fbID", containedIn: friendIds);
+                query.findObjectsInBackgroundWithBlock({
+                    (objects: [AnyObject]!, error: NSError!) in
+                    initFunc(objects.count);
+                    for index: Int in 0..<objects.count {
+                        var content = (objects[index] as PFObject)["username"] as String;
+                        //var friend = FriendEncapsulator(friendName: content);
+                        receiveFunc(index, content);
+                    }
+                    endFunc();
+                });
+            }
+        });
     }
 }
