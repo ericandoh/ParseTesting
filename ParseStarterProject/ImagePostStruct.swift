@@ -136,6 +136,52 @@ class ImagePostStructure
             finishFunction(imgStruct: self, index: index);
         }
     }
+    
+    func loadRestIfNeeded(callBack: (Int)->Void, snapShotViewCounter: Int) {
+        if (imagesLoaded) {
+            callBack(snapShotViewCounter);
+        }
+        else {
+            var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
+            if (imgFiles.count == 0) {
+                self.imagesLoaded = true;
+                callBack(snapShotViewCounter);
+            }
+            for (index, imgFile: PFFile) in enumerate(imgFiles) {
+                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                    if (!error) {
+                        //get file objects
+                        var fImage = UIImage(data: result);
+                        self.images.append(fImage);
+                    }
+                    if (self.images.count == imgFiles.count) {
+                        self.imagesLoaded = true;
+                        callBack(snapShotViewCounter);
+                    }
+                });
+            }
+        }
+    }
+    func isRestLoaded()->Bool {
+        return imagesLoaded;
+    }
+    func isViewingComments(postCounter: Int)->Bool {
+        //4 images=>1/5,2/5,3/5,4/5,5/5
+        //images.count = 3
+        return imagesLoaded && (postCounter >= (images.count + 1));
+    }
+    
+    //this function ASSUMES we have already gone through protocol for loading images!
+    func getImageAt(index: Int)->UIImage {
+        if (index == 0) {
+            return self.image!;
+        }
+        else {
+            return self.images[index - 1];
+        }
+    }
+    
+    //deprecated
     //loads all images, as I load I return images by index
     func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
         

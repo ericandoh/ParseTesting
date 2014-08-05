@@ -104,7 +104,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         if (!isSearching) {
             return 0;
         }
-        return 1 + searchTermList.count;
+        return searchTermList.count;
+        //return 1 + searchTermList.count;
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
@@ -112,15 +113,15 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         var index: Int = indexPath.row;
         
-        if (index == 0) {
-            cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
+        //if (index == 0) {
+            //cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
+        //}
+        //else {
+        if (index < searchTermList.count) {
+            //to avoid race conditions
+            cell.textLabel.text = searchTermList[index]?.username;
         }
-        else {
-            if (index - 1 < searchTermList.count) {
-                //to avoid race conditions
-                cell.textLabel.text = searchTermList[index - 1]?.username;
-            }
-        }
+        //}
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
@@ -128,13 +129,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         var index: Int = indexPath.row;
         var searchResult: String = "";
         var friend: FriendEncapsulator?;
-        if (index == 0) {
-            searchResult = currentTerm;
-            friend = FriendEncapsulator(friendName: searchResult);
-        }
-        else {
-            friend = searchTermList[indexPath.row - 1];
-        }
+        //if (index == 0) {
+            //searchResult = currentTerm;
+            //friend = FriendEncapsulator(friendName: searchResult);
+        //}
+        //else {
+        friend = searchTermList[indexPath.row];
+        //}
         //startSearch(searchResult);
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
         

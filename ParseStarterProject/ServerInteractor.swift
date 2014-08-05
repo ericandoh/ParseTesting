@@ -13,7 +13,7 @@ import UIKit
 
 @objc class ServerInteractor: NSObject {
     //---------------User Login/Signup/Interaction Methods---------------------------------
-    class func registerUser(username: String, email: String, password: String, sender: NSObject)->Bool {
+    class func registerUser(username: String, email: String, password: String, firstName: String, lastName: String, sender: NSObject)->Bool {
         var userNameLabel: UILabel
         var friendObj: PFObject = PFObject(className: "Friendship")
         var user: PFUser = PFUser();
@@ -22,6 +22,9 @@ import UIKit
         user.username = username;
         user.password = password;
         user.email = email;
+        
+        user["personFirstName"] = firstName;
+        user["personLastName"] = lastName;
         
         initialiseUser(user, type: UserType.DEFAULT);
         
@@ -113,6 +116,8 @@ import UIKit
                 //https://parse.com/questions/how-can-i-find-parse-users-that-are-facebook-friends-with-the-current-user
                 FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
                     if (error == nil) {
+                        PFUser.currentUser()["personFirstName"] = result["first_name"];
+                        PFUser.currentUser()["personLastName"] = result["last_name"];
                         PFUser.currentUser()["fbID"] = result["id"];
                         PFUser.currentUser().saveInBackground();
                     }
@@ -146,6 +151,8 @@ import UIKit
             } else {
                 FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
                     if (error == nil) {
+                        PFUser.currentUser()["personFirstName"] = result["first_name"];
+                        PFUser.currentUser()["personLastName"] = result["last_name"];
                         PFUser.currentUser()["fbID"] = result["id"];
                         PFUser.currentUser().saveInBackground();
                     }
@@ -979,7 +986,7 @@ import UIKit
             addressBook = ServerInteractor.extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
             ABAddressBookRequestAccessWithCompletion(addressBook, { success, error in
                 if success {
-                    ServerInteractor.getContactNames()
+                    ServerInteractor.getContactNames(initFunc, receiveFunc, endFunc)
                 }
                 else {
                     NSLog("error")
@@ -990,29 +997,51 @@ import UIKit
             NSLog("Access denied")
         }
         else if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.Authorized) {
-            ServerInteractor.getContactNames();
+            ServerInteractor.getContactNames(initFunc, receiveFunc, endFunc);
         }
     }
-    class func getContactNames() {
+    class func getContactNames(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
         var errorRef: Unmanaged<CFError>?
         var addressBook: ABAddressBookRef? = extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
         var contactList: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
-        println("records in the array \(contactList.count)")
+        //println("records in the array \(contactList.count)")
+        
+        var arrayOfQueries: Array<PFQuery> = [];
+        
         for record:ABRecordRef in contactList {
             var contactPerson: ABRecordRef = record
-            var fName = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty);
-            //fName.takeRetainedValue();
-            //var firstName: String = fName as NSString;
-            //var lName: String = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue() as NSString;
+            
+            var fName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty).takeRetainedValue();
+            var firstName: String = fName as NSString;
+            
+            var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
+            var lastName: String = lName as NSString;
             //kABPersonPhoneProperty, kABPersonEmailProperty
             
-            var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
+            //var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
             //var firstName: String = "";
             //var lastName: String = "";
             //firstName = fName as NSString;
             //lastName = lName as NSString;
-            println ("contactName \(contactName)")
+            //println ("contactName \(contactName)")
+            var query: PFQuery = PFUser.query();
+            query.whereKey("personFirstName", equalTo: fName);
+            query.whereKey("personLastName", equalTo: lName);
+            arrayOfQueries.append(query);
         }
+        
+        var combinedQuery = PFQuery.orQueryWithSubqueries(arrayOfQueries);
+        
+        combinedQuery.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) in
+            initFunc(objects.count);
+            for index: Int in 0..<objects.count {
+                var content = (objects[index] as PFObject)["username"] as String;
+                //var friend = FriendEncapsulator(friendName: content);
+                receiveFunc(index, content);
+            }
+            endFunc();
+        });
     }
     
     class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
