@@ -216,8 +216,12 @@ class ImagePostStructure
         finishFunction(input: retList);
     }
     func addComment(comment: String)->PostComment {
-        var commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
-        var commentArray = myObj["comments"] as NSMutableArray;
+        var commentAuthorArray: NSMutableArray = [];
+        var commentArray: NSMutableArray = [];
+        if (myObj["commentAuthor"] != nil) {
+            commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
+            commentArray = myObj["comments"] as NSMutableArray;
+        }
         var author = PFUser.currentUser().username;
         commentAuthorArray.insertObject(author, atIndex: commentAuthorArray.count)
         commentArray.insertObject(comment, atIndex: commentArray.count);

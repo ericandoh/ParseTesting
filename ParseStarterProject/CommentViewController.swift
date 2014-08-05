@@ -63,6 +63,8 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         var comment = currentPost!.addComment(commentToAdd);
         commentList.append(comment);
         self.commentTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: commentList.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic);
+        
+        commentTextField.text = "";
 
     }
     /*
