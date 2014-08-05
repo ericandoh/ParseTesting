@@ -89,28 +89,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
-        
         var index: Int = indexPath.row;
-        
         var author = commentList[index].author;
-        //NSLog("Comment by \(author) saying \(commentList[index].commentString)")
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
         cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false, sender: self);
-        /*if (member.type == NotificationType.IMAGE_POST.toRaw()) {
-            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
-        }
-        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
-            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: true, sender: self)
-        }
-        else {
-            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
-        }*/
-        
-        
-        
-        
-        
         
         
         

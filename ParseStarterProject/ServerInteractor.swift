@@ -1086,7 +1086,26 @@ import UIKit
             endFunc();
             return;
         }
-        
+        /*if ((FBSession.activeSession().permissions as NSArray).indexOfObject("user_friends") == NSNotFound) {
+            FBSession.activeSession().requestNewReadPermissions(["user_friends"], completionHandler: {
+                (session: FBSession!, error: NSError!) in
+                if (error == nil) {
+                    if ((FBSession.activeSession().permissions as NSArray).indexOfObject("user_friends") == NSNotFound) {
+                        //permissions not found!
+                        NSLog("FB Permissions rejected");
+                    }
+                    else {
+                        //all good, continue
+                        self.lookforFBFriendsAndSet(initFunc, receiveFunc: receiveFunc, endFunc: endFunc);
+                    }
+                }
+                else {
+                    NSLog("FB Requesting error, handling it!");
+                }
+            });
+
+        }
+        else {*/
         FBRequestConnection.startForMyFriendsWithCompletionHandler({
             (connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
             if (error == nil) {
