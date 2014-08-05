@@ -45,21 +45,29 @@ class UserTextTableViewCell: UITableViewCell {
         //clicking on the message is handled by the linkfilledtextview
         //clicking on the (optional) right button allows you to follow that user
         owner = sender;
+        self.userImage!.image = nil;
         if (involvedUser != nil) {
-            leadingConstraint.constant = 68;
+            leadingConstraint.constant = 60;
             involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
+                //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.userImage!.image = fetchedImage;
+                self.userImage!.autoresizingMask = UIViewAutoresizing.None;
                 self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
                 self.userImage!.layer.masksToBounds = true
                 self.userImage!.layer.borderWidth = 0
+                //self.userImage!.clipsToBounds = true;
                 });
             friend = involvedUser;
         }
         else {
             leadingConstraint.constant = 5;
+            //self.userImage!.image = nil;
         }
         if(enableFriending) {
-            sideConstraint.constant = 68;
+            
+            //check if I am already friends with this dude
+            
+            sideConstraint.constant = 60;
             nextAction.hidden = false;
         }
         else {
@@ -68,6 +76,22 @@ class UserTextTableViewCell: UITableViewCell {
         }
         descriptionBox.owner = sender;
         descriptionBox.setTextAfterAttributing(message);
+        descriptionBox.scrollEnabled = false;
+        
+        
+        descriptionBox.sizeToFit();
+        NSLog("-->\(descriptionBox.frame.height)")
+        var frame = self.contentView.frame;
+        
+        //var sysSize = self.contentView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize);
+        
+        frame.size.height = max(60, descriptionBox.frame.height);
+        
+        self.backgroundColor = UIColor.clearColor();
+        self.contentView.backgroundColor = UIColor.clearColor();
+        //self.layoutIfNeeded();
+        //self.frame = frame;
+        //self.sizeToFit();
     }
     @IBAction func nextActionCalled(sender: UIButton) {
         var username = friend!.username;

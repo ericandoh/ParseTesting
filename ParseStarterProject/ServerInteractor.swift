@@ -265,6 +265,19 @@ import UIKit
         
         return arr;
     }
+    
+    
+    //used by certain classes to resize the user icon to the correct specifications
+    class func imageWithImage(image: UIImage, scaledToSize newSize: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
+        var rect: CGRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        image.drawInRect(rect)
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
         var individualRatio: Float;
         var width: Int;

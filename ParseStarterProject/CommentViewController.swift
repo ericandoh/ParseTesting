@@ -25,6 +25,8 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.commentTableView.rowHeight = UITableViewAutomaticDimension;
+        self.commentTableView.estimatedRowHeight = 60.0;
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -81,31 +83,53 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
+        
+        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        
+        // Configure the cell...
         
         var index: Int = indexPath.row;
         
-        cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.font = UIFont(name: "Helvetica Neue", size: 17);
-        
         var author = commentList[index].author;
         //NSLog("Comment by \(author) saying \(commentList[index].commentString)")
-        cell.textLabel.text = commentList[index].author + ": " + commentList[index].commentString;
+        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
-        if (postImageList[author] != nil) {
+        cell.extraConfigurations(FriendEncapsulator(friendName: author), message: text, enableFriending: false, sender: self);
+        /*if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: true, sender: self)
+        }
+        else {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }*/
+        
+        
+        
+        
+        
+        
+        
+        
+        //cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        //cell.textLabel.numberOfLines = 0;
+        //cell.textLabel.font = UIFont(name: "Helvetica Neue", size: 17);
+        
+        
+        /*if (postImageList[author] != nil) {
             cell.imageView.image = postImageList[author];
         }
         else {
             cell.imageView.image = LOADING_IMG;
             self.makeTableImage(index);
-        }
+        }*/
         
             //cell.imageView.image = PFUser.currentUser()["userIcon"] as UIImage
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
-    func makeTableImage(index: Int) {
+    /*func makeTableImage(index: Int) {
         var author = commentList[index].author;
         var thisUser = FriendEncapsulator(friendName: author);
         thisUser.fetchImage({(image: UIImage)->Void in
@@ -118,7 +142,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 }
             }
             });
-    }
+    }*/
     /*func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
         if (index == 0) {
@@ -149,7 +173,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             //clicked on other comment - if implement comment upvoting, do it here
         }
     }*/
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
+    /*func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
         var cellText: NSString?;
         cellText = commentList[indexPath.row].commentString;
         
@@ -161,6 +185,6 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         var maxSize: CGSize = CGSizeMake(cell.width, 9999);
         var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
         return expectedSize.height + 20;
-    }
+    }*/
 
 }
