@@ -732,11 +732,13 @@ import UIKit
     }*/
     //call this method when either accepting a friend inv or receiving a confirmation notification
     class func addAsFriend(friendName: String)->Array<NSObject?>? {
+        NSLog("Wrong method being called, please remove!")
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
         PFUser.currentUser().saveEventually();
         return nil;
     }
     
+    //follow a user
     class func addAsFollower(followerName: String) {
         var friendObj: PFObject = PFObject(className: "Friendship")
         friendObj.ACL.setPublicReadAccess(true)
@@ -745,65 +747,60 @@ import UIKit
         friendObj["following"] = followerName
         friendObj.saveEventually()
     }
+    class func removeAsFollower(followingName: String) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: PFUser.currentUser().username)
+        query.whereKey("following", equalTo: followingName)
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                if (objects.count > 0) {
+                    (objects[0] as PFObject).deleteInBackground();
+                }
+            }
+        });
+
+    }
     
     class func findFollowers(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("following", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
                 //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-                NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
                 for object in objects {
                     var following = object["follower"] as String
                     var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
                     followerList.append(friend)
-                    NSLog("\(object) yaya lolololl")
-                    
-                    NSLog("\(following)")
-                    NSLog("\(objects.count)")
-                    NSLog("YAY WORK")
                 }
-            NSLog("O'RLLY")
-            retFunction(retList: followerList)
-            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
+                retFunction(retList: followerList)
             });
     }
     
     class func findFollowing(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
                 followerList.append(friend)
-                NSLog("\(object) yaya lolololl")
-                NSLog("\(follower)")
-                NSLog("\(objects.count)")
-                NSLog("YAY WORK")
             }
-            NSLog("O'RLLY")
             retFunction(retList: followerList)
-            NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
             });
     }
     
     class func findNumFollowing(followerName: String, retFunction: (Int)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var follower = object["following"] as String
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
@@ -817,12 +814,10 @@ import UIKit
     class func findNumFollowers(followerName: String, retFunction: (Int)->Void) {
         var query = PFQuery(className: "Friendship");
         query.whereKey("following", equalTo: followerName)
-        NSLog("\(followerName)")
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
             for object in objects {
                 var following = object["follower"] as String
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
@@ -830,6 +825,28 @@ import UIKit
             }
             retFunction(followerList.count)
             //return (followerList.count)
+        });
+        //return followerList.count
+    }
+    
+    //returns if I am already following user X
+    class func amFollowingUser(followingName: String, retFunction: (Int)->Void) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: PFUser.currentUser().username)
+        query.whereKey("following", equalTo: followingName)
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                if (objects.count > 0) {
+                    retFunction(1);
+                }
+                else {
+                    retFunction(0);
+                }
+            }
+            else {
+                retFunction(-1);
+            }
         });
         //return followerList.count
     }

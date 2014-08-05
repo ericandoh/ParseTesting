@@ -427,9 +427,13 @@
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRu-qY-fEM">
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRu-qY-fEM">
                                             <rect key="frame" x="266" y="13" width="46" height="40"/>
-                                            <state key="normal" title=">>">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="sFv-ad-bjT"/>
+                                                <constraint firstAttribute="height" constant="40" id="vjz-qW-yiG"/>
+                                            </constraints>
+                                            <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
@@ -439,10 +443,12 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lDr-BI-tpi" secondAttribute="bottom" constant="5" id="5Sv-CV-pzE"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="PRu-qY-fEM" secondAttribute="bottom" constant="5" id="B8K-ze-zLI"/>
                                         <constraint firstItem="8LH-sn-HLL" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="73" id="CFb-uS-aMS"/>
                                         <constraint firstItem="lDr-BI-tpi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="IDZ-Xj-wuQ"/>
                                         <constraint firstItem="8LH-sn-HLL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="c1P-3e-2Vy"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8LH-sn-HLL" secondAttribute="bottom" constant="5" id="hZ9-mF-UEW"/>
+                                        <constraint firstItem="PRu-qY-fEM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="puK-Gs-MLW"/>
                                         <constraint firstAttribute="trailing" secondItem="8LH-sn-HLL" secondAttribute="trailing" constant="68" id="sr1-0u-Tqj"/>
                                         <constraint firstItem="lDr-BI-tpi" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="5" id="vCn-e7-rjI"/>
                                     </constraints>
