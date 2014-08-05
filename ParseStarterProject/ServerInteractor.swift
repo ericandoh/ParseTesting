@@ -14,11 +14,17 @@ import UIKit
 @objc class ServerInteractor: NSObject {
     //---------------User Login/Signup/Interaction Methods---------------------------------
     class func registerUser(username: String, email: String, password: String, firstName: String, lastName: String, sender: NSObject)->Bool {
+        var signController: SignUpViewController = sender as SignUpViewController;
+        if (username.hasPrefix("_")) {
+            signController.failedSignUp("Usernames cannot begin with _");
+            return false;
+        }
+        
         var userNameLabel: UILabel
-        var friendObj: PFObject = PFObject(className: "Friendship")
+        //var friendObj: PFObject = PFObject(className: "Friendship")
         var user: PFUser = PFUser();
-        friendObj.ACL.setPublicReadAccess(true)
-        friendObj.ACL.setPublicWriteAccess(true)
+        //friendObj.ACL.setPublicReadAccess(true)
+        //friendObj.ACL.setPublicWriteAccess(true)
         user.username = username;
         user.password = password;
         user.email = email;
@@ -33,7 +39,6 @@ import UIKit
         user["likedPosts"] = NSMutableArray();*/
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
-            var signController: SignUpViewController = sender as SignUpViewController;
             if (!error) {
                 //success!
                 //sees if user has pending items to process
@@ -58,6 +63,7 @@ import UIKit
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
+        user["numPosts"] = 0;
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
@@ -119,11 +125,12 @@ import UIKit
                         PFUser.currentUser()["personFirstName"] = result["first_name"];
                         PFUser.currentUser()["personLastName"] = result["last_name"];
                         PFUser.currentUser()["fbID"] = result["id"];
-                        PFUser.currentUser().saveInBackground();
+                        
+                        ServerInteractor.setRandomUsernameAndSave((result["first_name"] as String).lowercaseString);
                     }
                     });
                 
-                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                
                 user.saveEventually();
                 //logController.successfulLogin();
                 //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
@@ -163,8 +170,34 @@ import UIKit
             }
         });
     }
-    
-    
+    class func setRandomUsernameAndSave(firstName: String) {
+        
+        var query: PFQuery = PFQuery(className: "SearchTerm");
+        query.whereKey("term", equalTo: firstName);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+                if (error==nil) {
+                    if (objects.count > 0) {
+                        var termObj = objects[0] as PFObject
+                        var termCount = termObj["count"] as Int;
+                        PFUser.currentUser().username = "_"+firstName + String(termCount);
+                        termObj.incrementKey("count");
+                        PFUser.currentUser().saveInBackground();
+                        termObj.saveInBackground();
+                    }
+                    else {
+                        PFUser.currentUser().username = "_"+firstName;
+                        ServerInteractor.makeNewTerm(firstName);
+                        PFUser.currentUser().saveInBackground();
+                    }
+                    ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                } else {
+                    NSLog("oh no!")
+                }
+        });
+    }
+
+
     //logged in as anonymous user does NOT count
     //use this to check whether to go to signup/login screen or directly to home
     class func isUserLogged()->Bool {
@@ -256,21 +289,23 @@ import UIKit
                     arr.removeAtIndex(find(arr, foundLabel)!);
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
-                var newLabel: PFObject;
                 for label: String in arr {
-                    NSLog("Adding new label \(label)")
-                    newLabel = PFObject(className: "SearchTerm");
-                    newLabel["term"] = label;
-                    newLabel["count"] = 1;
-                    newLabel.ACL.setPublicReadAccess(true);
-                    newLabel.ACL.setPublicWriteAccess(true);
-                    newLabel.saveInBackground();
+                    ServerInteractor.makeNewTerm(label);
                 }
             }
         });
         
         
         return arr;
+    }
+    class func makeNewTerm(label: String) {
+        NSLog("Adding new label \(label)")
+        var newLabel = PFObject(className: "SearchTerm");
+        newLabel["term"] = label;
+        newLabel["count"] = 1;
+        newLabel.ACL.setPublicReadAccess(true);
+        newLabel.ACL.setPublicWriteAccess(true);
+        newLabel.saveInBackground();
     }
     
     

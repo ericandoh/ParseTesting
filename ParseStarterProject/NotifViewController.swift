@@ -26,6 +26,8 @@ class NotifViewController: UITableViewController {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
         //notifList = Array<InAppNotification>();
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = 60.0;
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -121,10 +123,14 @@ class NotifViewController: UITableViewController {
                 });
             //self.performSegueWithIdentifier("ImagePostSegue", sender: self);
         }
-        /*else if (member.type == NotificationType.FRIEND_REQUEST.toRaw()) {
-            self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
-        }*/
-        else {
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            //self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
+            var friend = FriendEncapsulator(friendName: member.friendName);
+            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+            self.navigationController.pushViewController(nextBoard, animated: true);
+        }
+        else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
             self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
         }
        /* else {

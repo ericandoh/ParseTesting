@@ -404,7 +404,7 @@
         <scene sceneID="GIw-Di-XCD">
             <objects>
                 <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="65" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -414,11 +414,21 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFD-ai-3cA" id="M4i-vK-vSd">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-BI-tpi">
-                                            <rect key="frame" x="5" y="3" width="60" height="60"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-BI-tpi">
+                                            <rect key="frame" x="5" y="5" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="DeZ-hV-oj0"/>
+                                                <constraint firstAttribute="width" constant="60" id="Tke-Am-tZj"/>
+                                            </constraints>
                                         </imageView>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                            <rect key="frame" x="73" y="13" width="179" height="36"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRu-qY-fEM">
-                                            <rect key="frame" x="268" y="13" width="46" height="40"/>
+                                            <rect key="frame" x="266" y="13" width="46" height="40"/>
                                             <state key="normal" title=">>">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -426,16 +436,15 @@
                                                 <action selector="nextActionCalled:" destination="oFD-ai-3cA" eventType="touchUpInside" id="HXe-uB-KTJ"/>
                                             </connections>
                                         </button>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
-                                            <rect key="frame" x="73" y="17" width="179" height="32"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lDr-BI-tpi" secondAttribute="bottom" constant="5" id="5Sv-CV-pzE"/>
                                         <constraint firstItem="8LH-sn-HLL" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="73" id="CFb-uS-aMS"/>
+                                        <constraint firstItem="lDr-BI-tpi" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="IDZ-Xj-wuQ"/>
+                                        <constraint firstItem="8LH-sn-HLL" firstAttribute="top" relation="greaterThanOrEqual" secondItem="M4i-vK-vSd" secondAttribute="top" constant="5" id="c1P-3e-2Vy"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8LH-sn-HLL" secondAttribute="bottom" constant="5" id="hZ9-mF-UEW"/>
                                         <constraint firstAttribute="trailing" secondItem="8LH-sn-HLL" secondAttribute="trailing" constant="68" id="sr1-0u-Tqj"/>
+                                        <constraint firstItem="lDr-BI-tpi" firstAttribute="leading" secondItem="M4i-vK-vSd" secondAttribute="leading" constant="5" id="vCn-e7-rjI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
