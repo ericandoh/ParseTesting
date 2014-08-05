@@ -23,7 +23,7 @@ class UserTextTableViewCell: UITableViewCell {
     
     var owner: UIViewController?;
     
-    var friendAction: Int = -1;
+    var friendAction: Bool = false;
 
     /*override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -73,13 +73,13 @@ class UserTextTableViewCell: UITableViewCell {
             //self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
             sideConstraint.constant = 60;
             if (involvedUser != nil) {
-                ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Int) in
+                ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
                     self.friendAction = amFollowing;
                     self.nextAction.hidden = false;
-                    if (amFollowing == 1) {
+                    if (amFollowing == true) {
                         self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
                     }
-                    else if (amFollowing == 0) {
+                    else if (amFollowing == false) {
                         self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
                     }
                     else {
@@ -114,22 +114,22 @@ class UserTextTableViewCell: UITableViewCell {
     }
     @IBAction func nextActionCalled(sender: UIButton) {
         var username = friend!.username;
-        if (friendAction == 0) {
+        if (friendAction == false) {
             //follow me
             ServerInteractor.postFollowerNotif(username, controller: self.owner!);
             ServerInteractor.addAsFollower(username);
             
             //update button
-            self.friendAction = 1
+            self.friendAction = true
             self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
         }
-        else if (friendAction == 1) {
+        else if (friendAction == true) {
             //unfollow me (if u wish!)
             let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 ServerInteractor.removeAsFollower(username);
                 //update button
-                self.friendAction = 0
+                self.friendAction = false
                 self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in

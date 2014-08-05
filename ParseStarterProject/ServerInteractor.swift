@@ -64,6 +64,7 @@ import UIKit
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
         user["numPosts"] = 0;
+        user["followings"] = []
     }
     
     class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
@@ -103,7 +104,7 @@ import UIKit
         //whats permissions
         //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
         //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
-        let permissions: [AnyObject]? = ["user_about_me", "user_relationships"];
+        let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
         PFFacebookUtils.logInWithPermissions(permissions, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: NewLoginViewController = sender as NewLoginViewController;
@@ -740,14 +741,26 @@ import UIKit
     
     //follow a user
     class func addAsFollower(followerName: String) {
-        var friendObj: PFObject = PFObject(className: "Friendship")
-        friendObj.ACL.setPublicReadAccess(true)
-        friendObj.ACL.setPublicWriteAccess(true)
-        friendObj["follower"] = PFUser.currentUser().username
-        friendObj["following"] = followerName
-        friendObj.saveEventually()
+        if (contains(PFUser.currentUser()["followings"] as Array<String>, followerName)) {
+            return;
+        } else {
+            var friendObj: PFObject = PFObject(className: "Friendship")
+            friendObj.ACL.setPublicReadAccess(true)
+            friendObj.ACL.setPublicWriteAccess(true)
+            friendObj["follower"] = PFUser.currentUser().username
+            friendObj["following"] = followerName
+            friendObj.saveEventually()
+            var followingsArray: NSMutableArray = []
+            followingsArray.insertObject(followerName, atIndex: 0)
+            PFUser.currentUser()["followings"] = followingsArray
+            PFUser.currentUser().saveEventually()
+        }
     }
     class func removeAsFollower(followingName: String) {
+        var followingsArray: NSMutableArray = PFUser.currentUser()["followings"] as NSMutableArray
+        followingsArray.removeObject(followingName)
+        PFUser.currentUser()["followings"] = followingsArray
+        PFUser.currentUser().saveEventually()
         var query = PFQuery(className: "Friendship");
         query.whereKey("follower", equalTo: PFUser.currentUser().username)
         query.whereKey("following", equalTo: followingName)
@@ -779,36 +792,18 @@ import UIKit
     }
     
     class func findFollowing(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
-        var query = PFQuery(className: "Friendship");
-        query.whereKey("follower", equalTo: followerName)
-        var followerList: Array<FriendEncapsulator?> = [];
-        query.findObjectsInBackgroundWithBlock({
-            (objects: [AnyObject]!, error: NSError!) -> Void in
-            //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            for object in objects {
-                var follower = object["following"] as String
-                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
-                followerList.append(friend)
-            }
-            retFunction(retList: followerList)
-            });
+        var followingList: Array<FriendEncapsulator?> = []
+        for object in PFUser.currentUser()["followings"] as Array<String> {
+            var following = FriendEncapsulator.dequeueFriendEncapsulator(object)
+            followingList.append(following)
+        }
+        retFunction(retList: followingList)
+        
     }
     
     class func findNumFollowing(followerName: String, retFunction: (Int)->Void) {
-        var query = PFQuery(className: "Friendship");
-        query.whereKey("follower", equalTo: followerName)
-        var followerList: Array<FriendEncapsulator?> = [];
-        query.findObjectsInBackgroundWithBlock({
-            (objects: [AnyObject]!, error: NSError!) -> Void in
-            //var followerList: Array<FriendEncapsulator?>  = listToAddTo
-            for object in objects {
-                var follower = object["following"] as String
-                var friend = FriendEncapsulator.dequeueFriendEncapsulator(follower)
-                followerList.append(friend)
-            }
-            retFunction(followerList.count)
-        });
-        //return followerList.count
+        
+        retFunction(PFUser.currentUser()["followings"].count)
     }
 
     class func findNumFollowers(followerName: String, retFunction: (Int)->Void) {
@@ -830,25 +825,13 @@ import UIKit
     }
     
     //returns if I am already following user X
-    class func amFollowingUser(followingName: String, retFunction: (Int)->Void) {
-        var query = PFQuery(className: "Friendship");
-        query.whereKey("follower", equalTo: PFUser.currentUser().username)
-        query.whereKey("following", equalTo: followingName)
-        query.findObjectsInBackgroundWithBlock({
-            (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (error == nil) {
-                if (objects.count > 0) {
-                    retFunction(1);
-                }
-                else {
-                    retFunction(0);
-                }
-            }
-            else {
-                retFunction(-1);
-            }
-        });
-        //return followerList.count
+    class func amFollowingUser(followingName: String, retFunction: (Bool)->Void) {
+        
+        if(contains(PFUser.currentUser()["followings"] as Array<String>, followingName)) {
+            retFunction(true)
+        } else {
+            return retFunction(false)
+        }
     }
 
     

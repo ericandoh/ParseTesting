@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428899855.238884"
+            timestampString = "428968989.726309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
-            landmarkName = "uploadImage(_:description:labels:looks:)"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
+            landmarkName = "preprocessImages(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/ServerInteractor.swift"
-            timestampString = "428899855.238884"
+            timestampString = "428968989.726309"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "363"
-            endingLineNumber = "363"
-            landmarkName = "uploadImage(_:description:labels:looks:)"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
+            landmarkName = "preprocessImages(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
