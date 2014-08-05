@@ -11,6 +11,8 @@
 
 //decided to encapsulate rather than override PFObject so changing code is easier, I can load images semantics, etc.
 
+var imagePostDictionary: [String: ImagePostStructure] = [:];
+
 class ImagePostStructure
 {
     var image: UIImage?
@@ -74,6 +76,19 @@ class ImagePostStructure
         //might want to change this for exclusivity posts?
         myObj.ACL.setPublicReadAccess(true);
         myObj.ACL.setPublicWriteAccess(true);
+        
+        imagePostDictionary[myObj.objectId] = self;
+    }
+    class func dequeueImagePost(inputObj: PFObject)->ImagePostStructure {
+        var postExist: ImagePostStructure? = imagePostDictionary[inputObj.objectId];
+        if (postExist != nil) {
+            return postExist!;
+        }
+        else {
+            var newPostToMake = ImagePostStructure(inputObj: inputObj);
+            imagePostDictionary[inputObj.objectId] = newPostToMake;
+            return newPostToMake;
+        }
     }
     func save() {
         myObj.saveInBackground()

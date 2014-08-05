@@ -464,7 +464,7 @@ import UIKit
                 notifyQueryFinish(objects.count);
                     var post: ImagePostStructure?;
                     for (index, object) in enumerate(objects!) {
-                        post = ImagePostStructure(inputObj: object as PFObject);
+                        post = ImagePostStructure.dequeueImagePost(object as PFObject);
                         var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
                         post!.loadImage(finishFunction, index: realIndex);
                     }
@@ -524,7 +524,7 @@ import UIKit
                 
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: (object as PFObject));
+                    post = ImagePostStructure.dequeueImagePost((object as PFObject));
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -557,7 +557,7 @@ import UIKit
                 // Do something with the found objects
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object as PFObject);
+                    post = ImagePostStructure.dequeueImagePost(object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {
@@ -584,7 +584,7 @@ import UIKit
                 // Do something with the found objects
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
-                    post = ImagePostStructure(inputObj: object as PFObject);
+                    post = ImagePostStructure.dequeueImagePost(object as PFObject);
                     post!.loadImage(finishFunction, index: index);
                 }
             } else {

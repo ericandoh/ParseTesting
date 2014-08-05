@@ -111,7 +111,7 @@ class NotifViewController: UITableViewController {
             member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
                 if (!error) {
                     var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
-                    var onlyImagePost = ImagePostStructure(inputObj: obj);
+                    var onlyImagePost = ImagePostStructure.dequeueImagePost(obj);
                     imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
                     var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                     newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
