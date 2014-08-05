@@ -17,6 +17,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var numberPosts: UILabel!
     @IBOutlet var numberLikes: UILabel!
     
+    @IBOutlet weak var numberFollowers: UILabel!
+    @IBOutlet weak var numberFollowing: UILabel!
+    
+    
     @IBOutlet var followerTableView: UITableView!
     var mainUser: FriendEncapsulator?;
     
@@ -58,44 +62,47 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
-        numberPosts.text = String(PFUser.currentUser()["numPosts"] as Int)
-        numberLikes.text = String(PFUser.currentUser()["likedPosts"].count as Int)
+        
+        //1. mainUser == nil
+        //  a. Anon
+        //  b. MyUser (current user)
+        //2. receive mainUser from some other view
+        //  a. mainUser == currentUser
+        //  b. mainUser == some other user thats not me
+        
+        //numberPosts.text = String(mainUser!["numPosts"].count as Int)
+        //numberLikes.text = String(mainUser!["likedPosts"].count as Int)
+        //numberPosts.text = String(mainUser!.getNumPosts())
+        //numberLikes.text = String(mainUser!.getNumLiked())
         var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
         var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
-        //self.navigationItem.titleView = CGRect(0, 0, 40, 40)
         userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
-        userIcon!.layer.cornerRadius = (userIcon!.frame.size.width) / 2
-        //NSLog("\(userIcon!.layer.cornerRadius)")
-        userIcon!.layer.masksToBounds = true
-        userIcon!.layer.borderWidth = 0
-        //NSLog("\(userIcon!.frame.size.width)")
-        //userIcon!.image = DEFAULT_USER_ICON;
-        //self.navigationItem.titleView = userIcon
         userIcon!.frame = CGRectMake(20, -5, 40, 40);
-        //self.navigationItem.titleView.frame = CGRectMake(-10, -10, 40, 40)
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
-                //self.userIcon.image = image;
                 var newUserIcon: UIImage = self.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                //NSLog("\(self.userIcon!.layer.cornerRadius)")
+                self.userIcon!.layer.masksToBounds = true
+                self.userIcon!.layer.borderWidth = 0
+                self.navigationItem.titleView = view;
+                userLabel.text = self.mainUser!.username
+                view.addSubview(self.userIcon!);
+                view.addSubview(userLabel);
+                self.numberPosts.text = String(self.mainUser!.getNumPosts())
+                self.numberLikes.text = String(self.mainUser!.getNumLiked())
+                self.getNumFollowers()
+                self.getNumFollowing()
+                //self.settingsButton.hidden = true
+                self.settingsButton.setImage(LOADING_IMG, forState: UIControlState.Normal)
                 });
-            //logOffButton.hidden = true;         //same as below
-            settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
+            //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
-            /* else {
-            var isLinkedToFacebook: Bool = PFFacebookUtils.isLinkedWithUser(PFUser.currentUser())
-            if (isLinkedToFacebook){
-            userNameLabel.text = ServerInteractor.getUserName()
-            }*/
         else {
             if (ServerInteractor.isAnonLogged()) {
                 userLabel.text = "Not logged in";
-                //logOffButton.setTitle("Sign In", forState: UIControlState.Normal)
                 self.userIcon!.image = DEFAULT_USER_ICON;
-                //var newUserIcon = self.imageWithImage(image, scaledToSize: self.navigationController.navigationBar.frame.size)
                 friendsButton.hidden = true;
             }
             else {
@@ -103,23 +110,19 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 // Do any additional setup after loading the view.
                 userLabel.text = ServerInteractor.getUserName();
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
-                    //self.userIcon.image = fetchedImage;
                     var newUserIcon = self.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                    //NSLog("\(self.userIcon!.layer.cornerRadius)")
-                    //NSLog("\(self.userIcon!.frame.size.width)")
                     self.userIcon!.layer.masksToBounds = true
                     self.userIcon!.layer.borderWidth = 0
-                    //NSLog("\(self.userIcon!.frame.size.width)")
-                    //userIcon!.image = DEFAULT_USER_ICON;
-                    //self.navigationItem.titleView = self.userIcon;
                     self.navigationItem.titleView = view;
-                    //self.userIcon!.frame = CGRectMake(30, 0, 40, 40)
-                    //self.navigationItem.titleView.frame = CGRectMake(30, 0, 40, 40)
                     userLabel.text = self.mainUser!.username
                     view.addSubview(self.userIcon!);
                     view.addSubview(userLabel);
+                    self.numberPosts.text = String(self.mainUser!.getNumPosts())
+                    self.numberLikes.text = String(self.mainUser!.getNumLiked())
+                    self.getNumFollowers()
+                    self.getNumFollowing()
                     });
             }
         }
@@ -204,6 +207,31 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }) //--> change this to getFriends(srcFriend)
     }
 
+    func getNumFollowing() {
+        //var numFollowing = ServerInteractor.findNumFollowing(mainUser!.username)
+        //println("\(numFollowing) sdkjfnvkjdnvkjsndfljvsdlfjnvsdjfv OHH YEAADFJKVNDKVJN WOOTOWOTOWOWOT")
+        //return numFollowing
+        ServerInteractor.findNumFollowing(mainUser!.username,
+            retFunction: {
+                (retInt: Int) in
+                var numFollowing: Int = retInt
+                self.numberFollowing.text = String(numFollowing)
+        })
+    }
+    
+    func getNumFollowers() {
+        //var numFollowers = ServerInteractor.findNumFollowers(mainUser!.username)
+        //println(String(numFollowers) + "sdkjfnvkjdnvkjsndfljvsdlfjnvsdjfv OHH YEAADFJKVNDKVJN WOOTOWOTOWOWOT")
+        //return numFollowers
+        ServerInteractor.findNumFollowers(mainUser!.username,
+            retFunction: {
+                (retInt: Int) in
+                var numFollowers: Int = retInt
+                self.numberFollowers.text = String(numFollowers)
+        })
+
+    }
+    
     func reloadDatums() {
         NSLog("d")
         self.followerTableView.reloadData();
@@ -292,6 +320,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return "Unfollow"
     }*/
     
+    @IBAction func settings(sender: AnyObject) {
+        if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
+            ServerInteractor.addAsFollower(mainUser!.username)
+            ServerInteractor.postFollowerNotif(mainUser!.username, controller: self);
+        } else {
+            self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
+        }
+    }
     
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
@@ -312,5 +348,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         return cell
         
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var temp = indexPath.row
+        var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+        (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
+        self.navigationController.pushViewController(nextBoard, animated: true);
     }
 }

@@ -43,6 +43,18 @@ class FriendEncapsulator {
         }
         return username;
     }
+    
+    func getNumLiked() -> Int {
+        var numLiked: Int = friendObj!["likedPosts"].count
+        return numLiked
+    }
+    
+    func getNumPosts() -> Int {
+        var numPosts: Int = friendObj!["numPosts"]! as Int
+        return numPosts
+    }
+    
+    
     func exists(result: (Bool)->Void) {
         var query = PFUser.query();
         query.whereKey("username", equalTo: self.username);

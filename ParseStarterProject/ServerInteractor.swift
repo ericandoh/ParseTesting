@@ -321,8 +321,8 @@ import UIKit
             /*newPost.myObj.saveInBackgroundWithBlock({(succeeded: Bool, error: NSError!)->Void in
                 NSLog("What");
                 });*/
-            //PFUser.currentUser().incrementKey("numPosts")
-            //PFUser.currentUser().saveEventually();
+            PFUser.currentUser().incrementKey("numPosts")
+            PFUser.currentUser().saveEventually();
 
             newPost.myObj.saveInBackgroundWithBlock({
                 (succeeded: Bool, error: NSError!)->Void in
@@ -731,6 +731,45 @@ import UIKit
             retFunction(retList: followerList)
             NSLog("JDFNJKVNSDKFJNVSLKDJFNVLKSJDFNV")
             });
+    }
+    
+    class func findNumFollowing(followerName: String, retFunction: (Int)->Void) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("follower", equalTo: followerName)
+        NSLog("\(followerName)")
+        var followerList: Array<FriendEncapsulator?> = [];
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
+            for object in objects {
+                var follower = object["following"] as String
+                var friend = FriendEncapsulator(friendName: follower)
+                followerList.append(friend)
+            }
+            retFunction(followerList.count)
+        });
+        //return followerList.count
+    }
+
+    class func findNumFollowers(followerName: String, retFunction: (Int)->Void) {
+        var query = PFQuery(className: "Friendship");
+        query.whereKey("following", equalTo: followerName)
+        NSLog("\(followerName)")
+        var followerList: Array<FriendEncapsulator?> = [];
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+            NSLog("\(objects.count) lololol yayayay fdjdsfnvksjdfvksjndfv")
+            for object in objects {
+                var following = object["follower"] as String
+                var friend = FriendEncapsulator(friendName: following)
+                followerList.append(friend)
+            }
+            retFunction(followerList.count)
+            //return (followerList.count)
+        });
+        //return followerList.count
     }
 
     
