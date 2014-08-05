@@ -40,6 +40,7 @@ class LinkFilledTextView: UITextView {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+        self.editable = false;
     }
     
     init(frame: CGRect, textContainer: NSTextContainer!, owner: UIViewController) {
@@ -48,12 +49,14 @@ class LinkFilledTextView: UITextView {
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+        self.editable = false;
     }
     override func awakeFromNib() {
         super.awakeFromNib();
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+        self.editable = false;
     }
     /*init(frame: CGRect) {
     super.init(frame: frame);
