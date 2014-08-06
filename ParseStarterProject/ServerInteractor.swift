@@ -567,6 +567,31 @@ import UIKit
             }
         }
     }
+    class func getSubmissionsForSuggest(loadCount: Int, user: FriendEncapsulator, userIndex: Int,  notifyQueryFinish: (Int, Int)->Void, finishFunction: (Int, ImagePostStructure, Int)->Void)  {
+        var query = PFQuery(className:"ImagePost")
+        query.whereKey("author", equalTo: user.username);
+        query.limit = loadCount;
+        query.orderByDescending("createdAt");
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if !error {
+                // Do something with the found objects
+                notifyQueryFinish(userIndex, objects.count);
+                var post: ImagePostStructure?;
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure.dequeueImagePost(object as PFObject);
+                    post!.loadImage({
+                        (img: ImagePostStructure, index: Int) in
+                        finishFunction(userIndex, img, index);
+                        }, index: index);
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Error: %@ %@", error, error.userInfo)
+            }
+        }
+
+    }
     
     class func getSearchPosts(skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
@@ -899,6 +924,53 @@ import UIKit
         return nil;
     }
 
+    
+    class func getSuggestedFollowers(numToReturn: Int, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+        //screw it I'm going to make it random 3 followers for now
+        //let NUM_FOLLOWERS_TO_QUERY: Int32 = 3;
+        
+        var toRet: Array<FriendEncapsulator?> = [];
+        
+        var query = PFUser.query();
+        query.whereKey("userType", containedIn: RELEVANT_TYPES);
+        query.whereKey("numPosts", greaterThan: 1);
+        
+        //-----add orderby type (rank by popularity?)-------------WORK NEED
+        //query......
+        //------------------------
+        
+        
+        query.countObjectsInBackgroundWithBlock({(result: Int32, error: NSError!) in
+            if (error == nil) {
+                if (result == 0) {
+                    
+                }
+                else {
+                    var nums = 0;
+                    for i in 0..<numToReturn {
+                        var query = PFUser.query();
+                        query.whereKey("userType", containedIn: RELEVANT_TYPES);
+                        query.whereKey("numPosts", greaterThan: 1);
+                        //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
+                        //make this unique numbers
+                        query.skip = random() % Int(result);
+                        //WORK NEED
+                        query.limit = 1;
+                        query.findObjectsInBackgroundWithBlock({
+                            (objects: [AnyObject]!, error: NSError!) in
+                            for index: Int in 0..<objects.count {
+                                toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser));
+                            }
+                            nums += 1;
+                            if (nums == numToReturn) {
+                                retFunction(retList: toRet);
+                            }
+                        })
+                    }
+                }
+            }
+        });
+    }
     
     //not currently used, but might be helpful later on/nice to have a default version
     class func getFriends()->Array<FriendEncapsulator?> {

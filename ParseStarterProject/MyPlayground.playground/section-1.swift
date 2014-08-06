@@ -22,6 +22,13 @@ wordNumberer(409298);
 wordNumberer(50194809);
 wordNumberer(98682091809184604);*/
 
+var num = random() % 100;
+
+for i in 0..<5{
+    print(i);
+}
+
+/*
 var dictionary: [String: String] = [:];
 dictionary.keys
 var arr = [1,2,3];
@@ -47,7 +54,7 @@ for match in matches {
     //var piece = aString.substringWithRange();
     results.append(aString.substringFromIndex(match.range.location).substringToIndex(match.range.length));
 }
-results;
+results;*/
 
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 
