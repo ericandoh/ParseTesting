@@ -55,6 +55,9 @@ class CustomImageBuffer: NSObject {
     var newlyLoadedStart: Int = 0;
     var newlyLoadedEnd: Int = 0;
     
+    //active meaning I should write to the collectionview
+    var isActive: Bool = false;
+    
     //whenever the buffer is reset, previous calls to functions must be invalidated
     //this variable lets me know (for delayed calls) if my callback is modifying at the correct state 
     //(i.e. callback from old function after I reset gets called, makes sure my state is consistent
@@ -151,6 +154,7 @@ class CustomImageBuffer: NSObject {
             return;
         }
         isLoading = 1;
+        isActive = true;
         //loadedUpTo += 1;
         //loadedPosts += Array<ImagePostStructure?>(count: postLoadCount, repeatedValue: nil);
         //start loading next set of postLoadCount here
@@ -190,6 +194,7 @@ class CustomImageBuffer: NSObject {
         endLoadCount = 0;
         hitEnd = false;
         isLoading = false;
+        isActive = false;
     }
     func getImagePostAt(index: Int)->ImagePostStructure {
         return loadedPosts[index]!;
@@ -232,7 +237,9 @@ class CustomImageBuffer: NSObject {
         newlyLoadedEnd = needAmount;
         //myCollectionView.reloadData();
         if (refreshFunction != nil) {
-            refreshFunction!();
+            if (isActive) {
+                refreshFunction!();
+            }
         }
     }
     
@@ -250,7 +257,9 @@ class CustomImageBuffer: NSObject {
         }
         loadedPosts[realIndex] = loaded;
         
-        self.configureCellFunction!(index: realIndex);
+        if (isActive) {
+            self.configureCellFunction!(index: realIndex);
+        }
         
         if (realIndex == loadedPosts.count - 1) {
             isLoading = 0;

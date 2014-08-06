@@ -19,6 +19,7 @@ class ImagePostStructure
     var images: Array<UIImage>
     var myObj: PFObject
     var imagesLoaded: Bool = false;
+    var isLoadingImages: Bool = false;
     //var user: PFUser()
     init(inputObj: PFObject) {
         //called when retrieving object (for viewing, etc)
@@ -125,6 +126,7 @@ class ImagePostStructure
         return ServerInteractor.likedBefore(myObj.objectId);
     }
     func loadImage() {
+        NSLog("loadImage() - this function seems unused");
         if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
@@ -137,7 +139,7 @@ class ImagePostStructure
         if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                if (!error) {
+                if (error == nil) {
                     //get file objects
                     self.image = UIImage(data: result);
                     finishFunction(imgStruct: self, index: index);
@@ -156,21 +158,31 @@ class ImagePostStructure
         if (imagesLoaded) {
             callBack(snapShotViewCounter);
         }
+        else if (isLoadingImages) {
+            //repetitive call, wait for first call to finish
+            //no callback
+        }
         else {
+            isLoadingImages = true;
             var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
             if (imgFiles.count == 0) {
                 self.imagesLoaded = true;
+                isLoadingImages = false;
                 callBack(snapShotViewCounter);
             }
             for (index, imgFile: PFFile) in enumerate(imgFiles) {
                 imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                    if (!error) {
+                    if (error == nil) {
                         //get file objects
                         var fImage = UIImage(data: result);
                         self.images.append(fImage);
                     }
+                    else {
+                        NSLog("Error fetching rest of images!")
+                    }
                     if (self.images.count == imgFiles.count) {
                         self.imagesLoaded = true;
+                        self.isLoadingImages = false;
                         callBack(snapShotViewCounter);
                     }
                 });
@@ -199,7 +211,7 @@ class ImagePostStructure
     //deprecated
     //loads all images, as I load I return images by index
     func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
-        
+        NSLog("This method is deprecated: investigate if this nslog shows up")
         //get me img at index 0
         if (postIndex == 0) {
             loadImage({(imgStruct: ImagePostStructure, index: Int)->Void in
@@ -212,13 +224,16 @@ class ImagePostStructure
                 var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
                 for (index, imgFile: PFFile) in enumerate(imgFiles) {
                     imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                        if (!error) {
+                        if (error == nil) {
                             //get file objects
                             var fImage = UIImage(data: result);
                             self.images.append(fImage);
                             if (index == postIndex - 1) {
                                 finishFunction(fImage, false);
                             }
+                        }
+                        else {
+                            NSLog("Failed to fetch images!")
                         }
                         if (index == imgFiles.count - 1) {
                             self.imagesLoaded = true;
