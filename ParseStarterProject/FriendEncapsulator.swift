@@ -29,6 +29,10 @@ class FriendEncapsulator {
     }
     
     class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
+        if (PFAnonymousUtils.isLinkedWithUser(friend)) {
+            var newFriendToMake = FriendEncapsulator(friend: friend);
+            return newFriendToMake;
+        }
         var friendExist: FriendEncapsulator? = friendDictionary[friend.username];
         if (friendExist != nil) {
             if (friendExist!.friendObj == nil) {
