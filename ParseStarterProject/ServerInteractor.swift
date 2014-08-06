@@ -39,7 +39,7 @@ import UIKit
         user["likedPosts"] = NSMutableArray();*/
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
-            if (!error) {
+            if (error == nil) {
                 //success!
                 //sees if user has pending items to process
                 //ServerInteractor.initialUserChecks();
@@ -88,7 +88,7 @@ import UIKit
     class func updateUser(sender: NSObject) {
         PFUser.currentUser().fetchInBackgroundWithBlock({(user: PFObject!, error: NSError!)->Void in
             var start: StartController = sender as StartController;
-            if (!error) {
+            if (error == nil) {
                // ServerInteractor.initialUserChecks();
                 start.approveUser();
             }
@@ -193,7 +193,7 @@ import UIKit
                     }
                     ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 } else {
-                    NSLog("oh no!")
+                    NSLog("Query for my terms failed")
                 }
         });
     }
@@ -280,7 +280,7 @@ import UIKit
         query.whereKey("term", containedIn: arr);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (!error) {
+            if (error == nil) {
                 var foundLabel: String;
                 for object:PFObject in objects as [PFObject] {
                     foundLabel = object["term"] as String;
@@ -293,6 +293,9 @@ import UIKit
                 for label: String in arr {
                     ServerInteractor.makeNewTerm(label);
                 }
+            }
+            else {
+                NSLog("Error: Querying for labels failed");
             }
         });
         
@@ -389,7 +392,7 @@ import UIKit
 
             newPost.myObj.saveInBackgroundWithBlock({
                 (succeeded: Bool, error: NSError!)->Void in
-                if (succeeded && !error) {
+                if (succeeded && error == nil) {
                     var myUser: PFUser = PFUser.currentUser();
                     if (!(myUser["userIcon"])) {
                         //above may set to last submitted picture...? sometimes??
@@ -529,7 +532,7 @@ import UIKit
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 // Do something with the found objects
                 notifyQueryFinish(objects.count);
@@ -561,7 +564,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 
                 notifyQueryFinish(objects.count);
@@ -585,7 +588,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // Do something with the found objects
                 notifyQueryFinish(userIndex, objects.count);
                 var post: ImagePostStructure?;
@@ -613,7 +616,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 
                 notifyQueryFinish(objects.count);
@@ -688,7 +691,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 // Do something with the found objects
                 var object: PFObject;

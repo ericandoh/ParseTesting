@@ -94,11 +94,11 @@ class FriendEncapsulator {
         query.limit = 1;
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (!error && objects.count > 0)  {
+            if (error == nil && objects.count > 0)  {
                 self.friendObj = objects[0] as? PFUser;
                 result(true);
             }
-            else if (error) {
+            else if (error != nil) {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
                 result(false);
@@ -132,7 +132,7 @@ class FriendEncapsulator {
             query.limit = 1;
             query.findObjectsInBackgroundWithBlock {
                 (objects: [AnyObject]!, error: NSError!) -> Void in
-                if (!error && objects.count > 0)  {
+                if (error == nil && objects.count > 0)  {
                     self.friendObj = objects[0] as? PFUser;
                     self.fetchImage(receiveAction);
                 }

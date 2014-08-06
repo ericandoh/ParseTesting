@@ -54,11 +54,14 @@ class InAppNotification {
                 case NotificationType.IMAGE_POST.toRaw():
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        if (!error) {
+                        if (error == nil) {
                             var numLikes: Int = object["likes"] as Int
                             //if one person, say "Person" has liked your photo, else "_" people have liked it!
                             self.messageString = "Your picture has gotten \(numLikes) likes!"
                             listener.tableView.reloadData()
+                        }
+                        else {
+                            NSLog("Error fetching image post for notification?");
                         }
                     });
                 case NotificationType.FOLLOWER_NOTIF.toRaw():

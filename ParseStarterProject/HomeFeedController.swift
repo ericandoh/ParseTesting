@@ -142,6 +142,7 @@ class HomeFeedController: UIViewController {
         super.viewWillDisappear(animated);
     }*/
     func syncWithImagePostDelegate(theirBuffer: CustomImageBuffer, selectedAt: Int) {
+        NSLog("Syncing to home at \(selectedAt)")
         viewCounter = selectedAt;
         postCounter = 0;
         refreshNeeded = false;
@@ -159,7 +160,9 @@ class HomeFeedController: UIViewController {
         frontImageView!.image = LOADING_IMG;
         if (imgBuffer != nil) {
             imgBuffer!.resetData();
-            self.imgBuffer!.loadSet();
+            //self.imgBuffer!.loadSet();
+            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
+            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
         }
         else {
             self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
@@ -243,6 +246,7 @@ class HomeFeedController: UIViewController {
         if (index != viewCounter) {
             return;
         }
+        NSLog("Configuring \(index)");
 
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
@@ -447,6 +451,10 @@ class HomeFeedController: UIViewController {
             //show end of file screen, refresh if needed
             if (self.navigationController) {
                 viewCounter = imgBuffer!.numItems() - 1;
+                if (imgBuffer!.isLoadedAt(viewCounter)) {
+                    var currentPost = imgBuffer!.getImagePostAt(viewCounter);
+                    pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+                }
                 return;
             }
             else {

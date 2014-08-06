@@ -155,25 +155,33 @@ class ImagePostStructure
     }
     
     func loadRestIfNeeded(callBack: (Int)->Void, snapShotViewCounter: Int) {
+        NSLog("----------------------Request for more images at \(snapShotViewCounter)-------------------")
         if (imagesLoaded) {
+            NSLog("Images are already loaded, calling callback")
             callBack(snapShotViewCounter);
         }
         else if (isLoadingImages) {
             //repetitive call, wait for first call to finish
             //no callback
+            NSLog("I already started loading images!")
         }
         else {
+            NSLog("Starting load of images")
             isLoadingImages = true;
             var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
             if (imgFiles.count == 0) {
+                NSLog("No results")
                 self.imagesLoaded = true;
                 isLoadingImages = false;
                 callBack(snapShotViewCounter);
+                return;
             }
+            NSLog("We have \(imgFiles.count) files to fetch, lets get on it!");
             for (index, imgFile: PFFile) in enumerate(imgFiles) {
                 imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                     if (error == nil) {
                         //get file objects
+                        NSLog("+1");
                         var fImage = UIImage(data: result);
                         self.images.append(fImage);
                     }
@@ -181,6 +189,7 @@ class ImagePostStructure
                         NSLog("Error fetching rest of images!")
                     }
                     if (self.images.count == imgFiles.count) {
+                        NSLog("Finished fetching for \(snapShotViewCounter)")
                         self.imagesLoaded = true;
                         self.isLoadingImages = false;
                         callBack(snapShotViewCounter);

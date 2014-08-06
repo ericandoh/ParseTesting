@@ -168,6 +168,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 AnonText.hidden = false
             } else {
                 collectionDelegatePosts!.resetData();
+                collectionDelegateLikes!.resetData()
+                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
                 collectionDelegatePosts!.initialSetup();
                 //collectionDelegate!.loadSet()
                 myCollectionView.hidden = false
@@ -179,7 +181,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 return
             } else {
                 collectionDelegatePosts!.resetData();
-                collectionDelegatePosts!.loadSet()
+                
+                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
+                collectionDelegatePosts!.initialSetup();
+                //collectionDelegatePosts!.loadSet()
             }
         }
     }
@@ -187,8 +192,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userLikes(sender: AnyObject) {
         if (options != 2) {
-            //collectionDelegatePosts!.resetData();
             collectionDelegateLikes!.resetData()
+            collectionDelegatePosts!.resetData();
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
             options = 2
             myCollectionView.hidden = false
@@ -198,7 +204,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             options = 2
             collectionDelegateLikes!.resetData();
-            collectionDelegateLikes!.loadSet()
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+            collectionDelegateLikes!.initialSetup();
         }
     }
     
@@ -333,7 +340,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        NSLog("a \(friendList.count)")
         return friendList.count;
     }
     
@@ -375,9 +381,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var temp = indexPath.row
-        var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-        (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
-        self.navigationController.pushViewController(nextBoard, animated: true);
+        if (self.navigationController != nil) {
+            var temp = indexPath.row
+            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
+            self.navigationController.pushViewController(nextBoard, animated: true);
+        }
     }
 }

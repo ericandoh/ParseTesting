@@ -30,6 +30,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     var suggestedUserImgs: [String: Array<UIImage>] = [:];
     var suggestedUserCounts: [String: Int] = [:];
     
+    var isLoadingSuggestedFriends: Bool = false;
+    
+    var friendsToLoad: Int = 0;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         /*someTextField.owner = self;
@@ -114,6 +118,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
     func resetAndFetchSuggested() {
+        if (isLoadingSuggestedFriends) {
+            //i was loading them before, no need to reset and see new ones!
+            return;
+        }
+        isLoadingSuggestedFriends = true;
         suggestedUsers = [];
         suggestedUserImgs = [:];
         suggestedUserCounts = [:];
@@ -121,8 +130,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func fetchSuggestedUsers() {
+        self.suggestedCollectionView.reloadData();
         ServerInteractor.getSuggestedFollowers(NUM_TO_SUGGEST, retFunction: {
             (retList: Array<FriendEncapsulator?>) in
+            self.friendsToLoad = retList.count;
             for (index, friend) in enumerate(retList) {
                 self.suggestedUsers.append(friend);
                 //self.suggestedUserImgs[friend!.username] = [];
@@ -141,6 +152,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.suggestedUserImgs[friend.username]!.append(post.getImageAt(0));
         if (self.suggestedUserImgs[friend.username]!.count == self.suggestedUserCounts[friend.username]!) {
             suggestedCollectionView.reloadData();
+            friendsToLoad--;
+            if (friendsToLoad == 0) {
+                isLoadingSuggestedFriends = false;
+            }
             //suggestedCollectionView.reloadSections(NSIndexSet(index: userIndex));
         }
     }
