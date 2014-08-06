@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
-        <deployment defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <scenes>
@@ -22,7 +21,7 @@
             </objects>
             <point key="canvasLocation" x="1008" y="1665"/>
         </scene>
-        <!--User Profile View Controller-->
+        <!--                      -->
         <scene sceneID="HDz-ta-5fb">
             <objects>
                 <viewController storyboardIdentifier="UserProfilePage" id="Ism-7q-CMJ" customClass="UserProfileViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -132,6 +131,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="                  Sign in to Upload Pictures" translatesAutoresizingMaskIntoConstraints="NO" id="bFd-DT-pdV">
+                                <rect key="frame" x="0.0" y="268" width="320" height="80"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3rd-ZN-2US">
                                 <rect key="frame" x="0.0" y="125" width="320" height="443"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -143,7 +148,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Y1-Ls-Za2">
-                                                    <rect key="frame" x="8" y="14.5" width="40" height="40"/>
+                                                    <rect key="frame" x="8" y="15" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="Gso-V6-8hp"/>
                                                         <constraint firstAttribute="width" constant="40" id="p6Y-hb-fBx"/>
@@ -192,7 +197,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="19Q-uH-hUr">
+                    <navigationItem key="navigationItem" title="                      " id="19Q-uH-hUr">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Su4-M6-yrE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
                                 <rect key="frame" x="147" y="59" width="57" height="30"/>
@@ -207,6 +212,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="AnonText" destination="bFd-DT-pdV" id="aHI-2q-zeW"/>
                         <outlet property="followerTableView" destination="3rd-ZN-2US" id="562-AG-YHr"/>
                         <outlet property="friendsButton" destination="88N-x2-sgK" id="cYw-Ed-Ge8"/>
                         <outlet property="myCollectionView" destination="XgZ-I1-U6x" id="rrH-Sp-aKZ"/>
@@ -1443,6 +1449,49 @@
                 </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1912" y="2390"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="lyo-zz-anv">
+            <objects>
+                <viewController id="gGt-ls-Xji" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7dc-Ev-EnQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="VpM-FW-gfL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KCd-kF-8ui">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="   Anonymous users cannot use this function" translatesAutoresizingMaskIntoConstraints="NO" id="IAz-ui-X8k">
+                                <rect key="frame" x="0.0" y="181" width="320" height="206"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="sXn-Dv-gP0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dhn-p5-Dra" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2380" y="1660"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2In-E1-wos">
+            <objects>
+                <navigationController storyboardIdentifier="Anon" id="p64-DW-Ze5" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ras-AM-T8b">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="gGt-ls-Xji" kind="relationship" relationship="rootViewController" id="BXX-nY-o5n"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k9x-ed-alH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1912" y="1660"/>
         </scene>
         <!--Register-->
         <scene sceneID="GbN-ib-ZeW">

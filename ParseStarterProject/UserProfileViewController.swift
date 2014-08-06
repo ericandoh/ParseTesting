@@ -20,6 +20,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var numberFollowers: UILabel!
     @IBOutlet weak var numberFollowing: UILabel!
     
+    @IBOutlet weak var AnonText: UITextView!
     
     @IBOutlet var followerTableView: UITableView!
     var mainUser: FriendEncapsulator?;
@@ -104,13 +105,21 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
         else {
+            mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
-                userLabel.text = "Not logged in";
-                self.userIcon!.image = DEFAULT_USER_ICON;
+                var tempImage: UIImage = DEFAULT_USER_ICON;
+                var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
+                self.userIcon!.image = newUserIcon
+                self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
+                self.userIcon!.layer.masksToBounds = true
+                self.userIcon!.layer.borderWidth = 0
+                self.navigationItem.titleView = view;
+                userLabel.text = "Anon User";
+                view.addSubview(self.userIcon!);
+                view.addSubview(userLabel);
                 friendsButton.hidden = true;
             }
             else {
-                mainUser = ServerInteractor.getCurrentUser();
                 // Do any additional setup after loading the view.
                 userLabel.text = ServerInteractor.getUserName();
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
@@ -133,9 +142,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
         if (options == 0) {
             options = 1;
-            collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
-            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
-            collectionDelegatePosts!.initialSetup();
+            if (ServerInteractor.isAnonLogged()) {
+                myCollectionView.hidden = true
+                followerTableView.hidden = true
+                collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+                AnonText.hidden = false
+            } else {
+                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
+                collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+                collectionDelegatePosts!.initialSetup();
+            }
         }
     }
     
@@ -146,14 +162,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             //collectionDelegate!.serverFunction = ServerInteractor.getSubmissions;
             options = 1
             //collectionDelegateLikes!.resetData();
-            collectionDelegatePosts!.resetData();
-            collectionDelegatePosts!.initialSetup();
-            //collectionDelegate!.loadSet()
-            myCollectionView.hidden = false
-            followerTableView.hidden = true
+            if (ServerInteractor.isAnonLogged()) {
+                myCollectionView.hidden = true
+                followerTableView.hidden = true
+                AnonText.hidden = false
+            } else {
+                collectionDelegatePosts!.resetData();
+                collectionDelegatePosts!.initialSetup();
+                //collectionDelegate!.loadSet()
+                myCollectionView.hidden = false
+                followerTableView.hidden = true
+            }
         } else {
-            collectionDelegatePosts!.resetData();
-            collectionDelegatePosts!.loadSet()
+            if (ServerInteractor.isAnonLogged()) {
+                //collectionDelegatePosts!.resetData();
+                return
+            } else {
+                collectionDelegatePosts!.resetData();
+                collectionDelegatePosts!.loadSet()
+            }
         }
     }
     
@@ -166,6 +193,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             options = 2
             myCollectionView.hidden = false
             followerTableView.hidden = true
+            AnonText.hidden = true
             //collectionDelegate!.loadSet()
         } else {
             options = 2

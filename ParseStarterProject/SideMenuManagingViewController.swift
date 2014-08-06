@@ -156,7 +156,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             }
         }
         else {
-            content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+            
+            if ((ServerInteractor.isAnonLogged()) && ((contentString == "Upload") || (contentString == "FindFriends"))) {
+                content = self.storyboard.instantiateViewControllerWithIdentifier("Anon") as UIViewController;
+            } else {
+                content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+            }
             self.viewControllerDictionary[contentString] = content;
         }
         content.view.alpha = 0;

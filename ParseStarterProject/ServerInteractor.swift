@@ -427,7 +427,11 @@ import UIKit
         return output;
     }
     class func appendToLikedPosts(id: String) {
-        var likedPostsArray = PFUser.currentUser()["likedPosts"] as NSMutableArray
+        if (PFUser.currentUser()["likedPosts"] == nil) {
+            NSLog("Something's wrong bro")
+        }
+        var likedPosts = PFUser.currentUser()["likedPosts"] as Array<String>;
+        var likedPostsArray: NSMutableArray = NSMutableArray(array: likedPosts);
         likedPostsArray.insertObject(id, atIndex: 0)
         PFUser.currentUser()["likedPosts"] = likedPostsArray
         PFUser.currentUser().saveInBackground()
@@ -439,11 +443,18 @@ import UIKit
         PFUser.currentUser().saveInBackground()
     }
     class func likedBefore(id: String)->Bool {
-        var likedPostsArray = PFUser.currentUser()["likedPosts"] as Array<String>;
-        if (contains(likedPostsArray, id)) {
-            return true;
+        if (PFUser.currentUser()["likedPosts"] == nil) {
+            PFUser.currentUser()["likedPosts"] = NSArray();
+            PFUser.currentUser().saveEventually();
+            return false;
         }
-        return false;
+        else {
+            var likedPostsArray = PFUser.currentUser()["likedPosts"] as Array<String>;
+            if (contains(likedPostsArray, id)) {
+                return true;
+            }
+            return false;
+        }
     }
     
     class func getLikedPosts(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void) {

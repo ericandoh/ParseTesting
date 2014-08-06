@@ -58,12 +58,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/UserProfileViewController.swift"
-            timestampString = "428897196.128186"
+            timestampString = "429045527.444062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "237"
-            endingLineNumber = "237"
-            landmarkName = "reloadDatums()"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "getNumFollowers()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ParseStarterProject/ServerInteractor.swift"
+            timestampString = "428980211.636721"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
+            landmarkName = "appendToLikedPosts(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
