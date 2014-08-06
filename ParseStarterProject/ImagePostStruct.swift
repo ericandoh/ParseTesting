@@ -77,7 +77,7 @@ class ImagePostStructure
         myObj.ACL.setPublicReadAccess(true);
         myObj.ACL.setPublicWriteAccess(true);
         
-        imagePostDictionary[myObj.objectId] = self;
+        //imagePostDictionary[myObj.objectId] = self;
     }
     class func dequeueImagePost(inputObj: PFObject)->ImagePostStructure {
         var postExist: ImagePostStructure? = imagePostDictionary[inputObj.objectId];
