@@ -255,11 +255,22 @@ class HomeFeedController: UIViewController {
             likeButton.setTitle("Like", forState: UIControlState.Normal);
         }
         
-        currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
+        //this loads the images
+        //2. images are being loaded already (prior call is active)
+        //  a. do nothing (callback will get called when needed)
+        //3. images need to be loaded
+        //  a. load images => when done, if postcounter = 0 => callback function ignores
+        //  b. load images => when done, if postcounter != 1 configure
+        if (!currentPost.isRestLoaded()) {
+            //if postCounter = 0, and I'm looking at it for first time I should start preloading next set of images as well!
+            currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
+        }
         
         if (postCounter == 0) {
+            //handled ok, post should be loaded on arrival of this page anyhows
             if (currentPost.image != nil) {
                 //most of time should go here
+                //our image exists!
                 needLoadOnCurrent = false;
                 switchImage(currentPost.image!, fromDirection: fromDirection);
             }
@@ -267,8 +278,9 @@ class HomeFeedController: UIViewController {
                 NSLog("Current Post's image is not loaded despite assumption that it is");
                 needLoadOnCurrent = true;
                 self.switchImage(LOADING_IMG, fromDirection: fromDirection);
+                var currentVC = self.viewCounter;
                 currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
-                    if (self.needLoadOnCurrent && index == self.postCounter) {
+                    if (self.needLoadOnCurrent && index == self.postCounter && currentVC == self.viewCounter) {
                         //this should be 0 (postCounter will be 0)
                         self.switchImage(currentPost.image!, fromDirection: CompassDirection.STAY);
                         self.needLoadOnCurrent = false;
@@ -280,11 +292,18 @@ class HomeFeedController: UIViewController {
             //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
+        else if (postCounter >= currentPost.getImagesCount() + 1) {
+            postCounter = currentPost.getImagesCount() + 1;
+            pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+            self.viewingComments = true;
+            //self.frontImageView!.image = oldImg;
+            self.startViewingComments(currentPost);
+        }
         else {
-            
             if (currentPost.isRestLoaded()) {
-                needLoadOnCurrent = false;
+                //needLoadOnCurrent = false;
                 if (currentPost.isViewingComments(postCounter)) {
+                    NSLog("This should not run; block above handles me");
                     self.viewingComments = true;
                     //self.frontImageView!.image = oldImg;
                     self.startViewingComments(currentPost);
@@ -295,7 +314,7 @@ class HomeFeedController: UIViewController {
             }
             else {
                 //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
-                self.needLoadOnCurrent = true;
+                //trying to configure at comments, but its not loaded yet!
                 self.switchImage(LOADING_IMG, fromDirection: fromDirection);
             }
             //else, just wait for configureRest to do its job!
@@ -324,19 +343,20 @@ class HomeFeedController: UIViewController {
         }
     }
     func configureRest(indexAtTimeOfRequest: Int) {
-        if(!needLoadOnCurrent) {
-            return;
-        }
+        //if(!needLoadOnCurrent) {
+            //return;
+        //}
         if (indexAtTimeOfRequest == viewCounter) {
             //im still on the same image post, phew!
             var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-            if (currentPost.isViewingComments(postCounter)) {
+            /*if (currentPost.isViewingComments(postCounter)) {
+                NSLog("This should not run")
                 self.viewingComments = true;
                 //self.frontImageView!.image = oldImg;
                 self.startViewingComments(currentPost);
-            }
-            else if (postCounter != 0) {
-                needLoadOnCurrent = false;
+            }*/
+            if (postCounter != 0) {
+                //needLoadOnCurrent = false;
                 self.switchImage(currentPost.getImageAt(postCounter), fromDirection: CompassDirection.STAY);
             }
         }
@@ -451,7 +471,8 @@ class HomeFeedController: UIViewController {
         }
         else {
             //cell will get fetched, wait
-            frontImageView!.image = LOADING_IMG;
+            
+            //frontImageView!.image = LOADING_IMG; commented, 0806
         }
         
         //load more if necessary

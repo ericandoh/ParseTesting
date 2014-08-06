@@ -8,18 +8,27 @@
 
 import UIKit
 
+let NUM_TO_SUGGEST = 5; //WORK NEED move to Constants
+let MAX_IMGS_PER_SUGGEST = 5;   //move to constants as well
+
 let SUGGESTED_CELL_IDENTIFIER = "SuggestedFriendCell";
 let SEARCH_CELL_IDENTIFIER = "SearchFriendCell";
 
-class FindFriendsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class FindFriendsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
-    @IBOutlet var suggestedFriendsTableView: UITableView!
+    
+    @IBOutlet weak var suggestedCollectionView: UICollectionView!
+    
     @IBOutlet var searchFriendsTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     
     var isSearching: Bool = false;
     var searchTermList: Array<FriendEncapsulator?> = [];
     var currentTerm: String = "";
+    
+    var suggestedUsers: Array<FriendEncapsulator?> = [];
+    var suggestedUserImgs: [String: Array<UIImage>] = [:];
+    var suggestedUserCounts: [String: Int] = [:];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +47,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         isSearching = false;
         searchTermList = [];
         searchFriendsTableView.hidden = true;
+        
+        resetAndFetchSuggested();
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +86,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 isSearching = false;
                 searchTermList = [];
                 searchFriendsTableView.hidden = true;
+                
+                resetAndFetchSuggested();
             }
             return;
         }
@@ -100,6 +113,38 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchFriendsTableView.reloadData();
     }
 
+    func resetAndFetchSuggested() {
+        suggestedUsers = [];
+        suggestedUserImgs = [:];
+        suggestedUserCounts = [:];
+        fetchSuggestedUsers();
+    }
+    
+    func fetchSuggestedUsers() {
+        ServerInteractor.getSuggestedFollowers(NUM_TO_SUGGEST, retFunction: {
+            (retList: Array<FriendEncapsulator?>) in
+            for (index, friend) in enumerate(retList) {
+                self.suggestedUsers.append(friend);
+                //self.suggestedUserImgs[friend!.username] = [];
+                //self.suggestedUserCounts[friend!.username] = 0;
+                ServerInteractor.getSubmissionsForSuggest(MAX_IMGS_PER_SUGGEST, user: friend!, userIndex: index, notifyQueryFinish: self.receiveFinish, finishFunction: self.finishFunction)
+            }
+        })
+    }
+    func receiveFinish(userIndex: Int, number: Int) {
+        var friend = self.suggestedUsers[userIndex]!;
+        self.suggestedUserImgs[friend.username] = [];
+        self.suggestedUserCounts[friend.username] = number;
+    }
+    func finishFunction(userIndex: Int, post: ImagePostStructure, index: Int) {
+        var friend = self.suggestedUsers[userIndex]!;
+        self.suggestedUserImgs[friend.username]!.append(post.getImageAt(0));
+        if (self.suggestedUserImgs[friend.username]!.count == self.suggestedUserCounts[friend.username]!) {
+            suggestedCollectionView.reloadData();
+            //suggestedCollectionView.reloadSections(NSIndexSet(index: userIndex));
+        }
+    }
+    
 
     //-------------------tableview methods-------------------
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
@@ -172,7 +217,53 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         });
         
     }
-
+    
+    //-------------------collectionview methods-------------------
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int {
+        return suggestedUsers.count;
+    }
+    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+        var user = suggestedUsers[section];
+        var userString: String = user!.username;
+        if (suggestedUserImgs[userString] != nil) {
+            return (suggestedUserImgs[userString]!).count;
+        }
+        return 0;
+    }
+    
+    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SuggestedCell", forIndexPath: indexPath) as UICollectionViewCell;
+        
+        let section = indexPath.section;
+        let row = indexPath.row;
+        
+        var username = suggestedUsers[section]!.username;
+        var img = (suggestedUserImgs[username]!)[row];
+        cell.backgroundView = UIImageView(image: img)
+        
+        return cell;
+        
+    }
+    func collectionView(collectionView: UICollectionView!, viewForSupplementaryElementOfKind kind: String!, atIndexPath indexPath: NSIndexPath!) -> UICollectionReusableView! {
+        if (kind == UICollectionElementKindSectionHeader) {
+            var reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", forIndexPath: indexPath) as SuggestedHeaderView;
+            let section = indexPath.section;
+            //var username = suggestedUsers[section]!.username;
+            
+            reusableView.extraConfigurations(suggestedUsers[section]!, sender: self)
+            return reusableView;
+        }
+        else {
+            var emptyReusableView = UICollectionReusableView();
+            return emptyReusableView;
+        }
+    }
+    func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
+        //segue to user at that index
+        
+    }
+    
+    
     /*
     // #pragma mark - Navigation
 
