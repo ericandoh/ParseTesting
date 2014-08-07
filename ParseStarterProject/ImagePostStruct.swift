@@ -137,6 +137,9 @@ class ImagePostStructure
         return ServerInteractor.likedBefore(myObj.objectId);
     }
     func isOwnedByMe()->Bool {
+        if (ServerInteractor.isAnonLogged()) {
+            return false;
+        }
         return (myObj["author"] as String) == PFUser.currentUser().username;
     }
     func loadImage() {
