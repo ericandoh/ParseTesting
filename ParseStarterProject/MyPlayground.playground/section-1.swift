@@ -27,6 +27,10 @@ var num = random() % 100;
 for i in 0..<0{
     print(i);
 }
+var currentDate = NSDate();
+var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
+
+
 //for i in 0...(-1) {
     //print(i)
 //}

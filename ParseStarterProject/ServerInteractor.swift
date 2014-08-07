@@ -447,6 +447,9 @@ import UIKit
                 (object as PFObject).deleteInBackground();
             }
         });
+        
+        
+        
         post.myObj.deleteInBackground();
     }
     
@@ -538,8 +541,9 @@ import UIKit
         var excludeList = convertPostToID(excludes);
 
         if (!isAnonLogged()) {
-            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
+            //excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
             query.whereKey("author", notEqualTo: PFUser.currentUser().username);
+            query.whereKey("author", containedIn: (PFUser.currentUser()["followings"] as NSArray));
         }
 
         /*
@@ -585,12 +589,20 @@ import UIKit
     
     class func getExplore(loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         
+        var currentDate = NSDate();
+        var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
         
         //query
         var query = PFQuery(className:"ImagePost")
         //query.skip = skip * POST_LOAD_COUNT;
+        
         query.limit = POST_LOAD_COUNT;
-        query.orderByDescending("createdAt");
+        
+        query.orderByDescending("likes");
+        
+        query.whereKey("createdAt", greaterThan: oneWeekAgo);
+        
+        //query.orderByDescending("createdAt");
         
         var excludeList = convertPostToID(excludes);
         
