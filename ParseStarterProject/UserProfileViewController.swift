@@ -167,6 +167,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 followerTableView.hidden = true
                 AnonText.hidden = false
             } else {
+                self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
                 collectionDelegateLikes!.resetData()
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
@@ -180,6 +181,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //collectionDelegatePosts!.resetData();
                 return
             } else {
+                self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
                 
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
@@ -192,6 +194,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userLikes(sender: AnyObject) {
         if (options != 2) {
+            self.numberLikes.text = String(self.mainUser!.getNumLiked())
             collectionDelegateLikes!.resetData()
             collectionDelegatePosts!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -203,6 +206,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             //collectionDelegate!.loadSet()
         } else {
             options = 2
+            self.numberLikes.text = String(self.mainUser!.getNumLiked())
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
@@ -210,6 +214,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     @IBAction func userFollowing(sender: UIButton) {
+        getNumFollowing();
+        getNumFollowers();
         if (options != 3) {
             options = 3
             myCollectionView.hidden = true
@@ -220,6 +226,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userFollowers(sender: UIButton) {
+        getNumFollowing();
+        getNumFollowers();
         if (options != 4) {
             options = 4
             myCollectionView.hidden = true

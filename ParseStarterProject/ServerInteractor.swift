@@ -439,6 +439,10 @@ import UIKit
         query.whereKey("ImagePost", equalTo: post.myObj);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) in
+            if (error != nil) {
+                NSLog("Uh oh could not remove imageposts with our ID in them");
+                return;
+            }
             for object in objects {
                 (object as PFObject).deleteInBackground();
             }
@@ -510,10 +514,11 @@ import UIKit
                         var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
                         post!.loadImage(finishFunction, index: realIndex);
                     }
-                } else {
-                    NSLog("oh no!")
-                }
+            } else {
+                NSLog("Error getting my liked posts");
+                notifyQueryFinish(0);
             }
+        }
     }
 
     //return ImagePostStructure(image, likes)
@@ -571,7 +576,8 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Post Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
         //return returnList;
@@ -605,6 +611,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
     }
@@ -629,6 +636,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(userIndex, 0);
             }
         }
 
@@ -657,6 +665,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
     }
@@ -679,6 +688,10 @@ import UIKit
         query.whereKey("username", equalTo: targetUserName)
         var currentUserName = PFUser.currentUser().username;
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("Querying to add notification failed!");
+                return;
+            }
             if (objects.count > 0) {
                 //i want to request myself as a friend to my friend
                 var targetUser = objects[0] as PFUser;
@@ -837,6 +850,9 @@ import UIKit
                     (objects[0] as PFObject).deleteInBackground();
                 }
             }
+            else {
+                NSLog("Failed to remove follower \(followingName)");
+            }
         });
 
     }
@@ -848,6 +864,11 @@ import UIKit
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
                 //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+                if (error != nil) {
+                    NSLog("Could not find my followers");
+                    retFunction(retList: []);
+                    return;
+                }
                 for object in objects {
                     var following = object["follower"] as String
                     var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
@@ -879,6 +900,11 @@ import UIKit
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+            if (error != nil) {
+                NSLog("Could not find numbers of followers");
+                retFunction(0);
+                return;
+            }
             for object in objects {
                 var following = object["follower"] as String
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
@@ -938,6 +964,7 @@ import UIKit
     }
     
     class func removeFollower(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+        NSLog("This looks broken, if you see this code run let me know -Eric")
         PFUser.currentUser().removeObject(friendName, forKey: "following");
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
@@ -984,7 +1011,7 @@ import UIKit
         query.countObjectsInBackgroundWithBlock({(result: Int32, error: NSError!) in
             if (error == nil) {
                 if (result == 0) {
-                    
+                    retFunction(retList: []);
                 }
                 else {
                     var nums = 0;
@@ -999,6 +1026,11 @@ import UIKit
                         query.limit = 1;
                         query.findObjectsInBackgroundWithBlock({
                             (objects: [AnyObject]!, error: NSError!) in
+                            if (error != nil) {
+                                NSLog("Couldn't find followers");
+                                retFunction(retList: []);
+                                return;
+                            }
                             for index: Int in 0..<objects.count {
                                 toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser));
                             }
@@ -1009,6 +1041,10 @@ import UIKit
                         })
                     }
                 }
+            }
+            else {
+                NSLog("Error querying for suggested followers")
+                retFunction(retList: []);
             }
         });
     }
@@ -1093,6 +1129,12 @@ import UIKit
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
+            if (error != nil) {
+                NSLog("Error while querying for search terms");
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             var content: String;
             for index: Int in 0..<objects.count {
@@ -1110,6 +1152,12 @@ import UIKit
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
+            if (error != nil) {
+                NSLog("Error while querying for users")
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             var content: String;
             for index: Int in 0..<objects.count {
@@ -1182,6 +1230,12 @@ import UIKit
         
         combinedQuery.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) in
+            if (error != nil) {
+                NSLog("Could not find objects");
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             for index: Int in 0..<objects.count {
                 var content = (objects[index] as PFObject)["username"] as String;
@@ -1231,6 +1285,12 @@ import UIKit
                 query.whereKey("fbID", containedIn: friendIds);
                 query.findObjectsInBackgroundWithBlock({
                     (objects: [AnyObject]!, error: NSError!) in
+                    if (error != nil) {
+                        NSLog("Query for facebook users errored");
+                        initFunc(0);
+                        endFunc();
+                        return;
+                    }
                     initFunc(objects.count);
                     for index: Int in 0..<objects.count {
                         var content = (objects[index] as PFObject)["username"] as String;
@@ -1239,6 +1299,12 @@ import UIKit
                     }
                     endFunc();
                 });
+            }
+            else {
+                NSLog("Error connecting to fb and getting their friends");
+                initFunc(0);
+                endFunc();
+                return;
             }
         });
     }

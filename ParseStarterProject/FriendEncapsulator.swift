@@ -122,8 +122,14 @@ class FriendEncapsulator {
             }
             var obj = friendObj!["userIcon"] as PFFile;
             obj.getDataInBackgroundWithBlock({(result: NSData!, error: NSError!) in
-                self.friendImg = UIImage(data: result);
-                receiveAction(self.friendImg!);
+                if (error == nil) {
+                    self.friendImg = UIImage(data: result);
+                    receiveAction(self.friendImg!);
+                }
+                else {
+                    NSLog("Error: %@ %@", error, error.userInfo)
+                    receiveAction(DEFAULT_USER_ICON);
+                }
             });
         }
         else {
@@ -136,12 +142,13 @@ class FriendEncapsulator {
                     self.friendObj = objects[0] as? PFUser;
                     self.fetchImage(receiveAction);
                 }
-                else if (error) {
+                else if (error != nil) {
                     // Log details of the failure
                     NSLog("Error: %@ %@", error, error.userInfo)
                 }
                 else if (objects.count == 0) {
                     NSLog("Can't find user: \(self.username)")
+                    receiveAction(DEFAULT_USER_ICON);
                 }
             }
         }

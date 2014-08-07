@@ -357,6 +357,7 @@ class ImagePostStructure
             }
             else {
                 NSLog("Error refetching object for comments");
+                finishFunction(authorInput:[], input: []);
             }
         });
     }

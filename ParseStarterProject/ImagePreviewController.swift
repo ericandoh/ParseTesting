@@ -119,9 +119,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     //called when a new shopbutton is made, and featurizes the button
     func featurizeShopButton(index: Int, shopButton: ShopButton) {
+        
+        shopButton.backgroundColor = UIColor.clearColor();
+        
         shopButton.shopIndex = index;
         var but1 = ShopTextButton(frame: CGRectMake(0, 0, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
         var but2 = ShopTextButton(frame: CGRectMake(BOX_WIDTH_ONE, 0, BOX_CLOSE_WIDTH, LABEL_BOX_HEIGHT));
+        but1.backgroundColor = UIColor.clearColor();
+        but2.backgroundColor = UIColor.clearColor();
+        but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+        but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.shopIndex = index;
         but2.shopIndex = index;
         
