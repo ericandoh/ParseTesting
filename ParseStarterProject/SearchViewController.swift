@@ -30,6 +30,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.topItem.title = "Popular";
+        //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
+
         // Do any additional setup after loading the view.
         
         myTable.hidden = true;
@@ -133,6 +141,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //start a query for the searchText
         receiveSizeOfQuery(0);//erase this line later
         ServerInteractor.getSearchTerms(currentTerm, receiveSizeOfQuery, receiveStringResult, endStringQuery);
+        
     }
     func receiveSizeOfQuery(size: Int) {
         searchTermList = Array<String>(count: size, repeatedValue: "");

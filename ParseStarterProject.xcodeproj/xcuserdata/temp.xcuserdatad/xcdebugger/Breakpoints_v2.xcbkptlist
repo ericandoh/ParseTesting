@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/UserProfileViewController.swift"
-            timestampString = "429045527.444062"
+            timestampString = "429140280.7604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
-            landmarkName = "getNumFollowers()"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "getNumFollowing()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,7 +79,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "434"
             endingLineNumber = "434"
-            landmarkName = "appendToLikedPosts(_:)"
+            landmarkName = "removePost(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

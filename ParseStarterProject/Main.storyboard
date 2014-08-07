@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
         <deployment version="2048" defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
@@ -466,6 +466,22 @@
             <point key="canvasLocation" x="1439" y="2390"/>
         </scene>
         <!--Navigation Controller-->
+        <scene sceneID="hGt-5h-hjN">
+            <objects>
+                <navigationController storyboardIdentifier="Search" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MKC-7k-nyJ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nxg-xs-QN4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="d93-87-W5i" kind="relationship" relationship="rootViewController" id="LgC-SC-j7J"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6dm-yG-YRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="154" y="1665"/>
+        </scene>
+        <!--Navigation Controller-->
         <scene sceneID="Zst-hV-oVj">
             <objects>
                 <navigationController storyboardIdentifier="Notifications" id="Z9q-9c-yfZ" sceneMemberID="viewController">
@@ -587,7 +603,7 @@
             </objects>
             <point key="canvasLocation" x="591" y="3115"/>
         </scene>
-        <!--Home-->
+        <!--Home Feed Controller-->
         <scene sceneID="yIV-MD-BT5">
             <objects>
                 <viewController storyboardIdentifier="Home" id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -641,9 +657,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.42999999999999999" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mou-va-zpC">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mou-va-zpC">
                                 <rect key="frame" x="10" y="476" width="40" height="40"/>
-                                <state key="normal" title="L:">
+                                <state key="normal" backgroundImage="heart.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -703,7 +719,6 @@
                             <outletCollection property="gestureRecognizers" destination="zXT-vz-Xyo" appends="YES" id="dAY-6p-JkK"/>
                         </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="otN-m4-N78"/>
                     <navigationItem key="navigationItem" id="4eM-UE-Bv3"/>
                     <connections>
                         <outlet property="authorTextField" destination="8lk-Zt-q9h" id="Ftw-1W-uNn"/>
@@ -760,10 +775,19 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Uc-do-kG6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xhi-ah-eAE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="CFY-px-QV6">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="3xQ-yU-YJs">
                                 <rect key="frame" x="0.0" y="65" width="320" height="442"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="M1W-Hd-U9k" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -780,7 +804,8 @@
                                                 </imageView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
                                                     <rect key="frame" x="76" y="8" width="176" height="44"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -1288,7 +1313,7 @@
             </objects>
             <point key="canvasLocation" x="551" y="102"/>
         </scene>
-        <!--Search-->
+        <!--Search View Controller-->
         <scene sceneID="Ya9-qu-hy2">
             <objects>
                 <viewController storyboardIdentifier="SearchWindow" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d93-87-W5i" customClass="SearchViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -1360,10 +1385,9 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="search" id="kck-d4-M4I"/>
-                    <navigationItem key="navigationItem" title="Search" id="ih1-wR-6xp"/>
+                    <navigationItem key="navigationItem" id="ih1-wR-6xp"/>
                     <connections>
                         <outlet property="myCollectionView" destination="i9W-9H-mbV" id="rTK-Iq-2LH"/>
                         <outlet property="myTable" destination="U2k-kU-9IY" id="V7s-1d-3Yy"/>
@@ -1735,27 +1759,12 @@
             </objects>
             <point key="canvasLocation" x="-240" y="1665"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="nh0-Dw-MyR">
-            <objects>
-                <navigationController storyboardIdentifier="Search" id="kUu-Ja-GDJ" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lb1-AX-xje">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="d93-87-W5i" kind="relationship" relationship="rootViewController" id="G16-fs-61E"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4cm-WF-XSb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="160" y="1665"/>
-        </scene>
     </scenes>
     <resources>
         <image name="arrow_left.png" width="50" height="50"/>
         <image name="arrow_right.png" width="50" height="50"/>
         <image name="deleteSwipeInfoBar.png" width="290" height="35"/>
+        <image name="heart.png" width="40" height="40"/>
         <image name="testbackground.jpg" width="500" height="667"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

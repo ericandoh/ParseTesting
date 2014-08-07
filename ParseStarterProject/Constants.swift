@@ -60,6 +60,8 @@ let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
 //close button image for Shop The Look while uploading
 let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
+let NORMAL_HEART = UIImage(named: "heart.png")
+
 //icon of a person and a plus, indicating that if pressed I can start following this person
 let FOLLOW_ME_ICON: UIImage = LOADING_IMG;
 

@@ -260,12 +260,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         var numComments = currentPost.getCommentsCount();
         var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
         var shortenedNumCommentString = ServerInteractor.wordNumberer(numComments);
-        
+        likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
         if (currentPost.isLikedByUser()) {
-            likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+            //likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+            likeButton.setBackgroundImage(LOADING_IMG, forState: UIControlState.Normal);
         }
         else {
-            likeButton.setTitle("L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+            likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
         }
         commentsButton.setTitle("C:"+shortenedNumCommentString, forState: UIControlState.Normal);
         
@@ -740,13 +741,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         if (imgBuffer!.isLoadedAt(viewCounter)) {
             var post = imgBuffer!.getImagePostAt(viewCounter);
             post.like();
-            
             var shortenedNumLikeString = ServerInteractor.wordNumberer(post.getLikes());
+            likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
             if (post.isLikedByUser()) {
-                likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+                //likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
+                likeButton.setBackgroundImage(LOADING_IMG, forState: UIControlState.Normal)
             }
             else {
-                likeButton.setTitle("L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+                likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
             }
         }
         //likePostOutlet.hidden = true

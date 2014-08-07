@@ -111,8 +111,11 @@ class UserTextTableViewCell: UITableViewCell {
         
         //frame.size.height = max(60, descriptionBox.frame.height);
         
+        //var backView: UIView = UIView();
+        //backView.backgroundColor = UIColor.clearColor()
         self.backgroundColor = UIColor.clearColor();
         self.contentView.backgroundColor = UIColor.clearColor();
+        //self.backgroundView = backView
         //self.layoutIfNeeded();
         //self.frame = frame;
         //self.sizeToFit();

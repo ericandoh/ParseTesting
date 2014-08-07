@@ -20,6 +20,7 @@
 		09ABC07F13A1D52D009C3FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC07E13A1D52D009C3FCF /* main.m */; };
 		09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */; };
 		09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09BEF34B13D51C3F001BBCDB /* Security.framework */; };
+		24A4812619943B30001BE688 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A4812519943B30001BE688 /* heart.png */; };
 		24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */; };
 		24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D541982EDD400AF90FD /* SettingsViewController.swift */; };
 		24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */; };
@@ -101,6 +102,7 @@
 		09ABC08013A1D52D009C3FCF /* ParseStarterProjectAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseStarterProjectAppDelegate.h; sourceTree = "<group>"; };
 		09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseStarterProjectAppDelegate.m; sourceTree = "<group>"; };
 		09BEF34B13D51C3F001BBCDB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		24A4812519943B30001BE688 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		24B90D541982EDD400AF90FD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUsernameSetupViewController.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 		09ABC06213A1D52D009C3FCF = {
 			isa = PBXGroup;
 			children = (
+				24A4812519943B30001BE688 /* heart.png */,
 				09ABC07713A1D52D009C3FCF /* ParseStarterProject */,
 				09ABC07013A1D52D009C3FCF /* Frameworks */,
 				09ABC06E13A1D52D009C3FCF /* Products */,
@@ -262,6 +265,7 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				24A4812219943324001BE688 /* buttons */,
 				D91C98D6196EF69A00E1DBEE /* testbackground.jpg */,
 				D99B5FCF196DBB2500662A39 /* Defaults */,
 				D996F6AD195C8D98009E97B0 /* test image 3.jpg */,
@@ -277,6 +281,13 @@
 				09ABC07E13A1D52D009C3FCF /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		24A4812219943324001BE688 /* buttons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = buttons;
 			sourceTree = "<group>";
 		};
 		D914F7FB19883AC400A59314 /* Delegates */ = {
@@ -427,6 +438,7 @@
 				D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */,
 				D923E4CB1989A00A00C12429 /* deleteSwipeInfoBar.png in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,
+				24A4812619943B30001BE688 /* heart.png in Resources */,
 				C4C51B591613CE0800959FDC /* Default@2x.png in Resources */,
 				D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */,
 			);

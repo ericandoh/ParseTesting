@@ -20,7 +20,12 @@ class FriendEncapsulator {
         //run by settings from main
         friendObj = friend;
         let friend = friendObj!;
-        username = friend.username;
+        if (friend.username != nil) {
+            username = friend.username
+        } else {
+            username = "Anonymous"
+        }
+        //username = friend.username;
     }
     init(friendName: String) {
         //run by everythign else
