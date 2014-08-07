@@ -50,18 +50,23 @@ class UserTextTableViewCell: UITableViewCell {
         self.userImage!.image = nil;
         if (involvedUser != nil) {
             leadingConstraint.constant = 60;
-            involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
-                //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
-                self.userImage!.image = fetchedImage;
-                self.userImage!.autoresizingMask = UIViewAutoresizing.None;
-                //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
-                self.userImage!.layer.cornerRadius = (40.0) / 2
-                //self.userImage!.layer.cornerRadius = (40.0) / 2
-                self.userImage!.layer.masksToBounds = true
-                //self.userImage!.layer.borderWidth = 0
-                //self.userImage!.clipsToBounds = true;
+            if (!PFAnonymousUtils.isLinkedWithUser(involvedUser!.friendObj)) {
+                var friendAtTimeOfSnapshot = involvedUser;
+                involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
+                    //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
+                    if (friendAtTimeOfSnapshot!.username == involvedUser!.username) {
+                        self.userImage!.image = fetchedImage;
+                        self.userImage!.autoresizingMask = UIViewAutoresizing.None;
+                        //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
+                        self.userImage!.layer.cornerRadius = (40.0) / 2
+                        //self.userImage!.layer.cornerRadius = (40.0) / 2
+                        self.userImage!.layer.masksToBounds = true
+                        //self.userImage!.layer.borderWidth = 0
+                        //self.userImage!.clipsToBounds = true;
+                    }
                 });
-            friend = involvedUser;
+                friend = involvedUser;
+            }
         }
         else {
             leadingConstraint.constant = 5;
@@ -132,7 +137,7 @@ class UserTextTableViewCell: UITableViewCell {
                 self.friendAction = false
                 self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             }));
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
             }));
             self.owner!.presentViewController(alert, animated: true, completion: nil)

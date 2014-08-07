@@ -55,6 +55,9 @@ class CustomImageBuffer: NSObject {
     var newlyLoadedStart: Int = 0;
     var newlyLoadedEnd: Int = 0;
     
+    //how many things I should expect to load eventually
+    var numLoaded: Int = 0;
+    
     //active meaning I should write to the collectionview
     var isActive: Bool = false;
     
@@ -150,7 +153,9 @@ class CustomImageBuffer: NSObject {
         self.configureCellFunction = configureCellFunction;
     }
     func loadSet() {
+        NSLog("Buffer loading")
         if (isLoading != 0) {
+            NSLog("Inconsistent: \(isLoading) != 0")
             return;
         }
         isLoading = 1;
@@ -174,7 +179,7 @@ class CustomImageBuffer: NSObject {
         else if (loaderType == 3) {
             //everything (should) already be loaded
             hitEnd = true;
-            isLoading = false;
+            isLoading = 0;
             endLoadCount = (loadedPosts.count) % postLoadCount;
             var divisible = loadedPosts.count - endLoadCount;
             loadedUpTo = divisible / postLoadCount;
@@ -193,7 +198,7 @@ class CustomImageBuffer: NSObject {
         loadedUpTo = 0;
         endLoadCount = 0;
         hitEnd = false;
-        isLoading = false;
+        isLoading = 0;
         isActive = false;
     }
     func getImagePostAt(index: Int)->ImagePostStructure {
@@ -212,8 +217,9 @@ class CustomImageBuffer: NSObject {
         return hitEnd;
     }
     func receiveNumQuery(size: Int) {
-        
+        NSLog("Received results \(size)")
         if (isLoading != 1) {
+            NSLog("Inconsistent: \(isLoading) != 1")
             return;
         }
         isLoading = 2;
@@ -227,6 +233,7 @@ class CustomImageBuffer: NSObject {
             needAmount = (loadedUpTo * postLoadCount) + endLoadCount;
         }
         else {
+            //size must equal postLoadCount
             endLoadCount = 0;
             loadedUpTo += 1;
             needAmount = loadedUpTo * postLoadCount;
@@ -235,6 +242,7 @@ class CustomImageBuffer: NSObject {
             loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
         }
         newlyLoadedEnd = needAmount;
+        numLoaded = size;
         //myCollectionView.reloadData();
         if (refreshFunction != nil) {
             if (isActive) {
@@ -246,6 +254,7 @@ class CustomImageBuffer: NSObject {
     func receiveImagePostWithImage(loaded: ImagePostStructure, index: Int) {
         //called by getSubmissions for when image at index x is loaded in...
         if (isLoading != 2) {
+            NSLog("Inconsistent: \(isLoading) != 2")
             return;
         }
         var realIndex: Int;
@@ -261,7 +270,8 @@ class CustomImageBuffer: NSObject {
             self.configureCellFunction!(index: realIndex);
         }
         
-        if (realIndex == loadedPosts.count - 1) {
+        numLoaded--;
+        if (numLoaded == 0) {
             isLoading = 0;
         }
         //isLoading = false;  //still loading cells in, but setting indexes are ok

@@ -32,6 +32,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var myCollectionView: UICollectionView!
     @IBOutlet var myTableView: UITableView!
     @IBOutlet var navigationTitle: UIButton!
+    @IBOutlet weak var backImageView: UIImageView!
     
     var assetLibrary: ALAssetsLibrary?;
     
@@ -62,6 +63,14 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
         
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationTitle.setTitle("", forState: UIControlState.Normal);
+        
+        
         //NSLog("Loading View");
         // Do any additional setup after loading the view.
         assetLibrary = ALAssetsLibrary();
@@ -77,7 +86,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
                 if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
                     //first asset I've loaded
                     //NSLog("First asset group, adding + loading")
-                    var name: String = self.getGalleryFullName(self.assetGroups.count - 1);
+                    var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
                     self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
                     self.savedPhotoIndex = self.assetGroups.count - 1;
                     self.groupSelected = self.savedPhotoIndex;
@@ -126,6 +135,10 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
             //NSLog("Loading asset \(index)")
             if (!result) {
                 return;
+            }
+            if (index == 0) {
+                var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+                self.backImageView.image = assetImg;
             }
             self.currentAssets[index].asset = result;
             self.myCollectionView.reloadData();
@@ -180,7 +193,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         groupSelected = row;
         loadImagesForCurrent();
         optionsView.hidden = true;
-        var name = getGalleryFullName(row);
+        var name = getGalleryFullName(row) + " ▾";
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
     }
     
@@ -201,8 +214,9 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         
         if (row == 0) {
             //render a camera icon
-            cell.backgroundColor = UIColor.redColor();
-            cell.label.text = "Camera";
+            //cell.backgroundColor = UIColor.redColor();
+            cell.makeVisible();
+            cell.label.text = "";
             cell.image.image = CAMERA_ICON;
             return cell;
         }
@@ -211,12 +225,13 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         
         cell.image.image = UIImage(CGImage: self.currentAssets[row].asset!.thumbnail().takeUnretainedValue());
         if (self.currentAssets[row].highlighted != -1) {
-            cell.backgroundColor = UIColor.yellowColor();
-            
+            //cell.backgroundColor = UIColor.yellowColor();
+            cell.darkenImage();
             cell.label.text = String(find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, asset: nil))! + 1);   //for those damn nonprogrammer people
         }
         else {
-            cell.backgroundColor = UIColor.redColor();
+            //cell.backgroundColor = UIColor.redColor();
+            cell.makeVisible();
             cell.label.text = "";
         }
         return cell;
@@ -297,7 +312,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
                                         }
                                     }
                                     self.loadImagesForCurrent();
-                                    var name = self.getGalleryFullName(self.savedPhotoIndex);
+                                    var name = self.getGalleryFullName(self.savedPhotoIndex) + " ▾";
                                     self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
                                     
                                     

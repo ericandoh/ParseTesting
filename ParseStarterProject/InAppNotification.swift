@@ -47,6 +47,10 @@ class InAppNotification {
                     NSLog("Something is wrong");
                     return;
                 }
+                if (error != nil) {
+                    NSLog("Error fetching notification message")
+                    return;
+                }
                 
                 self.type = self.personalObj!["type"] as String;
                 
@@ -54,11 +58,14 @@ class InAppNotification {
                 case NotificationType.IMAGE_POST.toRaw():
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-                        if (!error) {
+                        if (error == nil) {
                             var numLikes: Int = object["likes"] as Int
                             //if one person, say "Person" has liked your photo, else "_" people have liked it!
                             self.messageString = "Your picture has gotten \(numLikes) likes!"
                             listener.tableView.reloadData()
+                        }
+                        else {
+                            NSLog("Error fetching image post for notification?");
                         }
                     });
                 case NotificationType.FOLLOWER_NOTIF.toRaw():
@@ -96,16 +103,27 @@ class InAppNotification {
         var obj = self.personalObj!["ImagePost"] as PFObject
         //fetchIfNeededInBackgroundWithBlock is used when getting PFObjects (smaller things). This fetches the actual object.
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+            if (error != nil) {
+                NSLog("Error fetching notification object image");
+                receiveAction(LOADING_IMG);
+                return;
+            }
             var imgFile: PFFile = object["imageFile"] as PFFile;
             //getDataINBackgroundWithBlock is used to get big chunks of data - such as PFFiles
             imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                 //get file objects
+                if (error != nil) {
+                    NSLog("Error fetching notification object image");
+                    receiveAction(LOADING_IMG);
+                    return;
+                }
                 receiveAction(UIImage(data: result));
             });
         });
     }
     
     func getComments(receiveAction:(Array<String>)->Void)->Void {
+        NSLog("This looks deprecated; alert me if you see this NSLog -Eric")
         var obj = self.personalObj!["ImagePost"] as PFObject
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
             var commenting: Array<String> = object["comments"] as Array<String>

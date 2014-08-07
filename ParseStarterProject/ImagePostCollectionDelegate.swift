@@ -30,10 +30,13 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
 
     var searchTerm: String = "";    //for search term collections only
     
+    //for when you hit end of scroll + want to load more, dont send more requests if I've already made such a request
+    var requestedBuffer: Bool = false;
+    
     /*
         Sample Usage:
         -In viewDidLoad-
-            var cdel = ImagePostCollectionDelegate(true, collectionView: self.myCollectionView, ServerInteractor.getPosts, self);
+            var cdel = ImagePostCollectionDelegate(true, collectionView: self.myCollectionView, ServerInteractor.getPost, self);
             cdel.initialSetup();
     */
     //for user profile stuff
@@ -161,10 +164,14 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
             if (path.row >= (imgBuffer.numItems() - 1 - CELLS_BEFORE_RELOAD)) {
-                self.loadSet();
+                if (!requestedBuffer) {
+                    requestedBuffer = true;
+                    self.loadSet();
+                }
                 return;
             }
         }
+        requestedBuffer = false;
     }
     func getPost()->ImagePostStructure? {
         var indexPaths: [NSIndexPath] = myCollectionView.indexPathsForSelectedItems() as [NSIndexPath];

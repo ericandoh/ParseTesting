@@ -87,19 +87,22 @@ class LinkFilledTextView: UITextView {
             var typeOfString = ExternalViewLink.fromRaw(value as String)!;
             if (typeOfString == ExternalViewLink.TAG) {
                 var searchTerm = realText.substringFromIndex(1);
-                
-                var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
-                (nextBoard as SearchViewController).currentTerm = searchTerm;
-                self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                if (self.owner!.navigationController != nil) {
+                    var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
+                    (nextBoard as SearchViewController).currentTerm = searchTerm;
+                    self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                }
             }
             else if (typeOfString == ExternalViewLink.USER) {
                 var friendName = realText.substringFromIndex(1);
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(friendName);
                 friend.exists({(exist: Bool) in
                     if (exist) {
-                        var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-                        (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                        self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                        if (self.owner!.navigationController != nil) {  //to avoid race conditions
+                            var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                            (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                            self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                        }
                     }
                     });
             }

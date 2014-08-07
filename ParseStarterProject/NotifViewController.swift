@@ -109,7 +109,7 @@ class NotifViewController: UITableViewController {
 
         if (member.type == NotificationType.IMAGE_POST.toRaw()) {
             member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
-                if (!error) {
+                if (error == nil) {
                     var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
                     var onlyImagePost = ImagePostStructure.dequeueImagePost(obj);
                     imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
@@ -125,10 +125,12 @@ class NotifViewController: UITableViewController {
         }
         else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
             //self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
-            var friend = FriendEncapsulator.dequeueFriendEncapsulator(member.friendName);
-            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-            (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-            self.navigationController.pushViewController(nextBoard, animated: true);
+            if (self.navigationController != nil) {
+                var friend = FriendEncapsulator.dequeueFriendEncapsulator(member.friendName);
+                var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                self.navigationController.pushViewController(nextBoard, animated: true);
+            }
         }
         else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
             self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);

@@ -88,7 +88,7 @@ class NewLoginViewController: UIViewController {
     func failedLogin(msg: String) {
         let alert: UIAlertController = UIAlertController(title: "Login Failed", message: msg, preferredStyle: UIAlertControllerStyle.Alert);
         
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)

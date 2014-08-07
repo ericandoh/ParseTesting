@@ -167,7 +167,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 followerTableView.hidden = true
                 AnonText.hidden = false
             } else {
+                self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
+                collectionDelegateLikes!.resetData()
+                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
                 collectionDelegatePosts!.initialSetup();
                 //collectionDelegate!.loadSet()
                 myCollectionView.hidden = false
@@ -178,8 +181,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //collectionDelegatePosts!.resetData();
                 return
             } else {
+                self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
-                collectionDelegatePosts!.loadSet()
+                
+                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
+                collectionDelegatePosts!.initialSetup();
+                //collectionDelegatePosts!.loadSet()
             }
         }
     }
@@ -187,8 +194,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userLikes(sender: AnyObject) {
         if (options != 2) {
-            //collectionDelegatePosts!.resetData();
+            self.numberLikes.text = String(self.mainUser!.getNumLiked())
             collectionDelegateLikes!.resetData()
+            collectionDelegatePosts!.resetData();
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
             options = 2
             myCollectionView.hidden = false
@@ -197,12 +206,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             //collectionDelegate!.loadSet()
         } else {
             options = 2
+            self.numberLikes.text = String(self.mainUser!.getNumLiked())
             collectionDelegateLikes!.resetData();
-            collectionDelegateLikes!.loadSet()
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+            collectionDelegateLikes!.initialSetup();
         }
     }
     
     @IBAction func userFollowing(sender: UIButton) {
+        getNumFollowing();
+        getNumFollowers();
         if (options != 3) {
             options = 3
             myCollectionView.hidden = true
@@ -213,6 +226,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userFollowers(sender: UIButton) {
+        getNumFollowing();
+        getNumFollowers();
         if (options != 4) {
             options = 4
             myCollectionView.hidden = true
@@ -333,7 +348,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        NSLog("a \(friendList.count)")
         return friendList.count;
     }
     
@@ -375,9 +389,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var temp = indexPath.row
-        var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-        (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
-        self.navigationController.pushViewController(nextBoard, animated: true);
+        if (self.navigationController != nil) {
+            var temp = indexPath.row
+            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
+            self.navigationController.pushViewController(nextBoard, animated: true);
+        }
     }
 }

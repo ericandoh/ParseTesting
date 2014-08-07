@@ -39,7 +39,7 @@ import UIKit
         user["likedPosts"] = NSMutableArray();*/
         
         user.signUpInBackgroundWithBlock( {(succeeded: Bool, error: NSError!) in
-            if (!error) {
+            if (error == nil) {
                 //success!
                 //sees if user has pending items to process
                 //ServerInteractor.initialUserChecks();
@@ -88,7 +88,7 @@ import UIKit
     class func updateUser(sender: NSObject) {
         PFUser.currentUser().fetchInBackgroundWithBlock({(user: PFObject!, error: NSError!)->Void in
             var start: StartController = sender as StartController;
-            if (!error) {
+            if (error == nil) {
                // ServerInteractor.initialUserChecks();
                 start.approveUser();
             }
@@ -193,7 +193,7 @@ import UIKit
                     }
                     ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
                 } else {
-                    NSLog("oh no!")
+                    NSLog("Query for my terms failed")
                 }
         });
     }
@@ -274,30 +274,40 @@ import UIKit
                 arr.append(otherLabel);
             }
         }
+        //remove duplicate labels here!
         
+        var arrWithoutDuplicates: Array<String> = [];
+        for otherLabel in arr {
+            if (!contains(arrWithoutDuplicates, otherLabel)) {
+                arrWithoutDuplicates.append(otherLabel);
+            }
+        }
         
         var query = PFQuery(className: "SearchTerm");
-        query.whereKey("term", containedIn: arr);
+        query.whereKey("term", containedIn: arrWithoutDuplicates);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if (!error) {
+            if (error == nil) {
                 var foundLabel: String;
                 for object:PFObject in objects as [PFObject] {
                     foundLabel = object["term"] as String;
                     NSLog("\(foundLabel) already exists as label, incrementing")
                     object.incrementKey("count");
                     object.saveInBackground();
-                    arr.removeAtIndex(find(arr, foundLabel)!);
+                    arrWithoutDuplicates.removeAtIndex(find(arrWithoutDuplicates, foundLabel)!);
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
-                for label: String in arr {
+                for label: String in arrWithoutDuplicates {
                     ServerInteractor.makeNewTerm(label);
                 }
+            }
+            else {
+                NSLog("Error: Querying for labels failed");
             }
         });
         
         
-        return arr;
+        return arrWithoutDuplicates;
     }
     class func makeNewTerm(label: String) {
         NSLog("Adding new label \(label)")
@@ -362,6 +372,10 @@ import UIKit
         }
         return newImgList;
     }
+    class func updatePost(post: ImagePostStructure, imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
+        var images = preprocessImages(imgs);
+        post.updatePost(imgs, description: description, labels: labels, looks: looks);
+    }
     class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
@@ -389,7 +403,7 @@ import UIKit
 
             newPost.myObj.saveInBackgroundWithBlock({
                 (succeeded: Bool, error: NSError!)->Void in
-                if (succeeded && !error) {
+                if (succeeded && error == nil) {
                     var myUser: PFUser = PFUser.currentUser();
                     if (!(myUser["userIcon"])) {
                         //above may set to last submitted picture...? sometimes??
@@ -413,6 +427,26 @@ import UIKit
     }
     
     class func removePost(post: ImagePostStructure) {
+        if (PFUser.currentUser().username != post.getAuthor()) {
+            //cant delete this post silly!
+            return;
+        }
+        PFUser.currentUser().incrementKey("numPosts", byAmount: -1);
+        PFUser.currentUser().saveEventually();
+        
+        //delete all notifications associated with this notification
+        var query = PFQuery(className: "Notification");
+        query.whereKey("ImagePost", equalTo: post.myObj);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) in
+            if (error != nil) {
+                NSLog("Uh oh could not remove imageposts with our ID in them");
+                return;
+            }
+            for object in objects {
+                (object as PFObject).deleteInBackground();
+            }
+        });
         post.myObj.deleteInBackground();
     }
     
@@ -480,10 +514,11 @@ import UIKit
                         var realIndex: Int = find(oldCPosts as Array<String>, object.objectId)!;
                         post!.loadImage(finishFunction, index: realIndex);
                     }
-                } else {
-                    NSLog("oh no!")
-                }
+            } else {
+                NSLog("Error getting my liked posts");
+                notifyQueryFinish(0);
             }
+        }
     }
 
     //return ImagePostStructure(image, likes)
@@ -529,7 +564,7 @@ import UIKit
         //query addAscending/DescendingOrder for extra ordering:
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 // Do something with the found objects
                 notifyQueryFinish(objects.count);
@@ -541,11 +576,50 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Post Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
-        //return returnList;
     }
+    
+    
+    class func getExplore(loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
+        
+        
+        //query
+        var query = PFQuery(className:"ImagePost")
+        //query.skip = skip * POST_LOAD_COUNT;
+        query.limit = POST_LOAD_COUNT;
+        query.orderByDescending("createdAt");
+        
+        var excludeList = convertPostToID(excludes);
+        
+        if (!isAnonLogged()) {
+            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
+            query.whereKey("author", notEqualTo: PFUser.currentUser().username);
+        }
+        query.whereKey("objectId", notContainedIn: excludeList);
+        //query addAscending/DescendingOrder for extra ordering:
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                // The find succeeded.
+                // Do something with the found objects
+                notifyQueryFinish(objects.count);
+                
+                var post: ImagePostStructure?;
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure.dequeueImagePost((object as PFObject));
+                    post!.loadImage(finishFunction, index: index);
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Post Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
+            }
+        }
+    }
+    
     class func resetViewedPosts() {
         PFUser.currentUser()["viewHistory"] = NSArray();
         PFUser.currentUser().saveEventually();
@@ -561,7 +635,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 
                 notifyQueryFinish(objects.count);
@@ -575,6 +649,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
     }
@@ -585,7 +660,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // Do something with the found objects
                 notifyQueryFinish(userIndex, objects.count);
                 var post: ImagePostStructure?;
@@ -599,6 +674,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(userIndex, 0);
             }
         }
 
@@ -613,7 +689,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 
                 notifyQueryFinish(objects.count);
@@ -627,6 +703,7 @@ import UIKit
             } else {
                 // Log details of the failure
                 NSLog("Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
             }
         }
     }
@@ -649,6 +726,10 @@ import UIKit
         query.whereKey("username", equalTo: targetUserName)
         var currentUserName = PFUser.currentUser().username;
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("Querying to add notification failed!");
+                return;
+            }
             if (objects.count > 0) {
                 //i want to request myself as a friend to my friend
                 var targetUser = objects[0] as PFUser;
@@ -688,7 +769,7 @@ import UIKit
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
-            if !error {
+            if (error == nil) {
                 // The find succeeded.
                 // Do something with the found objects
                 var object: PFObject;
@@ -807,6 +888,9 @@ import UIKit
                     (objects[0] as PFObject).deleteInBackground();
                 }
             }
+            else {
+                NSLog("Failed to remove follower \(followingName)");
+            }
         });
 
     }
@@ -818,6 +902,11 @@ import UIKit
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
                 //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+                if (error != nil) {
+                    NSLog("Could not find my followers");
+                    retFunction(retList: []);
+                    return;
+                }
                 for object in objects {
                     var following = object["follower"] as String
                     var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
@@ -849,6 +938,11 @@ import UIKit
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             //var followerList: Array<FriendEncapsulator?>  = listToAddTo
+            if (error != nil) {
+                NSLog("Could not find numbers of followers");
+                retFunction(0);
+                return;
+            }
             for object in objects {
                 var following = object["follower"] as String
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
@@ -908,6 +1002,7 @@ import UIKit
     }
     
     class func removeFollower(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+        NSLog("This looks broken, if you see this code run let me know -Eric")
         PFUser.currentUser().removeObject(friendName, forKey: "following");
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
@@ -954,7 +1049,7 @@ import UIKit
         query.countObjectsInBackgroundWithBlock({(result: Int32, error: NSError!) in
             if (error == nil) {
                 if (result == 0) {
-                    
+                    retFunction(retList: []);
                 }
                 else {
                     var nums = 0;
@@ -969,6 +1064,11 @@ import UIKit
                         query.limit = 1;
                         query.findObjectsInBackgroundWithBlock({
                             (objects: [AnyObject]!, error: NSError!) in
+                            if (error != nil) {
+                                NSLog("Couldn't find followers");
+                                retFunction(retList: []);
+                                return;
+                            }
                             for index: Int in 0..<objects.count {
                                 toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser));
                             }
@@ -979,6 +1079,10 @@ import UIKit
                         })
                     }
                 }
+            }
+            else {
+                NSLog("Error querying for suggested followers")
+                retFunction(retList: []);
             }
         });
     }
@@ -1063,6 +1167,12 @@ import UIKit
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
+            if (error != nil) {
+                NSLog("Error while querying for search terms");
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             var content: String;
             for index: Int in 0..<objects.count {
@@ -1080,6 +1190,12 @@ import UIKit
         //query.orderByDescending("importance")
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!)->Void in
+            if (error != nil) {
+                NSLog("Error while querying for users")
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             var content: String;
             for index: Int in 0..<objects.count {
@@ -1152,6 +1268,12 @@ import UIKit
         
         combinedQuery.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) in
+            if (error != nil) {
+                NSLog("Could not find objects");
+                initFunc(0);
+                endFunc();
+                return;
+            }
             initFunc(objects.count);
             for index: Int in 0..<objects.count {
                 var content = (objects[index] as PFObject)["username"] as String;
@@ -1201,6 +1323,12 @@ import UIKit
                 query.whereKey("fbID", containedIn: friendIds);
                 query.findObjectsInBackgroundWithBlock({
                     (objects: [AnyObject]!, error: NSError!) in
+                    if (error != nil) {
+                        NSLog("Query for facebook users errored");
+                        initFunc(0);
+                        endFunc();
+                        return;
+                    }
                     initFunc(objects.count);
                     for index: Int in 0..<objects.count {
                         var content = (objects[index] as PFObject)["username"] as String;
@@ -1210,6 +1338,23 @@ import UIKit
                     endFunc();
                 });
             }
+            else {
+                NSLog("Error connecting to fb and getting their friends");
+                initFunc(0);
+                endFunc();
+                return;
+            }
         });
+    }
+    
+    
+    class func wordNumberer(num: Int)->String {
+        if (num > 1000000) {
+            return "\(num / 1000000)M"
+        }
+        else if (num > 1000) {
+            return "\(num / 1000)K"
+        }
+        return "\(num)"
     }
 }

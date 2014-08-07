@@ -52,7 +52,7 @@ let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
 let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
 
 //camera icon image in upload flow
-let CAMERA_ICON = UIImage(named: "temp_camera_icon.jpg")
+let CAMERA_ICON = UIImage(named: "f_camera_roll.png")
 
 //default images
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
@@ -93,6 +93,13 @@ let BAR_WIDTH = CGFloat(225.0);
 //from where swiping left triggers side menu bar
 let TRIGGER_BAR_WIDTH = CGFloat(200.0);
 
+
+//constants for the rotated table in upload flow
+let SIDE_MARGINS = CGFloat(2.0);
+let PREVIEW_CELL_WIDTH: CGFloat = CGFloat(150.0);
+let PREVIEW_CELL_HEIGHT: CGFloat = CGFloat(90.0) - SIDE_MARGINS*2;
+//----end rotated table-----
+
 //numbers for shop the look boxes in upload flow
 let BOX_START_Y = CGFloat(412.0);                //starting y pos of shop look boxes
 let LABEL_BOX_HEIGHT = CGFloat(40.0);            //individual box heights
@@ -104,6 +111,11 @@ let BOX_WIDTH_ONE = BOX_WIDTH - BOX_CLOSE_WIDTH;
 let BOX_LEFT_MARGIN = ((FULLSCREEN_WIDTH) - BOX_WIDTH) / CGFloat(2.0)
 let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(595.0); //height of scrollfield when no shoplooks
 //----end shop the look------
+
+//text view attributes for the textview with a placeholder in upload flow
+let PREVIEW_TEXT_VIEW_COLOR = UIColor.whiteColor();
+let PLACEHOLDER_COLOR = UIColor(white: 1, alpha: 0.32);
+let PREVIEW_DESCRIP_PLACEHOLDER_TEXT = "Tell us about your style";
 
 //----------------------------Side Bar Constants---------------------------------
 

@@ -17,7 +17,7 @@ class ShopTextButton: UIButton {
     var shopIndex: Int = -1;
 }
 
-class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
 
     @IBOutlet var labelBar: UITextField!;
     
@@ -41,6 +41,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var backDirectionImage: UIImageView!
     
+    @IBOutlet weak var backImageView: UIImageView!
+    
     
     var movingWindow: Bool = false;
     
@@ -55,13 +57,33 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     var shopButtons: Array<ShopButton> = [];
     
+    var placeholding: Bool = false;
+    
+    var isEditingExisting = false;
+    
+    var existingPost: ImagePostStructure?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        textView.layer.borderWidth = 1;
+        textView.layer.borderColor = UIColor.whiteColor().CGColor;
+        //textView.layer.cornerRadius = 8;
+        textView.delegate = self;
+        
+        labelBar.borderStyle = UITextBorderStyle.None;
+        labelBar.layer.borderWidth = 1;
+        labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
+        
         labelBar.text = prevLabel;
-        textView.text = prevDescrip;
+        if (prevDescrip == "") {
+            setPlaceholderText();
+        }
+        else {
+            textView.text = prevDescrip;
+        }
         
         scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
@@ -77,13 +99,36 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
+        
+        if (receivedImages.count > 0) {
+            backImageView.image = receivedImages[0];
+        }
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        /*if (receivedImages.count > 0) {
+            backImageView.image = receivedImages[0];
+        }*/
+    }
+    
+    func setPlaceholderText() {
+        placeholding = true;
+        textView.textColor = PLACEHOLDER_COLOR;
+        textView.text = PREVIEW_DESCRIP_PLACEHOLDER_TEXT
     }
     
     //called when a new shopbutton is made, and featurizes the button
     func featurizeShopButton(index: Int, shopButton: ShopButton) {
+        
+        shopButton.backgroundColor = UIColor.clearColor();
+        
         shopButton.shopIndex = index;
         var but1 = ShopTextButton(frame: CGRectMake(0, 0, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
         var but2 = ShopTextButton(frame: CGRectMake(BOX_WIDTH_ONE, 0, BOX_CLOSE_WIDTH, LABEL_BOX_HEIGHT));
+        but1.backgroundColor = UIColor.clearColor();
+        but2.backgroundColor = UIColor.clearColor();
+        but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+        but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.shopIndex = index;
         but2.shopIndex = index;
         
@@ -122,17 +167,24 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             default:
                 exclusivity = PostExclusivity.EVERYONE;
         }*/
-        var description = textView.text;
-        ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
-        
-        //reset submission page
-        
-        
-        if (self.navigationController) {
-            if (self.navigationController.parentViewController) {
-                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
-                overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
-                overlord.openHome();
+        var description = "";
+        if (!placeholding) {
+            description = textView.text;
+        }
+        if (isEditingExisting) {
+            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
+            self.navigationController.popViewControllerAnimated(true);
+        }
+        else {
+            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
+            
+            //reset submission page
+            if (self.navigationController) {
+                if (self.navigationController.parentViewController) {
+                    var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                    overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
+                    overlord.openHome();
+                }
             }
         }
     }
@@ -153,16 +205,36 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func receiveImage(imageValues: Array<UIImage>, hOrder: Array<ImageIndex>, prevLabel: String, prevDescrip: String, prevShop: Array<ShopLook>) {
+        self.isEditingExisting = false;
         receivedImages = imageValues;
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
         self.highlightOrder = hOrder;
         self.shopTheLook = prevShop;
     }
+    
+    func receiveImage(imageValues: Array<UIImage>, post: ImagePostStructure) {
+        
+        var prevLabel = post.getLabels();
+        var prevDescrip = post.getDescription();
+        var prevShop = post.getShopLooks();
+        
+        self.isEditingExisting = true;
+        receivedImages = imageValues;
+        self.prevLabel = prevLabel;
+        self.prevDescrip = prevDescrip;
+        var hOrder = Array<ImageIndex>();
+        for i in 0..<imageValues.count {
+            hOrder.append(ImageIndex(groupNum: -1, index: i, asset: nil));
+        }
+        self.highlightOrder = hOrder;
+        self.shopTheLook = prevShop;
+        self.existingPost = post;
+    }
 
     @IBAction func addMoreImages(sender: UIButton) {
-        NSLog("Deprecated!")
-        sendBackImages(2);
+        //NSLog("Deprecated!")
+        //sendBackImages(2);
         self.navigationController.popViewControllerAnimated(true);
     }
     
@@ -262,7 +334,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             var urlLink = (alert.textFields[1] as UITextField).text;
             self.addManualShopTheLook(ShopLook(title: title, urlLink: urlLink));
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -285,7 +357,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.shopTheLook[index] = ShopLook(title: title, urlLink: urlLink);
             thisButton.setTitle(title, forState: UIControlState.Normal);
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -296,8 +368,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         let alert: UIAlertController = UIAlertController(title: "Delete?", message: "Delete this ShopTheLook?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Delete!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             
-            
-            for i in (index+1)...(self.shopButtons.count - 1) {
+            for i in (index+1)..<(self.shopButtons.count) {
                 var oldY = BOX_START_Y + CGFloat(i - 1) * BOX_INCR_Y;
                 self.shopButtons[i].frame = CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
                 self.shopButtons[i].shopIndex = i-1;
@@ -314,7 +385,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             
             self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * BOX_INCR_Y);
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -344,7 +415,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (currentIndex >= seeBack) {
             var prevController: UIViewController = self.navigationController.viewControllers[currentIndex - seeBack] as UIViewController;
             if (prevController is ImagePickingViewController) {
-                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text, prevOrder: highlightOrder, prevShop: shopTheLook);
+                var sendBackText = "";
+                if (!placeholding) {
+                    sendBackText = textView.text;
+                }
+                
+                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: sendBackText, prevOrder: highlightOrder, prevShop: shopTheLook);
             }
         }
     }
@@ -354,8 +430,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
         super.viewWillDisappear(animated);
     }
-
-    
     
 /*
     // #pragma mark - Navigation
@@ -412,6 +486,22 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             highlightOrder.removeAtIndex(indexPath.row);
             receivedImages.removeAtIndex(indexPath.row);
         }*/
+    }
+    
+    //-------textview delegate methods------
+    func textViewShouldBeginEditing(textView: UITextView!) -> Bool {
+        if (placeholding) {
+            textView.text = "";
+            textView.textColor = PREVIEW_TEXT_VIEW_COLOR;
+            placeholding = false;
+        }
+        return true;
+    }
+    func textViewDidChange(textView: UITextView!) {
+        if (textView.text == "") {
+            setPlaceholderText();
+            textView.resignFirstResponder();
+        }
     }
 
 }
