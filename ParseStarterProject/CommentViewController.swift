@@ -57,15 +57,20 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     @IBAction func addComment(sender: UIButton) {
-        
-        var commentToAdd = commentTextField.text;
-        
-        var comment = currentPost!.addComment(commentToAdd);
-        commentList.append(comment);
-        self.commentTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: commentList.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic);
-        
-        commentTextField.text = "";
+        if (ServerInteractor.isAnonLogged()) {
+            var alert = UIAlertController(title: "Error!", message: "Anonymous users can't post comments!", preferredStyle: UIAlertControllerStyle.Alert);
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
 
+            var commentToAdd = commentTextField.text;
+        
+            var comment = currentPost!.addComment(commentToAdd);
+            commentList.append(comment);
+            self.commentTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: commentList.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic);
+        
+            commentTextField.text = "";
+        }
     }
     /*
     // #pragma mark - Navigation
