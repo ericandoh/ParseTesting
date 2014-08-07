@@ -41,6 +41,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var backDirectionImage: UIImageView!
     
+    @IBOutlet weak var backImageView: UIImageView!
     
     var movingWindow: Bool = false;
     
@@ -60,6 +61,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
 
         // Do any additional setup after loading the view.
         
+        textView.layer.borderWidth = 1;
+        textView.layer.borderColor = UIColor.whiteColor().CGColor;
+        //textView.layer.cornerRadius = 8;
+        
+        labelBar.borderStyle = UITextBorderStyle.None;
+        labelBar.layer.borderWidth = 1;
+        labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
+        
         labelBar.text = prevLabel;
         textView.text = prevDescrip;
         
@@ -77,6 +86,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         
         navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
         sideTableView.setEditing(false, animated: false);
+        
+        if (receivedImages.count > 0) {
+            backImageView.image = receivedImages[0];
+        }
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        /*if (receivedImages.count > 0) {
+            backImageView.image = receivedImages[0];
+        }*/
     }
     
     //called when a new shopbutton is made, and featurizes the button
@@ -161,8 +180,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
 
     @IBAction func addMoreImages(sender: UIButton) {
-        NSLog("Deprecated!")
-        sendBackImages(2);
+        //NSLog("Deprecated!")
+        //sendBackImages(2);
         self.navigationController.popViewControllerAnimated(true);
     }
     
