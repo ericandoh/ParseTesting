@@ -122,8 +122,22 @@ class ImagePostStructure
     func getImagesCount()->Int {
         return (myObj["imageFiles"] as Array<PFFile>).count;
     }
+    func getCommentsCount()->Int {
+        return (myObj["comments"] as Array<String>).count;
+    }
+    func getLabels()->String {
+        var labelArr = myObj["labels"] as Array<String>;
+        var ret = "";
+        for label in labelArr {
+            ret += "#" + label + " ";
+        }
+        return ret;
+    }
     func isLikedByUser()->Bool {
         return ServerInteractor.likedBefore(myObj.objectId);
+    }
+    func isOwnedByMe()->Bool {
+        return (myObj["author"] as String) == PFUser.currentUser().username;
     }
     func loadImage() {
         NSLog("loadImage() - this function seems unused");
@@ -154,6 +168,7 @@ class ImagePostStructure
         }
     }
     
+    //used ONLY by home feed! do NOT use by any other class!
     func loadRestIfNeeded(callBack: (Int)->Void, snapShotViewCounter: Int) {
         NSLog("----------------------Request for more images at \(snapShotViewCounter)-------------------")
         if (imagesLoaded) {
@@ -217,6 +232,61 @@ class ImagePostStructure
         }
     }
     
+    func loadAllImages(finishFunction: (Array<UIImage>)->Void) {
+        if (image == nil) {
+            var imgFile: PFFile = myObj["imageFile"] as PFFile;
+            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                if (error == nil) {
+                    //get file objects
+                    self.image = UIImage(data: result);
+                    self.loadAllImagesPart2(finishFunction)
+                }
+                else {
+                    NSLog("Error fetching image \(index)");
+                }
+            });
+        }
+        else {
+            self.loadAllImagesPart2(finishFunction)
+        }
+    }
+    func loadAllImagesPart2(finishFunction: (Array<UIImage>)->Void) {
+        if (imagesLoaded) {
+            loadAllImagesPart3(finishFunction);
+        }
+        else {
+            var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
+            if (imgFiles.count == 0) {
+                self.imagesLoaded = true;
+                self.loadAllImagesPart3(finishFunction);
+                return;
+            }
+            for (index, imgFile: PFFile) in enumerate(imgFiles) {
+                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                    if (error == nil) {
+                        var fImage = UIImage(data: result);
+                        self.images.append(fImage);
+                    }
+                    else {
+                        NSLog("Error fetching rest of images!")
+                    }
+                    if (self.images.count == imgFiles.count) {
+                        self.imagesLoaded = true;
+                        self.loadAllImagesPart3(finishFunction);
+                    }
+                });
+            }
+        }
+    }
+    func loadAllImagesPart3(finishFunction: (Array<UIImage>)->Void) {
+        var imgArrayToReturn: Array<UIImage> = [];
+        imgArrayToReturn.append(self.image!);
+        for restImage in self.images {
+            imgArrayToReturn.append(restImage);
+        }
+        finishFunction(imgArrayToReturn);
+    }
+    
     //deprecated
     //loads all images, as I load I return images by index
     func loadImages(finishFunction: (UIImage?, Bool)->Void, postIndex: Int) {
@@ -267,20 +337,35 @@ class ImagePostStructure
         }
     }
     func fetchComments(finishFunction: (authorInput: NSArray, input: NSArray)->Void) {
-        var commentAuthorArray = NSArray();
-        if (myObj["commentAuthor"]) {
-            commentAuthorArray = myObj["commentAuthor"] as NSArray
-        }
-        var commentArray = myObj["comments"] as NSArray;
-        if (commentArray.count > commentAuthorArray.count) {
-            var myArray = commentAuthorArray as Array<String>;
-            myArray += Array<String>(count: commentArray.count - commentAuthorArray.count, repeatedValue: "");
-            commentAuthorArray = myArray as NSArray;
-        }
-        finishFunction(authorInput: commentAuthorArray, input: commentArray);
+        
+        //refresh comments by refetching object from server
+        myObj.fetchInBackgroundWithBlock({
+            (object: PFObject!, error: NSError!) in
+            if (error == nil) {
+                self.myObj = object;
+                var commentAuthorArray = NSArray();
+                if (self.myObj["commentAuthor"]) {
+                    commentAuthorArray = self.myObj["commentAuthor"] as NSArray
+                }
+                var commentArray = self.myObj["comments"] as NSArray;
+                if (commentArray.count > commentAuthorArray.count) {
+                    var myArray = commentAuthorArray as Array<String>;
+                    myArray += Array<String>(count: commentArray.count - commentAuthorArray.count, repeatedValue: "");
+                    commentAuthorArray = myArray as NSArray;
+                }
+                finishFunction(authorInput: commentAuthorArray, input: commentArray);
+            }
+            else {
+                NSLog("Error refetching object for comments");
+            }
+        });
     }
     func getAuthor()->String {
         return myObj["author"] as String;
+    }
+    func getDescription()->String {
+        var mainBody = myObj["description"] as String;
+        return mainBody;
     }
     func getDescriptionWithTag()->String {
         var mainBody = myObj["description"] as String;
@@ -291,6 +376,14 @@ class ImagePostStructure
             }
         }
         return mainBody;
+    }
+    func getShopLooks()->Array<ShopLook> {
+        var lookArray = myObj["shopLooks"] as NSArray;
+        var retList: Array<ShopLook> = [];
+        for object in lookArray {
+            retList.append(ShopLook.fromDictionary(object));
+        }
+        return retList;
     }
     func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
         var lookArray = myObj["shopLooks"] as NSArray;
@@ -315,5 +408,36 @@ class ImagePostStructure
         //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
         return PostComment(author: author, content: comment);
+    }
+    func updatePost(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
+        //called when making a new post
+        //myObj must be saved by caller
+        image = images[0];
+        let singleData = UIImagePNGRepresentation(images[0]);
+        let singleFile = PFFile(name:"posted.png",data:singleData);
+        
+        self.images = images;
+        self.images.removeAtIndex(0);
+        imagesLoaded = true;
+        
+        var imgArray: Array<PFFile> = [];
+        for image: UIImage in self.images {
+            let data = UIImagePNGRepresentation(image);
+            let file = PFFile(name:"posted.png",data:data);
+            imgArray.append(file);
+        }
+        myObj["imageFile"] = singleFile;     //separating this for sake of faster loading (since most ppl only see first img then move on)
+        myObj["imageFiles"] = imgArray; //other images that may be in this file
+        myObj["description"] = description;
+        var descriptionLabels: Array<String> = ServerInteractor.extractStrings(description);
+        var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
+        myObj["labels"] = labelArr;
+        
+        var looksArray = NSMutableArray();
+        for look: ShopLook in looks {
+            looksArray.addObject(look.toDictionary());
+        }
+        myObj["shopLooks"] = looksArray;
+        myObj.saveInBackground();
     }
 }

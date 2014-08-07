@@ -120,7 +120,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
                 ServerInteractor.addAsFollower((alert.textFields[0] as UITextField).text)
                 //ServerInteractor.findFollowing((alert.textFields[0] as UITextField).text)
                 }));
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
                 }));
             self.presentViewController(alert, animated: true, completion: nil)

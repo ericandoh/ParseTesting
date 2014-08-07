@@ -12,7 +12,7 @@ import UIKit
 
 let HOME_OWNER = "HOME";
 
-class HomeFeedController: UIViewController {
+class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     //@IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView!
@@ -37,6 +37,8 @@ class HomeFeedController: UIViewController {
     @IBOutlet var likeButton: UIButton!
     
     @IBOutlet var commentsButton: UIButton!
+    
+    @IBOutlet weak var editPostButton: UIButton!
     var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -108,6 +110,8 @@ class HomeFeedController: UIViewController {
         backImageView!.alpha = 0;
         backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+        
+        editPostButton.hidden = true;
     }
     override func viewDidAppear(animated: Bool) {
         //frontImageView!.image = LOADING_IMG;
@@ -252,11 +256,24 @@ class HomeFeedController: UIViewController {
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         
+        var numLikes = currentPost.getLikes();
+        var numComments = currentPost.getCommentsCount();
+        var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
+        var shortenedNumCommentString = ServerInteractor.wordNumberer(numComments);
+        
         if (currentPost.isLikedByUser()) {
-            likeButton.setTitle("Liked!", forState: UIControlState.Normal);
+            likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
         }
         else {
-            likeButton.setTitle("Like", forState: UIControlState.Normal);
+            likeButton.setTitle("L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+        }
+        commentsButton.setTitle("C:"+shortenedNumCommentString, forState: UIControlState.Normal);
+        
+        if (currentPost.isOwnedByMe()) {
+            editPostButton.hidden = false;
+        }
+        else {
+            editPostButton.hidden = true;
         }
         
         //this loads the images
@@ -717,14 +734,19 @@ class HomeFeedController: UIViewController {
     
     
     @IBAction func likePost(sender: UIButton) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
+            return;
+        }
         if (imgBuffer!.isLoadedAt(viewCounter)) {
             var post = imgBuffer!.getImagePostAt(viewCounter);
             post.like();
+            
+            var shortenedNumLikeString = ServerInteractor.wordNumberer(post.getLikes());
             if (post.isLikedByUser()) {
-                likeButton.setTitle("Liked!", forState: UIControlState.Normal);
+                likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
             }
             else {
-                likeButton.setTitle("Like", forState: UIControlState.Normal);
+                likeButton.setTitle("L:"+shortenedNumLikeString, forState: UIControlState.Normal);
             }
         }
         //likePostOutlet.hidden = true
@@ -757,6 +779,68 @@ class HomeFeedController: UIViewController {
             self.commentTableView.reloadData();
         });*/
         self.performSegueWithIdentifier("ViewCommentsSegue", sender: self);
+    }
+    
+    @IBAction func shareAction(sender: UIButton) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
+            return;
+        }
+        if (frontImageView.image == LOADING_IMG) {
+            //lets not share a loading image...
+            return;
+        }
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+        var contentString = "FashionStash - Image Post by user @"+currentPost.getAuthor();
+        if (viewingComments) {
+            contentString += (": " + currentPost.getDescriptionWithTag())
+        }
+        var contentImage = frontImageView!.image;
+        
+        var activityController = UIActivityViewController(activityItems: [contentString, contentImage], applicationActivities: nil);
+        self.presentViewController(activityController, animated: true, completion: {
+            () in
+            //nothing
+        });
+        
+    }
+    
+    @IBAction func editPostAction(sender: UIButton) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
+            return;
+        }
+        var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Edit Post", "Delete Post");
+        //actionSheet.tag = 1;
+        actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
+        //self.presentViewController(actionSheet, animated: true, completion: {() in });
+    }
+    
+    func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
+        switch buttonIndex {
+        case 0:
+            NSLog("Cancelled");
+        case 1:
+            //edit this post, segue to imagepreviewcontroller with right specs
+            var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+            currentPost.loadAllImages({(result: Array<UIImage>) in
+                var imageEditingControl = self.storyboard.instantiateViewControllerWithIdentifier("ImagePreview") as ImagePreviewController;
+                imageEditingControl.receiveImage(result, post: currentPost)
+                self.navigationController.pushViewController(imageEditingControl, animated: true);
+            })
+        case 2:
+            let alert: UIAlertController = UIAlertController(title: "Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", preferredStyle: UIAlertControllerStyle.Alert);
+            alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Default, handler: {
+                (action: UIAlertAction!)->Void in
+                var currentPost = self.imgBuffer!.getImagePostAt(self.viewCounter);
+                //delete this post!
+                ServerInteractor.removePost(currentPost);
+            }));
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
+                (action: UIAlertAction!)->Void in
+            }));
+            self.presentViewController(alert, animated: true, completion: nil);
+        default:
+            break;
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {

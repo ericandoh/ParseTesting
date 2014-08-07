@@ -274,10 +274,17 @@ import UIKit
                 arr.append(otherLabel);
             }
         }
+        //remove duplicate labels here!
         
+        var arrWithoutDuplicates: Array<String> = [];
+        for otherLabel in arr {
+            if (!contains(arrWithoutDuplicates, otherLabel)) {
+                arrWithoutDuplicates.append(otherLabel);
+            }
+        }
         
         var query = PFQuery(className: "SearchTerm");
-        query.whereKey("term", containedIn: arr);
+        query.whereKey("term", containedIn: arrWithoutDuplicates);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil) {
@@ -287,10 +294,10 @@ import UIKit
                     NSLog("\(foundLabel) already exists as label, incrementing")
                     object.incrementKey("count");
                     object.saveInBackground();
-                    arr.removeAtIndex(find(arr, foundLabel)!);
+                    arrWithoutDuplicates.removeAtIndex(find(arrWithoutDuplicates, foundLabel)!);
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
-                for label: String in arr {
+                for label: String in arrWithoutDuplicates {
                     ServerInteractor.makeNewTerm(label);
                 }
             }
@@ -300,7 +307,7 @@ import UIKit
         });
         
         
-        return arr;
+        return arrWithoutDuplicates;
     }
     class func makeNewTerm(label: String) {
         NSLog("Adding new label \(label)")
@@ -365,6 +372,10 @@ import UIKit
         }
         return newImgList;
     }
+    class func updatePost(post: ImagePostStructure, imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
+        var images = preprocessImages(imgs);
+        post.updatePost(imgs, description: description, labels: labels, looks: looks);
+    }
     class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
@@ -416,6 +427,22 @@ import UIKit
     }
     
     class func removePost(post: ImagePostStructure) {
+        if (PFUser.currentUser().username != post.getAuthor()) {
+            //cant delete this post silly!
+            return;
+        }
+        PFUser.currentUser().incrementKey("numPosts", byAmount: -1);
+        PFUser.currentUser().saveEventually();
+        
+        //delete all notifications associated with this notification
+        var query = PFQuery(className: "Notification");
+        query.whereKey("ImagePost", equalTo: post.myObj);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) in
+            for object in objects {
+                (object as PFObject).deleteInBackground();
+            }
+        });
         post.myObj.deleteInBackground();
     }
     
@@ -1214,5 +1241,16 @@ import UIKit
                 });
             }
         });
+    }
+    
+    
+    class func wordNumberer(num: Int)->String {
+        if (num > 1000000) {
+            return "\(num / 1000000)M"
+        }
+        else if (num > 1000) {
+            return "\(num / 1000)K"
+        }
+        return "\(num)"
     }
 }

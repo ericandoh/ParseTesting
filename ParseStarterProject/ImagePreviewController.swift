@@ -57,6 +57,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     var shopButtons: Array<ShopButton> = [];
     
+    var placeholding: Bool = false;
+    
+    var isEditingExisting = false;
+    
+    var existingPost: ImagePostStructure?;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -106,6 +112,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func setPlaceholderText() {
+        placeholding = true;
         textView.textColor = PLACEHOLDER_COLOR;
         textView.text = PREVIEW_DESCRIP_PLACEHOLDER_TEXT
     }
@@ -153,17 +160,24 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             default:
                 exclusivity = PostExclusivity.EVERYONE;
         }*/
-        var description = textView.text;
-        ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
-        
-        //reset submission page
-        
-        
-        if (self.navigationController) {
-            if (self.navigationController.parentViewController) {
-                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
-                overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
-                overlord.openHome();
+        var description = "";
+        if (!placeholding) {
+            description = textView.text;
+        }
+        if (isEditingExisting) {
+            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
+            self.navigationController.popViewControllerAnimated(true);
+        }
+        else {
+            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
+            
+            //reset submission page
+            if (self.navigationController) {
+                if (self.navigationController.parentViewController) {
+                    var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                    overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
+                    overlord.openHome();
+                }
             }
         }
     }
@@ -184,11 +198,31 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func receiveImage(imageValues: Array<UIImage>, hOrder: Array<ImageIndex>, prevLabel: String, prevDescrip: String, prevShop: Array<ShopLook>) {
+        self.isEditingExisting = false;
         receivedImages = imageValues;
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
         self.highlightOrder = hOrder;
         self.shopTheLook = prevShop;
+    }
+    
+    func receiveImage(imageValues: Array<UIImage>, post: ImagePostStructure) {
+        
+        var prevLabel = post.getLabels();
+        var prevDescrip = post.getDescription();
+        var prevShop = post.getShopLooks();
+        
+        self.isEditingExisting = true;
+        receivedImages = imageValues;
+        self.prevLabel = prevLabel;
+        self.prevDescrip = prevDescrip;
+        var hOrder = Array<ImageIndex>();
+        for i in 0..<imageValues.count {
+            hOrder.append(ImageIndex(groupNum: -1, index: i, asset: nil));
+        }
+        self.highlightOrder = hOrder;
+        self.shopTheLook = prevShop;
+        self.existingPost = post;
     }
 
     @IBAction func addMoreImages(sender: UIButton) {
@@ -293,7 +327,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             var urlLink = (alert.textFields[1] as UITextField).text;
             self.addManualShopTheLook(ShopLook(title: title, urlLink: urlLink));
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -316,7 +350,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.shopTheLook[index] = ShopLook(title: title, urlLink: urlLink);
             thisButton.setTitle(title, forState: UIControlState.Normal);
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -345,7 +379,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             
             self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * BOX_INCR_Y);
             }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
         self.presentViewController(alert, animated: true, completion: nil)
@@ -375,7 +409,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (currentIndex >= seeBack) {
             var prevController: UIViewController = self.navigationController.viewControllers[currentIndex - seeBack] as UIViewController;
             if (prevController is ImagePickingViewController) {
-                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: textView.text, prevOrder: highlightOrder, prevShop: shopTheLook);
+                var sendBackText = "";
+                if (!placeholding) {
+                    sendBackText = textView.text;
+                }
+                
+                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: sendBackText, prevOrder: highlightOrder, prevShop: shopTheLook);
             }
         }
     }
@@ -445,8 +484,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     //-------textview delegate methods------
     func textViewShouldBeginEditing(textView: UITextView!) -> Bool {
-        textView.text = "";
-        textView.textColor = PREVIEW_TEXT_VIEW_COLOR;
+        if (placeholding) {
+            textView.text = "";
+            textView.textColor = PREVIEW_TEXT_VIEW_COLOR;
+            placeholding = false;
+        }
         return true;
     }
     func textViewDidChange(textView: UITextView!) {

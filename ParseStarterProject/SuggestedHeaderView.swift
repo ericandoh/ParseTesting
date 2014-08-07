@@ -80,7 +80,7 @@ class SuggestedHeaderView: UICollectionReusableView {
                 self.friendAction = false
                 self.friendButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             }));
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
             }));
             self.owner!.presentViewController(alert, animated: true, completion: nil)
