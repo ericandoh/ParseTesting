@@ -13,11 +13,15 @@ class CustomImageBuffer: NSObject {
     //the posts I have loaded
     var loadedPosts: Array<ImagePostStructure?> = [];
     
+    /*
     //how many sets I have loaded up to
     var loadedUpTo: Int = 0;
     
     //how many images are loaded in our last set (only valid when hitEnd = true)
     var endLoadCount: Int = 0;
+    */
+    
+    var loadedPostCount: Int = 0;
     
     //set to true when I have already loaded in last set of stuff
     var hitEnd: Bool = false;
@@ -82,9 +86,10 @@ class CustomImageBuffer: NSObject {
         self.configureCellFunction = configureCellFunction;
 
         if (disableOnAnon && ServerInteractor.isAnonLogged()) {
-            loadedUpTo = 0;
+            //loadedUpTo = 0;
             hitEnd = true;
-            endLoadCount = 0;
+            //endLoadCount = 0;
+            loadedPostCount = 0;
         }
         else {
             loadSet();
@@ -99,9 +104,10 @@ class CustomImageBuffer: NSObject {
             self.refreshFunction = refreshFunction;
             self.configureCellFunction = configureCellFunction;
             if (disableOnAnon && ServerInteractor.isAnonLogged()) {
-                loadedUpTo = 0;
+                //loadedUpTo = 0;
                 hitEnd = true;
-                endLoadCount = 0;
+                //endLoadCount = 0;
+                loadedPostCount = 0;
             }
             else {
                 loadSet();
@@ -119,9 +125,10 @@ class CustomImageBuffer: NSObject {
             self.configureCellFunction = configureCellFunction;
             self.searchTerm = term;
             if (disableOnAnon && ServerInteractor.isAnonLogged()) {
-                loadedUpTo = 0;
+                //loadedUpTo = 0;
                 hitEnd = true;
-                endLoadCount = 0;
+                //endLoadCount = 0;
+                loadedPostCount = 0;
             }
             else {
                 loadSet();
@@ -136,9 +143,10 @@ class CustomImageBuffer: NSObject {
             self.refreshFunction = refreshFunction;
             self.configureCellFunction = configureCellFunction;
             if (disableOnAnon && ServerInteractor.isAnonLogged()) {
-                loadedUpTo = 0;
+                //loadedUpTo = 0;
                 hitEnd = true;
-                endLoadCount = 0;
+                //endLoadCount = 0;
+                loadedPostCount = 0;
             }
             else {
                 self.loadedPosts = alreadyLoadedPosts;
@@ -167,22 +175,23 @@ class CustomImageBuffer: NSObject {
         //broke here
         
         if (loaderType == 0) {
-            serverFunction!(skip: (loadedUpTo)*postLoadCount, loadCount: postLoadCount, user: user!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+            serverFunction!(skip: loadedPostCount, loadCount: postLoadCount, user: user!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
         else if (loaderType == 1) {
             var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
             serverFunction2!(loadCount: postLoadCount, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
         else if (loaderType == 2) {
-            serverFunction3!(skip: (loadedUpTo)*postLoadCount, loadCount: postLoadCount, term: searchTerm, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
+            serverFunction3!(skip: loadedPostCount, loadCount: postLoadCount, term: searchTerm, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
         else if (loaderType == 3) {
             //everything (should) already be loaded
             hitEnd = true;
             isLoading = 0;
-            endLoadCount = (loadedPosts.count) % postLoadCount;
-            var divisible = loadedPosts.count - endLoadCount;
-            loadedUpTo = divisible / postLoadCount;
+            loadedPostCount = loadedPosts.count;
+            //endLoadCount = (loadedPosts.count) % postLoadCount;
+            //var divisible = loadedPosts.count - endLoadCount;
+            //loadedUpTo = divisible / postLoadCount;
             if (refreshFunction != nil) {
                 refreshFunction!();
             }
@@ -195,8 +204,9 @@ class CustomImageBuffer: NSObject {
         if (loaderType != 3) {
             loadedPosts = [];
         }
-        loadedUpTo = 0;
-        endLoadCount = 0;
+        //loadedUpTo = 0;
+        //endLoadCount = 0;
+        loadedPostCount = 0;
         hitEnd = false;
         isLoading = 0;
         isActive = false;
@@ -227,21 +237,18 @@ class CustomImageBuffer: NSObject {
         newlyLoadedStart = loadedPosts.count;
         
         var needAmount: Int;
-        if (size < postLoadCount) {
+        if (size == 0) {
             hitEnd = true;
-            endLoadCount = size;
-            needAmount = (loadedUpTo * postLoadCount) + endLoadCount;
         }
         else {
             //size must equal postLoadCount
-            endLoadCount = 0;
-            loadedUpTo += 1;
-            needAmount = loadedUpTo * postLoadCount;
+            //endLoadCount = 0;
+            //loadedUpTo += 1;
+            //needAmount = loadedUpTo * postLoadCount;
+            loadedPostCount = size + loadedPostCount;
+            loadedPosts += Array<ImagePostStructure?>(count: size, repeatedValue: nil);
         }
-        if (loadedPosts.count < needAmount) {
-            loadedPosts += Array<ImagePostStructure?>(count: needAmount - loadedPosts.count, repeatedValue: nil);
-        }
-        newlyLoadedEnd = needAmount;
+        newlyLoadedEnd = loadedPosts.count;
         numLoaded = size;
         //myCollectionView.reloadData();
         if (refreshFunction != nil) {
@@ -258,12 +265,12 @@ class CustomImageBuffer: NSObject {
             return;
         }
         var realIndex: Int;
-        if (hitEnd) {
-            realIndex = index + (loadedUpTo * postLoadCount);
-        }
+        //if (hitEnd) {
+        realIndex = index + newlyLoadedStart;
+        /*}
         else {
             realIndex = index + ((loadedUpTo - 1) * postLoadCount);
-        }
+        }*/
         loadedPosts[realIndex] = loaded;
         
         if (isActive) {
@@ -277,7 +284,8 @@ class CustomImageBuffer: NSObject {
         //isLoading = false;  //still loading cells in, but setting indexes are ok
     }
     func numItems() -> Int {
-        return loadedUpTo * postLoadCount + endLoadCount;
+        return loadedPostCount;
+        //return loadedUpTo * postLoadCount + endLoadCount;
     }
     
 }
