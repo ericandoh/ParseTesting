@@ -184,21 +184,21 @@ class LinkFilledTextView: UITextView {
             var individualString: String = ((text as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length);
             if (individualString.hasPrefix("#")) {
                 let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font];
+                let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else if (individualString.hasPrefix("@")) {
                 let font = UIFont(name: "Futura-CondensedExtraBold", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font];
+                let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else {
                 let font = UIFont(name: "Futura", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.DEFAULT.toRaw(), NSFontAttributeName: font];
+                let attrDict = [TYPE_TAG: ExternalViewLink.DEFAULT.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: UIColor.whiteColor()];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
             }
             attributedString.appendAttributedString(attributedStringPiece);

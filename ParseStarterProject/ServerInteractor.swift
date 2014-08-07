@@ -602,7 +602,7 @@ import UIKit
         
         query.whereKey("createdAt", greaterThan: oneWeekAgo);
         
-        query.orderByDescending("createdAt");
+        //query.orderByDescending("createdAt");
         
         var excludeList = convertPostToID(excludes);
         
