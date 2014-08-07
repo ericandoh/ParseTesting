@@ -19,6 +19,8 @@ class SuggestedHeaderView: UICollectionReusableView {
     
     var friendAction: Bool = false;
     
+    var gestureSet: Bool = false;
+    
     
     func extraConfigurations(involvedUser: FriendEncapsulator?, sender: UIViewController) {
         //clicking on the image segues to that user's profile page
@@ -57,8 +59,18 @@ class SuggestedHeaderView: UICollectionReusableView {
         //check if I am already friends with this dude
         nameLabel.text = involvedUser!.username;
         self.backgroundColor = UIColor.clearColor();
+        
+        if (!gestureSet) {
+            var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped");
+            self.addGestureRecognizer(tapRecognizer);
+            gestureSet = true;
+        }
     }
-    
+    func isTapped() {
+        var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+        (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
+        self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+    }
     
     @IBAction func friendMe(sender: UIButton) {
         var username = friend!.username;
@@ -88,6 +100,7 @@ class SuggestedHeaderView: UICollectionReusableView {
         else {
             //no action
         }
-
     }
+    
+    
 }

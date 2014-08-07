@@ -1101,6 +1101,7 @@
                                             </connections>
                                         </button>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <connections>
                                         <outlet property="friendButton" destination="2Ml-rA-4SZ" id="bNl-M5-B4H"/>
                                         <outlet property="iconImage" destination="lMu-3g-P5f" id="h3S-KD-rnw"/>

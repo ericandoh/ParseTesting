@@ -14,6 +14,8 @@ let MAX_IMGS_PER_SUGGEST = 5;   //move to constants as well
 let SUGGESTED_CELL_IDENTIFIER = "SuggestedFriendCell";
 let SEARCH_CELL_IDENTIFIER = "SearchFriendCell";
 
+let SUGGEST_OWNER = "SUGGEST"
+
 class FindFriendsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     
@@ -27,7 +29,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     var currentTerm: String = "";
     
     var suggestedUsers: Array<FriendEncapsulator?> = [];
-    var suggestedUserImgs: [String: Array<UIImage>] = [:];
+    var suggestedUserImgs: [String: Array<ImagePostStructure>] = [:];
     var suggestedUserCounts: [String: Int] = [:];
     
     var isLoadingSuggestedFriends: Bool = false;
@@ -149,7 +151,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     func finishFunction(userIndex: Int, post: ImagePostStructure, index: Int) {
         var friend = self.suggestedUsers[userIndex]!;
-        self.suggestedUserImgs[friend.username]!.append(post.getImageAt(0));
+        
+        self.suggestedUserImgs[friend.username]!.append(post);
+        
         if (self.suggestedUserImgs[friend.username]!.count == self.suggestedUserCounts[friend.username]!) {
             suggestedCollectionView.reloadData();
             friendsToLoad--;
@@ -254,7 +258,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         var username = suggestedUsers[section]!.username;
         var img = (suggestedUserImgs[username]!)[row];
-        cell.backgroundView = UIImageView(image: img)
+        cell.backgroundView = UIImageView(image: img.getImageAt(0))
         
         return cell;
         
@@ -266,6 +270,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             //var username = suggestedUsers[section]!.username;
             
             reusableView.extraConfigurations(suggestedUsers[section]!, sender: self)
+            
             return reusableView;
         }
         else {
@@ -275,9 +280,18 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
         //segue to user at that index
+        let section = indexPath.section;
+        let row = indexPath.row;
+        var username = suggestedUsers[section]!.username;
         
+        var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: SUGGEST_OWNER);
+
+        var onlyImagePost = (suggestedUserImgs[username]!)[row];
+        imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
+        var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+        newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
+        self.navigationController.pushViewController(newHome, animated: true);
     }
-    
     
     /*
     // #pragma mark - Navigation
