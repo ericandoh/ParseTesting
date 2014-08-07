@@ -112,6 +112,11 @@ let BOX_LEFT_MARGIN = ((FULLSCREEN_WIDTH) - BOX_WIDTH) / CGFloat(2.0)
 let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(595.0); //height of scrollfield when no shoplooks
 //----end shop the look------
 
+//text view attributes for the textview with a placeholder in upload flow
+let PREVIEW_TEXT_VIEW_COLOR = UIColor.whiteColor();
+let PLACEHOLDER_COLOR = UIColor(white: 1, alpha: 0.32);
+let PREVIEW_DESCRIP_PLACEHOLDER_TEXT = "Tell us about your style";
+
 //----------------------------Side Bar Constants---------------------------------
 
 //side menu bar items we will have

@@ -17,7 +17,7 @@ class ShopTextButton: UIButton {
     var shopIndex: Int = -1;
 }
 
-class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
 
     @IBOutlet var labelBar: UITextField!;
     
@@ -43,6 +43,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var backImageView: UIImageView!
     
+    
     var movingWindow: Bool = false;
     
     var receivedImages: Array<UIImage> = [];
@@ -64,13 +65,19 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.layer.borderWidth = 1;
         textView.layer.borderColor = UIColor.whiteColor().CGColor;
         //textView.layer.cornerRadius = 8;
+        textView.delegate = self;
         
         labelBar.borderStyle = UITextBorderStyle.None;
         labelBar.layer.borderWidth = 1;
         labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
         
         labelBar.text = prevLabel;
-        textView.text = prevDescrip;
+        if (prevDescrip == "") {
+            setPlaceholderText();
+        }
+        else {
+            textView.text = prevDescrip;
+        }
         
         scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
@@ -96,6 +103,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         /*if (receivedImages.count > 0) {
             backImageView.image = receivedImages[0];
         }*/
+    }
+    
+    func setPlaceholderText() {
+        textView.textColor = PLACEHOLDER_COLOR;
+        textView.text = PREVIEW_DESCRIP_PLACEHOLDER_TEXT
     }
     
     //called when a new shopbutton is made, and featurizes the button
@@ -373,8 +385,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
         super.viewWillDisappear(animated);
     }
-
-    
     
 /*
     // #pragma mark - Navigation
@@ -431,6 +441,19 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             highlightOrder.removeAtIndex(indexPath.row);
             receivedImages.removeAtIndex(indexPath.row);
         }*/
+    }
+    
+    //-------textview delegate methods------
+    func textViewShouldBeginEditing(textView: UITextView!) -> Bool {
+        textView.text = "";
+        textView.textColor = PREVIEW_TEXT_VIEW_COLOR;
+        return true;
+    }
+    func textViewDidChange(textView: UITextView!) {
+        if (textView.text == "") {
+            setPlaceholderText();
+            textView.resignFirstResponder();
+        }
     }
 
 }
