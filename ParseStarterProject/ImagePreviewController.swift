@@ -368,8 +368,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         let alert: UIAlertController = UIAlertController(title: "Delete?", message: "Delete this ShopTheLook?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Delete!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             
-            
-            for i in (index+1)...(self.shopButtons.count - 1) {
+            for i in (index+1)..<(self.shopButtons.count) {
                 var oldY = BOX_START_Y + CGFloat(i - 1) * BOX_INCR_Y;
                 self.shopButtons[i].frame = CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
                 self.shopButtons[i].shopIndex = i-1;

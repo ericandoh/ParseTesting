@@ -34,7 +34,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         myTable.hidden = true;
         
-        collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getPost, sender: self);
+        collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getExplore, sender: self);
         if (currentTerm != "") {
             startSearch(currentTerm);
         }

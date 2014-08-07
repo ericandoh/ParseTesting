@@ -36,7 +36,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     /*
         Sample Usage:
         -In viewDidLoad-
-            var cdel = ImagePostCollectionDelegate(true, collectionView: self.myCollectionView, ServerInteractor.getPosts, self);
+            var cdel = ImagePostCollectionDelegate(true, collectionView: self.myCollectionView, ServerInteractor.getPost, self);
             cdel.initialSetup();
     */
     //for user profile stuff

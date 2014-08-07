@@ -580,8 +580,46 @@ import UIKit
                 notifyQueryFinish(0);
             }
         }
-        //return returnList;
     }
+    
+    
+    class func getExplore(loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
+        
+        
+        //query
+        var query = PFQuery(className:"ImagePost")
+        //query.skip = skip * POST_LOAD_COUNT;
+        query.limit = POST_LOAD_COUNT;
+        query.orderByDescending("createdAt");
+        
+        var excludeList = convertPostToID(excludes);
+        
+        if (!isAnonLogged()) {
+            excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
+            query.whereKey("author", notEqualTo: PFUser.currentUser().username);
+        }
+        query.whereKey("objectId", notContainedIn: excludeList);
+        //query addAscending/DescendingOrder for extra ordering:
+        query.findObjectsInBackgroundWithBlock {
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error == nil) {
+                // The find succeeded.
+                // Do something with the found objects
+                notifyQueryFinish(objects.count);
+                
+                var post: ImagePostStructure?;
+                for (index, object) in enumerate(objects!) {
+                    post = ImagePostStructure.dequeueImagePost((object as PFObject));
+                    post!.loadImage(finishFunction, index: index);
+                }
+            } else {
+                // Log details of the failure
+                NSLog("Post Error: %@ %@", error, error.userInfo)
+                notifyQueryFinish(0);
+            }
+        }
+    }
+    
     class func resetViewedPosts() {
         PFUser.currentUser()["viewHistory"] = NSArray();
         PFUser.currentUser().saveEventually();

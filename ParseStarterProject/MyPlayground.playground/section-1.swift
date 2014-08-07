@@ -24,9 +24,12 @@ wordNumberer(98682091809184604);*/
 
 var num = random() % 100;
 
-for i in 0..<5{
+for i in 0..<0{
     print(i);
 }
+//for i in 0...(-1) {
+    //print(i)
+//}
 
 /*
 var dictionary: [String: String] = [:];
