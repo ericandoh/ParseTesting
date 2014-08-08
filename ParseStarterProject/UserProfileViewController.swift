@@ -23,6 +23,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var AnonText: UITextView!
     
     @IBOutlet var followerTableView: UITableView!
+    
+    
+    @IBOutlet weak var backImageView: UIImageView!
+    
     var mainUser: FriendEncapsulator?;
     var amMyself: Bool = true
     var friendAction: Bool = false;
@@ -58,6 +62,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        //self.navigationController.navigationBar.topItem.title = "User Profile";
+        
         followerTableView.allowsMultipleSelectionDuringEditing = false
         
         followerTableView.allowsSelectionDuringEditing = true
@@ -88,6 +99,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
+                self.backImageView.image = image;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -111,6 +123,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
                 var tempImage: UIImage = DEFAULT_USER_ICON;
+                self.backImageView.image = tempImage;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -127,6 +140,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.text = ServerInteractor.getUserName();
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //self.userIcon.image = fetchedImage;
+                    self.backImageView.image = fetchedImage;
                     var newUserIcon = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
