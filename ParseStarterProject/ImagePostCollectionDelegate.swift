@@ -33,6 +33,9 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     //for when you hit end of scroll + want to load more, dont send more requests if I've already made such a request
     var requestedBuffer: Bool = false;
     
+    //whether I should mark posts as being read (and possibly mark them as being so)
+    var readMode: Bool = false;
+    
     /*
         Sample Usage:
         -In viewDidLoad-
@@ -56,6 +59,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
             self.owner = sender;
             self.serverFunction2 = serverFunction2;
             self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: nil, owner: COLLECTION_OWNER);
+            self.readMode = true;
     }
     init(disableOnAnon: Bool, collectionView: UICollectionView,
         serverFunction3: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
@@ -131,6 +135,11 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         UIView.animateWithDuration(0.1, animations: {() in
             cell.alpha = 1;
             });
+        
+        if (!post.read) {
+            ServerInteractor.readPost(post);
+            post.read = true;
+        }
     }
     
     

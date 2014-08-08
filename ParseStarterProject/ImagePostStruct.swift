@@ -20,6 +20,10 @@ class ImagePostStructure
     var myObj: PFObject
     var imagesLoaded: Bool = false;
     var isLoadingImages: Bool = false;
+    
+    //for search, set this to true to not mark as read any more posts than necessary
+    var read: Bool = false;
+    
     //var user: PFUser()
     init(inputObj: PFObject) {
         //called when retrieving object (for viewing, etc)
