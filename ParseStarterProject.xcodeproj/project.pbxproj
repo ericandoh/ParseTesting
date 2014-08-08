@@ -21,6 +21,7 @@
 		09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */; };
 		09BEF34C13D51C3F001BBCDB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09BEF34B13D51C3F001BBCDB /* Security.framework */; };
 		24A4812619943B30001BE688 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A4812519943B30001BE688 /* heart.png */; };
+		24A4812819944DA5001BE688 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 24A4812719944DA5001BE688 /* gradient.png */; };
 		24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */; };
 		24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B90D541982EDD400AF90FD /* SettingsViewController.swift */; };
 		24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */; };
@@ -103,6 +104,7 @@
 		09ABC08113A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseStarterProjectAppDelegate.m; sourceTree = "<group>"; };
 		09BEF34B13D51C3F001BBCDB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		24A4812519943B30001BE688 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		24A4812719944DA5001BE688 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 		24B90D521982CF2C00AF90FD /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		24B90D541982EDD400AF90FD /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUsernameSetupViewController.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				24A4812919944DB3001BE688 /* backgrounds */,
 				24A4812219943324001BE688 /* buttons */,
 				D91C98D6196EF69A00E1DBEE /* testbackground.jpg */,
 				D99B5FCF196DBB2500662A39 /* Defaults */,
@@ -288,6 +291,14 @@
 			children = (
 			);
 			name = buttons;
+			sourceTree = "<group>";
+		};
+		24A4812919944DB3001BE688 /* backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				24A4812719944DA5001BE688 /* gradient.png */,
+			);
+			name = backgrounds;
 			sourceTree = "<group>";
 		};
 		D914F7FB19883AC400A59314 /* Delegates */ = {
@@ -435,6 +446,7 @@
 				D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */,
 				D92390A01992D99D001B5CBE /* arrow_right.png in Resources */,
 				D923909E1992D278001B5CBE /* f_camera_roll.png in Resources */,
+				24A4812819944DA5001BE688 /* gradient.png in Resources */,
 				D996F6AE195C8D98009E97B0 /* test image 3.jpg in Resources */,
 				D923E4CB1989A00A00C12429 /* deleteSwipeInfoBar.png in Resources */,
 				C4C51B581613CE0800959FDC /* Default-568h@2x.png in Resources */,

@@ -76,6 +76,9 @@ let FULLSCREEN_WIDTH: CGFloat = CGFloat(320);
 //height of a fullscreen image
 let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
 
+//height of a fullscreen app
+let TRUE_FULLSCREEN_HEIGHT = CGFloat(568);
+
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 

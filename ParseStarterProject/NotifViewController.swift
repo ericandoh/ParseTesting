@@ -18,6 +18,7 @@ class NotifViewController: UITableViewController {
     //var notifList: Array<InAppNotification?> = Array<InAppNotification?>();
     var notifList: Array<InAppNotification?> = [];
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -26,6 +27,20 @@ class NotifViewController: UITableViewController {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
         //notifList = Array<InAppNotification>();
+        
+        var view: UIView = UIView()
+        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
+        view.addSubview(effectView)
+        self.tableView.backgroundView = view
+        
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        mainUser.fetchImage({(image: UIImage)->Void in
+            var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT));
+            imageView.image = image
+            self.tableView.backgroundView.insertSubview(imageView, atIndex: 0)
+        });
+        
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 60.0;
     }

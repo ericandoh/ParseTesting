@@ -85,12 +85,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (self.navigationController) {
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        //self.navigationTitle.setTitle("", forState: UIControlState.Normal);
+        
+        //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
-            self.navigationController.navigationBar.hidden = true;
-            self.navigationController.navigationBar.translucent = true;
+            //self.navigationController.navigationBar.hidden = true;
+            //self.navigationController.navigationBar.translucent = true;
             //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
-        }
+        //}
+        
+        
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
         
@@ -117,11 +125,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
         super.viewDidAppear(animated);
-        if (self.navigationController) {
+        //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
-            self.navigationController.navigationBar.hidden = true;
-            self.navigationController.navigationBar.translucent = true;
-        }
+            //self.navigationController.navigationBar.hidden = true;
+            //self.navigationController.navigationBar.translucent = true;
+        //}
         
         if ((imgBuffer) != nil) {
             if (imgBuffer!.isLoadedAt(viewCounter)) {
@@ -131,11 +139,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
-        if (self.navigationController) {
+        super.viewWillDisappear(animated);
+        //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(false, animated: false);
-            self.navigationController.navigationBar.hidden = false;
+            //self.navigationController.navigationBar.hidden = false;
             //self.navigationController.navigationBar.translucent = false;
-        }
+        //}
     }
     /*override func viewWillDisappear(animated: Bool) {
         if (self.navigationController) {
