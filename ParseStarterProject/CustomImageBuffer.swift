@@ -239,6 +239,7 @@ class CustomImageBuffer: NSObject {
         var needAmount: Int;
         if (size == 0) {
             hitEnd = true;
+            isLoading = 0;
         }
         else {
             //size must equal postLoadCount
@@ -279,6 +280,7 @@ class CustomImageBuffer: NSObject {
         
         numLoaded--;
         if (numLoaded == 0) {
+            NSLog("Reset back to 0");
             isLoading = 0;
         }
         //isLoading = false;  //still loading cells in, but setting indexes are ok

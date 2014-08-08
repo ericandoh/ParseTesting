@@ -137,22 +137,6 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false, sender: self);
         
-        
-        
-        //cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
-        //cell.textLabel.numberOfLines = 0;
-        //cell.textLabel.font = UIFont(name: "Helvetica Neue", size: 17);
-        
-        
-        /*if (postImageList[author] != nil) {
-            cell.imageView.image = postImageList[author];
-        }
-        else {
-            cell.imageView.image = LOADING_IMG;
-            self.makeTableImage(index);
-        }*/
-        
-            //cell.imageView.image = PFUser.currentUser()["userIcon"] as UIImage
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }

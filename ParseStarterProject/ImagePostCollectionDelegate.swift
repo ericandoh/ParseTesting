@@ -33,6 +33,13 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     //for when you hit end of scroll + want to load more, dont send more requests if I've already made such a request
     var requestedBuffer: Bool = false;
     
+    //whether I should mark posts as being read (and possibly mark them as being so)
+    var readMode: Bool = false;
+    
+    var lastThoughtEnd: Int = 0;
+    
+    var needAddMore:Bool = false;
+    
     /*
         Sample Usage:
         -In viewDidLoad-
@@ -56,6 +63,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
             self.owner = sender;
             self.serverFunction2 = serverFunction2;
             self.imgBuffer = CustomImageBuffer(disableOnAnon: disableOnAnon, user: nil, owner: COLLECTION_OWNER);
+            self.readMode = true;
     }
     init(disableOnAnon: Bool, collectionView: UICollectionView,
         serverFunction3: ((skip: Int, loadCount: Int, term: String, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
@@ -90,6 +98,18 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
                 indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
             }
             self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
+        }
+        if (needAddMore) {
+            var refreshStart = lastThoughtEnd;
+            var refreshEnd = imgBuffer.numItems();
+            if (refreshEnd - 1 >= refreshStart) {
+                var indexPaths: Array<NSIndexPath> = [];
+                for i in refreshStart...(refreshEnd-1) {
+                    indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
+                }
+                self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
+            }
+            needAddMore = false;
         }
         //self.myCollectionView.reloadItemsAtIndexPaths(indexPaths);
         //self.myCollectionView.reloadData();
@@ -131,11 +151,17 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         UIView.animateWithDuration(0.1, animations: {() in
             cell.alpha = 1;
             });
+        
+        if (!post.read) {
+            ServerInteractor.readPost(post);
+            post.read = true;
+        }
     }
     
     
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
-        return imgBuffer.numItems();
+        lastThoughtEnd = imgBuffer.numItems();
+        return lastThoughtEnd;
     }
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
         var cell: SinglePostCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PostCell", forIndexPath: indexPath) as SinglePostCollectionViewCell;
@@ -160,7 +186,13 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     }
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         if (imgBuffer.didHitEnd()) {
-            return;
+            if (imgBuffer.numItems() == lastThoughtEnd) {
+                return;
+            }
+            else {
+                needAddMore = true;
+                requestedBuffer = false;
+            }
         }
         for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
             if (path.row >= (imgBuffer.numItems() - 1 - CELLS_BEFORE_RELOAD)) {

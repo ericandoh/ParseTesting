@@ -23,8 +23,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var AnonText: UITextView!
     
     @IBOutlet var followerTableView: UITableView!
+    
+    
+    @IBOutlet weak var backImageView: UIImageView!
+    
     var mainUser: FriendEncapsulator?;
     var amMyself: Bool = true
+    var friendAction: Bool = false;
     
     /*
     //the posts I have loaded
@@ -57,6 +62,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        //self.navigationController.navigationBar.topItem.title = "User Profile";
+        
         followerTableView.allowsMultipleSelectionDuringEditing = false
         
         followerTableView.allowsSelectionDuringEditing = true
@@ -87,6 +99,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
+                self.backImageView.image = image;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -102,7 +115,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.getNumFollowing()
                 //self.settingsButton.hidden = true
                 self.amMyself = false
-                self.settingsButton.setImage(LOADING_IMG, forState: UIControlState.Normal)
+                self.configureSettingsButton();
                 });
             //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
@@ -110,6 +123,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
                 var tempImage: UIImage = DEFAULT_USER_ICON;
+                self.backImageView.image = tempImage;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -126,6 +140,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.text = ServerInteractor.getUserName();
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //self.userIcon.image = fetchedImage;
+                    self.backImageView.image = fetchedImage;
                     var newUserIcon = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -409,11 +424,51 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return "Unfollow"
     }*/
     
+    func configureSettingsButton() {
+        ServerInteractor.amFollowingUser(mainUser!.username, retFunction: {(amFollowing: Bool) in
+            self.friendAction = amFollowing;
+            if (amFollowing == true) {
+                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+            }
+            else if (amFollowing == false) {
+                self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+            }
+            else {
+                //do nothing, server failed to fetch!
+                NSLog("Failure? \(amFollowing)")
+            }
+        });
+    }
+    
     @IBAction func settings(sender: AnyObject) {
         if (!amMyself) {
-            ServerInteractor.addAsFollower(mainUser!.username)
-            ServerInteractor.postFollowerNotif(mainUser!.username, controller: self);
-            //settingsButton.setImage(ENDING_IMG, forState: UIControlState.Normal)
+            var username = mainUser!.username;
+            if (!friendAction) {
+                //follow me
+                ServerInteractor.postFollowerNotif(username, controller: self);
+                ServerInteractor.addAsFollower(username);
+                
+                //update button
+                self.friendAction = true
+                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+            }
+            else if (friendAction == true) {
+                //unfollow me (if u wish!)
+                let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                    ServerInteractor.removeAsFollower(username);
+                    //update button
+                    self.friendAction = false
+                    self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                }));
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
+                    //canceled
+                }));
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            else {
+                //no action
+            }
         } else {
             self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
         }
