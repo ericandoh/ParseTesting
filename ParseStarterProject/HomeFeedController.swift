@@ -89,6 +89,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
+        
+        //self.navigationController.navigationBar.barStyle = UIBarStyle.Default
+        
+        //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        
+        
+
         //self.navigationTitle.setTitle("", forState: UIControlState.Normal);
         
         //if (self.navigationController) {
@@ -857,12 +864,45 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue!.identifier == "ViewCommentsSegue") {
             if (segue!.destinationViewController is CommentViewController) {
+              //  vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical; // Rises from below
+                
+                // vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve; // Fade
+                // vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal; // Flip
+                // vc.modalTransitionStyle = UIModalTransitionStylePartialCurl; // Curl
+                
+                //[self presentViewController:vc animated:YES completion:nil];
+              
                 var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
                 var currentImg = frontImageView.image;
                 (segue!.destinationViewController as CommentViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg);
+                
+                /*UIView.animateWithDuration(0.3, animations: {
+                    ()->Void in
+                    //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+                    //[self.navigationController pushViewController:nextView animated:NO];
+                    //[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
+                    UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+                    self.navigationController.pushViewController(CommentViewController(), animated: false)
+                    UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: self.navigationController.view, cache: false)
+                });*/
+
+                //UIViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"YourStoryboardID"];
+                //var controller: UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("CommentsTestController") as UIViewController
+                //controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                //[self presentViewController:controller animated:YES completion:nil];
+               // self.presentViewController(controller, animated: true, completion: nil)
             }
         }
     }
+    
+        /*CATransition* transition = [CATransition animation];
+        
+        transition.duration = 0.3;
+        transition.type = kCATransitionFade;
+        
+        [[self.sourceViewController navigationController].view.layer addAnimation:transition forKey:kCATransition];
+        [[self.sourceViewController navigationController] pushViewController:[self destinationViewController] animated:NO];*/
+    
     
     /*@IBAction func exitComments(sender: UIButton) {
         commentView.hidden = true;

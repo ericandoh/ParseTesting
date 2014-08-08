@@ -8,11 +8,14 @@
 
 import UIKit
 
+let kOFFSET_FOR_KEYBOARD = 80.0
+
 class CommentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet var commentTextField: UITextField!
     @IBOutlet var commentTableView: UITableView!
     
+    @IBOutlet weak var commentsTextFieldConstraint: NSLayoutConstraint!
     @IBOutlet var backImgView: UIImageView!
     var commentList: Array<PostComment> = [];
     
@@ -23,11 +26,45 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         self.commentTableView.rowHeight = UITableViewAutomaticDimension;
         self.commentTableView.estimatedRowHeight = 60.0;
+        //self.navigationTitle.setTitle("Comments", forState: UIControlState.Normal);
+        self.commentTextField.backgroundColor = UIColor.clearColor()
+        self.commentTextField.borderStyle = UITextBorderStyle.None
+        self.commentTextField.layer.borderWidth = 1
+        self.commentTextField.layer.borderColor = UIColor.whiteColor().CGColor
+        self.commentTextField.layer.cornerRadius = 5.0
+        self.commentTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardDidHideNotification, object: nil)
     }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self);
+    }
+
+    func keyboardWillShow(notif: NSNotification) {
+        NSLog("Keyboard Will Show")
+        
+        let s: NSValue = notif.userInfo[UIKeyboardFrameEndUserInfoKey] as NSValue;
+        let rect :CGRect = s.CGRectValue();
+        
+        commentsTextFieldConstraint.constant = CGFloat(15.0) + rect.height;
+
+    }
+    
+    func keyboardWillHide(notif: NSNotification) {
+        
+        NSLog("Keyboard Will Hide")
+        let s: NSValue = notif.userInfo[UIKeyboardFrameBeginUserInfoKey] as NSValue;
+        let rect :CGRect = s.CGRectValue();
+
+        commentsTextFieldConstraint.constant = CGFloat(15.0)
+
+    }
+    
+    
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
         if (currentPost != nil) {

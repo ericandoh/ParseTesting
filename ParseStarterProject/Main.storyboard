@@ -766,7 +766,7 @@
         <!--Comment View Controller-->
         <scene sceneID="47n-dt-Vi0">
             <objects>
-                <viewController id="qDB-cd-cme" customClass="CommentViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsTestController" id="qDB-cd-cme" customClass="CommentViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zpi-Oq-juO"/>
                         <viewControllerLayoutGuide type="bottom" id="s45-Ge-O20"/>
@@ -781,7 +781,6 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xhi-ah-eAE">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="CFY-px-QV6">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="dark"/>
@@ -860,17 +859,23 @@
                                     <action selector="addComment:" destination="qDB-cd-cme" eventType="touchUpInside" id="rtK-G1-xUe"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9n-mt-4aE">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your comment here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9n-mt-4aE">
                                 <rect key="frame" x="10" y="515" width="263" height="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="_placeholderLabel.textColor">
+                                        <color key="value" red="1" green="1" blue="1" alpha="0.31" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="S9n-mt-4aE" firstAttribute="top" secondItem="3xQ-yU-YJs" secondAttribute="bottom" constant="8" id="05s-Y5-Igv"/>
+                            <constraint firstItem="S9n-mt-4aE" firstAttribute="top" secondItem="3xQ-yU-YJs" secondAttribute="bottom" constant="16" id="05s-Y5-Igv"/>
                             <constraint firstAttribute="bottom" secondItem="JJU-vv-1Gw" secondAttribute="bottom" constant="23" id="GgJ-3o-89C"/>
-                            <constraint firstAttribute="bottom" secondItem="S9n-mt-4aE" secondAttribute="bottom" constant="23" id="QRD-da-Oou"/>
+                            <constraint firstAttribute="bottom" secondItem="S9n-mt-4aE" secondAttribute="bottom" constant="15" id="QRD-da-Oou"/>
                             <constraint firstItem="JJU-vv-1Gw" firstAttribute="top" secondItem="3xQ-yU-YJs" secondAttribute="bottom" constant="8" id="nfg-RZ-Zvt"/>
                         </constraints>
                     </view>
@@ -879,6 +884,7 @@
                         <outlet property="backImgView" destination="4Uc-do-kG6" id="lk0-6i-1eJ"/>
                         <outlet property="commentTableView" destination="3xQ-yU-YJs" id="oT4-po-rLw"/>
                         <outlet property="commentTextField" destination="S9n-mt-4aE" id="WjI-6W-x97"/>
+                        <outlet property="commentsTextFieldConstraint" destination="QRD-da-Oou" id="jrC-yg-7A4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ir6-Tv-eek" userLabel="First Responder" sceneMemberID="firstResponder"/>

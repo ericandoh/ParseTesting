@@ -28,10 +28,19 @@ class NotifViewController: UITableViewController {
         }
         //notifList = Array<InAppNotification>();
         
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.topItem.title = "Notifications";
+        
         var view: UIView = UIView()
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
         view.addSubview(effectView)
+        //let gradientView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+        //gradientView.image = GRADIENT_IMG
+        //view.addSubview(gradientView)
         self.tableView.backgroundView = view
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
@@ -42,7 +51,7 @@ class NotifViewController: UITableViewController {
         });
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 60.0;
+        self.tableView.estimatedRowHeight = 60.0;        
     }
     
     override func viewDidAppear(animated: Bool) {
