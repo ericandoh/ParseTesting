@@ -74,7 +74,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         followerTableView.allowsSelectionDuringEditing = true
         
         self.followerTableView.rowHeight = UITableViewAutomaticDimension;
-        self.followerTableView.estimatedRowHeight = 60.0;
+        self.followerTableView.estimatedRowHeight = 50.0;
     }
     
     override func viewDidAppear(animated: Bool) {

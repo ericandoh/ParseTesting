@@ -51,7 +51,7 @@ class NotifViewController: UITableViewController {
         });
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 60.0;        
+        self.tableView.estimatedRowHeight = 50.0;
     }
     
     override func viewDidAppear(animated: Bool) {
