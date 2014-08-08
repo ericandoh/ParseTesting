@@ -35,7 +35,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var shopTheLookConstraint: NSLayoutConstraint!
     
-    @IBOutlet var mainWindowConstraint: NSLayoutConstraint!
+    //@IBOutlet var mainWindowConstraint: NSLayoutConstraint!
     
     @IBOutlet var slideDownConstraint: NSLayoutConstraint!
     
@@ -85,14 +85,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             textView.text = prevDescrip;
         }
         
-        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
+        scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
         if (shopTheLook.count > 0) {
-            scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * BOX_INCR_Y);
+            scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * LABEL_BOX_HEIGHT);
             
             for (index, look) in enumerate(shopTheLook) {
-                var oldY = BOX_START_Y + CGFloat(index) * BOX_INCR_Y;
-                var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
+                var oldY = BOX_START_Y + CGFloat(index) * LABEL_BOX_HEIGHT;
+                var newButton = ShopButton(frame: CGRectMake(BOX_X, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
                 featurizeShopButton(index, shopButton: newButton);
             }
         }
@@ -123,8 +123,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         shopButton.backgroundColor = UIColor.clearColor();
         
         shopButton.shopIndex = index;
-        var but1 = ShopTextButton(frame: CGRectMake(0, 0, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
-        var but2 = ShopTextButton(frame: CGRectMake(BOX_WIDTH_ONE, 0, BOX_CLOSE_WIDTH, LABEL_BOX_HEIGHT));
+        var but1 = ShopTextButton(frame: CGRectMake(BOX_X_ONE, LABEL_SPACING, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
+        var but2 = ShopTextButton(frame: CGRectMake(BOX_X_TWO, LABEL_SPACING, BOX_WIDTH_TWO, LABEL_BOX_HEIGHT));
         but1.backgroundColor = UIColor.clearColor();
         but2.backgroundColor = UIColor.clearColor();
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
@@ -140,14 +140,18 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
         shopButton.backgroundColor = UIColor.blackColor();
         
+        var thinLine = UIView(frame: CGRectMake(BOX_X_ONE, LABEL_BOX_HEIGHT - 1, BOX_WIDTH, 1));
+        thinLine.backgroundColor = UIColor.whiteColor();
+        
         shopButton.addSubview(but1);
         shopButton.addSubview(but2);
+        shopButton.addSubview(thinLine);
         
         shopButtons.append(shopButton);
         mainView.addSubview(shopButton);
         
-        shopTheLookConstraint.constant = shopTheLookConstraint.constant + BOX_INCR_Y;
-        mainWindowConstraint.constant = mainWindowConstraint.constant + BOX_INCR_Y;
+        shopTheLookConstraint.constant = shopTheLookConstraint.constant + LABEL_BOX_HEIGHT;
+        //mainWindowConstraint.constant = mainWindowConstraint.constant + LABEL_BOX_HEIGHT;
     }
     
     //function triggered by pushing check button
@@ -369,8 +373,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Delete!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             
             for i in (index+1)..<(self.shopButtons.count) {
-                var oldY = BOX_START_Y + CGFloat(i - 1) * BOX_INCR_Y;
-                self.shopButtons[i].frame = CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
+                var oldY = BOX_START_Y + CGFloat(i - 1) * LABEL_BOX_HEIGHT;
+                self.shopButtons[i].frame = CGRectMake(BOX_X, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
                 self.shopButtons[i].shopIndex = i-1;
                 (self.shopButtons[i].subviews[0] as ShopTextButton).shopIndex = i - 1;
                 (self.shopButtons[i].subviews[1] as ShopTextButton).shopIndex = i - 1;
@@ -380,10 +384,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.shopTheLook.removeAtIndex(index);
             button.removeFromSuperview();
             
-            self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - BOX_INCR_Y;
-            self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - BOX_INCR_Y;
+            self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - LABEL_BOX_HEIGHT;
+            //self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - LABEL_BOX_HEIGHT;
             
-            self.scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * BOX_INCR_Y);
+            self.scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * LABEL_BOX_HEIGHT);
             }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
@@ -401,11 +405,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func addManualShopTheLook(look: ShopLook) {
         //function for pushing down stack
         shopTheLook.append(look);
-        scrollView.contentSize = CGSize(width: 320, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * BOX_INCR_Y);
+        scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * LABEL_BOX_HEIGHT);
         
-        var oldY = BOX_START_Y + CGFloat(shopTheLook.count - 1) * BOX_INCR_Y;
-        var newY = BOX_START_Y + CGFloat(shopTheLook.count) * BOX_INCR_Y;
-        var newButton = ShopButton(frame: CGRectMake(BOX_LEFT_MARGIN, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
+        var oldY = BOX_START_Y + CGFloat(shopTheLook.count - 1) * LABEL_BOX_HEIGHT;
+        var newY = BOX_START_Y + CGFloat(shopTheLook.count) * LABEL_BOX_HEIGHT;
+        var newButton = ShopButton(frame: CGRectMake(BOX_X, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
         
         featurizeShopButton(shopTheLook.count - 1, shopButton: newButton);
     }
