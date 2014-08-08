@@ -590,7 +590,6 @@ import UIKit
     class func getExplore(loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         
         var currentDate = NSDate();
-        var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
         
         //query
         var query = PFQuery(className:"ImagePost")
@@ -600,11 +599,14 @@ import UIKit
         
         query.orderByDescending("likes");
         
+        var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
         query.whereKey("createdAt", greaterThan: oneWeekAgo);
-        
         //query.orderByDescending("createdAt");
         
         var excludeList = convertPostToID(excludes);
+        
+        //nothing to exclude: I must be fetching images for first time
+        var isFirst: Bool = (excludeList.count == 0);
         
         if (!isAnonLogged()) {
             excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
@@ -617,6 +619,17 @@ import UIKit
             if (error == nil) {
                 // The find succeeded.
                 // Do something with the found objects
+                
+                if (objects.count == 0 && isFirst) {
+                    if ((PFUser.currentUser()["viewHistory"] as NSArray).count != 0) {
+                        //my search returned 0 results from the start. oh no!
+                        NSLog("Out of posts to explore, resetting my viewed post counter")
+                        ServerInteractor.resetViewedPosts();
+                        ServerInteractor.getExplore(loadCount, excludes: excludes, notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
+                        return;
+                    }
+                }
+                
                 notifyQueryFinish(objects.count);
                 
                 var post: ImagePostStructure?;
