@@ -105,7 +105,7 @@ class InAppNotification {
         obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
             if (error != nil) {
                 NSLog("Error fetching notification object image");
-                receiveAction(LOADING_IMG);
+                receiveAction(NULL_IMG);
                 return;
             }
             var imgFile: PFFile = object["imageFile"] as PFFile;
@@ -114,7 +114,7 @@ class InAppNotification {
                 //get file objects
                 if (error != nil) {
                     NSLog("Error fetching notification object image");
-                    receiveAction(LOADING_IMG);
+                    receiveAction(NULL_IMG);
                     return;
                 }
                 receiveAction(UIImage(data: result));

@@ -25,6 +25,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var followerTableView: UITableView!
     var mainUser: FriendEncapsulator?;
     var amMyself: Bool = true
+    var friendAction: Bool = false;
     
     /*
     //the posts I have loaded
@@ -102,7 +103,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.getNumFollowing()
                 //self.settingsButton.hidden = true
                 self.amMyself = false
-                self.settingsButton.setImage(LOADING_IMG, forState: UIControlState.Normal)
+                self.configureSettingsButton();
                 });
             //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
@@ -409,11 +410,51 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return "Unfollow"
     }*/
     
+    func configureSettingsButton() {
+        ServerInteractor.amFollowingUser(mainUser!.username, retFunction: {(amFollowing: Bool) in
+            self.friendAction = amFollowing;
+            if (amFollowing == true) {
+                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+            }
+            else if (amFollowing == false) {
+                self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+            }
+            else {
+                //do nothing, server failed to fetch!
+                NSLog("Failure? \(amFollowing)")
+            }
+        });
+    }
+    
     @IBAction func settings(sender: AnyObject) {
         if (!amMyself) {
-            ServerInteractor.addAsFollower(mainUser!.username)
-            ServerInteractor.postFollowerNotif(mainUser!.username, controller: self);
-            //settingsButton.setImage(ENDING_IMG, forState: UIControlState.Normal)
+            var username = mainUser!.username;
+            if (!friendAction) {
+                //follow me
+                ServerInteractor.postFollowerNotif(username, controller: self);
+                ServerInteractor.addAsFollower(username);
+                
+                //update button
+                self.friendAction = true
+                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+            }
+            else if (friendAction == true) {
+                //unfollow me (if u wish!)
+                let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                    ServerInteractor.removeAsFollower(username);
+                    //update button
+                    self.friendAction = false
+                    self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                }));
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
+                    //canceled
+                }));
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            else {
+                //no action
+            }
         } else {
             self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
         }

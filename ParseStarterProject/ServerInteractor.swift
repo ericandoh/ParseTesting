@@ -853,7 +853,9 @@ import UIKit
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFollowerNotif(friendName: String, controller: UIViewController) {
         if (friendName == "") {
-            (controller as UserProfileViewController).notifyFailure("Please fill in a name");
+            if (controller is UserProfileViewController) {
+                (controller as UserProfileViewController).notifyFailure("Please fill in a name");
+            }
             return;
         }
         

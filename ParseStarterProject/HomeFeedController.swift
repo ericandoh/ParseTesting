@@ -39,6 +39,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     @IBOutlet var commentsButton: UIButton!
     
     @IBOutlet weak var editPostButton: UIButton!
+    
+    
+    var loadingSpinner: UIActivityIndicatorView?;
+    
     var backImageView: UIImageView?;      //deprecated
     
     var swiperNoSwipe: Bool = false;
@@ -85,6 +89,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White);
+        loadingSpinner!.center = CGPointMake(FULLSCREEN_WIDTH / 2.0, FULLSCREEN_HEIGHT / 2.0);
+        loadingSpinner!.hidden = true;
+        self.view.insertSubview(loadingSpinner!, atIndex: 0);
+        
         if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
             self.navigationController.navigationBar.hidden = true;
@@ -100,7 +109,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             refresh();
         }
         else {
-            frontImageView!.image = LOADING_IMG;
+            setLoadingImage();
             topLeftButton.setTitle("Back", forState: UIControlState.Normal);
         }
         
@@ -114,7 +123,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         editPostButton.hidden = true;
     }
     override func viewDidAppear(animated: Bool) {
-        //frontImageView!.image = LOADING_IMG;
         //check if page needs a refresh
         super.viewDidAppear(animated);
         if (self.navigationController) {
@@ -152,7 +160,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         refreshNeeded = false;
         viewingComments = false;
         imgBuffer = theirBuffer;
-        //frontImageView!.image = LOADING_IMG;
         imgBuffer!.switchContext(HOME_OWNER, nil, configureCellFunction: configureCurrent);
     }
     //to refresh all images in feed
@@ -161,7 +168,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         postCounter = 0;
         refreshNeeded = false;
         viewingComments = false;
-        frontImageView!.image = LOADING_IMG;
+        setLoadingImage();
         if (imgBuffer != nil) {
             imgBuffer!.resetData();
             //self.imgBuffer!.loadSet();
@@ -174,7 +181,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
     }
     
+    func setLoadingImage() {
+        loadingSpinner!.hidden = false;
+        loadingSpinner!.startAnimating();
+        frontImageView!.image = LOADING_IMG;
+    }
+    func switchImageToLoading(fromDirection: CompassDirection) {
+        switchImage(NULL_IMG, fromDirection: fromDirection);
+        setLoadingImage();
+    }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        if (loadingSpinner!.hidden == false) {
+            loadingSpinner!.stopAnimating();
+            loadingSpinner!.hidden = true;
+        }
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;
         self.backImageView!.hidden = false;
@@ -263,7 +283,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
         if (currentPost.isLikedByUser()) {
             //likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
-            likeButton.setBackgroundImage(LOADING_IMG, forState: UIControlState.Normal);
+            likeButton.setBackgroundImage(LIKED_HEART, forState: UIControlState.Normal);
         }
         else {
             likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
@@ -299,7 +319,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             else {
                 NSLog("Current Post's image is not loaded despite assumption that it is");
                 needLoadOnCurrent = true;
-                self.switchImage(LOADING_IMG, fromDirection: fromDirection);
+                self.switchImageToLoading(fromDirection);
                 var currentVC = self.viewCounter;
                 currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
                     if (self.needLoadOnCurrent && index == self.postCounter && currentVC == self.viewCounter) {
@@ -337,31 +357,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             else {
                 //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
                 //trying to configure at comments, but its not loaded yet!
-                self.switchImage(LOADING_IMG, fromDirection: fromDirection);
+                self.switchImageToLoading(fromDirection);
             }
-            //else, just wait for configureRest to do its job!
-            /*
-            var currentPostNum = postCounter;
-            var oldImg = self.frontImageView!.image;
-            //self.frontImageView!.image = LOADING_IMG;
-            currentPost.loadImages({(img: UIImage?, comments: Bool)->Void in
-                if (currentPostNum == self.postCounter) {
-                    //i haven't swiped more in that time
-                    
-                    if (comments) {
-                        //we have comments! or error :(
-                        self.viewingComments = true;
-                        self.frontImageView!.image = oldImg;
-                        self.startViewingComments(currentPost);
-                    }
-                    else {
-                        if (img != nil) {
-                            self.switchImage(img!, fromDirection: fromDirection);
-                        }
-                    }
-                }
-
-            }, postIndex: postCounter);*/
         }
     }
     func configureRest(indexAtTimeOfRequest: Int) {
@@ -497,7 +494,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         else {
             //cell will get fetched, wait
-            
             //frontImageView!.image = LOADING_IMG; commented, 0806
         }
         
@@ -571,168 +567,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                 self.navigationController.popViewControllerAnimated(true);
             }
         }
-        //else if (self.parentViewController) {
-            //(self.parentViewController as SideMenuManagingViewController).openMenu();
-        //}
     }
-    
-    func performBufferLog() {
-        /*NSLog("----------Logging---------")
-        NSLog("VC: \(self.viewCounter) LoadedSetCount: \(self.loadedSet.count)");
-        NSLog("FirstSetCount: \(self.firstSet.count) SecondSetCount: \(self.secondSet.count)")
-        NSLog("LoadedSetNum: \(self.loadedSetNum)")
-        NSLog("First img = loading? \(self.frontImageView!.image == LOADING_IMG)")
-        NSLog("Second img = loading? \(self.backImageView!.image == LOADING_IMG)")
-        NSLog("----------End Log---------")*/
-    }
-    /*
-    func animateImageMotion(towardPoint: CGPoint, vote: Bool) {
-        if (swiperNoSwipe) {
-            //in middle of swiping - do nothing
-            //later replace this with faster animation
-            return;
-        }
-        swiperNoSwipe = true;
-        
-        /*
-        UIView.animateWithDuration(0.5, animations: {
-            frontView.alpha = 0.0;
-            frontView.center = towardPoint;
-        }
-        , completion: { });
-        */
-        
-        
-        
-                    //register vote to backend (BACKEND)
-                    //set frontView's image to backView's image
-                    if let backView = self.backImageView {
-                        
-                        var needRefresh = (frontView.image == ENDING_IMG);
-                        frontView.image = backView.image;
-                        //reset frontView back to front
-                        frontView.frame = CGRect(origin: backView.frame.origin, size: backView.frame.size);
-                        frontView.alpha = 1.0;
-                        
-                        if (!(needRefresh)) {
-                            if (vote) {
-                                //these are causing the object not found for update error
-                                if (self.viewCounter >= self.firstSet.count) {
-                                    NSLog("Houston we have a problem");
-                                    self.performBufferLog();
-                                }
-                                self.firstSet[self.viewCounter]!.like();
-                                self.voteCounter.textColor = UIColor.greenColor();
-                            }
-                            else {
-                                self.firstSet[self.viewCounter]!.pass();
-                                self.voteCounter.textColor = UIColor.redColor();
-                            }
-                            //mark post as read
-                            ServerInteractor.readPost(self.firstSet[self.viewCounter]!);
-                            
-                            self.voteCounter!.text = "Last Post: +\(self.firstSet[self.viewCounter]!.getLikes())"
-                            
-                            self.viewCounter += 1
-                            
-                            if (self.viewCounter == self.firstSet.count) {
-                                //we have reached end of our array
-                                self.viewCounter = 0;
-                            }
-                            
-                            if (self.loadedSetNum == 1) {
-                                if (self.viewCounter == self.firstSet.count - 1) {
-                                    //need to load 2nd set images, but first set isn't done loading!!!
-                                    //this is impossible, since we just showed all of first set though!
-                                    
-                                    //actually, this might happen for an image queue size of 1
-                                    NSLog("Potential Error: loadedSetNum did not update although list is completely loaded");
-                                }
-                                else if (self.loadedSet[self.viewCounter+1]) {
-                                    self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image;
-                                }
-                                else {
-                                    self.backImageView!.image = LOADING_IMG;
-                                }
-                            }
-                            else {
-                                if (self.viewCounter == self.firstSet.count - 1) {
-                                    if (self.secondSet.count == 0) {
-                                        self.backImageView!.image = ENDING_IMG;
-                                        
-                                        //this was there before 7/14
-                                        if (self.frontImageView!.image == ENDING_IMG) {
-                                            self.resetToStart();
-                                        }
-                                    }
-                                    else if (self.loadedCount == self.secondSet.count) {
-                                        //no need to check loading, they should all be loaded
-                                        self.backImageView!.image = (self.secondSet[0])!.image;
-                                    }
-                                    else {
-                                        if (self.secondSet.count > 0 && self.loadedSet[0]) {
-                                            self.backImageView!.image = (self.secondSet[0])!.image;
-                                        }
-                                        else {
-                                            self.backImageView!.image = LOADING_IMG;
-                                        }
-                                    }
-                                }
-                                else if (self.viewCounter == 0) {
-                                    //only way for this to happen + !atEnd is if we just cycled through and just swiped past the last frame
-                                    if (self.secondSet.count == 0) {
-                                        //my 2nd set has nothing in it...
-                                        self.firstSet = self.secondSet;
-                                        self.backImageView!.image = LOADING_IMG;    //from ending
-                                        //self.atEnd = true;
-                                    }
-                                    else if (self.loadedCount == self.secondSet.count) {
-                                        //my 2nd set is all loaded and I can copy the 2nd set => 1st set and start loading right away
-                                        self.firstSet = self.secondSet;
-                                        //start loading another set of images
-                                        if (self.firstSet.count > 1) {
-                                            self.backImageView!.image = (self.firstSet[1])!.image;
-                                            self.getPostCall();
-                                        }
-                                        else {
-                                            //my set only has 1 thing in it
-                                            NSLog("Setting as end");
-                                            self.backImageView!.image = ENDING_IMG;
-                                        }
-                                    }
-                                    else {
-                                        //my 2nd set is still loading, I need to copy the 2nd set over to the 1st and keep on loading
-                                        self.firstSet = self.secondSet;
-                                        self.loadedSetNum = 1;
-                                        if (self.firstSet.count > 1 && self.loadedSet[1]) {
-                                            self.backImageView!.image = (self.firstSet[1])!.image;
-                                        }
-                                        else {
-                                            self.backImageView!.image = LOADING_IMG;
-                                        }
-                                    }
-                                }
-                                else {
-                                    self.backImageView!.image = (self.firstSet[self.viewCounter+1])!.image;
-                                }
-                            }
-                        }
-                        else {
-                            //tell server to reset
-                            self.backImageView!.image = LOADING_IMG;
-                            ServerInteractor.resetViewedPosts();
-                            self.resetToStart();
-                        }
-                        if (self.frontImageView!.image == ENDING_IMG) {
-                            self.backImageView!.image = LOADING_IMG;
-                        }
-                        
-                    }
-                    self.swiperNoSwipe = false;
-                });
-        }
-    }*/
-    
     
     @IBAction func likePost(sender: UIButton) {
         if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
@@ -745,7 +580,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
             if (post.isLikedByUser()) {
                 //likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
-                likeButton.setBackgroundImage(LOADING_IMG, forState: UIControlState.Normal)
+                likeButton.setBackgroundImage(LIKED_HEART, forState: UIControlState.Normal)
             }
             else {
                 likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)

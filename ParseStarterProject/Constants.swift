@@ -45,6 +45,8 @@ let CELLS_BEFORE_RELOAD = 9;
 
 //----------------------------Image Constants---------------------------------
 
+let NULL_IMG: UIImage = UIImage(named: "horned-logo.png");
+
 //Whenever something needs to be loaded, this picture shows up
 let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
 
@@ -62,11 +64,13 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
+let LIKED_HEART = UIImage(named: "horned-logo.png");
+
 //icon of a person and a plus, indicating that if pressed I can start following this person
-let FOLLOW_ME_ICON: UIImage = LOADING_IMG;
+let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
 
 //icon of a person and a check, indicating that I am already following this person. Clicking on this triggers a notification asking if I want to unfollow this person
-let FOLLOWED_ME_ICON: UIImage = ENDING_IMG;
+let FOLLOWED_ME_ICON: UIImage = UIImage(named: "followed.png");
 
 //----------------------------Width/Height Constants---------------------------------
 
