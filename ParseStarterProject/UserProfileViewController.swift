@@ -20,8 +20,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var numberFollowers: UILabel!
     @IBOutlet weak var numberFollowing: UILabel!
     
-    @IBOutlet weak var AnonText: UITextView!
+    @IBOutlet weak var AnonText: UILabel!
+    @IBOutlet weak var followOthersText: UILabel!
+    @IBOutlet weak var haveFollowersText: UILabel!
     
+    @IBOutlet weak var SignInAnon: UIButton!
     @IBOutlet var followerTableView: UITableView!
     
     
@@ -75,22 +78,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.followerTableView.rowHeight = UITableViewAutomaticDimension;
         self.followerTableView.estimatedRowHeight = 60.0;
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated);
         
-        //1. mainUser == nil
-        //  a. Anon
-        //  b. MyUser (current user)
-        //2. receive mainUser from some other view
-        //  a. mainUser == currentUser
-        //  b. mainUser == some other user thats not me
         
-        //numberPosts.text = String(mainUser!["numPosts"].count as Int)
-        //numberLikes.text = String(mainUser!["likedPosts"].count as Int)
-        //numberPosts.text = String(mainUser!.getNumPosts())
-        //numberLikes.text = String(mainUser!.getNumLiked())
+        
+        
         var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
         var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
         userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
@@ -109,6 +100,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.text = self.mainUser!.username
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
+                NSLog("a");
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 self.getNumFollowers()
@@ -116,7 +108,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //self.settingsButton.hidden = true
                 self.amMyself = false
                 self.configureSettingsButton();
-                });
+            });
             //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
         else {
@@ -133,7 +125,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.text = "Anon User";
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
-                friendsButton.hidden = true;
+                AnonText.hidden = true
+                //friendsButton.hidden = true;
             }
             else {
                 // Do any additional setup after loading the view.
@@ -150,13 +143,33 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     userLabel.text = self.mainUser!.username
                     view.addSubview(self.userIcon!);
                     view.addSubview(userLabel);
+                    NSLog("B")
                     self.numberPosts.text = String(self.mainUser!.getNumPosts())
                     self.numberLikes.text = String(self.mainUser!.getNumLiked())
                     self.getNumFollowers()
                     self.getNumFollowing()
-                    });
+                    self.AnonText.hidden = true
+                });
             }
         }
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        
+        //1. mainUser == nil
+        //  a. Anon
+        //  b. MyUser (current user)
+        //2. receive mainUser from some other view
+        //  a. mainUser == currentUser
+        //  b. mainUser == some other user thats not me
+        
+        //numberPosts.text = String(mainUser!["numPosts"].count as Int)
+        //numberLikes.text = String(mainUser!["likedPosts"].count as Int)
+        //numberPosts.text = String(mainUser!.getNumPosts())
+        //numberLikes.text = String(mainUser!.getNumLiked())
+        
         if (options == 0) {
             if (ServerInteractor.isAnonLogged()) {
                 options = 2;
@@ -188,7 +201,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 myCollectionView.hidden = true
                 followerTableView.hidden = true
                 AnonText.hidden = false
+                SignInAnon.hidden = false
+                followOthersText.hidden = true
+                haveFollowersText.hidden = true
+                options = 1
             } else {
+                NSLog("C")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
 //                collectionDelegatePosts!.resetData();
 //                collectionDelegateLikes!.resetData()
@@ -203,8 +221,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             if (ServerInteractor.isAnonLogged()) {
                 //collectionDelegatePosts!.resetData();
+                AnonText.hidden = false
+                SignInAnon.hidden = false
+                followOthersText.hidden = true
+                haveFollowersText.hidden = true
                 return
             } else {
+                NSLog("D")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
@@ -217,51 +240,92 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userLikes(sender: AnyObject) {
         if (options != 2) {
+            NSLog("A")
             self.numberLikes.text = String(self.mainUser!.getNumLiked())
+            NSLog("B")
+
 //            collectionDelegateLikes!.resetData()
 //            collectionDelegatePosts!.resetData();
             resetDatums(options)
+            NSLog("C")
+
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+            NSLog("D")
+
             collectionDelegateLikes!.initialSetup();
+            NSLog("E")
+
             myCollectionView.hidden = false
+            NSLog("F")
+
             followerTableView.hidden = true
+            NSLog("G")
+
             AnonText.hidden = true
+            NSLog("H")
+
             options = 2
+            NSLog("I")
+
+            SignInAnon.hidden = true
+            followOthersText.hidden = true
+            haveFollowersText.hidden = true
             //collectionDelegate!.loadSet()
         } else {
             AnonText.hidden = true
+            SignInAnon.hidden = true
+            followOthersText.hidden = true
+            haveFollowersText.hidden = true
             options = 2
             self.numberLikes.text = String(self.mainUser!.getNumLiked())
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
+            NSLog("J")
         }
     }
     
     @IBAction func userFollowing(sender: UIButton) {
-        getNumFollowing();
-        getNumFollowers();
-        if (options != 3) {
-            options = 3
-            resetDatums(options)
+        if (ServerInteractor.isAnonLogged()) {
             myCollectionView.hidden = true
-            followerTableView.hidden = false
-            getFollowing()
+            followerTableView.hidden = true
+            followOthersText.hidden = false
+            SignInAnon.hidden = false
+            AnonText.hidden = true
+            haveFollowersText.hidden = true
+        } else {
+            getNumFollowing();
+            getNumFollowers();
+            if (options != 3) {
+                options = 3
+                resetDatums(options)
+                myCollectionView.hidden = true
+                followerTableView.hidden = false
+                getFollowing()
+            }
         }
     }
     
     
     @IBAction func userFollowers(sender: UIButton) {
-        getNumFollowing();
-        getNumFollowers();
-        if (options != 4) {
-            options = 4
-            resetDatums(options)
+        if (ServerInteractor.isAnonLogged()) {
             myCollectionView.hidden = true
-            followerTableView.hidden = false
-            getFollowers()
+            followerTableView.hidden = true
+            haveFollowersText.hidden = false
+            SignInAnon.hidden = false
+            AnonText.hidden = true
+            followOthersText.hidden = true
+        } else {
+            getNumFollowing();
+            getNumFollowers();
+            if (options != 4) {
+                options = 4
+                resetDatums(options)
+                myCollectionView.hidden = true
+                followerTableView.hidden = false
+                getFollowers()
+            }
         }
-
     }
     
     func getFollowers() {
