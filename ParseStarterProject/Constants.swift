@@ -74,6 +74,9 @@ let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
 //icon of a person and a check, indicating that I am already following this person. Clicking on this triggers a notification asking if I want to unfollow this person
 let FOLLOWED_ME_ICON: UIImage = UIImage(named: "followed.png");
 
+//icon in home that takes you to info page right away
+let INFO_ICON = UIImage(named: "info.png");
+
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
