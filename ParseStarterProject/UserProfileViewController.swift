@@ -126,6 +126,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
                 AnonText.hidden = true
+                self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
             else {
@@ -221,6 +222,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             if (ServerInteractor.isAnonLogged()) {
                 //collectionDelegatePosts!.resetData();
+                collectionDelegateLikes!.initialSetup();
+                collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+                collectionDelegateLikes!.initialSetup();
                 AnonText.hidden = false
                 SignInAnon.hidden = false
                 followOthersText.hidden = true
@@ -287,6 +291,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userFollowing(sender: UIButton) {
         if (ServerInteractor.isAnonLogged()) {
+            collectionDelegateLikes!.resetData();
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+            collectionDelegateLikes!.initialSetup();
             myCollectionView.hidden = true
             followerTableView.hidden = true
             followOthersText.hidden = false
@@ -309,6 +316,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func userFollowers(sender: UIButton) {
         if (ServerInteractor.isAnonLogged()) {
+            collectionDelegateLikes!.resetData();
+            collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
+            collectionDelegateLikes!.initialSetup();
             myCollectionView.hidden = true
             followerTableView.hidden = true
             haveFollowersText.hidden = false
