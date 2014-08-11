@@ -370,6 +370,7 @@
 				D93CD47E19954161001F0253 /* magnifyingglass.png */,
 				D93CD47F19954161001F0253 /* map.png */,
 				D93CD47819954146001F0253 /* home.png */,
+				D93CD46A199540F4001F0253 /* camera.png */,
 				D93CD47419954138001F0253 /* flag.png */,
 			);
 			name = sideicons;
@@ -426,7 +427,6 @@
 				D93CD47C19954157001F0253 /* logo.png */,
 				D93CD47019954133001F0253 /* follow.png */,
 				D93CD47119954133001F0253 /* followed.png */,
-				D93CD46A199540F4001F0253 /* camera.png */,
 				D923909D1992D278001B5CBE /* f_camera_roll.png */,
 				D95EA0141986B55D000A3037 /* unused_temp_camera_icon.jpg */,
 				D99B5FCB196DA0FD00662A39 /* unknown_user.png */,

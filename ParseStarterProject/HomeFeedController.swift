@@ -124,7 +124,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         else {
             setLoadingImage();
-            topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+            //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+            topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
         
         var frame: CGRect = frontImageView.frame;
@@ -625,6 +626,30 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
         if (postCounter == currentPost.getImagesCount() + 1) {
+            var username = currentPost.getAuthor();
+            ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
+                if (amFollowing == true) {
+                    let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                    alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                        ServerInteractor.removeAsFollower(username);
+                        //update button
+                        self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
+                    }));
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
+                        //canceled
+                    }));
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else if (amFollowing == false) {
+                    ServerInteractor.postFollowerNotif(username, controller: self);
+                    ServerInteractor.addAsFollower(username);
+                    self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                }
+                else {
+                    //do nothing, server failed to fetch!
+                    NSLog("Failure? \(amFollowing)")
+                }
+            });
             
         }
         else {
