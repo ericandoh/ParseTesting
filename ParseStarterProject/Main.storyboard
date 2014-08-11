@@ -976,6 +976,9 @@
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type your comment here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9n-mt-4aE">
                                 <rect key="frame" x="10" y="515" width="263" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="2N1-6j-HsZ"/>
+                                </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>

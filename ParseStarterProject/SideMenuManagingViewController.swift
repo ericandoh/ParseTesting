@@ -108,7 +108,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     func hideSideBar(completions: (Bool)->Void) {
         if (menuOpen) {
-            outOfMenuButton.hidden = true;
             var x = self.sideView.center.x - BAR_WIDTH;
             var y = self.sideView.center.y;
             var point = CGPoint(x: x, y: y);
@@ -119,6 +118,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 self.outOfMenuButton.alpha = 0;
                 }, completion: {(success: Bool)->Void in
                     self.menuOpen = false;
+                    self.outOfMenuButton.hidden = true;
                     completions(success);
                 });
         }

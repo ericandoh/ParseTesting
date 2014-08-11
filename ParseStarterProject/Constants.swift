@@ -114,7 +114,7 @@ let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
 //how dim the right side of the menu becomes when side menu (left) is triggered and pulled out
 //you can change hue in storyboard
-let SIDE_MENU_DIM = CGFloat(0.5);
+let SIDE_MENU_DIM = CGFloat(0.05);
 
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(FULLSCREEN_HEIGHT);
