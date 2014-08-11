@@ -92,6 +92,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideView.hidden = false;
         self.view.bringSubviewToFront(self.outOfMenuButton);
         self.view.bringSubviewToFront(self.sideView);
+        self.sideTableView.userInteractionEnabled = true;
+        self.sideTableView.reloadData();
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             ()->Void in
             self.sideView.center = point;
@@ -110,6 +112,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             var x = self.sideView.center.x - BAR_WIDTH;
             var y = self.sideView.center.y;
             var point = CGPoint(x: x, y: y);
+            self.sideTableView.userInteractionEnabled = false;
             UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 ()->Void in
                 self.sideView.center = point;
@@ -143,7 +146,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //switches over to correct context
     func displayContent(contentString: String) {
-        if (contentString == currentlyShowing) {
+        
+        var previouslyShowing = currentlyShowing;
+        currentlyShowing = contentString;
+        self.sideTableView.reloadData();
+        
+        if (contentString == previouslyShowing) {
             hideSideBar({(success: Bool)->Void in });
             return;
         }
@@ -175,7 +183,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             self.view.addSubview(content.view);
             content.didMoveToParentViewController(self);*/
             
-            if (self.viewControllerDictionary[self.currentlyShowing] == nil) {
+            if (self.viewControllerDictionary[previouslyShowing] == nil) {
                 self.addChildViewController(content);
                 content.view.frame = self.contentArea.frame;
                 self.view.addSubview(content.view);
@@ -185,7 +193,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                     });
             }
             else {
-                var old = self.viewControllerDictionary[self.currentlyShowing]!;
+                var old = self.viewControllerDictionary[previouslyShowing]!;
                 
                 old.willMoveToParentViewController(nil);
                 self.addChildViewController(content);
@@ -210,7 +218,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 }
             }
             
-            self.currentlyShowing = contentString;
+            //self.currentlyShowing = contentString;
             self.sideView.hidden = true;
             });
     }
@@ -257,6 +265,30 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
         cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
+        cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+        
+        //var backColor = UIColor(red: SIDE_MENU_BACK_RED, green: SIDE_MENU_BACK_GREEN, blue: SIDE_MENU_BACK_BLUE, alpha: 1.0);
+        
+        var transparentBackgroundView = UIView();
+        transparentBackgroundView.backgroundColor = SIDE_MENU_BACK_COLOR;
+        transparentBackgroundView.alpha = CGFloat(SIDE_MENU_OPACITIES[indexPath.row]) / DAMPENING_CONSTANT;
+        
+        //transparentBackgroundView.alpha = 0.1;
+        
+        //cell.alpha = CGFloat(SIDE_MENU_OPACITIES[indexPath.row]);
+        //cell.backgroundColor = backColor;
+        cell.backgroundView = transparentBackgroundView;
+        cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        
+        if (SIDE_MENU_ITEMS[indexPath.row] == currentlyShowing) {
+            cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.9);
+            cell.imageView.alpha = 0.9;
+        }
+        else {
+            cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.4);
+            cell.imageView.alpha = 0.4;
+        }
+        
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

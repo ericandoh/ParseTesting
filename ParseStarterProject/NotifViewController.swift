@@ -51,7 +51,7 @@ class NotifViewController: UITableViewController {
         });
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 60.0;        
+        self.tableView.estimatedRowHeight = 50.0;
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -96,7 +96,13 @@ class NotifViewController: UITableViewController {
         
         var member: InAppNotification = notifList[temp]! as InAppNotification;
         
-        if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw()) {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+        else if (member.type == NotificationType.IMAGE_POST_COMMENT.toRaw()) {
+            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+        }
+        else if (member.type == "ImagePost") {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
         else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
@@ -123,15 +129,24 @@ class NotifViewController: UITableViewController {
         
         cell.textLabel.text = member.messageString;*/
         
+        cell.descriptionBox.otherAction = {
+            () in
+            self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None);
+            self.pressedNotifAt(indexPath!);
+        }
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        pressedNotifAt(indexPath);
+    }
+    func pressedNotifAt(indexPath: NSIndexPath) {
         var temp = indexPath.row;
         
         var member: InAppNotification = notifList[temp]! as InAppNotification;
-
-        if (member.type == NotificationType.IMAGE_POST.toRaw()) {
+        
+        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw() || member.type == NotificationType.IMAGE_POST_COMMENT.toRaw() || member.type == "ImagePost") {
             member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
                 if (error == nil) {
                     var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
@@ -144,7 +159,7 @@ class NotifViewController: UITableViewController {
                 else {
                     NSLog("App Notification object couldn't be found");
                 }
-                });
+            });
             //self.performSegueWithIdentifier("ImagePostSegue", sender: self);
         }
         else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
@@ -159,14 +174,14 @@ class NotifViewController: UITableViewController {
         else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
             self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
         }
-       /* else {
-            if (member.type == NotificationType.FRIEND_ACCEPT.toRaw()) {
-                member.personalObj!.deleteInBackground()
-            }
+        /* else {
+        if (member.type == NotificationType.FRIEND_ACCEPT.toRaw()) {
+        member.personalObj!.deleteInBackground()
+        }
         
         }*/
     }
-        
+    
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

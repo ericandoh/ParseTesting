@@ -64,9 +64,9 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
-let GRADIENT_IMG = UIImage(named: "gradient.png")
+let LIKED_HEART = UIImage(named: "heartredglow.png");
 
-let LIKED_HEART = UIImage(named: "horned-logo.png");
+let GRADIENT_IMG = UIImage(named: "gradient.png")
 
 //icon of a person and a plus, indicating that if pressed I can start following this person
 let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
@@ -74,6 +74,30 @@ let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
 //icon of a person and a check, indicating that I am already following this person. Clicking on this triggers a notification asking if I want to unfollow this person
 let FOLLOWED_ME_ICON: UIImage = UIImage(named: "followed.png");
 
+//icon in home that takes you to info page right away
+let INFO_ICON = UIImage(named: "info.png");
+
+//icon to show back button (for home feed, when seguing from some other screen)
+let BACK_ICON = UIImage(named: "arrow_left.png");
+
+//icon to show forward button (referenced in homefeed - shoplook delegate - for shoplook URL forwards)
+let FORWARD_ICON = UIImage(named: "arrow_right.png");
+
+
+//side menu images
+let HOME_ICON = UIImage(named: "home.png");
+let EXPLORE_ICON = UIImage(named: "map.png");
+let USER_ICON = UIImage(named: "user.png");
+let NOTIF_ICON = UIImage(named: "flag.png");
+let FIND_ICON = UIImage(named: "magnifyingglass.png");
+let UPLOAD_ICON = UIImage(named: "camera.png");
+
+
+let SIDE_MENU_BACK_RED = CGFloat(163);
+let SIDE_MENU_BACK_GREEN = CGFloat(255);
+let SIDE_MENU_BACK_BLUE = CGFloat(198);
+
+let SIDE_MENU_BACK_COLOR = UIColor(red: 163.0/255.0, green: 255.0/255.0, blue: 198.0/255.0, alpha: 1.0);
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
@@ -145,7 +169,14 @@ let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
 let SIDE_MENU_NAMES = ["Home", "Explore", "Profile", "Notifications", "Find People", "Upload"];
 
 //side menu bar images we will have
-let SIDE_MENU_IMAGES = [LOADING_IMG, LOADING_IMG, ENDING_IMG, LOADING_IMG, LOADING_IMG, LOADING_IMG];
+let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICON, UPLOAD_ICON];
+
+//side menu bar item opacities
+//let SIDE_MENU_OPACITIES = [1.0, 0.75, 0.57, 0.37, 0.25, 0.1];
+let SIDE_MENU_OPACITIES = [0.1, 0.25, 0.37, 0.57, 0.75, 1.0];
+
+//how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
+let DAMPENING_CONSTANT = CGFloat(5.0);
 
 //----------------------------Type Constants---------------------------------
 
@@ -154,7 +185,8 @@ enum NotificationType: String {
     case PLAIN_TEXT = "PlainText"
     //case FRIEND_REQUEST = "FriendRequest"
     case FRIEND_ACCEPT = "FriendAccept"
-    case IMAGE_POST = "ImagePost"
+    case IMAGE_POST_LIKE = "ImagePostLike"
+    case IMAGE_POST_COMMENT = "ImagePostComment"
     case FOLLOWER_NOTIF = "FollowerNotif"
 }
 

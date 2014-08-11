@@ -55,13 +55,53 @@ class InAppNotification {
                 self.type = self.personalObj!["type"] as String;
                 
                 switch self.type {
-                case NotificationType.IMAGE_POST.toRaw():
+                case "ImagePost":
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (error == nil) {
                             var numLikes: Int = object["likes"] as Int
                             //if one person, say "Person" has liked your photo, else "_" people have liked it!
-                            self.messageString = "Your picture has gotten \(numLikes) likes!"
+                            self.messageString = "Your picture has been posted!"
+                            listener.tableView.reloadData()
+                        }
+                        else {
+                            NSLog("Error fetching image post for notification?");
+                        }
+                    });
+                case NotificationType.IMAGE_POST_LIKE.toRaw():
+                    var obj = self.personalObj!["ImagePost"] as PFObject
+                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                        if (error == nil) {
+                            var suffix = self.personalObj!["message"] as String
+                            var numLikes: Int = object["likes"] as Int
+                            if (numLikes <= 1) {
+                                var sender = self.personalObj!["sender"] as String;
+                                self.messageString = "@" + sender + suffix;
+                            }
+                            else {
+                                var numString = ServerInteractor.wordNumberer(numLikes);
+                                self.messageString = numString + " people" + suffix;
+                            }
+                            listener.tableView.reloadData()
+                        }
+                        else {
+                            NSLog("Error fetching image post for notification?");
+                        }
+                    });
+                case NotificationType.IMAGE_POST_COMMENT.toRaw():
+                    var obj = self.personalObj!["ImagePost"] as PFObject
+                    obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
+                        if (error == nil) {
+                            var suffix = self.personalObj!["message"] as String
+                            var numComments: Int = (object["comments"] as Array<String>).count
+                            if (numComments <= 1) {
+                                var sender = self.personalObj!["sender"] as String;
+                                self.messageString = "@" + sender + suffix;
+                            }
+                            else {
+                                var numString = ServerInteractor.wordNumberer(numComments);
+                                self.messageString = numString + " people" + suffix;
+                            }
                             listener.tableView.reloadData()
                         }
                         else {
@@ -95,7 +135,7 @@ class InAppNotification {
     }
     
     func getImage(receiveAction:(UIImage)->Void) {
-        if (type != NotificationType.IMAGE_POST.toRaw()) {
+        if (type != NotificationType.IMAGE_POST_LIKE.toRaw() && type != NotificationType.IMAGE_POST_COMMENT.toRaw() && type != "ImagePost") {
             //Post does not have image associated with it
             NSLog("Cannot retrieve image from non-image post notification")
         }

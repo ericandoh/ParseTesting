@@ -27,6 +27,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         else {
             tableView.hidden = false;
         }
+        tableView.alwaysBounceVertical = false;
         tableView.reloadData();
     }
     
@@ -38,6 +39,20 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
 
         cell.textLabel.text = shopLooks[indexPath.row].title;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        
+        var forwardImg = UIImageView(image: FORWARD_ICON);
+        
+        forwardImg.frame = CGRectMake(0, 0, 20, 20)
+        
+        cell.accessoryView = forwardImg;
+        
+        /*let viewsDictionary: NSDictionary = ["view": cell.accessoryView.superview!]
+        var verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
+        var horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
+        
+        forwardImg.addConstraints(verticalConstraints);
+        forwardImg.addConstraints(horizontalConstraints);*/
+        
         return cell;
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {

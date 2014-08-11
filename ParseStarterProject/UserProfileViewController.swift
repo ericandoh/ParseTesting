@@ -77,13 +77,15 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         followerTableView.allowsSelectionDuringEditing = true
         
         self.followerTableView.rowHeight = UITableViewAutomaticDimension;
-        self.followerTableView.estimatedRowHeight = 60.0;
         
+        self.followerTableView.estimatedRowHeight = 50.0;
         
+        self.followerTableView.alwaysBounceVertical = false;        
         
         
         var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
         var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
+        userLabel.textColor = UIColor.whiteColor();
         userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
         userIcon!.frame = CGRectMake(20, -5, 40, 40);
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {

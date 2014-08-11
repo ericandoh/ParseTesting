@@ -23,6 +23,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet var searchFriendsTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet weak var backImage: UIImageView!
+    @IBOutlet weak var backBlur: UIVisualEffectView!
     
     var isSearching: Bool = false;
     var searchTermList: Array<FriendEncapsulator?> = [];
@@ -44,8 +46,19 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         //self.navigationController.navigationBar.topItem.title = "Find Friends";
         // Do any additional setup after loading the view.
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
-        self.searchFriendsTableView.estimatedRowHeight = 60.0;
+        self.searchFriendsTableView.estimatedRowHeight = 50.0;
+        
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        mainUser.fetchImage({(image: UIImage)->Void in
+            self.backImage.image = image;
+        });
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -63,10 +76,16 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
     @IBAction func findFriendsFromFB(sender: UIButton) {
+        if (!ServerInteractor.isLinkedWithFB()) {
+            notLinkedWithFBAlert();
+            return;
+        }
+        
         if (!self.isSearching) {
             self.isSearching = true;
             self.searchFriendsTableView.hidden = false;
             self.view.bringSubviewToFront(searchFriendsTableView);
+            self.setNewBackgroundFor(searchFriendsTableView);
         }
         searchTermList = [];
         self.currentTerm = "Friends From Facebook";
@@ -79,11 +98,33 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             self.isSearching = true;
             self.searchFriendsTableView.hidden = false;
             self.view.bringSubviewToFront(searchFriendsTableView);
+            self.setNewBackgroundFor(searchFriendsTableView);
         }
         searchTermList = [];
         self.currentTerm = "Friends From Contacts";
         self.searchBar.text = self.currentTerm;
         ServerInteractor.getSearchContacts(receiveSizeOfQuery, receiveStringResult, endStringQuery);
+    }
+    func setNewBackgroundFor(view: UIView?) {
+        //sets the background elements to be right behind this view
+        if (view == nil) {
+            //set background images to wayyy back
+            //backImage
+            //backBlur
+            self.view.sendSubviewToBack(backBlur);
+            self.view.sendSubviewToBack(backImage);
+        }
+        else {
+            self.view.insertSubview(backImage, belowSubview: view!);
+            self.view.insertSubview(backBlur, belowSubview: view!);
+            self.view.insertSubview(searchBar, aboveSubview: view!);
+        }
+    }
+    
+    func notLinkedWithFBAlert() {
+        var alert = UIAlertController(title: "Not linked with FB!", message: "This account is not linked with Facebook! Go to settings to link your account with Facebook", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
@@ -92,7 +133,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 isSearching = false;
                 searchTermList = [];
                 searchFriendsTableView.hidden = true;
-                
+                self.setNewBackgroundFor(nil)
                 resetAndFetchSuggested();
             }
             return;
@@ -102,6 +143,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             //loadFriendList = [];
             searchFriendsTableView.hidden = false;
             self.view.bringSubviewToFront(searchFriendsTableView);
+            self.setNewBackgroundFor(searchFriendsTableView)
         }
         currentTerm = searchText;
         searchTermList = [];
@@ -220,7 +262,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.isSearching = false;
                 self.searchTermList = [];
                 self.searchFriendsTableView.hidden = true;
-                
+                self.setNewBackgroundFor(nil);
                 var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
                 self.navigationController.pushViewController(nextBoard, animated: true);

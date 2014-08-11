@@ -8,6 +8,10 @@
 
 import UIKit
 
+let EXPANDED_TEXT_CELL_VALUE = CGFloat(55.0);
+
+let CONTRACTED_TEXT_CELL_VALUE = CGFloat(5.0);
+
 class UserTextTableViewCell: UITableViewCell {
 
     @IBOutlet var userImage: UIImageView!;
@@ -49,7 +53,7 @@ class UserTextTableViewCell: UITableViewCell {
         owner = sender;
         self.userImage!.image = nil;
         if (involvedUser != nil) {
-            leadingConstraint.constant = 60;
+            leadingConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
             if (!PFAnonymousUtils.isLinkedWithUser(involvedUser!.friendObj)) {
                 var friendAtTimeOfSnapshot = involvedUser;
                 involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
@@ -69,14 +73,14 @@ class UserTextTableViewCell: UITableViewCell {
             }
         }
         else {
-            leadingConstraint.constant = 5;
+            leadingConstraint.constant = CONTRACTED_TEXT_CELL_VALUE;
             //self.userImage!.image = nil;
         }
         nextAction.hidden = true;
         //nextAction.setTitle("", forState: UIControlState.Normal);
         if(enableFriending) {
             //self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
-            sideConstraint.constant = 60;
+            sideConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
             if (involvedUser != nil) {
                 ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
                     self.friendAction = amFollowing;
@@ -96,7 +100,7 @@ class UserTextTableViewCell: UITableViewCell {
             //check if I am already friends with this dude
         }
         else {
-            sideConstraint.constant = 5;
+            sideConstraint.constant = CONTRACTED_TEXT_CELL_VALUE;
             //nextAction.hidden = true;
         }
         descriptionBox.owner = sender;

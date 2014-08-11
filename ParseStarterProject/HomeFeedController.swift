@@ -16,7 +16,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     //@IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView!
-    @IBOutlet var authorTextField: UILabel!
     //@IBOutlet var descriptionTextField: UILabel
     
     @IBOutlet var descriptionTextField: LinkFilledTextView!
@@ -28,6 +27,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     @IBOutlet var topLeftButton: UIButton!
     
+    @IBOutlet weak var topRightButton: UIButton!
     @IBOutlet var shopTheLookBoxReference: UILabel!
     
     @IBOutlet var homeLookTable: UITableView!
@@ -124,7 +124,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         else {
             setLoadingImage();
-            topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+            //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
+            topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
         
         var frame: CGRect = frontImageView.frame;
@@ -303,7 +304,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         else {
             likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
         }
-        commentsButton.setTitle("C:"+shortenedNumCommentString, forState: UIControlState.Normal);
+        commentsButton.setTitle(shortenedNumCommentString, forState: UIControlState.Normal);
         
         if (currentPost.isOwnedByMe()) {
             editPostButton.hidden = false;
@@ -397,7 +398,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     func startViewingComments(currentPost: ImagePostStructure) {
         
-        authorTextField.text = currentPost.getAuthor();
+        //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
         descriptionTextField.setTextAfterAttributing(currentPost.getDescriptionWithTag());
         currentPost.fetchShopLooks({
@@ -417,8 +418,53 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             UIView.animateWithDuration(0.3, animations: {() in
                 self.descriptionPage.alpha = 1;
                 });
+            ServerInteractor.amFollowingUser(currentPost.getAuthor(), retFunction: {(amFollowing: Bool) in
+                if (amFollowing == true) {
+                    self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                }
+                else if (amFollowing == false) {
+                    self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
+                }
+                else {
+                    //do nothing, server failed to fetch!
+                    NSLog("Failure? \(amFollowing)")
+                }
+            });
+            
+            var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
+            var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
+            userLabel.textColor = UIColor.whiteColor();
+            var userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
+            userIcon.frame = CGRectMake(20, -5, 40, 40);
+            
+            userLabel.text = currentPost.getAuthor();
+            
+            var user = FriendEncapsulator.dequeueFriendEncapsulator(currentPost.getAuthor());
+            user.fetchImage({(image: UIImage)->Void in
+                //self.userIcon.image = image;
+                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+                userIcon.image = newUserIcon
+                userIcon.layer.cornerRadius = (userIcon.frame.size.width) / 2
+                userIcon.layer.masksToBounds = true
+                userIcon.layer.borderWidth = 0
+                self.navigationItem.titleView = view;
+                view.addSubview(userIcon);
+                view.addSubview(userLabel);
+            });
         }
     }
+    
+    func hideDescriptionPage() {
+        descriptionPage.alpha = 1;
+        UIView.animateWithDuration(0.3, animations: {() in
+            self.descriptionPage.alpha = 0;
+            }, completion: {(success: Bool) in
+                self.descriptionPage.hidden = true;
+        });
+        self.topRightButton.setBackgroundImage(INFO_ICON, forState: UIControlState.Normal);
+        self.navigationItem.titleView = UIView();
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -458,12 +504,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         if (viewingComments) {
             viewingComments = false;
             if (!descriptionPage.hidden) {
-                descriptionPage.alpha = 1;
-                UIView.animateWithDuration(0.3, animations: {() in
-                    self.descriptionPage.alpha = 0;
-                    }, completion: {(success: Bool) in
-                        self.descriptionPage.hidden = true;
-                    });
+                hideDescriptionPage();
             }
         }
         if (refreshNeeded) {
@@ -548,12 +589,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         if (viewingComments) {
             viewingComments = false;
             if (!descriptionPage.hidden) {
-                descriptionPage.alpha = 1;
-                UIView.animateWithDuration(0.3, animations: {() in
-                    self.descriptionPage.alpha = 0;
-                    }, completion: {(success: Bool) in
-                        self.descriptionPage.hidden = true;
-                    });
+                hideDescriptionPage();
             }
             swipeSideAction(CompassDirection.STAY);
             return;
@@ -581,6 +617,44 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                 //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
                 self.navigationController.popViewControllerAnimated(true);
             }
+        }
+    }
+    
+    @IBAction func rightSideClicked(sender: UIButton) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
+            return;
+        }
+        var currentPost = imgBuffer!.getImagePostAt(viewCounter);
+        if (postCounter == currentPost.getImagesCount() + 1) {
+            var username = currentPost.getAuthor();
+            ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
+                if (amFollowing == true) {
+                    let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                    alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                        ServerInteractor.removeAsFollower(username);
+                        //update button
+                        self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
+                    }));
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
+                        //canceled
+                    }));
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                else if (amFollowing == false) {
+                    ServerInteractor.postFollowerNotif(username, controller: self);
+                    ServerInteractor.addAsFollower(username);
+                    self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                }
+                else {
+                    //do nothing, server failed to fetch!
+                    NSLog("Failure? \(amFollowing)")
+                }
+            });
+            
+        }
+        else {
+            postCounter = currentPost.getImagesCount() + 1;
+            configureCurrent(viewCounter, fromDirection: CompassDirection.WEST);
         }
     }
     
