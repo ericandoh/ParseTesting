@@ -110,6 +110,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //self.settingsButton.hidden = true
                 self.amMyself = false
                 self.configureSettingsButton();
+                self.AnonText.hidden = true
             });
             //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }

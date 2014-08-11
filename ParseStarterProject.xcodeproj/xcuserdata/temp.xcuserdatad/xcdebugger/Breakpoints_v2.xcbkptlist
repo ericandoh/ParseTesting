@@ -58,13 +58,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ParseStarterProject/UserProfileViewController.swift"
-            timestampString = "429423903.538155"
+            timestampString = "429485003.632206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
-            landmarkName = "getFollowing()"
-            landmarkType = "5">
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "UserProfileViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
