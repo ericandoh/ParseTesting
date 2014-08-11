@@ -147,6 +147,9 @@ let SIDE_MENU_NAMES = ["Home", "Explore", "Profile", "Notifications", "Find Peop
 //side menu bar images we will have
 let SIDE_MENU_IMAGES = [LOADING_IMG, LOADING_IMG, ENDING_IMG, LOADING_IMG, LOADING_IMG, LOADING_IMG];
 
+//side menu bar item opacities
+let SIDE_MENU_OPACITIES = [1.0, 0.75, 0.57, 0.37, 0.25, 0.1];
+
 //----------------------------Type Constants---------------------------------
 
 //String enums to describe type of notification (work need)

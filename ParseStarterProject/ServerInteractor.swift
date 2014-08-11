@@ -1064,9 +1064,12 @@ import UIKit
         
         var toRet: Array<FriendEncapsulator?> = [];
         
+        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        
         var query = PFUser.query();
         query.whereKey("userType", containedIn: RELEVANT_TYPES);
         query.whereKey("numPosts", greaterThan: 1);
+        query.whereKey("username", notContainedIn: alreadyMyFriends);
         
         //-----add orderby type (rank by popularity?)-------------WORK NEED
         //query......
@@ -1084,6 +1087,7 @@ import UIKit
                         var query = PFUser.query();
                         query.whereKey("userType", containedIn: RELEVANT_TYPES);
                         query.whereKey("numPosts", greaterThan: 1);
+                        query.whereKey("username", notContainedIn: alreadyMyFriends);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
                         //make this unique numbers
                         query.skip = random() % Int(result);
@@ -1309,6 +1313,12 @@ import UIKit
             }
             endFunc();
         });
+    }
+    class func isLinkedWithFB()->Bool {
+        if (PFUser.currentUser()["fbID"] == nil) {
+            return false;
+        }
+        return true;
     }
     
     class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {

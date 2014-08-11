@@ -257,6 +257,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
         cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
+        cell.alpha = CGFloat(SIDE_MENU_OPACITIES[indexPath.row]);
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

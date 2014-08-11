@@ -93,6 +93,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //numberLikes.text = String(mainUser!.getNumLiked())
         var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
         var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
+        userLabel.textColor = UIColor.whiteColor();
         userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
         userIcon!.frame = CGRectMake(20, -5, 40, 40);
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {

@@ -44,8 +44,14 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         //self.navigationController.navigationBar.topItem.title = "Find Friends";
         // Do any additional setup after loading the view.
+        
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
-        self.searchFriendsTableView.estimatedRowHeight = 60.0;
+        self.searchFriendsTableView.estimatedRowHeight = 50.0;
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -63,6 +69,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
     @IBAction func findFriendsFromFB(sender: UIButton) {
+        if (!ServerInteractor.isLinkedWithFB()) {
+            notLinkedWithFBAlert();
+            return;
+        }
+        
         if (!self.isSearching) {
             self.isSearching = true;
             self.searchFriendsTableView.hidden = false;
@@ -84,6 +95,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.currentTerm = "Friends From Contacts";
         self.searchBar.text = self.currentTerm;
         ServerInteractor.getSearchContacts(receiveSizeOfQuery, receiveStringResult, endStringQuery);
+    }
+    
+    func notLinkedWithFBAlert() {
+        var alert = UIAlertController(title: "Not linked with FB!", message: "This account is not linked with Facebook! Go to settings to link your account with Facebook", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
