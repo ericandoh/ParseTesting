@@ -411,12 +411,12 @@ import UIKit
                         PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
                         PFUser.currentUser().saveEventually();
                     }
-                    var notifObj = PFObject(className:"Notification");
+                    /*var notifObj = PFObject(className:"Notification");
                     //type of notification - in this case, a Image Post (how many #likes i've gotten)
                     notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
                     notifObj["ImagePost"] = newPost.myObj;
                     
-                    ServerInteractor.processNotification(sender, targetObject: notifObj);
+                    ServerInteractor.processNotification(sender, targetObject: notifObj);*/
                     //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
                 }
                 else {
@@ -463,6 +463,61 @@ import UIKit
         }
         return output;
     }
+    
+    //when a user likes a post and gives it its first like!
+    class func sendFirstLike(newPost: ImagePostStructure) {
+        var notifObj = PFObject(className:"Notification");
+        //type of notification - in this case, a Image Post (how many #likes i've gotten)
+        notifObj["type"] = NotificationType.IMAGE_POST_LIKE.toRaw();
+        notifObj["ImagePost"] = newPost.myObj;
+        notifObj["message"] = " liked your post!";
+        
+        ServerInteractor.processNotification(newPost.getAuthor(), targetObject: notifObj);
+    }
+    class func sendCommentNotif(newPost: ImagePostStructure) {
+        var notifObj = PFObject(className:"Notification");
+        //type of notification - in this case, a Image Post (how many #likes i've gotten)
+        notifObj["type"] = NotificationType.IMAGE_POST_COMMENT.toRaw();
+        notifObj["ImagePost"] = newPost.myObj;
+        notifObj["message"] = " commented on your post!";
+        
+        ServerInteractor.processNotification(newPost.getAuthor(), targetObject: notifObj);
+    }
+    class func updateLikeNotif(newPost: ImagePostStructure) {
+        var query = PFQuery(className: "Notification");
+        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_LIKE.toRaw());
+        query.whereKey("ImagePost", equalTo: newPost.myObj);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("Error updating like notification");
+                return;
+            }
+            if (objects.count > 0) {
+                var notifToUpdate = objects[0] as PFObject;
+                notifToUpdate["bumpedAt"] = NSDate();
+                notifToUpdate.saveEventually();
+            }
+        });
+    }
+    class func updateCommentNotif(newPost: ImagePostStructure) {
+        var query = PFQuery(className: "Notification");
+        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_COMMENT.toRaw());
+        query.whereKey("ImagePost", equalTo: newPost.myObj);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("Error updating like notification");
+                return;
+            }
+            if (objects.count > 0) {
+                var notifToUpdate = objects[0] as PFObject;
+                notifToUpdate["bumpedAt"] = NSDate();
+                notifToUpdate.saveEventually();
+            }
+        });
+    }
+
     class func appendToLikedPosts(id: String) {
         if (PFUser.currentUser()["likedPosts"] == nil) {
             NSLog("Something's wrong bro")
@@ -758,12 +813,18 @@ import UIKit
             if (objects.count > 0) {
                 //i want to request myself as a friend to my friend
                 var targetUser = objects[0] as PFUser;
-                targetObject.ACL.setReadAccess(true, forUser: targetUser)
-                targetObject.ACL.setWriteAccess(true, forUser: targetUser)
+                //targetObject.ACL.setReadAccess(true, forUser: targetUser)
+                //targetObject.ACL.setWriteAccess(true, forUser: targetUser)
+                
+                targetObject.ACL.setPublicReadAccess(true);
+                targetObject.ACL.setPublicWriteAccess(true);
                 
                 targetObject["sender"] = currentUserName;  //this is necessary for friends!
                 targetObject["recipient"] = targetUserName;
                 targetObject["viewed"] = false;
+                
+                //used by notification object to query order
+                targetObject["bumpedAt"] = NSDate();
                 
                 targetObject.saveInBackground();
                 
@@ -791,7 +852,8 @@ import UIKit
         var query = PFQuery(className:"Notification")
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         //want most recent first
-        query.orderByDescending("createdAt");
+        //query.orderByDescending("createdAt");
+        query.orderByDescending("bumpedAt");
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil) {

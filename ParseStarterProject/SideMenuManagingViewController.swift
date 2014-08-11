@@ -146,7 +146,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     //switches over to correct context
     func displayContent(contentString: String) {
-        if (contentString == currentlyShowing) {
+        
+        var previouslyShowing = currentlyShowing;
+        currentlyShowing = contentString;
+        self.sideTableView.reloadData();
+        
+        if (contentString == previouslyShowing) {
             hideSideBar({(success: Bool)->Void in });
             return;
         }
@@ -178,7 +183,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             self.view.addSubview(content.view);
             content.didMoveToParentViewController(self);*/
             
-            if (self.viewControllerDictionary[self.currentlyShowing] == nil) {
+            if (self.viewControllerDictionary[previouslyShowing] == nil) {
                 self.addChildViewController(content);
                 content.view.frame = self.contentArea.frame;
                 self.view.addSubview(content.view);
@@ -188,7 +193,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                     });
             }
             else {
-                var old = self.viewControllerDictionary[self.currentlyShowing]!;
+                var old = self.viewControllerDictionary[previouslyShowing]!;
                 
                 old.willMoveToParentViewController(nil);
                 self.addChildViewController(content);
@@ -213,7 +218,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 }
             }
             
-            self.currentlyShowing = contentString;
+            //self.currentlyShowing = contentString;
             self.sideView.hidden = true;
             });
     }

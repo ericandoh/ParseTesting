@@ -75,6 +75,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.followerTableView.rowHeight = UITableViewAutomaticDimension;
         self.followerTableView.estimatedRowHeight = 50.0;
+        
+        self.followerTableView.alwaysBounceVertical = false;
     }
     
     override func viewDidAppear(animated: Bool) {

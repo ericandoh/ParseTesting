@@ -64,9 +64,9 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
-let GRADIENT_IMG = UIImage(named: "gradient.png")
+let LIKED_HEART = UIImage(named: "heartredglow.png");
 
-let LIKED_HEART = UIImage(named: "horned-logo.png");
+let GRADIENT_IMG = UIImage(named: "gradient.png")
 
 //icon of a person and a plus, indicating that if pressed I can start following this person
 let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
@@ -185,7 +185,8 @@ enum NotificationType: String {
     case PLAIN_TEXT = "PlainText"
     //case FRIEND_REQUEST = "FriendRequest"
     case FRIEND_ACCEPT = "FriendAccept"
-    case IMAGE_POST = "ImagePost"
+    case IMAGE_POST_LIKE = "ImagePostLike"
+    case IMAGE_POST_COMMENT = "ImagePostComment"
     case FOLLOWER_NOTIF = "FollowerNotif"
 }
 

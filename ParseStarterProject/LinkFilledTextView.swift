@@ -34,6 +34,8 @@ class LinkFilledTextView: UITextView {
     var owner: UIViewController?;
     var canRespond: Bool = false;
     
+    var otherAction: ()->Void = {() in };
+    
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder);
         //self.owner = owner;
@@ -105,6 +107,9 @@ class LinkFilledTextView: UITextView {
                         }
                     }
                     });
+            }
+            else {
+                otherAction();
             }
         }
         
