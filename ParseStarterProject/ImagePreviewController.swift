@@ -123,14 +123,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         shopButton.backgroundColor = UIColor.clearColor();
         
         shopButton.shopIndex = index;
-        var but1 = ShopTextButton(frame: CGRectMake(BOX_X_ONE, LABEL_SPACING, BOX_WIDTH_ONE, LABEL_BOX_HEIGHT));
-        var but2 = ShopTextButton(frame: CGRectMake(BOX_X_TWO, LABEL_SPACING, BOX_WIDTH_TWO, LABEL_BOX_HEIGHT));
+        var but1 = ShopTextButton(frame: CGRectMake(BOX_X_ONE, LABEL_SPACING, BOX_WIDTH_ONE, LABEL_BUTTON_HEIGHT));
+        var but2 = ShopTextButton(frame: CGRectMake(BOX_X_TWO, LABEL_SPACING, BOX_WIDTH_TWO, LABEL_BUTTON_HEIGHT));
         but1.backgroundColor = UIColor.clearColor();
         but2.backgroundColor = UIColor.clearColor();
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
-        //but1.titleLabel.font = UIFont...
-        //WORK NEED
+        but1.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
+        but2.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
         but1.shopIndex = index;
         but2.shopIndex = index;
         
@@ -139,7 +139,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but1.setTitle(shopTheLook[index].title, forState: UIControlState.Normal);
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-        but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
+        //but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
+        but2.setTitle("X", forState: UIControlState.Normal);
+        but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+        but2.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center;
         //shopButton.backgroundColor = UIColor.blackColor();
         
         var thinLine = UIView(frame: CGRectMake(BOX_X_ONE, LABEL_BOX_HEIGHT - 1, BOX_WIDTH, 1));

@@ -140,7 +140,7 @@ let PREVIEW_CELL_HEIGHT: CGFloat = CGFloat(90.0) - SIDE_MARGINS*2;
 //----end rotated table-----
 
 //numbers for shop the look boxes in upload flow
-let BOX_START_Y = CGFloat(420.0);                //starting y pos of shop look boxes
+let BOX_START_Y = CGFloat(440.0);                //starting y pos of shop look boxes
 let LABEL_BUTTON_HEIGHT = CGFloat(20.0);            //individual box heights
 let LABEL_SPACING = CGFloat(5.0);                //spacing between each box
 let LABEL_BOX_HEIGHT = LABEL_BUTTON_HEIGHT + 2 * LABEL_SPACING;
@@ -150,7 +150,7 @@ let BOX_X_ONE = CGFloat(0.0);             //x coord of box #1 relative to me
 let BOX_WIDTH_ONE = CGFloat(240.0);
 let BOX_X_TWO = BOX_WIDTH_ONE + CGFloat(10.0);  //x coord box #2 relative to me
 let BOX_WIDTH_TWO = CGFloat(20);
-let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(605.0); //height of scrollfield when no shoplooks
+let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(625.0); //height of scrollfield when no shoplooks
 //----end shop the look------
 
 //text view attributes for the textview with a placeholder in upload flow

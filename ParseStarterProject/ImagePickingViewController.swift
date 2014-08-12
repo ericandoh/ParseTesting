@@ -359,6 +359,13 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         myTableView.reloadData();
     }
     
+    
+    @IBAction func previousButton(sender: UIButton) {
+        if (self.navigationController) {
+            (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+        }
+    }
+    
     @IBAction func nextButton(sender: UIButton) {
         //var retImgList: Array<UIImage> = [];
         if (highlightOrder.count == 0) {
