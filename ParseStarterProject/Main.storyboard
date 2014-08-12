@@ -1146,9 +1146,9 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6s-ln-yTV">
-                                                            <rect key="frame" x="10" y="19" width="45" height="40"/>
+                                                            <rect key="frame" x="10" y="19" width="45" height="35"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="40" id="Bn7-4T-yxc"/>
+                                                                <constraint firstAttribute="height" constant="35" id="Bn7-4T-yxc"/>
                                                                 <constraint firstAttribute="width" constant="45" id="hZK-ch-jZ4"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -1747,6 +1747,7 @@
                                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgF-7S-xwR">
                                                         <rect key="frame" x="250" y="5" width="20" height="20"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="width" constant="20" id="7d1-t2-s4y"/>
                                                             <constraint firstAttribute="height" constant="20" id="qGn-lM-UEy"/>
                                                         </constraints>
                                                         <state key="normal" title="?">
@@ -1792,14 +1793,27 @@
                                                             <constraint firstAttribute="height" constant="2" id="oy9-bf-Xed"/>
                                                         </constraints>
                                                     </imageView>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCC-YK-ZB7">
+                                                        <rect key="frame" x="0.0" y="5" width="20" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="Iyb-kp-fZN"/>
+                                                            <constraint firstAttribute="width" constant="20" id="TXN-WC-EIQ"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Button" backgroundImage="plus.png">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="addShopTheLook:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="sYK-Va-kco"/>
+                                                        </connections>
+                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMw-4I-Q8A">
-                                                        <rect key="frame" x="0.0" y="5" width="240" height="20"/>
+                                                        <rect key="frame" x="20" y="5" width="220" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="FAA-i3-zUa"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                        <state key="normal" title="Add &quot;Shop The Look&quot; (optional)">
+                                                        <state key="normal" title=" Add &quot;Shop The Look&quot; (optional)">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -1810,12 +1824,14 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstItem="GgF-7S-xwR" firstAttribute="top" secondItem="Lbc-TH-R0A" secondAttribute="top" constant="5" id="7If-82-NZZ"/>
+                                                    <constraint firstItem="bMw-4I-Q8A" firstAttribute="leading" secondItem="OCC-YK-ZB7" secondAttribute="trailing" id="2pG-Uf-fH4"/>
                                                     <constraint firstItem="JhQ-HB-9IY" firstAttribute="top" secondItem="iW4-pr-vE5" secondAttribute="bottom" constant="28" id="9mk-bg-aQD"/>
                                                     <constraint firstItem="iW4-pr-vE5" firstAttribute="top" secondItem="bMw-4I-Q8A" secondAttribute="bottom" constant="5" id="HvB-Cv-TyG"/>
-                                                    <constraint firstItem="iW4-pr-vE5" firstAttribute="top" secondItem="GgF-7S-xwR" secondAttribute="bottom" constant="5" id="S4i-RN-uu1"/>
+                                                    <constraint firstItem="OCC-YK-ZB7" firstAttribute="leading" secondItem="Lbc-TH-R0A" secondAttribute="leading" id="QxQ-nd-DSX"/>
                                                     <constraint firstItem="0U5-gw-bxJ" firstAttribute="top" secondItem="JhQ-HB-9IY" secondAttribute="bottom" constant="10" id="Tzy-fe-Ebl"/>
+                                                    <constraint firstAttribute="trailing" secondItem="GgF-7S-xwR" secondAttribute="trailing" constant="10" id="eET-bi-zrx"/>
                                                     <constraint firstAttribute="bottom" secondItem="0U5-gw-bxJ" secondAttribute="bottom" constant="5" id="eIc-7L-7Ta"/>
+                                                    <constraint firstItem="GgF-7S-xwR" firstAttribute="leading" secondItem="bMw-4I-Q8A" secondAttribute="trailing" constant="10" id="jyE-N8-aTd"/>
                                                     <constraint firstItem="bMw-4I-Q8A" firstAttribute="top" secondItem="Lbc-TH-R0A" secondAttribute="top" constant="5" id="qVp-Vv-kom"/>
                                                 </constraints>
                                             </view>
@@ -2133,11 +2149,12 @@
         <image name="backcolor.png" width="460" height="73"/>
         <image name="comment.png" width="133" height="133"/>
         <image name="deleteSwipeInfoBar.png" width="290" height="35"/>
-        <image name="follow.png" width="90" height="90"/>
+        <image name="follow.png" width="67" height="70"/>
         <image name="gradient.png" width="640" height="1138"/>
         <image name="heart.png" width="110" height="110"/>
         <image name="info.png" width="82" height="82"/>
         <image name="logo.png" width="111" height="111"/>
+        <image name="plus.png" width="45" height="45"/>
         <image name="share.png" width="102" height="102"/>
         <image name="testbackground.jpg" width="500" height="667"/>
     </resources>

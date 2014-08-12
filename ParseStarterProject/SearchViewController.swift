@@ -248,6 +248,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //change context to searching for term
         if (collectionDelegateSearch == nil) {
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
+            collectionDelegateSearch!.myFinishFunction = self.setBackImage;
         }
         else {
             collectionDelegateSearch!.resetData();
