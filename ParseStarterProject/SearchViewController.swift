@@ -213,12 +213,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (index == 0) {
             cell.textLabel.text = "Search for \"" + currentTerm + "\"!";
             cell.textLabel.textColor = UIColor.whiteColor();
+            cell.textLabel.font = TABLE_CELL_FONT;
         }
         else {
             if (index - 1 < searchTermList.count) {
                 //to avoid race conditions
                 cell.textLabel.text = searchTermList[index - 1];
                 cell.textLabel.textColor = UIColor.whiteColor();
+                cell.textLabel.font = TABLE_CELL_FONT;
             }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;

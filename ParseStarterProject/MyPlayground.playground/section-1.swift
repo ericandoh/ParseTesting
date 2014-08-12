@@ -61,7 +61,7 @@ func scrambler(start:Int, end:Int, need: Int)->Array<Int> {
     return picked;
 }
 
-scrambler(1, 1000, 7);
+scrambler(0, 100000, 5);
 
 //for i in 0...(-1) {
     //print(i)

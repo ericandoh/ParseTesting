@@ -54,8 +54,8 @@
     NSString* username = self.userTextField.text;
     NSString* email = self.emailTextField.text;
     NSString* password = self.passwordTextField.text;
-    NSString* firstName = self.firstNameTextField.text;
-    NSString* lastName = self.lastNameTextField.text;
+    NSString* firstName = @"";//self.firstNameTextField.text;
+    NSString* lastName = @"";//self.lastNameTextField.text;
     //register user with server here (BACKEND)
     [ServerInteractor registerUser:username email:email password:password firstName:firstName lastName:lastName sender:self];
     if (DEBUG_FLAG) {
