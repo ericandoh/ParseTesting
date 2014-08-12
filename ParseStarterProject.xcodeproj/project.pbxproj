@@ -46,6 +46,7 @@
 		D923E4CD1989B3E900C12429 /* ShopLookDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */; };
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D92D8A9B19994E6600A41D96 /* heartredglow.png in Resources */ = {isa = PBXBuildFile; fileRef = D92D8A9A19994E6600A41D96 /* heartredglow.png */; };
+		D92D8A9D1999960100A41D96 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */; };
 		D93CD465199540CA001F0253 /* backcolor.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD464199540CA001F0253 /* backcolor.png */; };
 		D93CD468199540E4001F0253 /* arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD466199540E4001F0253 /* arrow_left.png */; };
 		D93CD469199540E4001F0253 /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD467199540E4001F0253 /* arrow_right.png */; };
@@ -151,6 +152,7 @@
 		D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookDelegate.swift; sourceTree = "<group>"; };
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
 		D92D8A9A19994E6600A41D96 /* heartredglow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartredglow.png; sourceTree = "<group>"; };
+		D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		D93CD464199540CA001F0253 /* backcolor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backcolor.png; sourceTree = "<group>"; };
 		D93CD466199540E4001F0253 /* arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_left.png; sourceTree = "<group>"; };
 		D93CD467199540E4001F0253 /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */,
 				D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */,
 				D923909B19929107001B5CBE /* SuggestedHeaderView.swift */,
+				D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				D94B03E11981873F002E9152 /* SideMenuManagingViewController.swift in Sources */,
 				D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */,
 				D94185F7198AA7BD00844697 /* LinkFilledTextView.swift in Sources */,
+				D92D8A9D1999960100A41D96 /* SideMenuTableViewCell.swift in Sources */,
 				D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */,
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,

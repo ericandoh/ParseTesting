@@ -43,6 +43,7 @@ class LinkFilledTextView: UITextView {
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
         self.editable = false;
+        self.textColor = UIColor.whiteColor();
     }
     
     init(frame: CGRect, textContainer: NSTextContainer!, owner: UIViewController) {
@@ -52,6 +53,7 @@ class LinkFilledTextView: UITextView {
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
         self.editable = false;
+        self.textColor = UIColor.whiteColor();
     }
     override func awakeFromNib() {
         super.awakeFromNib();
@@ -59,6 +61,7 @@ class LinkFilledTextView: UITextView {
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
         self.editable = false;
+        self.textColor = UIColor.whiteColor();
     }
     /*init(frame: CGRect) {
     super.init(frame: frame);
@@ -156,6 +159,9 @@ class LinkFilledTextView: UITextView {
     // Drawing code
     }
     */
+    func setTextColorBeforeAttributing(newColor: UIColor) {
+        self.textColor = newColor;
+    }
     func setTextAfterAttributing(text: String) {
         self.attributedText = self.convertToAttributed(text);
     }

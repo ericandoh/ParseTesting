@@ -108,7 +108,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     func hideSideBar(completions: (Bool)->Void) {
         if (menuOpen) {
-            outOfMenuButton.hidden = true;
             var x = self.sideView.center.x - BAR_WIDTH;
             var y = self.sideView.center.y;
             var point = CGPoint(x: x, y: y);
@@ -119,6 +118,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 self.outOfMenuButton.alpha = 0;
                 }, completion: {(success: Bool)->Void in
                     self.menuOpen = false;
+                    self.outOfMenuButton.hidden = true;
                     completions(success);
                 });
         }
@@ -262,10 +262,14 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         return SIDE_MENU_ITEMS.count;
     }
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
-        cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
-        cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+        let cell: SideMenuTableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as SideMenuTableViewCell
+        
+        //cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
+        cell.titleLabel.text = SIDE_MENU_NAMES[indexPath.row];
+        
+        //cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
+        cell.iconImageView.image = SIDE_MENU_IMAGES[indexPath.row];
+        //cell.imageView.frame = CGRectMake(0, 0, 40, 40);
         
         //var backColor = UIColor(red: SIDE_MENU_BACK_RED, green: SIDE_MENU_BACK_GREEN, blue: SIDE_MENU_BACK_BLUE, alpha: 1.0);
         
@@ -280,15 +284,30 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         cell.backgroundView = transparentBackgroundView;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         
+        
+        //var label: UILabel = UILabel(frame: CGRectMake(0, 0, 40, 40));
+        
         if (SIDE_MENU_ITEMS[indexPath.row] == currentlyShowing) {
-            cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.9);
-            cell.imageView.alpha = 0.9;
+            cell.titleLabel.textColor = UIColor(white: 1.0, alpha: 0.9);
+            cell.iconImageView.alpha = 0.9;
+            cell.numberCounter.textColor = UIColor(white: 1.0, alpha: 0.9);
         }
         else {
-            cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.4);
-            cell.imageView.alpha = 0.4;
+            cell.titleLabel.textColor = UIColor(white: 1.0, alpha: 0.4);
+            cell.iconImageView.alpha = 0.4;
+            cell.numberCounter.textColor = UIColor(white: 1.0, alpha: 0.4);
         }
-        
+        if (indexPath.row == INDEX_OF_NOTIF) {
+            cell.numberCounter.textAlignment = NSTextAlignment.Center;
+            ServerInteractor.getNumUnreadNotifications({
+                (result: Int) in
+                cell.numberCounter.text = String(result);
+            })
+            //cell.contentView.addSubview(label);
+        }
+        else {
+            cell.numberCounter.text = "";
+        }
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

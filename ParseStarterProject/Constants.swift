@@ -114,7 +114,7 @@ let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
 //how dim the right side of the menu becomes when side menu (left) is triggered and pulled out
 //you can change hue in storyboard
-let SIDE_MENU_DIM = CGFloat(0.5);
+let SIDE_MENU_DIM = CGFloat(0.05);
 
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(FULLSCREEN_HEIGHT);
@@ -159,6 +159,8 @@ let PREVIEW_DESCRIP_PLACEHOLDER_TEXT = "Tell us about your style";
 //side menu bar items we will have
 //this references ONLY storyboard ID names
 let SIDE_MENU_ITEMS = ["HomeNav", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
+
+let INDEX_OF_NOTIF: Int = find(SIDE_MENU_ITEMS, "Notifications")!;
 
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;

@@ -51,6 +51,13 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         let rect :CGRect = s.CGRectValue();
         
         commentsTextFieldConstraint.constant = CGFloat(15.0) + rect.height;
+        
+        self.view.layoutIfNeeded();
+        
+        var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
+        if (self.commentList.count != 0) {
+            self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Top, animated: false);
+        }
 
     }
     
@@ -61,6 +68,8 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         let rect :CGRect = s.CGRectValue();
 
         commentsTextFieldConstraint.constant = CGFloat(15.0)
+        
+        self.view.layoutIfNeeded();
 
     }
     
@@ -74,12 +83,12 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                     self.commentList.append(PostComment(author: (authorInput[index] as String), content: (input[index] as String)));
                 }
                 self.commentTableView.reloadData();
+                var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
+                if (self.commentList.count != 0) {
+                    self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
+                }
                 });
             backImgView.image = backImg!;
-        }
-        var path = NSIndexPath(forRow: commentList.count - 1, inSection: 0);
-        if (commentList.count != 0) {
-            commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Top, animated: false);
         }
     }
     override func didReceiveMemoryWarning() {
@@ -107,6 +116,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             self.commentTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: commentList.count - 1, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic);
         
             commentTextField.text = "";
+            
+            var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
+            if (self.commentList.count != 0) {
+                self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Top, animated: false);
+            }
         }
     }
     /*
@@ -139,6 +153,17 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
+    }
+    func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        var author = commentList[index].author;
+        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+        
+        var estimatedLines = CGFloat(countElements(text)) / 34.0;
+        
+        var estimatedWidth = 40.0 + 20.0 * estimatedLines;
+        
+        return estimatedWidth
     }
     /*func makeTableImage(index: Int) {
         var author = commentList[index].author;
