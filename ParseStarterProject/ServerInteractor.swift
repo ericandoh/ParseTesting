@@ -496,6 +496,7 @@ import UIKit
             if (objects.count > 0) {
                 var notifToUpdate = objects[0] as PFObject;
                 notifToUpdate["bumpedAt"] = NSDate();
+                notifToUpdate["viewed"] = false;
                 notifToUpdate.saveEventually();
             }
         });
@@ -513,6 +514,7 @@ import UIKit
             if (objects.count > 0) {
                 var notifToUpdate = objects[0] as PFObject;
                 notifToUpdate["bumpedAt"] = NSDate();
+                notifToUpdate["viewed"] = false;
                 notifToUpdate.saveEventually();
             }
         });
@@ -842,6 +844,16 @@ import UIKit
         return nil; //useless statement to suppress useless stupid xcode thing
     }
     
+    class func getNumUnreadNotifications(retFunc: (Int)->Void) {
+        var query = PFQuery(className:"Notification")
+        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
+        query.whereKey("viewed", equalTo: false);
+        query.countObjectsInBackgroundWithBlock({
+            (result: Int32, error: NSError!) in
+            retFunc(Int(result));
+        })
+    }
+    
     class func getNotifications(controller: NotifViewController) {
         if (isAnonLogged()) {
             if (controller.notifList.count == 0) {
@@ -875,22 +887,26 @@ import UIKit
                 }
                 for index:Int in 0..<objects.count {
                     object = objects![index] as PFObject;
+                    var hasBeenViewed = object["viewed"] as Bool;
                     if (index >= NOTIF_COUNT) {
-                        if(object["viewed"]) {
+                        if(hasBeenViewed) {
                             object.deleteInBackground();
                             continue;
                         }
                     }
-                    
-                                        
+                    if (!hasBeenViewed) {
+                        object["viewed"] = true;
+                        object.saveEventually();
+                    }
+                    var item = InAppNotification(dataObject: object, wasRead: hasBeenViewed);
                     if(index >= controller.notifList.count) {
-                        var item = InAppNotification(dataObject: object);
                         //weird issue #7 error happening here, notifList is NOT dealloc'd (exists) WORK
                         //EXC_BAD_ACCESS (code=EXC_I386_GPFLT)
                         controller.notifList.append(item);
                     }
                     else {
-                        controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
+                        //controller.notifList[index] = InAppNotification(dataObject: object, message: controller.notifList[index]!.messageString);
+                        controller.notifList[index] = item;
                     }
                     controller.notifList[index]!.assignMessage(controller);
                 }

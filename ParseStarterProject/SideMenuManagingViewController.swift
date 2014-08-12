@@ -280,15 +280,27 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         cell.backgroundView = transparentBackgroundView;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         
+        
+        var label: UILabel = UILabel(frame: cell.imageView.frame);
+        
         if (SIDE_MENU_ITEMS[indexPath.row] == currentlyShowing) {
             cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.9);
             cell.imageView.alpha = 0.9;
+            label.textColor = UIColor(white: 1.0, alpha: 0.9);
         }
         else {
             cell.textLabel.textColor = UIColor(white: 1.0, alpha: 0.4);
             cell.imageView.alpha = 0.4;
+            label.textColor = UIColor(white: 1.0, alpha: 0.4);
         }
-        
+        if (indexPath.row == INDEX_OF_NOTIF) {
+            label.textAlignment = NSTextAlignment.Center;
+            ServerInteractor.getNumUnreadNotifications({
+                (result: Int) in
+                label.text = String(result);
+            })
+            cell.contentView.addSubview(label);
+        }
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

@@ -44,7 +44,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         someTextField.setTextAfterAttributing("spotting the hottest fashion wear of the year #summer #penguin #fun #awesome with my buddies @dog1 @dog2 @asdf @meepmeep #coolbro socool")*/
         
-        //self.navigationController.navigationBar.topItem.title = "Find Friends";
+        self.navigationController.navigationBar.topItem.title = "Find Followers";
         // Do any additional setup after loading the view.
         
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
@@ -229,9 +229,6 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             var text = author;
             cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: true, sender: self);
         }
-        
-        
-        
         //if (index == 0) {
             //cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
         //}
@@ -299,8 +296,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         let row = indexPath.row;
         
         var username = suggestedUsers[section]!.username;
+        
         var img = (suggestedUserImgs[username]!)[row];
-        cell.backgroundView = UIImageView(image: img.getImageAt(0))
+        var backImageView = UIImageView(image: img.getImageAt(0))
+        backImageView.contentMode = UIViewContentMode.ScaleAspectFill;
+        cell.backgroundView = backImageView;
+        
         
         return cell;
         

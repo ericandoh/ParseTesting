@@ -22,18 +22,20 @@ class InAppNotification {
     var friendName: String = "";
     var type: String = NotificationType.PLAIN_TEXT.toRaw();
     var personalObj: PFObject? = nil
+    var wasRead: Bool = false;
     init(message: String) {
         //makes a default notification with just a text string
         messageString = message;
         type = NotificationType.PLAIN_TEXT.toRaw();
     }
-    init(dataObject: PFObject) {
+    init(dataObject: PFObject, wasRead: Bool) {
         personalObj = dataObject
+        self.wasRead = wasRead;
     }
-    init(dataObject: PFObject, message: String) {
+    /*init(dataObject: PFObject, message: String) {
         messageString = message;
         personalObj = dataObject
-    }
+    }*/
     func assignMessage(listener: NotifViewController) {
         //fetch notification message as necessary
         if (personalObj != nil) {
@@ -175,5 +177,7 @@ class InAppNotification {
         var obj: PFObject = self.personalObj!["ImagePost"] as PFObject
         return obj;
     }
-    
+    func wasReadBefore()->Bool {
+        return wasRead;
+    }
 }

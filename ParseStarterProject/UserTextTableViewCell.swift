@@ -124,6 +124,13 @@ class UserTextTableViewCell: UITableViewCell {
         //self.frame = frame;
         //self.sizeToFit();
     }
+    func setTextFieldLighter() {
+        self.descriptionBox.setTextColorBeforeAttributing(UIColor(white: 1.0, alpha: 0.4))
+        //self.descriptionBox.textColor = UIColor(white: 1.0, alpha: 0.4);
+    }
+    func setTextFieldNormal() {
+        self.descriptionBox.setTextColorBeforeAttributing(UIColor.whiteColor())
+    }
     @IBAction func nextActionCalled(sender: UIButton) {
         var username = friend!.username;
         if (friendAction == false) {

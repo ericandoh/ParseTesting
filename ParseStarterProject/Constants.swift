@@ -160,6 +160,8 @@ let PREVIEW_DESCRIP_PLACEHOLDER_TEXT = "Tell us about your style";
 //this references ONLY storyboard ID names
 let SIDE_MENU_ITEMS = ["HomeNav", "Search", "Profile", "Notifications", "FindFriends", "Upload"];
 
+let INDEX_OF_NOTIF: Int = find(SIDE_MENU_ITEMS, "Notifications")!;
+
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
 
