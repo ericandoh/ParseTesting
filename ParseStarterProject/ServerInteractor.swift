@@ -45,6 +45,7 @@ import UIKit
                 //ServerInteractor.initialUserChecks();
                 //user's first notification
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                ImagePostStructure.unreadAllPosts();
                 signController.successfulSignUp();
                 
             } else {
@@ -67,12 +68,13 @@ import UIKit
         user["followings"] = []
     }
     
-    class func loginUser(username: String, password: String, sender: NewLoginViewController)->Bool {
+    class func loginUser(username: String, password: String, sender: RealLoginViewController)->Bool {
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
-            var logController: NewLoginViewController = sender;
+            var logController: RealLoginViewController = sender;
             if (user) {
                 //successful log in
                 //ServerInteractor.initialUserChecks();
+                ImagePostStructure.unreadAllPosts();
                 logController.successfulLogin();
             }
             else {
@@ -135,6 +137,7 @@ import UIKit
                 user.saveEventually();
                 //logController.successfulLogin();
                 //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
+                ImagePostStructure.unreadAllPosts();
                 logController.facebookLogin()
                 
                 //var userID = userData.name
@@ -167,6 +170,7 @@ import UIKit
                 });
                 //logController.failedLogin("User logged in through Facebook!")
                 //ServerInteractor.initialUserChecks();
+                ImagePostStructure.unreadAllPosts();
                 logController.successfulLogin();
             }
         });
@@ -329,7 +333,19 @@ import UIKit
         UIGraphicsEndImageContext()
         return newImage
     }
-    
+    class func imageWithColorForSearch(color: UIColor, andHeight height: CGFloat)->UIImage {
+        var rect = CGRectMake(0, 0, 1, height);
+        UIGraphicsBeginImageContext(rect.size);
+        var context = UIGraphicsGetCurrentContext();
+        
+        CGContextSetFillColorWithColor(context, color.CGColor);
+        CGContextFillRect(context, rect);
+        
+        var image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return image;
+    }
     
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
         var individualRatio: Float;
@@ -680,17 +696,20 @@ import UIKit
                         //my search returned 0 results from the start. oh no!
                         NSLog("Out of posts to explore, resetting my viewed post counter")
                         ServerInteractor.resetViewedPosts();
+                        ImagePostStructure.unreadAllPosts();
                         ServerInteractor.getExplore(loadCount, excludes: excludes, notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
                         return;
                     }
                 }
+                
+                var scrambleList = ServerInteractor.scrambler(0, end: objects.count, need: objects.count);
                 
                 notifyQueryFinish(objects.count);
                 
                 var post: ImagePostStructure?;
                 for (index, object) in enumerate(objects!) {
                     post = ImagePostStructure.dequeueImagePost((object as PFObject));
-                    post!.loadImage(finishFunction, index: index);
+                    post!.loadImage(finishFunction, index: scrambleList[index]);
                 }
             } else {
                 // Log details of the failure
@@ -1489,5 +1508,38 @@ import UIKit
             return "\(num / 1000)K"
         }
         return "\(num)"
+    }
+    //O(N) algorithm in respect to need, regardless of start/end
+    //picks N numbers randomly + uniquely from a range start-end
+    //used to scramble orders for explore algorithm
+    class func scrambler(start:Int, end:Int, need: Int)->Array<Int> {
+        if (need > end - start) {
+            return [];
+        }
+        var replacementDict: [Int: Int] = [:];
+        var rangeToPick = end - start;
+        var picked: Array<Int> = [];
+        for i in 0..<need {
+            var pick = random() % rangeToPick;
+            //if (replacementDict[pick + start] != nil) {
+            //replacementDict[pick + start] = replacementDict[pick + start]!;
+            //}
+            //else {
+            if (replacementDict[pick + start] != nil) {
+                picked.append(replacementDict[pick+start]!);
+            }
+            else {
+                picked.append(pick+start);
+            }
+            if (replacementDict[rangeToPick + start - 1] != nil) {
+                replacementDict[pick + start] = replacementDict[rangeToPick + start - 1];
+            }
+            else {
+                replacementDict[pick + start] = rangeToPick + start - 1;
+            }
+            //}
+            rangeToPick--;
+        }
+        return picked;
     }
 }

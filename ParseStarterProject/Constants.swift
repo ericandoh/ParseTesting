@@ -43,6 +43,10 @@ let CELLS_BEFORE_RELOAD = 9;
 //but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)
 //let MYCOMMENT_LOAD_COUNT = 20
 
+//for suggest friends page, how many users to suggest + how many images per each user to preview
+let NUM_TO_SUGGEST = 5;
+let MAX_IMGS_PER_SUGGEST = 5;
+
 //----------------------------Image Constants---------------------------------
 
 let NULL_IMG: UIImage = UIImage(named: "horned-logo.png");

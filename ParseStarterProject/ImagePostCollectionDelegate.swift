@@ -40,6 +40,8 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     
     var needAddMore:Bool = false;
     
+    var myFinishFunction: (()->Void)?;
+    
     /*
         Sample Usage:
         -In viewDidLoad-
@@ -155,6 +157,11 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         if (!post.read) {
             ServerInteractor.readPost(post);
             post.read = true;
+        }
+        if (index == 0) {
+            if (myFinishFunction != nil) {
+                myFinishFunction!();
+            }
         }
     }
     

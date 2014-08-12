@@ -10,6 +10,10 @@ import UIKit
 
 class RealLoginViewController: UIViewController {
 
+    @IBOutlet weak var usernameTextField: UITextField!
+    
+    @IBOutlet weak var passwordTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +25,56 @@ class RealLoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func loginPushed(sender: UIButton) {
+        var username: String = self.usernameTextField.text
+        var password: String = self.passwordTextField.text
+        //connect to server + authenticare here (BACKEND)
+        ServerInteractor.loginUser(username, password: password, sender: self);
+    }
 
+    @IBAction func forgotPassword(sender: UIButton) {
+        let alert: UIAlertController = UIAlertController(title: "Reset password", message: "Enter your email and we'll send you directions on resetting your password!", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addTextFieldWithConfigurationHandler(nil);
+        (alert.textFields[0] as UITextField).placeholder = "Your Email"
+        alert.addAction(UIAlertAction(title: "Reset P/W", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            var email = (alert.textFields[0] as UITextField).text;
+            PFUser.requestPasswordResetForEmailInBackground(email, block: {
+                (succeeded: Bool, error: NSError!) in
+                if (error) {
+                    NSLog("Encountered an error sending an email!");
+                }
+                if (succeeded) {
+                    let alert2: UIAlertController = UIAlertController(title: "Reset password", message: "An email will be sent shortly with directions to reset your password", preferredStyle: UIAlertControllerStyle.Alert);
+                    alert2.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                        //canceled
+                    }));
+                    self.presentViewController(alert2, animated: true, completion: nil)
+                }
+                else {
+                    let alert3: UIAlertController = UIAlertController(title: "Reset password", message: "Email is invalid; try again", preferredStyle: UIAlertControllerStyle.Alert);
+                    alert3.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                        //canceled
+                    }));
+                    self.presentViewController(alert3, animated: true, completion: nil)
+                }
+            });
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
+            //canceled
+        }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    func successfulLogin() {
+        self.performSegueWithIdentifier("JumpIn", sender: self)
+    }
+    func failedLogin(msg: String) {
+        let alert: UIAlertController = UIAlertController(title: "Login Failed", message: msg, preferredStyle: UIAlertControllerStyle.Alert);
+        
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            //canceled
+        }));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

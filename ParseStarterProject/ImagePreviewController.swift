@@ -129,6 +129,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but2.backgroundColor = UIColor.clearColor();
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+        //but1.titleLabel.font = UIFont...
+        //WORK NEED
         but1.shopIndex = index;
         but2.shopIndex = index;
         
@@ -138,7 +140,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
         but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
-        shopButton.backgroundColor = UIColor.blackColor();
+        //shopButton.backgroundColor = UIColor.blackColor();
         
         var thinLine = UIView(frame: CGRectMake(BOX_X_ONE, LABEL_BOX_HEIGHT - 1, BOX_WIDTH, 1));
         thinLine.backgroundColor = UIColor.whiteColor();
