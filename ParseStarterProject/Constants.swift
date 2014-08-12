@@ -102,6 +102,10 @@ let SIDE_MENU_BACK_GREEN = CGFloat(255);
 let SIDE_MENU_BACK_BLUE = CGFloat(198);
 
 let SIDE_MENU_BACK_COLOR = UIColor(red: 163.0/255.0, green: 255.0/255.0, blue: 198.0/255.0, alpha: 1.0);
+
+let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(),
+    NSFontAttributeName: UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)];
+
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image

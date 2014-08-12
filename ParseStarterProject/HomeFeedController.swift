@@ -93,6 +93,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         //self.navigationController.navigationBar.barStyle = UIBarStyle.Default
         

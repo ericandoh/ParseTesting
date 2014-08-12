@@ -48,6 +48,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
         self.searchFriendsTableView.estimatedRowHeight = 50.0;

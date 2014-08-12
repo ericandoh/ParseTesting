@@ -38,6 +38,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.topItem.title = "Popular";
         //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
         // Do any additional setup after loading the view.
         

@@ -69,6 +69,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         
         //NSLog("Loading View");

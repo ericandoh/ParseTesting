@@ -33,6 +33,7 @@ class NotifViewController: UITableViewController {
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.topItem.title = "Notifications";
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var view: UIView = UIView()
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
