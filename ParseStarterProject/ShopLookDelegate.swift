@@ -39,6 +39,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
 
         cell.textLabel.text = shopLooks[indexPath.row].title;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        cell.textLabel.textColor = UIColor.whiteColor()
         
         var forwardImg = UIImageView(image: FORWARD_ICON);
         
@@ -49,7 +50,6 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         /*let viewsDictionary: NSDictionary = ["view": cell.accessoryView.superview!]
         var verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
         var horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
-        
         forwardImg.addConstraints(verticalConstraints);
         forwardImg.addConstraints(horizontalConstraints);*/
         
