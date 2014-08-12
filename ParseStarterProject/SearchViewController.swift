@@ -42,6 +42,22 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         myTable.hidden = true;
         
+        //self.searchBar.barStyle = UIBarStyle.BlackTranslucent
+        
+        self.searchBar.barStyle = UIBarStyle.BlackTranslucent
+        // set bar transparancy
+        self.searchBar.translucent = true;
+        // set bar color
+        self.searchBar.barTintColor = UIColor.clearColor()
+        // set bar button color
+       self.searchBar.tintColor = UIColor.clearColor()
+        // set bar background color
+        self.searchBar.backgroundColor = UIColor.clearColor()
+        self.searchBar.layer.cornerRadius = 3;
+        self.searchBar.layer.backgroundColor = UIColor.clearColor().CGColor;
+        self.searchBar.layer.borderWidth=0.75;
+        self.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
+        
         collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getExplore, sender: self);
         if (currentTerm != "") {
             startSearch(currentTerm);

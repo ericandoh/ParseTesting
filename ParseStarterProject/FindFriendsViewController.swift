@@ -55,6 +55,16 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
         self.searchFriendsTableView.estimatedRowHeight = 50.0;
         
+        self.searchBar.translucent = true;
+        self.searchBar.tintColor = UIColor.whiteColor()
+        self.searchBar.layer.cornerRadius = 3;
+        self.searchBar.layer.backgroundColor = UIColor.clearColor().CGColor;
+        self.searchBar.layer.borderWidth=0.75;
+        self.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
+        self.searchBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default);
+        
+        var searchBackImg = self.imageWithColorForSearch(UIColor.clearColor(), andHeight: 32);
+        self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
             self.backImage.image = image;
@@ -73,6 +83,20 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func imageWithColorForSearch(color: UIColor, andHeight height: CGFloat)->UIImage {
+        var rect = CGRectMake(0, 0, 1, height);
+        UIGraphicsBeginImageContext(rect.size);
+        var context = UIGraphicsGetCurrentContext();
+        
+        CGContextSetFillColorWithColor(context, color.CGColor);
+        CGContextFillRect(context, rect);
+        
+        var image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return image;
     }
 
     @IBAction func findFriendsFromFB(sender: UIButton) {

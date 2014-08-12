@@ -77,6 +77,8 @@
                                                     UIRemoteNotificationTypeSound];*/
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor] ];
+    
     return YES;
 }
 

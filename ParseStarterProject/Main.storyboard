@@ -1207,13 +1207,15 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAI-az-vyZ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="Cl9-nF-V0Z">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPT-wc-Nnf">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPT-wc-Nnf">
                                 <rect key="frame" x="42" y="126" width="236" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="JNe-NO-Jad"/>
+                                </constraints>
                                 <state key="normal" title="Find Friends from Facebook" backgroundImage="backcolor.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1222,8 +1224,11 @@
                                     <action selector="findFriendsFromFB:" destination="Anw-Wq-Q2x" eventType="touchUpInside" id="fxN-E5-f93"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lc-mW-qNE">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lc-mW-qNE">
                                 <rect key="frame" x="42" y="174" width="236" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="2FL-tm-DdX"/>
+                                </constraints>
                                 <state key="normal" title="Find Friends from Contacts" backgroundImage="backcolor.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1316,8 +1321,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="4Io-YJ-blA">
-                                <rect key="frame" x="0.0" y="65" width="320" height="44"/>
+                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Io-YJ-blA">
+                                <rect key="frame" x="5" y="65" width="310" height="35"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="OFr-TT-KGD"/>
+                                </constraints>
+                                <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="Anw-Wq-Q2x" id="zJN-8J-agg"/>
@@ -1393,6 +1403,16 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="BPT-wc-Nnf" firstAttribute="top" secondItem="4Io-YJ-blA" secondAttribute="bottom" constant="26" id="2fK-Gh-pdM"/>
+                            <constraint firstItem="8lc-mW-qNE" firstAttribute="leading" secondItem="Fst-GP-2aj" secondAttribute="leading" constant="42" id="CzN-Dk-JEY"/>
+                            <constraint firstItem="4Io-YJ-blA" firstAttribute="leading" secondItem="Fst-GP-2aj" secondAttribute="leading" constant="5" id="bB6-0G-q0n"/>
+                            <constraint firstAttribute="trailing" secondItem="BPT-wc-Nnf" secondAttribute="trailing" constant="42" id="db7-Df-Crt"/>
+                            <constraint firstItem="BPT-wc-Nnf" firstAttribute="leading" secondItem="Fst-GP-2aj" secondAttribute="leading" constant="42" id="eo1-d3-to6"/>
+                            <constraint firstAttribute="trailing" secondItem="8lc-mW-qNE" secondAttribute="trailing" constant="42" id="gMR-B5-0ms"/>
+                            <constraint firstItem="8lc-mW-qNE" firstAttribute="top" secondItem="BPT-wc-Nnf" secondAttribute="bottom" constant="8" id="q4W-1I-YPB"/>
+                            <constraint firstAttribute="trailing" secondItem="4Io-YJ-blA" secondAttribute="trailing" constant="5" id="vMh-wC-zgu"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Find Friends" id="fCv-Ra-qvs"/>
                     <connections>
@@ -1510,9 +1530,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" placeholder="Find tags, brands, trends..." translatesAutoresizingMaskIntoConstraints="NO" id="tLh-HH-SRl">
-                                <rect key="frame" x="0.0" y="61" width="320" height="44"/>
+                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" barStyle="black" placeholder="Find tags, brands, trends..." translatesAutoresizingMaskIntoConstraints="NO" id="tLh-HH-SRl">
+                                <rect key="frame" x="5" y="61" width="310" height="35"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="C27-U2-LC3"/>
+                                </constraints>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="d93-87-W5i" id="rWm-gn-hSZ"/>
@@ -1576,6 +1599,10 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tLh-HH-SRl" secondAttribute="trailing" constant="5" id="pcR-vC-QLr"/>
+                            <constraint firstItem="tLh-HH-SRl" firstAttribute="leading" secondItem="tOl-9H-a9Q" secondAttribute="leading" constant="5" id="vIJ-ee-GyD"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ih1-wR-6xp"/>
                     <connections>
