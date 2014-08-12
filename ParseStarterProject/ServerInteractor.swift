@@ -596,13 +596,11 @@ import UIKit
         query.orderByDescending("createdAt");
         
         var excludeList = convertPostToID(excludes);
-
         if (!isAnonLogged()) {
             //excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
             query.whereKey("author", notEqualTo: PFUser.currentUser().username);
             query.whereKey("author", containedIn: (PFUser.currentUser()["followings"] as NSArray));
         }
-
         /*
         if (friendsOnly && !isAnonLogged()) {
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
@@ -806,7 +804,13 @@ import UIKit
         
         var query: PFQuery = PFUser.query();
         query.whereKey("username", equalTo: targetUserName)
-        var currentUserName = PFUser.currentUser().username;
+        var currentUserName: String = "";
+        if (ServerInteractor.isAnonLogged()) {
+            currentUserName = "Anonymous";
+        }
+        else {
+            currentUserName = PFUser.currentUser().username;
+        }
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
                 NSLog("Querying to add notification failed!");
@@ -845,6 +849,10 @@ import UIKit
     }
     
     class func getNumUnreadNotifications(retFunc: (Int)->Void) {
+        if (ServerInteractor.isAnonLogged()) {
+            retFunc(0);
+            return;
+        }
         var query = PFQuery(className:"Notification")
         query.whereKey("recipient", equalTo: PFUser.currentUser().username);
         query.whereKey("viewed", equalTo: false);
@@ -1359,6 +1367,9 @@ import UIKit
             
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
             var lastName: String = lName as NSString;
+            
+            var cEmail: AnyObject = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
+            var contactEmail: String = cEmail as NSString;
             //kABPersonPhoneProperty, kABPersonEmailProperty
             
             //var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString
@@ -1367,10 +1378,17 @@ import UIKit
             //firstName = fName as NSString;
             //lastName = lName as NSString;
             //println ("contactName \(contactName)")
-            var query: PFQuery = PFUser.query();
-            query.whereKey("personFirstName", equalTo: fName);
-            query.whereKey("personLastName", equalTo: lName);
-            arrayOfQueries.append(query);
+            if (firstName != "" && lastName != "") {
+                var query: PFQuery = PFUser.query();
+                query.whereKey("personFirstName", equalTo: fName);
+                query.whereKey("personLastName", equalTo: lName);
+                arrayOfQueries.append(query);
+            }
+            if (contactEmail != "") {
+                var query2 = PFUser.query();
+                query2.whereKey("email", equalTo: contactEmail);
+                arrayOfQueries.append(query2);
+            }
         }
         
         var combinedQuery = PFQuery.orQueryWithSubqueries(arrayOfQueries);

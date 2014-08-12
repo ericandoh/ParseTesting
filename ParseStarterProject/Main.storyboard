@@ -1064,7 +1064,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="idW-10-gWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="-224"/>
+            <point key="canvasLocation" x="1410" y="510"/>
         </scene>
         <!--Start Controller-->
         <scene sceneID="zwv-W1-UcF">
@@ -1251,6 +1251,7 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAI-az-vyZ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="Cl9-nF-V0Z">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="dark"/>
@@ -1502,7 +1503,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLe-AF-DLT">
-                                <rect key="frame" x="132" y="297" width="57" height="30"/>
+                                <rect key="frame" x="132" y="153" width="57" height="30"/>
                                 <state key="normal" title="Register">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1510,26 +1511,17 @@
                                     <segue destination="vp5-wb-cPq" kind="push" id="Z5d-rw-eYD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
-                                <rect key="frame" x="38" y="373" width="245" height="30"/>
-                                <state key="normal" title="Don't sign me in - I want to browse!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="immediateBrowsing:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="wFo-ki-0b3"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URl-MG-9o6">
-                                <rect key="frame" x="139" y="259" width="43" height="30"/>
+                                <rect key="frame" x="139" y="115" width="43" height="30"/>
                                 <state key="normal" title="Login!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginPress:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="Nxz-M8-9U6"/>
+                                    <segue destination="qU9-dM-KP1" kind="push" id="7cC-uB-1Uk"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuC-K4-2wg">
-                                <rect key="frame" x="58" y="335" width="205" height="30"/>
+                                <rect key="frame" x="58" y="191" width="205" height="30"/>
                                 <state key="normal" title="Login/Register with Facebook">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1537,23 +1529,20 @@
                                     <action selector="loginWithFacebook:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="M3U-Qa-EoZ"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lCD-Hm-x7k">
-                                <rect key="frame" x="23" y="210" width="275" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nWM-np-dhM">
-                                <rect key="frame" x="20" y="159" width="280" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
+                                <rect key="frame" x="32" y="229" width="245" height="30"/>
+                                <state key="normal" title="Don't sign me in - I want to browse!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="immediateBrowsing:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="wFo-ki-0b3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Log in" id="5BD-bY-Cbe"/>
                     <connections>
-                        <outlet property="passwordTextField" destination="lCD-Hm-x7k" id="BZD-Sj-H8K"/>
-                        <outlet property="userTextField" destination="nWM-np-dhM" id="axA-ZJ-IL4"/>
                         <segue destination="B0E-wR-fsK" kind="push" identifier="SetUsername" id="5Cf-tw-DTD"/>
                         <segue destination="oQL-hX-F0F" kind="modal" identifier="JumpIn" id="4Kk-nU-xea"/>
                     </connections>
@@ -1958,6 +1947,49 @@
             </objects>
             <point key="canvasLocation" x="1912" y="1660"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="BBQ-Cj-GdR">
+            <objects>
+                <viewController id="qU9-dM-KP1" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0jX-Jv-apx"/>
+                        <viewControllerLayoutGuide type="bottom" id="CSn-Ro-UqH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="srQ-G3-L8K">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vzG-b3-d22">
+                                <rect key="frame" x="20" y="192" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vhg-vT-XKH">
+                                <rect key="frame" x="20" y="237" width="280" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9x-5D-7T5">
+                                <rect key="frame" x="141" y="304" width="38" height="30"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7TO-e1-89S">
+                                <rect key="frame" x="97" y="351" width="126" height="30"/>
+                                <state key="normal" title="Forgot Password?">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4ZL-Xh-ylH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k3x-4r-BUi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1008" y="-162"/>
+        </scene>
         <!--Register-->
         <scene sceneID="GbN-ib-ZeW">
             <objects>
@@ -2096,6 +2128,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="A5U-KF-v3T"/>
-        <segue reference="1Hu-E5-K1s"/>
+        <segue reference="4Kk-nU-xea"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -418,18 +418,23 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             UIView.animateWithDuration(0.3, animations: {() in
                 self.descriptionPage.alpha = 1;
                 });
-            ServerInteractor.amFollowingUser(currentPost.getAuthor(), retFunction: {(amFollowing: Bool) in
-                if (amFollowing == true) {
-                    self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
-                }
-                else if (amFollowing == false) {
-                    self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
-                }
-                else {
-                    //do nothing, server failed to fetch!
-                    NSLog("Failure? \(amFollowing)")
-                }
-            });
+            if (ServerInteractor.isAnonLogged()) {
+                self.topRightButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
+            }
+            else {
+                ServerInteractor.amFollowingUser(currentPost.getAuthor(), retFunction: {(amFollowing: Bool) in
+                    if (amFollowing == true) {
+                        self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                    }
+                    else if (amFollowing == false) {
+                        self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
+                    }
+                    else {
+                        //do nothing, server failed to fetch!
+                        NSLog("Failure? \(amFollowing)")
+                    }
+                });
+            }
             
             var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
             var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
@@ -625,7 +630,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             return;
         }
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
-        if (postCounter == currentPost.getImagesCount() + 1) {
+        if (postCounter == currentPost.getImagesCount() + 1 && !(ServerInteractor.isAnonLogged())) {
             var username = currentPost.getAuthor();
             ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
                 if (amFollowing == true) {

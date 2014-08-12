@@ -47,6 +47,7 @@
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D92D8A9B19994E6600A41D96 /* heartredglow.png in Resources */ = {isa = PBXBuildFile; fileRef = D92D8A9A19994E6600A41D96 /* heartredglow.png */; };
 		D92D8A9D1999960100A41D96 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */; };
+		D92D8A9F1999CA5300A41D96 /* RealLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */; };
 		D93CD465199540CA001F0253 /* backcolor.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD464199540CA001F0253 /* backcolor.png */; };
 		D93CD468199540E4001F0253 /* arrow_left.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD466199540E4001F0253 /* arrow_left.png */; };
 		D93CD469199540E4001F0253 /* arrow_right.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD467199540E4001F0253 /* arrow_right.png */; };
@@ -153,6 +154,7 @@
 		D92566641964A59F00189250 /* FriendEncapsulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEncapsulator.swift; sourceTree = "<group>"; };
 		D92D8A9A19994E6600A41D96 /* heartredglow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartredglow.png; sourceTree = "<group>"; };
 		D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
+		D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealLoginViewController.swift; sourceTree = "<group>"; };
 		D93CD464199540CA001F0253 /* backcolor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backcolor.png; sourceTree = "<group>"; };
 		D93CD466199540E4001F0253 /* arrow_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_left.png; sourceTree = "<group>"; };
 		D93CD467199540E4001F0253 /* arrow_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_right.png; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				D95EA0181986D2DA000A3037 /* SideTableViewCell.swift */,
 				D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */,
 				D956BAFB198FE2C1009CE92E /* CommentViewController.swift */,
+				D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				D914F7F4198805DD00A59314 /* FindFriendsViewController.swift in Sources */,
 				D95EA01B19873FAE000A3037 /* ShopLook.swift in Sources */,
 				D9715D2F1964CD3C00BA3C74 /* ImagePostNotifViewController.swift in Sources */,
+				D92D8A9F1999CA5300A41D96 /* RealLoginViewController.swift in Sources */,
 				D9F89B19195CCD9700849B1D /* StartController.swift in Sources */,
 				D945DA0D19632B4D00347F45 /* FriendTableViewController.swift in Sources */,
 				D93F7DB719705257001340DB /* SinglePostCollectionViewCell.swift in Sources */,

@@ -72,7 +72,6 @@ class NewLoginViewController: UIViewController {
                 NSLog("No we aint")
             }
         }
-
     }
     
     func successfulLogin() {
