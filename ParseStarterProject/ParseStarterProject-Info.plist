@@ -53,6 +53,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>HelveticaNeueLTPro-Th.otf</string>
+		<string>HelveticaNeueLTPro-LtCn.otf</string>
+		<string>HelveticaNeueLTPro-Lt.otf</string>
+		<string>HelveticaNeueLTPro-Ex.otf</string>
+		<string>HelveticaNeueLTPro-Bd.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

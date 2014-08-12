@@ -30,6 +30,38 @@ for i in 0..<0{
 var currentDate = NSDate();
 var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
 
+func scrambler(start:Int, end:Int, need: Int)->Array<Int> {
+    if (need > end - start) {
+        return [];
+    }
+    var replacementDict: [Int: Int] = [:];
+    var rangeToPick = end - start;
+    var picked: Array<Int> = [];
+    for i in 0..<need {
+        var pick = random() % rangeToPick;
+        //if (replacementDict[pick + start] != nil) {
+            //replacementDict[pick + start] = replacementDict[pick + start]!;
+        //}
+        //else {
+        if (replacementDict[pick + start] != nil) {
+            picked.append(replacementDict[pick+start]!);
+        }
+        else {
+            picked.append(pick+start);
+        }
+        if (replacementDict[rangeToPick + start - 1] != nil) {
+            replacementDict[pick + start] = replacementDict[rangeToPick + start - 1];
+        }
+        else {
+            replacementDict[pick + start] = rangeToPick + start - 1;
+        }
+        //}
+        rangeToPick--;
+    }
+    return picked;
+}
+
+scrambler(0, 100000, 5);
 
 //for i in 0...(-1) {
     //print(i)

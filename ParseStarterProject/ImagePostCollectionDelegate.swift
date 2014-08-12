@@ -40,6 +40,10 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     
     var needAddMore:Bool = false;
     
+    var myFinishFunction: (()->Void)?;
+    
+    var imageDelegateIdentifier: Int = random();
+    
     /*
         Sample Usage:
         -In viewDidLoad-
@@ -92,7 +96,15 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     func myRefreshFunction() {
         var refreshStart = imgBuffer.newlyLoadedStart;
         var refreshEnd = imgBuffer.newlyLoadedEnd;
+        if (self.myCollectionView.delegate is ImagePostCollectionDelegate && (self.myCollectionView.delegate as ImagePostCollectionDelegate).imageDelegateIdentifier != imageDelegateIdentifier) {
+            NSLog("Not supposed to be updating the table!");
+            return;
+        }
         if (refreshEnd - 1 >= refreshStart) {
+            if (lastThoughtEnd < refreshStart) {
+                NSLog("Warning: Inconsistent! \(lastThoughtEnd) vs \(refreshStart)")
+                refreshStart = lastThoughtEnd;
+            }
             var indexPaths: Array<NSIndexPath> = [];
             for i in refreshStart...(refreshEnd-1) {
                 indexPaths.append(NSIndexPath(forRow: i, inSection: 0));
@@ -155,6 +167,11 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         if (!post.read) {
             ServerInteractor.readPost(post);
             post.read = true;
+        }
+        if (index == 0) {
+            if (myFinishFunction != nil) {
+                myFinishFunction!();
+            }
         }
     }
     

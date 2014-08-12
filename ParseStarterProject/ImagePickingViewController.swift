@@ -69,6 +69,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         
         //NSLog("Loading View");
@@ -357,6 +358,13 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         optionsView.hidden = false;
         self.showingOptions = true;
         myTableView.reloadData();
+    }
+    
+    
+    @IBAction func previousButton(sender: UIButton) {
+        if (self.navigationController) {
+            (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+        }
     }
     
     @IBAction func nextButton(sender: UIButton) {

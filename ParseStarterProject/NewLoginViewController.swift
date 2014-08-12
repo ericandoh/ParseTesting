@@ -11,9 +11,6 @@ import Foundation
 class NewLoginViewController: UIViewController {
     
     
-    @IBOutlet var userTextField: UITextField!
-    
-    @IBOutlet var passwordTextField: UITextField!
     
     /*init(coder decoder: NSCoder!) {
         super.init(coder: decoder);
@@ -27,14 +24,6 @@ class NewLoginViewController: UIViewController {
         self.performSegueWithIdentifier("JumpIn", sender: self)
     }
     
-    @IBAction func loginPress(sender: AnyObject) {
-        //authenticate into user with
-        var username: String = self.userTextField.text
-        var password: String = self.passwordTextField.text
-        //connect to server + authenticare here (BACKEND)
-        ServerInteractor.loginUser(username, password: password, sender: self);
-    }
-    
     @IBAction func loginWithFacebook(sender: AnyObject) {
         NSLog("Logging with FB")
         ServerInteractor.loginWithFacebook(self)
@@ -44,6 +33,11 @@ class NewLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
     }
     
@@ -58,39 +52,29 @@ class NewLoginViewController: UIViewController {
         if (segue!.identifier) {
             if (segue!.identifier == "RegisterSegue") {
                 var next: SignUpViewController = segue!.destinationViewController as SignUpViewController
-                next.updateUserFields(self.userTextField.text, withPassword: self.passwordTextField.text)
+                //next.updateUserFields(self.userTextField.text, withPassword: self.passwordTextField.text)
             }
-            else if (segue!.identifier == "SetUsername") {
-                NSLog("Are we goign soemwhere");
+            /*else if (segue!.identifier == "SetUsername") {
                 if (segue!.destinationViewController is FBUsernameSetupViewController) {
-                    NSLog("Working as intended");
+                    var nextLol: FBUsernameSetupViewController = segue!.destinationViewController as FBUsernameSetupViewController
                 }
-                else {
-                    NSLog("Not wokring");
-                }
-                var nextLol: FBUsernameSetupViewController = segue!.destinationViewController as FBUsernameSetupViewController
-                NSLog("No we aint")
-            }
+            }*/
         }
-
     }
-    
-    func successfulLogin() {
-        self.performSegueWithIdentifier("JumpIn", sender: self)
-    }
-    
     func facebookLogin() {
         NSLog("Performing segue");
         self.performSegueWithIdentifier("SetUsername", sender: self)
         NSLog("Done");
     }
-    
+    func successfulLogin() {
+        self.performSegueWithIdentifier("JumpIn", sender: self)
+    }
     func failedLogin(msg: String) {
         let alert: UIAlertController = UIAlertController(title: "Login Failed", message: msg, preferredStyle: UIAlertControllerStyle.Alert);
         
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             //canceled
-            }));
+        }));
         self.presentViewController(alert, animated: true, completion: nil)
     }
     

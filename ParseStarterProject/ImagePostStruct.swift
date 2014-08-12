@@ -95,6 +95,11 @@ class ImagePostStructure
             return newPostToMake;
         }
     }
+    class func unreadAllPosts() {
+        for (key, post) in imagePostDictionary {
+            post.read = false;
+        }
+    }
     func save() {
         myObj.saveInBackground()
     }

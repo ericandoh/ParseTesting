@@ -13,6 +13,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @IBOutlet var myCollectionView: UICollectionView!
     @IBOutlet var searchBar: UISearchBar!
     
+    @IBOutlet weak var backImageView: UIImageView!
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
     
@@ -37,6 +38,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.topItem.title = "Popular";
         //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
         // Do any additional setup after loading the view.
         
@@ -44,21 +46,36 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         //self.searchBar.barStyle = UIBarStyle.BlackTranslucent
         
-        self.searchBar.barStyle = UIBarStyle.BlackTranslucent
+        /*self.searchBar.barStyle = UIBarStyle.BlackTranslucent
         // set bar transparancy
         self.searchBar.translucent = true;
         // set bar color
         self.searchBar.barTintColor = UIColor.clearColor()
         // set bar button color
-       self.searchBar.tintColor = UIColor.clearColor()
+        self.searchBar.tintColor = UIColor.clearColor()
         // set bar background color
         self.searchBar.backgroundColor = UIColor.clearColor()
         self.searchBar.layer.cornerRadius = 3;
         self.searchBar.layer.backgroundColor = UIColor.clearColor().CGColor;
         self.searchBar.layer.borderWidth=0.75;
+        self.searchBar.layer.borderColor = UIColor.whiteColor().CGColor*/
+        
+        
+        
+        
+        self.searchBar.translucent = true;
+        self.searchBar.tintColor = UIColor.whiteColor()
+        self.searchBar.layer.cornerRadius = 3;
+        self.searchBar.layer.backgroundColor = UIColor.clearColor().CGColor;
+        self.searchBar.layer.borderWidth=0.75;
         self.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
+        self.searchBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default);
+        var searchBackImg = ServerInteractor.imageWithColorForSearch(UIColor.clearColor(), andHeight: 32);
+        self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
+        
         
         collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getExplore, sender: self);
+        collectionDelegateMain!.myFinishFunction = self.setBackImage;
         if (currentTerm != "") {
             startSearch(currentTerm);
         }
@@ -97,6 +114,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             else {
                 //controller.receiveSearchTerm(searchTermList[temp - 1]);
             }
+        }
+    }
+    
+    func setBackImage() {
+        if (collectionDelegateMain!.imgBuffer.numItems() > 0) {
+            var post = collectionDelegateMain!.getPost(0);
+            post.loadImage({(imgStruct: ImagePostStructure, index: Int) in
+                self.backImageView.image = imgStruct.image!;
+            }, index: 0)
         }
     }
     
@@ -187,12 +213,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (index == 0) {
             cell.textLabel.text = "Search for \"" + currentTerm + "\"!";
             cell.textLabel.textColor = UIColor.whiteColor();
+            cell.textLabel.font = TABLE_CELL_FONT;
         }
         else {
             if (index - 1 < searchTermList.count) {
                 //to avoid race conditions
                 cell.textLabel.text = searchTermList[index - 1];
                 cell.textLabel.textColor = UIColor.whiteColor();
+                cell.textLabel.font = TABLE_CELL_FONT;
             }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -223,6 +251,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //change context to searching for term
         if (collectionDelegateSearch == nil) {
             collectionDelegateSearch = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction3: ServerInteractor.getSearchPosts, sender: self);
+            collectionDelegateSearch!.myFinishFunction = self.setBackImage;
         }
         else {
             collectionDelegateSearch!.resetData();

@@ -78,7 +78,7 @@
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor] ];
-    
+    [[UITextField appearanceWhenContainedIn: [UISearchBar class], nil] setFont:[UIFont fontWithName:@"HelveticaNeueLTPro-Lt" size:15.0]];
     return YES;
 }
 

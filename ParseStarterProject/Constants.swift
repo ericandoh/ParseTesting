@@ -43,6 +43,10 @@ let CELLS_BEFORE_RELOAD = 9;
 //but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)
 //let MYCOMMENT_LOAD_COUNT = 20
 
+//for suggest friends page, how many users to suggest + how many images per each user to preview
+let NUM_TO_SUGGEST = 5;
+let MAX_IMGS_PER_SUGGEST = 5;
+
 //----------------------------Image Constants---------------------------------
 
 let NULL_IMG: UIImage = UIImage(named: "horned-logo.png");
@@ -98,6 +102,12 @@ let SIDE_MENU_BACK_GREEN = CGFloat(255);
 let SIDE_MENU_BACK_BLUE = CGFloat(198);
 
 let SIDE_MENU_BACK_COLOR = UIColor(red: 163.0/255.0, green: 255.0/255.0, blue: 198.0/255.0, alpha: 1.0);
+
+let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(),
+    NSFontAttributeName: UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)];
+
+let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
+
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
@@ -136,7 +146,7 @@ let PREVIEW_CELL_HEIGHT: CGFloat = CGFloat(90.0) - SIDE_MARGINS*2;
 //----end rotated table-----
 
 //numbers for shop the look boxes in upload flow
-let BOX_START_Y = CGFloat(420.0);                //starting y pos of shop look boxes
+let BOX_START_Y = CGFloat(440.0);                //starting y pos of shop look boxes
 let LABEL_BUTTON_HEIGHT = CGFloat(20.0);            //individual box heights
 let LABEL_SPACING = CGFloat(5.0);                //spacing between each box
 let LABEL_BOX_HEIGHT = LABEL_BUTTON_HEIGHT + 2 * LABEL_SPACING;
@@ -146,7 +156,7 @@ let BOX_X_ONE = CGFloat(0.0);             //x coord of box #1 relative to me
 let BOX_WIDTH_ONE = CGFloat(240.0);
 let BOX_X_TWO = BOX_WIDTH_ONE + CGFloat(10.0);  //x coord box #2 relative to me
 let BOX_WIDTH_TWO = CGFloat(20);
-let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(605.0); //height of scrollfield when no shoplooks
+let SCROLLFIELD_DEFAULT_HEIGHT = CGFloat(625.0); //height of scrollfield when no shoplooks
 //----end shop the look------
 
 //text view attributes for the textview with a placeholder in upload flow
