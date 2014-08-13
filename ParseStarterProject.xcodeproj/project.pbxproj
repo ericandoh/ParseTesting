@@ -26,6 +26,7 @@
 		24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */; };
 		24BA50A8197DCFA200916814 /* NewLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A7197DCFA200916814 /* NewLoginViewController.swift */; };
 		24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA50A9197DE71300916814 /* ServerInteractor.swift */; };
+		24F51C6C199B05AA004E9C7C /* ReportProblemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F51C6B199B05AA004E9C7C /* ReportProblemViewController.swift */; };
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
@@ -175,6 +176,7 @@
 		24BA50A5197DC78B00916814 /* FBUsernameSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FBUsernameSetupViewController.swift; sourceTree = "<group>"; };
 		24BA50A7197DCFA200916814 /* NewLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewLoginViewController.swift; sourceTree = "<group>"; };
 		24BA50A9197DE71300916814 /* ServerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerInteractor.swift; sourceTree = "<group>"; };
+		24F51C6B199B05AA004E9C7C /* ReportProblemViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportProblemViewController.swift; sourceTree = "<group>"; };
 		2FCDD6AF14A573F500295AAC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4998650415BF305000803E05 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6332375315E438E900AE2736 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -506,6 +508,7 @@
 				D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */,
 				D956BAFB198FE2C1009CE92E /* CommentViewController.swift */,
 				D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */,
+				24F51C6B199B05AA004E9C7C /* ReportProblemViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				D97E36E61977003700380A12 /* SearchViewController.swift in Sources */,
 				D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
+				24F51C6C199B05AA004E9C7C /* ReportProblemViewController.swift in Sources */,
 				D996F6B0195C937A009E97B0 /* NotifViewController.swift in Sources */,
 				24B90D551982EDD400AF90FD /* SettingsViewController.swift in Sources */,
 				D9CB01F8195B462B0009D402 /* ImagePreviewController.swift in Sources */,
