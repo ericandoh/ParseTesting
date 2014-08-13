@@ -22,6 +22,8 @@ wordNumberer(409298);
 wordNumberer(50194809);
 wordNumberer(98682091809184604);*/
 
+["QWERTY","AWESOME","ASAWESOMEASME"]
+
 var num = random() % 100;
 
 for i in 0..<0{

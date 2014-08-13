@@ -215,7 +215,6 @@ class ImagePostStructure
                 imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                     if (error == nil) {
                         //get file objects
-                        NSLog("+1");
                         var fImage = UIImage(data: result);
                         self.images.append(fImage);
                     }

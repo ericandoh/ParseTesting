@@ -343,7 +343,9 @@ import UIKit
                     NSLog("\(foundLabel) already exists as label, incrementing")
                     object.incrementKey("count");
                     object.saveInBackground();
-                    arrWithoutDuplicates.removeAtIndex(find(arrWithoutDuplicates, foundLabel)!);
+                    if let foundIndex = find(arrWithoutDuplicates, foundLabel) {
+                        arrWithoutDuplicates.removeAtIndex(foundIndex);
+                    }
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
                 for label: String in arrWithoutDuplicates {

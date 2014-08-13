@@ -159,7 +159,6 @@ class FriendEncapsulator {
         else if (friendObj != nil) {
             //fetch friend + get image
             if (friendObj!["userIcon"] == nil) {
-                NSLog("Has no user icon!")
                 receiveAction(DEFAULT_USER_ICON);
                 return;
             }

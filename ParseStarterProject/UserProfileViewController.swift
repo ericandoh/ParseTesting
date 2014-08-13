@@ -299,7 +299,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 options = 1
             } else {
-                NSLog("C")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
 //                collectionDelegatePosts!.resetData();
 //                collectionDelegateLikes!.resetData()
@@ -323,7 +322,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 return
             } else {
-                NSLog("D")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
@@ -466,9 +464,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func reloadDatums() {
-        NSLog("d")
         self.followerTableView.reloadData();
-        NSLog("n")
     }
     
     func resetDatums(options: Int) {
