@@ -13,6 +13,8 @@ let SEARCH_CELL_IDENTIFIER = "SearchFriendCell";
 
 let SUGGEST_OWNER = "SUGGEST"
 
+
+
 class FindFriendsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     
@@ -35,6 +37,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     var friendsToLoad: Int = 0;
     
+    var searchingType: SearchUserType = SearchUserType.BY_NAME;
+    
+    var delayedSearchType: SearchUserType = SearchUserType.BY_NAME;
+    
+    var maxLoadCount: Int = NUM_TO_SUGGEST;
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         /*someTextField.owner = self;
@@ -51,7 +59,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
-        self.searchFriendsTableView.estimatedRowHeight = 50.0;
+        self.searchFriendsTableView.estimatedRowHeight = 60.0;
         
         self.searchBar.translucent = true;
         self.searchBar.tintColor = UIColor.whiteColor()
@@ -75,7 +83,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         isSearching = false;
         searchTermList = [];
         searchFriendsTableView.hidden = true;
-        
+        self.setNewBackgroundFor(nil);
         resetAndFetchSuggested();
     }
 
@@ -99,6 +107,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchTermList = [];
         self.currentTerm = "Friends From Facebook";
         self.searchBar.text = self.currentTerm;
+        searchingType = SearchUserType.BY_FACEBOOK;
         ServerInteractor.getFBFriendUsers(receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     
@@ -112,6 +121,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchTermList = [];
         self.currentTerm = "Friends From Contacts";
         self.searchBar.text = self.currentTerm;
+        searchingType = SearchUserType.BY_CONTACTS;
         ServerInteractor.getSearchContacts(receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     func setNewBackgroundFor(view: UIView?) {
@@ -156,6 +166,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         }
         currentTerm = searchText;
         searchTermList = [];
+        searchingType = SearchUserType.BY_NAME;
         ServerInteractor.getSearchUsers(searchText, receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
     func receiveSizeOfQuery(size: Int) {
@@ -167,6 +178,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchTermList[index] = FriendEncapsulator.dequeueFriendEncapsulator(classifier);
     }
     func endStringQuery() {
+        delayedSearchType = searchingType;
         searchFriendsTableView.reloadData();
     }
 
@@ -184,9 +196,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     func fetchSuggestedUsers() {
         self.suggestedCollectionView.reloadData();
-        ServerInteractor.getSuggestedFollowers(NUM_TO_SUGGEST, retFunction: {
+        ServerInteractor.getSuggestedFollowers(NUM_TO_SUGGEST,
+            retFunction: {
             (retList: Array<FriendEncapsulator?>) in
             self.friendsToLoad = retList.count;
+                NSLog("Fr \(self.friendsToLoad)")
             for (index, friend) in enumerate(retList) {
                 self.suggestedUsers.append(friend);
                 //self.suggestedUserImgs[friend!.username] = [];
@@ -234,9 +248,35 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         if (index < searchTermList.count && searchTermList[index] != nil) {
             //to avoid race conditions
+            var friend = searchTermList[index]!;
             var author = searchTermList[index]!.username;
-            var text = author;
-            cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: true, sender: self);
+            if (delayedSearchType == SearchUserType.BY_CONTACTS) {
+                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: "\n", enableFriending: true, sender: self);
+                friend.getNameWithExtras({(text: String) in
+                    cell.descriptionBox.setTextAfterAttributing(true, text: text);
+                    //cell.layoutIfNeeded();
+                });
+                cell.descriptionBox.otherAction = {
+                    () in
+                    self.pressedTableAt(indexPath!);
+                }
+            }
+            else if (delayedSearchType == SearchUserType.BY_FACEBOOK ) {
+                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: "\n", enableFriending: true, sender: self);
+                friend.getNameWithExtras({(text: String) in
+                    cell.descriptionBox.setTextAfterAttributing(true, text: text);
+                    //cell.layoutIfNeeded();
+                });
+                cell.descriptionBox.otherAction = {
+                    () in
+                    self.pressedTableAt(indexPath!);
+                }
+            }
+            else {
+                var text = author;
+                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: true, sender: self);
+            }
+            
         }
         //if (index == 0) {
             //cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
@@ -247,7 +287,18 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
+    func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        
+        if (searchingType == SearchUserType.BY_FACEBOOK || searchingType == SearchUserType.BY_CONTACTS) {
+            return 80.0;
+        }
+        
+        return 50.0
+    }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.pressedTableAt(indexPath);
+    }
+    func pressedTableAt(indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
         var searchResult: String = "";
         var friend: FriendEncapsulator?;

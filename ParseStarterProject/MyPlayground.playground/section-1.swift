@@ -61,7 +61,21 @@ func scrambler(start:Int, end:Int, need: Int)->Array<Int> {
     return picked;
 }
 
+var a: Array<String>? = [];
+
+if (a != nil && a!.count == 0) {
+    println("hi");
+}
+
 scrambler(0, 100000, 5);
+
+let GREEN_HEX = 0x94eed2;
+
+//163,255,198
+
+let SIDE_MENU_BACK_RED = CGFloat((GREEN_HEX & 0xFF0000) >> 16);
+let SIDE_MENU_BACK_GREEN = CGFloat((GREEN_HEX & 0xFF00) >> 8);
+let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
 
 //for i in 0...(-1) {
     //print(i)
@@ -74,14 +88,16 @@ var arr = [1,2,3];
 contains(arr, 3);
 for x in "H" {
     var y: String = String(x)
-}
+}*/
 
-//var aString = "hello #omg #lol @hi seriously $really troll'ed";
-var aString = "@balabala420 seriously dude??? cmon man #firstworldanarchist is really good sub for @eric #developers are serious #hash1 #hash2 #hash3 @reference";
+//var aString = "hello #omg #lol\n @hi seriously $really\n troll'ed";
+//var aString = "ABCD#lol\nC\nD";
+var aString = "meepmeep \n John"
 
 var error: NSError?;
 
-var pattern = "(#.+?\\b)|(@.+?\\b)|(.+?(?=#|@|$))";
+//var pattern = "(#.+?\\b)|(@.+?\\b)|(.+?(?=#|@|$))";
+var pattern = "(#.+?(?=\\b|\\n))|(@.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
 var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
 
 var matches = regex.matchesInString(aString, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(aString))) as [NSTextCheckingResult];
@@ -91,9 +107,18 @@ var results: [String] = [];
 for match in matches {
     match.range;
     //var piece = aString.substringWithRange();
-    results.append(aString.substringFromIndex(match.range.location).substringToIndex(match.range.length));
+    results.append(((aString as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length));
 }
-results;*/
+results;
+if (results[results.count - 1].hasPrefix("\n")) {
+    5;
+}
+else if (results[results.count - 1].hasPrefix(" ")) {
+    7;
+}
+else {
+    6;
+}
 
 /*var str = "hello, tag, sample moment really-hot,ootd,hothot     ohgod"
 

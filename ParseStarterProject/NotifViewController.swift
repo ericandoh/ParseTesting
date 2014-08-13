@@ -104,6 +104,13 @@ class NotifViewController: UITableViewController {
         
         var member: InAppNotification = notifList[temp]! as InAppNotification;
         
+        if (member.wasReadBefore()) {
+            cell.setTextFieldLighter();
+        }
+        else {
+            cell.setTextFieldNormal();
+        }
+        
         if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw()) {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
@@ -120,12 +127,7 @@ class NotifViewController: UITableViewController {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
         
-        if (member.wasReadBefore()) {
-            cell.setTextFieldLighter();
-        }
-        else {
-            cell.setTextFieldNormal();
-        }
+        
     
         
         //cell.textLabel.text = member.messageString;
