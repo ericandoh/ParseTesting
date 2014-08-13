@@ -401,7 +401,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         
         //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
-        descriptionTextField.setTextAfterAttributing(currentPost.getDescriptionWithTag());
+        descriptionTextField.setTextAfterAttributing(false, text: currentPost.getDescriptionWithTag());
         currentPost.fetchShopLooks({
             (input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
@@ -647,7 +647,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
                 else if (amFollowing == false) {
-                    ServerInteractor.postFollowerNotif(username, controller: self);
+                    //ServerInteractor.postFollowerNotif(username, controller: self);
                     ServerInteractor.addAsFollower(username);
                     self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
                 }

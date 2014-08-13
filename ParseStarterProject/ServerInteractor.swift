@@ -606,6 +606,9 @@ import UIKit
         
         
         //query
+        
+        var isFirst = (excludes.count == 0);
+        
         var query = PFQuery(className:"ImagePost")
         //query.skip = skip * POST_LOAD_COUNT;
         query.limit = POST_LOAD_COUNT;
@@ -640,6 +643,12 @@ import UIKit
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil) {
+                if (objects.count == 0 && isFirst) {
+                    //I'm probably following 0 people, or the ppl I'm following dont got jack
+                    NSLog("Out of posts to follow")
+                    ServerInteractor.getExplore(loadCount, excludes: [], notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
+                    return;
+                }
                 // The find succeeded.
                 // Do something with the found objects
                 notifyQueryFinish(objects.count);
@@ -697,7 +706,7 @@ import UIKit
                         NSLog("Out of posts to explore, resetting my viewed post counter")
                         ServerInteractor.resetViewedPosts();
                         ImagePostStructure.unreadAllPosts();
-                        ServerInteractor.getExplore(loadCount, excludes: excludes, notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
+                        ServerInteractor.getExplore(loadCount, excludes: [], notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
                         return;
                     }
                 }
@@ -956,17 +965,14 @@ import UIKit
         ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
-    class func postFollowerNotif(friendName: String, controller: UIViewController) {
+    class func postFollowerNotif(friendName: String) {
         if (friendName == "") {
-            if (controller is UserProfileViewController) {
-                (controller as UserProfileViewController).notifyFailure("Please fill in a name");
-            }
             return;
         }
         
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FOLLOWER_NOTIF.toRaw();
-        ServerInteractor.processNotification(friendName, targetObject: notifObj, controller: controller);
+        ServerInteractor.processNotification(friendName, targetObject: notifObj);
         
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
@@ -993,6 +999,9 @@ import UIKit
         if (contains(PFUser.currentUser()["followings"] as Array<String>, followerName)) {
             return;
         } else {
+            
+            ServerInteractor.postFollowerNotif(followerName);
+            
             var friendObj: PFObject = PFObject(className: "Friendship")
             friendObj.ACL.setPublicReadAccess(true)
             friendObj.ACL.setPublicWriteAccess(true)
@@ -1175,6 +1184,7 @@ import UIKit
         query.whereKey("userType", containedIn: RELEVANT_TYPES);
         query.whereKey("numPosts", greaterThan: 1);
         query.whereKey("username", notContainedIn: alreadyMyFriends);
+        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
         
         //-----add orderby type (rank by popularity?)-------------WORK NEED
         //query......
@@ -1188,28 +1198,38 @@ import UIKit
                 }
                 else {
                     var nums = 0;
-                    for i in 0..<numToReturn {
+                    var fetchCount = min(numToReturn, Int(result));
+                    NSLog("Fetching \(fetchCount), with results \(Int(result))")
+                    //getFunction(fetchCount);
+                    var scrambleOrder = ServerInteractor.scrambler(0, end: Int(result), need: fetchCount);
+                    for i in 0..<fetchCount {
                         var query = PFUser.query();
                         query.whereKey("userType", containedIn: RELEVANT_TYPES);
                         query.whereKey("numPosts", greaterThan: 1);
                         query.whereKey("username", notContainedIn: alreadyMyFriends);
+                        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
                         //make this unique numbers
-                        query.skip = random() % Int(result);
+                        query.skip = scrambleOrder[i];
+                        NSLog("\(query.skip) skip")
                         //WORK NEED
                         query.limit = 1;
                         query.findObjectsInBackgroundWithBlock({
                             (objects: [AnyObject]!, error: NSError!) in
+                            NSLog("Query returned")
                             if (error != nil) {
                                 NSLog("Couldn't find followers");
                                 retFunction(retList: []);
                                 return;
                             }
+                            if (objects.count == 0) {
+                                NSLog("No results?!?");
+                            }
                             for index: Int in 0..<objects.count {
                                 toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser));
                             }
                             nums += 1;
-                            if (nums == numToReturn) {
+                            if (nums == fetchCount) {
                                 retFunction(retList: toRet);
                             }
                         })
@@ -1218,6 +1238,7 @@ import UIKit
             }
             else {
                 NSLog("Error querying for suggested followers")
+                //getFunction(0);
                 retFunction(retList: []);
             }
         });
@@ -1387,8 +1408,13 @@ import UIKit
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
             var lastName: String = lName as NSString;
             
-            var cEmail: AnyObject = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
-            var contactEmail: String = cEmail as NSString;
+            var cEmails: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
+            var contactEmail = "";
+            for (var ij:CFIndex = 0; ij < ABMultiValueGetCount(cEmails); ij++) {
+                var contactEmail = ABMultiValueCopyValueAtIndex(cEmails, ij);
+                break;
+            }
+            
             //kABPersonPhoneProperty, kABPersonEmailProperty
             
             //var contactName: String = ABRecordCopyCompositeName(contactPerson).takeRetainedValue() as NSString

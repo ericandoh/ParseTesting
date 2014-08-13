@@ -76,7 +76,7 @@ class SuggestedHeaderView: UICollectionReusableView {
         var username = friend!.username;
         if (friendAction == false) {
             //follow me
-            ServerInteractor.postFollowerNotif(username, controller: self.owner!);
+            //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
             ServerInteractor.addAsFollower(username);
             
             //update button

@@ -81,6 +81,43 @@ class FriendEncapsulator {
         }
         return username;
     }
+    func getNameWithExtras(retFunc: (String)->Void) {
+        if (friendObj == nil) {
+            var query = PFUser.query();
+            query.whereKey("username", equalTo: self.username);
+            query.limit = 1;
+            query.findObjectsInBackgroundWithBlock {
+                (objects: [AnyObject]!, error: NSError!) -> Void in
+                if (error == nil && objects.count > 0)  {
+                    self.friendObj = objects[0] as? PFUser;
+                    self.getNameWithExtras(retFunc);
+                }
+                else if (error != nil) {
+                    // Log details of the failure
+                    NSLog("Error: %@ %@", error, error.userInfo)
+                }
+                else if (objects.count == 0) {
+                    NSLog("Can't find user: \(self.username)")
+                    retFunc(self.username);
+                }
+            }
+        }
+        else {
+            if (friendObj!["personFirstName"] != nil) {
+                var fName = friendObj!["personFirstName"] as String;
+                retFunc(username + "\n" + fName);
+            }
+            else {
+                if (friendObj!["email"] != nil) {
+                    var pEmail = friendObj!["email"] as String;
+                    retFunc(username + "\n" + pEmail);
+                }
+                else {
+                    retFunc(username);
+                }
+            }
+        }
+    }
     
     func getNumLiked() -> Int {
         var numLiked: Int = friendObj!["likedPosts"].count

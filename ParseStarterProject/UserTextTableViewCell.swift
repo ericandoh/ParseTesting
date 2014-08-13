@@ -104,7 +104,12 @@ class UserTextTableViewCell: UITableViewCell {
             //nextAction.hidden = true;
         }
         descriptionBox.owner = sender;
-        descriptionBox.setTextAfterAttributing(message);
+        if (involvedUser != nil) {
+            descriptionBox.setTextAfterAttributing(true, text: message);
+        }
+        else {
+            descriptionBox.setTextAfterAttributing(false, text: message);
+        }
         descriptionBox.scrollEnabled = false;
         
         
@@ -135,7 +140,7 @@ class UserTextTableViewCell: UITableViewCell {
         var username = friend!.username;
         if (friendAction == false) {
             //follow me
-            ServerInteractor.postFollowerNotif(username, controller: self.owner!);
+            //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
             ServerInteractor.addAsFollower(username);
             
             //update button
@@ -163,7 +168,7 @@ class UserTextTableViewCell: UITableViewCell {
         let alert: UIAlertController = UIAlertController(title: "Follow "+username, message: "Follow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler(nil);
         alert.addAction(UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            ServerInteractor.postFollowerNotif(username, controller: self.owner!);
+            //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
             ServerInteractor.addAsFriend(username);
             }));
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in

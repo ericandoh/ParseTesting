@@ -115,7 +115,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             let alert: UIAlertController = UIAlertController(title: "Add Follower", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                ServerInteractor.postFollowerNotif((alert.textFields[0] as UITextField).text, controller: self);
+                //ServerInteractor.postFollowerNotif((alert.textFields[0] as UITextField).text, controller: self);
                 ServerInteractor.addAsFriend((alert.textFields[0] as UITextField).text);
                 ServerInteractor.addAsFollower((alert.textFields[0] as UITextField).text)
                 //ServerInteractor.findFollowing((alert.textFields[0] as UITextField).text)

@@ -523,7 +523,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             var username = mainUser!.username;
             if (!friendAction) {
                 //follow me
-                ServerInteractor.postFollowerNotif(username, controller: self);
+                //ServerInteractor.postFollowerNotif(username, controller: self);
                 ServerInteractor.addAsFollower(username);
                 
                 //update button

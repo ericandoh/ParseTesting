@@ -96,12 +96,15 @@ let NOTIF_ICON = UIImage(named: "flag.png");
 let FIND_ICON = UIImage(named: "magnifyingglass.png");
 let UPLOAD_ICON = UIImage(named: "camera.png");
 
+let GREEN_HEX = 0x94eed2;
 
-let SIDE_MENU_BACK_RED = CGFloat(163);
-let SIDE_MENU_BACK_GREEN = CGFloat(255);
-let SIDE_MENU_BACK_BLUE = CGFloat(198);
+//163,255,198
 
-let SIDE_MENU_BACK_COLOR = UIColor(red: 163.0/255.0, green: 255.0/255.0, blue: 198.0/255.0, alpha: 1.0);
+let SIDE_MENU_BACK_RED = CGFloat((GREEN_HEX & 0xFF0000) >> 16);
+let SIDE_MENU_BACK_GREEN = CGFloat((GREEN_HEX & 0xFF00) >> 8);
+let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
+
+let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_MENU_BACK_GREEN/255.0, blue: SIDE_MENU_BACK_BLUE/255.0, alpha: 1.0);
 
 let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(),
     NSFontAttributeName: UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)];
@@ -188,7 +191,7 @@ let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICO
 let SIDE_MENU_OPACITIES = [0.1, 0.25, 0.37, 0.57, 0.75, 1.0];
 
 //how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
-let DAMPENING_CONSTANT = CGFloat(5.0);
+let DAMPENING_CONSTANT = CGFloat(4.0);
 
 //----------------------------Type Constants---------------------------------
 
@@ -224,6 +227,12 @@ enum UserType: String {
     case DEFAULT = "default"
     case FACEBOOK = "facebook"
     case ANON = "anon"
+}
+
+enum SearchUserType: String {
+    case BY_NAME = "name"
+    case BY_FACEBOOK = "facebook"
+    case BY_CONTACTS = "contacts"
 }
 
 var RELEVANT_TYPES = [UserType.DEFAULT.toRaw(), UserType.FACEBOOK.toRaw()];
