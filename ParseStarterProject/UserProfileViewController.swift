@@ -99,13 +99,26 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.followerTableView.alwaysBounceVertical = false;        
         
         
-        var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
-        var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
-        userLabel.textColor = UIColor.whiteColor();
-        userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
-        userIcon!.frame = CGRectMake(20, -5, 40, 40);
+        var widthOfTitleBar = TITLE_BAR_WIDTH;
+        var widthOfUserIconImg = USER_ICON_WIDTH;
+        var heightOfBar = TITLE_BAR_HEIGHT;
+        var spacing = TITLE_BAR_ICON_TEXT_SPACING;
+        
+        
+        var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
+        
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
-            userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
+            
+            var textToPut = mainUser!.username;
+            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+            var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+            userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+            userLabel.textColor = TITLE_TEXT_COLOR;
+            userLabel.text = textToPut;
+            userLabel.font = USER_TITLE_TEXT_FONT;
+            
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
                 self.backImageView.image = image;
@@ -115,7 +128,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.userIcon!.layer.masksToBounds = true
                 self.userIcon!.layer.borderWidth = 0
                 self.navigationItem.titleView = view;
-                userLabel.text = self.mainUser!.username
+                //userLabel.text = self.mainUser!.username
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
                 NSLog("a");
@@ -133,6 +146,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
+                
+                var textToPut = "Anonymous";
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+                var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 self.backImageView.image = tempImage;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
@@ -141,16 +164,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.userIcon!.layer.masksToBounds = true
                 self.userIcon!.layer.borderWidth = 0
                 self.navigationItem.titleView = view;
-                userLabel.text = "Anon User";
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
-                AnonText.hidden = true
+                AnonText.hidden = true  //<---cringe (damit bala)
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
             else {
                 // Do any additional setup after loading the view.
-                userLabel.text = ServerInteractor.getUserName();
+                
+                var textToPut = ServerInteractor.getUserName();
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+                var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
+                
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //self.userIcon.image = fetchedImage;
                     self.backImageView.image = fetchedImage;
@@ -160,7 +192,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     self.userIcon!.layer.masksToBounds = true
                     self.userIcon!.layer.borderWidth = 0
                     self.navigationItem.titleView = view;
-                    userLabel.text = self.mainUser!.username
                     view.addSubview(self.userIcon!);
                     view.addSubview(userLabel);
                     NSLog("B")
