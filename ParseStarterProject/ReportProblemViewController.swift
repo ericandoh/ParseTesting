@@ -53,5 +53,8 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         report.text = ""
     }
     
+    @IBAction func backPress(sender: UIButton) {
+        self.navigationController.popViewControllerAnimated(true);
+    }
 }
 

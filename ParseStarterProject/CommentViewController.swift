@@ -30,6 +30,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.commentTableView.rowHeight = UITableViewAutomaticDimension;
         self.commentTableView.estimatedRowHeight = 50.0;
         //self.navigationTitle.setTitle("Comments", forState: UIControlState.Normal);
+        self.navigationController.navigationBar.topItem.title = "Comments"
         self.commentTextField.backgroundColor = UIColor.clearColor()
         self.commentTextField.borderStyle = UITextBorderStyle.None
         self.commentTextField.layer.borderWidth = 1

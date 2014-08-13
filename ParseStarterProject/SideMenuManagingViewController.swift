@@ -150,21 +150,30 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         var previouslyShowing = currentlyShowing;
         currentlyShowing = contentString;
         self.sideTableView.reloadData();
-        
+        var refreshingHome: Bool = false;
         if (contentString == previouslyShowing) {
-            hideSideBar({(success: Bool)->Void in });
-            return;
+            if (SIDE_MENU_ITEMS[INDEX_OF_HOME] == contentString) {
+                refreshingHome = true;
+            }
+            else {
+                hideSideBar({(success: Bool)->Void in });
+                return;
+            }
         }
         
         var content: UIViewController;
+        var old: UIViewController?;
         if (contains(self.viewControllerDictionary.keys, contentString)) {
             content = self.viewControllerDictionary[contentString]!;
             if (content is UINavigationController) {
                 (content as UINavigationController).popToRootViewControllerAnimated(false);
             }
+            if (refreshingHome) {
+                old = self.viewControllerDictionary[contentString];
+                content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+            }
         }
         else {
-            
             if ((ServerInteractor.isAnonLogged()) && ((contentString == "Upload") || (contentString == "FindFriends"))) {
                 content = self.storyboard.instantiateViewControllerWithIdentifier("Anon") as UIViewController;
             } else {
@@ -193,9 +202,11 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                     });
             }
             else {
-                var old = self.viewControllerDictionary[previouslyShowing]!;
+                if (old == nil) {
+                    old = self.viewControllerDictionary[previouslyShowing]!;
+                }
                 
-                old.willMoveToParentViewController(nil);
+                old!.willMoveToParentViewController(nil);
                 self.addChildViewController(content);
                 content.view.frame = self.contentArea.frame;
                 self.view.addSubview(content.view);
@@ -203,11 +214,11 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut,
                     animations: {()->Void in
                     content.view.alpha = 1;
-                    old.view.alpha = 0;
+                    old!.view.alpha = 0;
                     }, completion: {(success: Bool)->Void in
-                        old.removeFromParentViewController();
+                        old!.removeFromParentViewController();
                         content.didMoveToParentViewController(self);
-                        old.view.removeFromSuperview();
+                        old!.view.removeFromSuperview();
                     });
             }
             if (self.needRemove.count > 0) {

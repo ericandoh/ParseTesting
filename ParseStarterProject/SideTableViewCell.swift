@@ -38,6 +38,7 @@ class SideTableViewCell: UITableViewCell {
             //cellImage = UIImageView(frame: CGRectMake(0, 0, (currentFrame.width-CGFloat(SIDE_MARGINS * 0)), currentFrame.height));
             //var mainView = UIView(frame: CGRectMake(0, 0, cellImage!.image.size.width, cellImage!.image.size.height));
             cellImage = UIImageView(frame: CGRectMake(0, 0, PREVIEW_CELL_WIDTH, PREVIEW_CELL_HEIGHT));
+            cellImage!.contentMode = UIViewContentMode.ScaleAspectFill;
             var mainView = UIView(frame: CGRectMake(0, 0, PREVIEW_CELL_WIDTH, PREVIEW_CELL_HEIGHT));
             mainView.addSubview(cellImage!);
             /*cellImage!.contentMode = UIViewContentMode.ScaleToFill;

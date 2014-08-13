@@ -195,6 +195,8 @@ let INDEX_OF_NOTIF: Int = find(SIDE_MENU_ITEMS, "Notifications")!;
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
 
+let INDEX_OF_HOME: Int = find(SIDE_MENU_ITEMS, "HomeNav")!;
+
 //side menu bar items we will have
 //this references ONLY the actual names to display on the side menu table
 //let SIDE_MENU_NAMES = ["My Stash", "Upload", "Notifications", "Search", "My Profile"];

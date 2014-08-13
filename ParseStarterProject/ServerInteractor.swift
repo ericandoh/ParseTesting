@@ -96,7 +96,7 @@ import UIKit
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
         user["numPosts"] = 0;
-        user["followings"] = []
+        user["followings"] = NSMutableArray();
     }
     
     class func loginUser(username: String, password: String, sender: RealLoginViewController)->Bool {

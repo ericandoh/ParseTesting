@@ -179,6 +179,7 @@ class NotifViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         pressedNotifAt(indexPath);
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
     }
     func pressedNotifAt(indexPath: NSIndexPath) {
         var temp = indexPath.row;
