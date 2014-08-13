@@ -36,7 +36,7 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         
         report.layer.borderWidth = 1;
         report.layer.borderColor = UIColor.whiteColor().CGColor;
-        report.layer.cornerRadius = 5
+        //report.layer.cornerRadius = 5
         
     }
     
@@ -46,7 +46,9 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         reportObj["report"] = report.text
         reportObj.saveEventually()
         var alert = UIAlertController(title: "Thank You!", message: "Your report has been submitted", preferredStyle: UIAlertControllerStyle.Alert);
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) in
+            var x = self.navigationController.popViewControllerAnimated(true);
+        }));
         self.presentViewController(alert, animated: true, completion: nil)
         report.text = ""
     }

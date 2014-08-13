@@ -106,8 +106,8 @@ import UIKit
         //whats permissions
         //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
         //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
-        let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
-        PFFacebookUtils.logInWithPermissions(permissions, {
+        //let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
+        PFFacebookUtils.logInWithPermissions(FB_PERMISSIONS, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: NewLoginViewController = sender as NewLoginViewController;
             if (error != nil) {

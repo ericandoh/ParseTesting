@@ -14,6 +14,7 @@ let NOTIF_OWNER = "NOTIF"
 
 class NotifViewController: UITableViewController {
 
+    @IBOutlet weak var backButton: UIButton!
     //most recent notifications at start of array
     //var notifList: Array<InAppNotification?> = Array<InAppNotification?>();
     var notifList: Array<InAppNotification?> = [];
@@ -21,6 +22,13 @@ class NotifViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count > 1) {
+                backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
+        }
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
@@ -68,6 +76,20 @@ class NotifViewController: UITableViewController {
         populateNotifs();
         self.tableView.reloadData();    //is this needed
     }
+    
+    @IBAction func backPress(sender: UIButton) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
+        }
+    }
+    
     
     func populateNotifs() {
        

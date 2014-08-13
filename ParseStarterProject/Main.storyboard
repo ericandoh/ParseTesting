@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
-        <deployment version="2048" identifier="iOS"/>
+        <deployment version="2048" defaultVersion="1808" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -9,6 +9,9 @@
             <string>HelveticaNeueLTPro-Bd</string>
         </mutableArray>
         <mutableArray key="HelveticaNeueLTPro-Lt.otf">
+            <string>HelveticaNeueLTPro-Lt</string>
+            <string>HelveticaNeueLTPro-Lt</string>
+            <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
@@ -306,6 +309,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="                      " id="19Q-uH-hUr">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="O9M-Fj-lT1">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xge-l0-Guf">
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="logo_menu.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPress:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="XMK-BR-VPq"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Su4-M6-yrE">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
                                 <rect key="frame" x="264" y="7" width="40" height="40"/>
@@ -322,6 +337,7 @@
                     <connections>
                         <outlet property="AnonText" destination="gYl-53-VkN" id="i4b-UF-tzf"/>
                         <outlet property="SignInAnon" destination="Bws-jx-7KO" id="esZ-c0-jP8"/>
+                        <outlet property="backButton" destination="xge-l0-Guf" id="ud6-dx-g7o"/>
                         <outlet property="backImageView" destination="mEe-A2-3cb" id="nBK-k3-cfU"/>
                         <outlet property="followOthersText" destination="KBx-Go-402" id="ZfT-gE-rnh"/>
                         <outlet property="followerTableView" destination="3rd-ZN-2US" id="562-AG-YHr"/>
@@ -373,7 +389,7 @@
             </objects>
             <point key="canvasLocation" x="1439" y="3115"/>
         </scene>
-        <!--Report Problem View Controller-->
+        <!--Report a Problem-->
         <scene sceneID="fjr-la-UvI">
             <objects>
                 <viewController id="ueZ-d7-4dO" customClass="ReportProblemViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
@@ -396,22 +412,19 @@
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Report a Problem" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0E-3N-gU9">
-                                <rect key="frame" x="93" y="78" width="135" height="40"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Report problems about small fixes, design, major app changes and other random stuff yo! nobody really cares" translatesAutoresizingMaskIntoConstraints="NO" id="P5n-dn-5a8" userLabel="Description">
-                                <rect key="frame" x="40" y="142" width="240" height="113"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P5n-dn-5a8" userLabel="Description">
+                                <rect key="frame" x="40" y="142" width="240" height="110"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <string key="text">It is our desire to provide you with the best app possible. Thank you for reporting a problem to us, we will try to fix it as soon as possible!</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xrj-jY-wHZ">
-                                <rect key="frame" x="141" y="487" width="49" height="30"/>
-                                <state key="normal" title="Submit">
+                                <rect key="frame" x="40" y="475" width="240" height="40"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
+                                <state key="normal" title="Submit" backgroundImage="backcolor.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -419,15 +432,17 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eXy-Sq-9ke" userLabel="Report">
-                                <rect key="frame" x="35" y="251" width="240" height="195"/>
+                                <rect key="frame" x="40" y="250" width="240" height="200"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="uFL-j7-rTe"/>
+                    <navigationItem key="navigationItem" title="Report a Problem" id="uFL-j7-rTe"/>
                     <connections>
                         <outlet property="backImage" destination="W6M-Kf-hTD" id="UOW-dh-T7K"/>
                         <outlet property="report" destination="eXy-Sq-9ke" id="Ozk-04-EEi"/>
@@ -464,22 +479,6 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ej1-Tp-mcX">
                                 <rect key="frame" x="0.0" y="32" width="320" height="568"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjz-UL-JBP">
-                                        <rect key="frame" x="23" y="108" width="67" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Connect">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQY-Lu-HTx">
-                                        <rect key="frame" x="23" y="185" width="116" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Terms of Service">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bbi-S2-Hc7">
                                         <rect key="frame" x="23" y="213" width="275" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -512,6 +511,28 @@
                                         <rect key="frame" x="23" y="512" width="275" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjz-UL-JBP">
+                                        <rect key="frame" x="23" y="108" width="187" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Connect Account with Facebook">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="connectAccount:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="m6g-Mi-QGH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQY-Lu-HTx">
+                                        <rect key="frame" x="23" y="185" width="116" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Terms of Service">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="termsOfService:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="gJf-9c-cUd"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubv-F9-HeW">
                                         <rect key="frame" x="23" y="223" width="126" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -530,6 +551,9 @@
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="aboutFS:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="MBK-3x-aB7"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSq-41-xhn">
                                         <rect key="frame" x="23" y="299" width="46" height="20"/>
@@ -558,10 +582,24 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4t-KI-6Ld">
                                         <rect key="frame" x="23" y="446" width="150" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Link With Facebook">
+                                        <state key="normal" title="Disable Account">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="disableAccount:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="JJT-TG-4pt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBO-Ri-2NQ">
+                                        <rect key="frame" x="23" y="70" width="132" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="Change Password">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changePassword:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="bh9-BD-kPT"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h9J-lm-aAC">
                                         <rect key="frame" x="23" y="484" width="150" height="20"/>
@@ -570,13 +608,10 @@
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="clearHistory:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="1VU-J0-jRj"/>
+                                        </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Privacy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJv-ya-Cae">
-                                        <rect key="frame" x="23" y="37" width="62" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NBO-gE-uhi">
                                         <rect key="frame" x="23" y="98" width="275" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -597,6 +632,12 @@
                                         <rect key="frame" x="23" y="136" width="275" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Privacy" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJv-ya-Cae">
+                                        <rect key="frame" x="23" y="37" width="62" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Support" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="euc-Zm-OsJ">
                                         <rect key="frame" x="23" y="147" width="67" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -609,17 +650,6 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBO-Ri-2NQ">
-                                        <rect key="frame" x="23" y="70" width="132" height="20"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <state key="normal" title="Change Password">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changePassword:" destination="KLW-Kf-YUh" eventType="touchUpInside" id="bh9-BD-kPT"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -779,7 +809,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Vk2-Pf-mHR">
                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="logo.png">
+                                <state key="normal" backgroundImage="logo_menu.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -813,6 +843,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="Vk2-Pf-mHR" id="xId-sw-mGx"/>
                         <outlet property="backImageView" destination="GGg-yD-aZT" id="oFo-xC-tOk"/>
                         <outlet property="myCollectionView" destination="pt4-ot-fjp" id="19H-UU-gKO"/>
                         <outlet property="myTableView" destination="muT-bP-afv" id="pNj-fz-AiU"/>
@@ -933,8 +964,22 @@
                             <outlet property="delegate" destination="NIy-LE-Tj9" id="5KV-16-TrP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Notifications" id="qW7-za-K02"/>
+                    <navigationItem key="navigationItem" title="Notifications" id="qW7-za-K02">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="sZR-VL-KlR">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EQP-dM-YyH">
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="logo_menu.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPress:" destination="NIy-LE-Tj9" eventType="touchUpInside" id="Wnx-UT-elh"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="EQP-dM-YyH" id="lrH-5H-Ufc"/>
                         <segue destination="geD-Vt-qQ8" kind="push" identifier="DefaultNotifSegue" id="wc2-zM-IBv"/>
                     </connections>
                 </tableViewController>
@@ -1137,7 +1182,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QSF-nY-e17">
                                 <rect key="frame" x="16" y="2" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="logo.png">
+                                <state key="normal" backgroundImage="logo_menu.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1786,9 +1831,23 @@
                             <constraint firstAttribute="trailing" secondItem="4Io-YJ-blA" secondAttribute="trailing" constant="5" id="vMh-wC-zgu"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Find Friends" id="fCv-Ra-qvs"/>
+                    <navigationItem key="navigationItem" title="Find Friends" id="fCv-Ra-qvs">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="LR1-Li-Njb">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DXu-qP-H1M">
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="logo_menu.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPress:" destination="Anw-Wq-Q2x" eventType="touchUpInside" id="Tuq-Fd-gXA"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="backBlur" destination="zAI-az-vyZ" id="4C5-71-MbI"/>
+                        <outlet property="backButton" destination="DXu-qP-H1M" id="8Xg-Rc-QIP"/>
                         <outlet property="backImage" destination="gjj-23-bPA" id="OYZ-ew-9i7"/>
                         <outlet property="searchBar" destination="4Io-YJ-blA" id="Jo7-I4-C8X"/>
                         <outlet property="searchFriendsTableView" destination="WG2-oN-ILX" id="8WX-EY-mqd"/>
@@ -1987,8 +2046,22 @@
                             <constraint firstItem="tLh-HH-SRl" firstAttribute="leading" secondItem="tOl-9H-a9Q" secondAttribute="leading" constant="5" id="vIJ-ee-GyD"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ih1-wR-6xp"/>
+                    <navigationItem key="navigationItem" id="ih1-wR-6xp">
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="FwY-4o-cBV">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b6c-d5-H14">
+                                <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" backgroundImage="logo_menu.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPress:" destination="d93-87-W5i" eventType="touchUpInside" id="d05-hP-w7N"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="backButton" destination="b6c-d5-H14" id="rlj-9u-mC3"/>
                         <outlet property="backImageView" destination="PVL-Gq-SeS" id="IlR-Wj-cYO"/>
                         <outlet property="myCollectionView" destination="i9W-9H-mbV" id="rTK-Iq-2LH"/>
                         <outlet property="myTable" destination="U2k-kU-9IY" id="V7s-1d-3Yy"/>
@@ -2493,6 +2566,7 @@
         <image name="heart.png" width="40" height="40"/>
         <image name="info.png" width="82" height="82"/>
         <image name="logo.png" width="111" height="111"/>
+        <image name="logo_menu.png" width="85" height="85"/>
         <image name="plus.png" width="45" height="45"/>
         <image name="share.png" width="40" height="40"/>
     </resources>

@@ -98,13 +98,13 @@ class SettingsViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    @IBAction func reportProblem(sender: AnyObject) {
+    /*@IBAction func reportProblem(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(title: "Report a problem",message: "Enter description of problem", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Report Problem";
         });
 
-    }
+    }*/
     
     
     @IBAction func logOffAction(sender: UIButton) {
@@ -126,4 +126,55 @@ class SettingsViewController: UIViewController {
             self.backImage.image = image;
         });
     }
+    
+    func blankAlertWithMessage(title: String, message:String) {
+        var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func connectAccount(sender: UIButton) {
+        if (!PFFacebookUtils.isLinkedWithUser(PFUser.currentUser())) {
+            PFFacebookUtils.linkUser(PFUser.currentUser(), permissions: FB_PERMISSIONS, block: {
+                (succeeded: Bool, error: NSError!) in
+                if (succeeded) {
+                    self.blankAlertWithMessage("Success", message: "Your account is now linked with facebook");
+                }
+                else {
+                    self.blankAlertWithMessage("Failure", message: "Failed to linked this account with facebook");
+                }
+            });
+        }
+        else {
+            blankAlertWithMessage("Already linked", message: "This account is already linked with a facebook account");
+        }
+    }
+    
+    @IBAction func termsOfService(sender: UIButton) {
+        blankAlertWithMessage("Terms of Service", message: "If you are reading this message, this is a failure on part of us. We will add a Terms of Service as soon as possible! Sorry");
+    }
+    
+    @IBAction func aboutFS(sender: UIButton) {
+        blankAlertWithMessage("About FashionStash", message: "FashionStash is not just an app, but a place to share with the community the trendy styles and designs of the world. We believe that anybody can become a fashion enthusiast and strive to help you develop your own sense of fashion by delivering to you the very best fashion to your stash!");
+    }
+    
+    
+    @IBAction func disableAccount(sender: UIButton) {
+        blankAlertWithMessage("In implementation", message: "Sorry, we will implement this feature very soon! Our programmers are working hard to add more features and this should be in the next update");
+    }
+    
+    
+    @IBAction func clearHistory(sender: UIButton) {
+        var alert = UIAlertController(title: "Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", preferredStyle: UIAlertControllerStyle.Alert);
+        alert.addAction(UIAlertAction(title: "Clear History", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+            var current = PFUser.currentUser();
+            current["likedPosts"] = [];
+            current["viewHistory"] = [];
+            current.saveEventually();
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
 }

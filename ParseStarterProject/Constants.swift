@@ -111,6 +111,8 @@ let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UICol
 
 let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
 
+let FB_PERMISSIONS: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
+
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image

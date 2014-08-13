@@ -33,6 +33,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     @IBOutlet var myTableView: UITableView!
     @IBOutlet var navigationTitle: UIButton!
     @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     
     var assetLibrary: ALAssetsLibrary?;
     
@@ -59,6 +60,12 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count > 1) {
+                backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
+        }
+
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
