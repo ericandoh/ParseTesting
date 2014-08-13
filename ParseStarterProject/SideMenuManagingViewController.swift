@@ -171,6 +171,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             if (refreshingHome) {
                 old = self.viewControllerDictionary[contentString];
                 content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+                self.viewControllerDictionary[contentString] = content;
             }
         }
         else {
