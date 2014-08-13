@@ -267,6 +267,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         //cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
         cell.titleLabel.text = SIDE_MENU_NAMES[indexPath.row];
         
+        cell.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)
+        
         //cell.imageView.image = SIDE_MENU_IMAGES[indexPath.row];
         cell.iconImageView.image = SIDE_MENU_IMAGES[indexPath.row];
         //cell.imageView.frame = CGRectMake(0, 0, 40, 40);
