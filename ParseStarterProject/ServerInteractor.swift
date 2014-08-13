@@ -347,6 +347,26 @@ import UIKit
         return image;
     }
     
+    class func cropImageSoNavigationWorksCorrectly(img: UIImage, frame: CGRect)->UIImage {
+        var wRatio = frame.size.width / img.size.width;
+        var hRatio = frame.size.height / img.size.height;
+        
+        var ratio = max(wRatio, hRatio);
+        
+        UIGraphicsBeginImageContext(frame.size);
+        
+        var imgNewWidth = ratio * img.size.width;
+        var imgNewHeight = ratio * img.size.height;
+        var leftMargin = (imgNewWidth - frame.size.width) / 2;
+        var topMargin = (imgNewHeight - frame.size.height) / 2;
+        img.drawInRect(CGRectMake(-leftMargin, -topMargin, imgNewWidth, imgNewHeight));
+        
+        var finalImg = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return finalImg;
+    }
+    
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
         var individualRatio: Float;
         var width: Int;

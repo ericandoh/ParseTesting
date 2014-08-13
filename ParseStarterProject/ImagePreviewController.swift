@@ -434,7 +434,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     override func viewWillDisappear(animated: Bool) {
-        if ((self.navigationController.viewControllers as NSArray).indexOfObject(self) == NSNotFound) {
+        if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
             sendBackImages(1);
         }
         super.viewWillDisappear(animated);

@@ -114,6 +114,18 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
         //}
         
+        var frame: CGRect = frontImageView.frame;
+        backImageView = UIImageView(frame: frame);
+        backImageView!.hidden = true;
+        backImageView!.alpha = 0;
+        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+        
+        if ((imgBuffer) != nil) {
+            if (imgBuffer!.isLoadedAt(viewCounter)) {
+                configureCurrent(viewCounter);
+            }
+        }
         
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
@@ -128,14 +140,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
-        
-        var frame: CGRect = frontImageView.frame;
-        backImageView = UIImageView(frame: frame);
-        backImageView!.hidden = true;
-        backImageView!.alpha = 0;
-        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        
         editPostButton.hidden = true;
     }
     override func viewDidAppear(animated: Bool) {
@@ -146,18 +150,22 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //self.navigationController.navigationBar.hidden = true;
             //self.navigationController.navigationBar.translucent = true;
         //}
-        
-        if ((imgBuffer) != nil) {
-            if (imgBuffer!.isLoadedAt(viewCounter)) {
-                configureCurrent(viewCounter);
-            }
+        if (backImageView == nil) {
+            var frame: CGRect = frontImageView.frame;
+            backImageView = UIImageView(frame: frame);
+            backImageView!.hidden = true;
+            backImageView!.alpha = 0;
+            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
+        
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         backImageView!.removeFromSuperview();
-        //frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly();
+        backImageView = nil;
+        frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image, frame: frontImageView.frame);
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(false, animated: false);
             //self.navigationController.navigationBar.hidden = false;
