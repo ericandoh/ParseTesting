@@ -89,6 +89,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        editPostButton.hidden = true;
+        
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
@@ -140,7 +142,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
-        editPostButton.hidden = true;
     }
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
@@ -459,10 +460,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
             var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
             var userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
-            var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
-            userLabel.textColor = TITLE_TEXT_COLOR;
-            userLabel.text = textToPut;
-            userLabel.font = USER_TITLE_TEXT_FONT;
+            var userLabel: UIButton = UIButton(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+            //userLabel.textColor = TITLE_TEXT_COLOR;
+            userLabel.setTitleColor(TITLE_TEXT_COLOR, forState: UIControlState.Normal);
+            //userLabel.text = textToPut;
+            userLabel.setTitle(textToPut, forState: UIControlState.Normal);
+            //userLabel.font = USER_TITLE_TEXT_FONT;
+            userLabel.titleLabel.font = USER_TITLE_TEXT_FONT;
+            
+            userLabel.addTarget(self, action: "goToCurrentPostAuthor:", forControlEvents: UIControlEvents.TouchDown);
             
             var user = FriendEncapsulator.dequeueFriendEncapsulator(currentPost.getAuthor());
             user.fetchImage({(image: UIImage)->Void in
@@ -488,6 +494,19 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         });
         self.topRightButton.setBackgroundImage(INFO_ICON, forState: UIControlState.Normal);
         self.navigationItem.titleView = UIView();
+    }
+    
+    func goToCurrentPostAuthor(sender: UIButton!) {
+        var friend = FriendEncapsulator.dequeueFriendEncapsulator(sender.titleLabel.text);
+        friend.exists({(exist: Bool) in
+            if (exist) {
+                if (self.navigationController != nil) {  //to avoid race conditions
+                    var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                    (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                    self.navigationController.pushViewController(nextBoard, animated: true);
+                }
+            }
+        });
     }
     
     override func didReceiveMemoryWarning() {

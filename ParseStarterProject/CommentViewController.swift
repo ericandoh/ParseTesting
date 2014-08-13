@@ -34,7 +34,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.commentTextField.borderStyle = UITextBorderStyle.None
         self.commentTextField.layer.borderWidth = 1
         self.commentTextField.layer.borderColor = UIColor.whiteColor().CGColor
-        self.commentTextField.layer.cornerRadius = 5.0
+        //self.commentTextField.layer.cornerRadius = 5.0
         self.commentTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardDidHideNotification, object: nil)
@@ -123,6 +123,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
     }
+    
+    @IBAction func backPress(sender: UIButton) {
+        self.navigationController.popViewControllerAnimated(true);
+    }
+    
     /*
     // #pragma mark - Navigation
 

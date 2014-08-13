@@ -19,6 +19,18 @@ import UIKit
             signController.failedSignUp("Usernames cannot begin with _");
             return false;
         }
+        else if (countElements(username) > 20) {
+            signController.failedSignUp("Your username \(username) is too long. Usernames must be between 1-20 characters long.");
+            return false;
+        }
+        else if (email == "") {
+            signController.failedSignUp("You must specify an email.");
+            return false;
+        }
+        else if (password == "") {
+            signController.failedSignUp("You must specify a password.");
+            return false;
+        }
         
         var userNameLabel: UILabel
         //var friendObj: PFObject = PFObject(className: "Friendship")
@@ -49,11 +61,30 @@ import UIKit
                 signController.successfulSignUp();
                 
             } else {
+                var message: String = "";
+                if (error.code == 200) {
+                    message = "Missing username!"
+                }
+                else if (error.code == 201) {
+                    message = "Missing password!"
+                }
+                else if (error.code == 202) {
+                    message = "A user with the username \(username) already exists.";
+                }
+                else if (error.code == 203) {
+                    message = "A user with the email \(email) already exists.";
+                }
+                else if (error.code == 204) {
+                    message = "An email must be specified to register an account.";
+                }
+                else {
+                    message = "Encountered an error while trying to register. Please try again.\nError Details: " + error.localizedDescription
+                }
                 //var errorString: String = error.userInfo["error"] as String;
-                var errorString = error.localizedDescription;
+                //var errorString = error.localizedDescription;
                 //display this error string to user
                 //send some sort of notif to refresh screen
-                signController.failedSignUp(errorString);
+                signController.failedSignUp(message);
             }
         });
         return true;
@@ -78,10 +109,24 @@ import UIKit
                 logController.successfulLogin();
             }
             else {
+                if (error != nil) {
+                    if (error.code == 101) {
+                        var msgString = "Invalid username/password!"
+                        logController.failedLogin(msgString);
+                    }
+                    else {
+                        var msgString = "Failed to authenticate user; please try again in a few seconds"
+                        logController.failedLogin(msgString);
+                    }
+                }
+                else {
+                    var msgString = "Invalid username/password!"
+                    logController.failedLogin(msgString);
+                }
                 //login failed
                 //var errorString: String = error.userInfo["error"] as String;
-                var errorString = error.localizedDescription;
-                logController.failedLogin(errorString);
+                //var errorString = error.localizedDescription;
+                //logController.failedLogin(errorString);
             }
         });
         return true;

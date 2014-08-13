@@ -211,7 +211,7 @@ class NotifViewController: UITableViewController {
             }
         }
         else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
-            self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
+            //self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
         }
         /* else {
         if (member.type == NotificationType.FRIEND_ACCEPT.toRaw()) {

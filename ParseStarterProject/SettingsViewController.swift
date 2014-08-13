@@ -140,6 +140,12 @@ class SettingsViewController: UIViewController {
                 if (succeeded) {
                     self.blankAlertWithMessage("Success", message: "Your account is now linked with facebook");
                 }
+                else if (error != nil && error.code == 208) {
+                    self.blankAlertWithMessage("Failure", message: "This facebook account is already linked to another user!");
+                }
+                else if (error != nil) {
+                    self.blankAlertWithMessage("Failure", message: "Failed to linked this account with facebook - Error \(error.code)");
+                }
                 else {
                     self.blankAlertWithMessage("Failure", message: "Failed to linked this account with facebook");
                 }
