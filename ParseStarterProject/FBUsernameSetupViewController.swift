@@ -16,6 +16,10 @@ class FBUsernameSetupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fbUsernameTextField.borderStyle = UITextBorderStyle.None;
+        fbUsernameTextField.layer.borderWidth = 1;
+        fbUsernameTextField.layer.borderColor = UIColor.whiteColor().CGColor;
     }
     
     override func didReceiveMemoryWarning() {

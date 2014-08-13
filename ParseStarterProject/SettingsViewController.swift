@@ -176,5 +176,10 @@ class SettingsViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    @IBAction func backPress(sender: UIButton) {
+        self.navigationController.popViewControllerAnimated(true);
+    }
+    
+    
     
 }

@@ -18,6 +18,14 @@ class RealLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        usernameTextField.borderStyle = UITextBorderStyle.None;
+        usernameTextField.layer.borderWidth = 1;
+        usernameTextField.layer.borderColor = UIColor.whiteColor().CGColor;
+        
+        passwordTextField.borderStyle = UITextBorderStyle.None;
+        passwordTextField.layer.borderWidth = 1;
+        passwordTextField.layer.borderColor = UIColor.whiteColor().CGColor;
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,6 +82,11 @@ class RealLoginViewController: UIViewController {
             //canceled
         }));
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func backPress(sender: UIButton) {
+        self.navigationController.popViewControllerAnimated(true);
     }
     /*
     // MARK: - Navigation

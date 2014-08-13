@@ -156,6 +156,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
+        backImageView!.removeFromSuperview();
+        //frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly();
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(false, animated: false);
             //self.navigationController.navigationBar.hidden = false;

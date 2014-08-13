@@ -13,12 +13,17 @@ import UIKit
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var settingsButton: UIButton!
     @IBOutlet var myCollectionView: UICollectionView!
-    @IBOutlet var friendsButton: UIButton!
+    
     @IBOutlet var numberPosts: UILabel!
     @IBOutlet var numberLikes: UILabel!
-    
     @IBOutlet weak var numberFollowers: UILabel!
     @IBOutlet weak var numberFollowing: UILabel!
+    
+    @IBOutlet weak var postButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    @IBOutlet weak var followerButton: UIButton!
+    
     
     @IBOutlet weak var AnonText: UILabel!
     @IBOutlet weak var followOthersText: UILabel!
@@ -60,6 +65,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     var collectionDelegateLikes: ImagePostCollectionDelegate?;
 
     var friendList: Array<FriendEncapsulator?> = [];
+    
+    //var lastIndex: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0);
     
     override func viewDidLoad()  {
         super.viewDidLoad();
@@ -182,10 +189,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //numberLikes.text = String(mainUser!["likedPosts"].count as Int)
         //numberPosts.text = String(mainUser!.getNumPosts())
         //numberLikes.text = String(mainUser!.getNumLiked())
-        
         if (options == 0) {
+            unclickEverything();
             if (ServerInteractor.isAnonLogged()) {
                 options = 2;
+                likeButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+                numberLikes.textColor = SELECTED_COLOR;
                 myCollectionView.hidden = false
                 followerTableView.hidden = true
                 collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -193,6 +202,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 AnonText.hidden = true
             } else {
                 options = 1;
+                postButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+                numberPosts.textColor = SELECTED_COLOR;
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
                 collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
                 collectionDelegatePosts!.initialSetup();
@@ -202,6 +213,27 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             resetDatums(options)
             reRender(options)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        var cellIndices = myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath>;
+        for cellIndex in cellIndices {
+            var cell = myCollectionView.cellForItemAtIndexPath(cellIndex)
+            if (cell != nil) {
+                cell.alpha = 0;
+            }
+        }
+    }
+    
+    func unclickEverything() {
+        postButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberPosts.textColor = UNSELECTED_COLOR;
+        likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberLikes.textColor = UNSELECTED_COLOR;
+        followingButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowing.textColor = UNSELECTED_COLOR;
+        followerButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowers.textColor = UNSELECTED_COLOR;
     }
     
     
@@ -220,6 +252,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userPosts(sender: AnyObject) {
+        unclickEverything();
+        postButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberPosts.textColor = SELECTED_COLOR;
         if (options != 1) {
             //collectionDelegatePosts!.resetData()
             //collectionDelegate!.serverFunction = ServerInteractor.getSubmissions;
@@ -269,33 +304,20 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userLikes(sender: AnyObject) {
+        unclickEverything();
+        likeButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberLikes.textColor = SELECTED_COLOR;
         if (options != 2) {
-            NSLog("A")
             self.numberLikes.text = String(self.mainUser!.getNumLiked())
-            NSLog("B")
-
 //            collectionDelegateLikes!.resetData()
 //            collectionDelegatePosts!.resetData();
             resetDatums(options)
-            NSLog("C")
-
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
-            NSLog("D")
-
             collectionDelegateLikes!.initialSetup();
-            NSLog("E")
-
             myCollectionView.hidden = false
-            NSLog("F")
-
             followerTableView.hidden = true
-            NSLog("G")
-
             AnonText.hidden = true
-            NSLog("H")
-
             options = 2
-            NSLog("I")
 
             SignInAnon.hidden = true
             followOthersText.hidden = true
@@ -311,11 +333,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
-            NSLog("J")
         }
     }
     
     @IBAction func userFollowing(sender: UIButton) {
+        unclickEverything();
+        followingButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowing.textColor = SELECTED_COLOR;
         if (ServerInteractor.isAnonLogged()) {
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -341,6 +365,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userFollowers(sender: UIButton) {
+        unclickEverything();
+        followerButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowers.textColor = SELECTED_COLOR;
         if (ServerInteractor.isAnonLogged()) {
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);

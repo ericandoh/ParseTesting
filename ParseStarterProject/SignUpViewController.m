@@ -31,6 +31,19 @@
     if (_prevUserName != nil) {
         self.userTextField.text = _prevUserName;
     }
+    
+    self.userTextField.borderStyle = UITextBorderStyleNone;
+    self.userTextField.layer.borderWidth = 1;
+    self.userTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
+    
+    self.passwordTextField.borderStyle = UITextBorderStyleNone;
+    self.passwordTextField.layer.borderWidth = 1;
+    self.passwordTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
+    
+    self.emailTextField.borderStyle = UITextBorderStyleNone;
+    self.emailTextField.layer.borderWidth = 1;
+    self.emailTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,6 +87,9 @@
 {
     _prevUserName = userfield;
     _prevPassWord = password;
+}
+- (IBAction)backPress:(UIButton *)sender {
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 @end

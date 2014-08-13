@@ -40,6 +40,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel.text = shopLooks[indexPath.row].title;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         cell.textLabel.textColor = UIColor.whiteColor()
+        cell.textLabel.font = TABLE_CELL_FONT;
         
         var forwardImg = UIImageView(image: FORWARD_ICON);
         
