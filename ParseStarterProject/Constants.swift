@@ -106,8 +106,14 @@ let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
 
 let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_MENU_BACK_GREEN/255.0, blue: SIDE_MENU_BACK_BLUE/255.0, alpha: 1.0);
 
-let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(),
-    NSFontAttributeName: UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)];
+let TITLE_TEXT_COLOR = UIColor.whiteColor();
+
+let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0);
+
+let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0);
+
+let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
+    NSFontAttributeName: TITLE_TEXT_FONT];
 
 let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
 
@@ -145,6 +151,12 @@ let BAR_WIDTH = CGFloat(225.0);
 
 //from where swiping left triggers side menu bar
 let TRIGGER_BAR_WIDTH = CGFloat(200.0);
+
+//constants for user profile name + icon in top nav bar
+var TITLE_BAR_WIDTH = CGFloat(220);
+var USER_ICON_WIDTH = CGFloat(30);
+var TITLE_BAR_HEIGHT = CGFloat(30);
+var TITLE_BAR_ICON_TEXT_SPACING = CGFloat(5);
 
 
 //constants for the rotated table in upload flow

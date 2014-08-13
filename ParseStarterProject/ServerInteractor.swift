@@ -60,7 +60,7 @@ import UIKit
     }
     
     class func initialiseUser(user: PFUser, type: UserType) {
-        user["friends"] = NSArray();
+        //user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
@@ -885,11 +885,11 @@ import UIKit
             }
             else if (controller != nil) {
                 if(objects.count == 0) {
-                    (controller! as FriendTableViewController).notifyFailure("No such user exists!");
+                    //(controller! as FriendTableViewController).notifyFailure("No such user exists!");
                 }
                 else if (error != nil) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                    (controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
+                    //(controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
                 }
             }
         });
@@ -1007,12 +1007,12 @@ import UIKit
         return nil;
     }*/
     //call this method when either accepting a friend inv or receiving a confirmation notification
-    class func addAsFriend(friendName: String)->Array<NSObject?>? {
+    /*class func addAsFriend(friendName: String)->Array<NSObject?>? {
         NSLog("Wrong method being called, please remove!")
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
         PFUser.currentUser().saveEventually();
         return nil;
-    }
+    }*/
     
     //follow a user
     class func addAsFollower(followerName: String) {
@@ -1134,7 +1134,7 @@ import UIKit
     //reason this is NOT a Notification PFObject: I should NOT notify the friend that I broke up with them
     //  (stealthy friend removal) => i.e. if I want to remove a creeper I got deceived into friending
     //RECEIVING END HAS BEEN IMPLEMENTED
-    class func removeFriend(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+    /*class func removeFriend(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
         PFUser.currentUser().removeObject(friendName, forKey: "friends");
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
@@ -1160,8 +1160,9 @@ import UIKit
             });
         }
         return nil;
-    }
+    }*/
     
+    /*
     class func removeFollower(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
         NSLog("This looks broken, if you see this code run let me know -Eric")
         PFUser.currentUser().removeObject(friendName, forKey: "following");
@@ -1189,7 +1190,7 @@ import UIKit
                 });
         }
         return nil;
-    }
+    }*/
 
     
     class func getSuggestedFollowers(numToReturn: Int, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
@@ -1265,10 +1266,10 @@ import UIKit
     }
     
     //not currently used, but might be helpful later on/nice to have a default version
-    class func getFriends()->Array<FriendEncapsulator?> {
+    /*class func getFriends()->Array<FriendEncapsulator?> {
         return getFriends(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()));
-    }
-    
+    }*/
+    /*
     //gets me a list of my friends!
     //used by friend table loader
     class func getFriends(user: FriendEncapsulator)->Array<FriendEncapsulator?> {
@@ -1291,7 +1292,7 @@ import UIKit
             returnList.append(FriendEncapsulator.dequeueFriendEncapsulator(friend));
         }
         return returnList;
-    }
+    }*/
     
     //checks that user should do whenever starting to use app on account
     /*class func initialUserChecks() {

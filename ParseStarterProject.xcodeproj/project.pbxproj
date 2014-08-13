@@ -35,7 +35,6 @@
 		D914F7F4198805DD00A59314 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */; };
 		D914F7FD19883CD000A59314 /* ImagePostCollectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7FC19883CD000A59314 /* ImagePostCollectionDelegate.swift */; };
 		D914F7FF198854A400A59314 /* CustomImageBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7FE198854A400A59314 /* CustomImageBuffer.swift */; };
-		D91C98D7196EF69A00E1DBEE /* testbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D91C98D6196EF69A00E1DBEE /* testbackground.jpg */; };
 		D91E5EA1199BBDA50041CB3F /* logo_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = D91E5EA0199BBDA50041CB3F /* logo_menu.png */; };
 		D9201BF5199A7AF8004018A1 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = D9201BF4199A7AF8004018A1 /* camera.png */; };
 		D9201BF7199A7B08004018A1 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = D9201BF6199A7B08004018A1 /* flag.png */; };
@@ -192,7 +191,6 @@
 		D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		D914F7FC19883CD000A59314 /* ImagePostCollectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostCollectionDelegate.swift; sourceTree = "<group>"; };
 		D914F7FE198854A400A59314 /* CustomImageBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageBuffer.swift; sourceTree = "<group>"; };
-		D91C98D6196EF69A00E1DBEE /* testbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testbackground.jpg; sourceTree = "<group>"; };
 		D91E5EA0199BBDA50041CB3F /* logo_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_menu.png; sourceTree = "<group>"; };
 		D9201BF4199A7AF8004018A1 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		D9201BF6199A7B08004018A1 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 				D93CD46F19954121001F0253 /* sideicons */,
 				D93CD46C19954107001F0253 /* homeicons */,
 				24A4812219943324001BE688 /* buttons */,
-				D91C98D6196EF69A00E1DBEE /* testbackground.jpg */,
 				D99B5FCF196DBB2500662A39 /* Defaults */,
 				D996F6AB195C8B2B009E97B0 /* daniel-craig.jpg */,
 				D9125D04195C7E090082F97B /* horned-logo.png */,
@@ -673,7 +670,6 @@
 				D93CD465199540CA001F0253 /* backcolor.png in Resources */,
 				D9BB5966199A844100367408 /* HelveticaNeueLTPro-BdOu.otf in Resources */,
 				D9BB5987199A844100367408 /* HelveticaNeueLTPro-ThCnO.otf in Resources */,
-				D91C98D7196EF69A00E1DBEE /* testbackground.jpg in Resources */,
 				D9BB598A199A844100367408 /* HelveticaNeueLTPro-ThIt.otf in Resources */,
 				D9BB598D199A844100367408 /* HelveticaNeueLTPro-UltLtCnO.otf in Resources */,
 				D9BB5978199A844100367408 /* HelveticaNeueLTPro-Lt.otf in Resources */,

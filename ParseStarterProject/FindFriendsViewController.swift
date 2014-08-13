@@ -82,9 +82,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
-        mainUser.fetchImage({(image: UIImage)->Void in
+        /*mainUser.fetchImage({(image: UIImage)->Void in
             self.backImage.image = image;
-        });
+        });*/
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -94,6 +94,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchFriendsTableView.hidden = true;
         self.setNewBackgroundFor(nil);
         resetAndFetchSuggested();
+        
+        if (self.backImage.image == nil) {
+            var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+            mainUser.fetchImage({(image: UIImage)->Void in
+                self.backImage.image = image;
+            });
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -221,7 +228,6 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             retFunction: {
             (retList: Array<FriendEncapsulator?>) in
             self.friendsToLoad = retList.count;
-                NSLog("Fr \(self.friendsToLoad)")
             for (index, friend) in enumerate(retList) {
                 self.suggestedUsers.append(friend);
                 //self.suggestedUserImgs[friend!.username] = [];

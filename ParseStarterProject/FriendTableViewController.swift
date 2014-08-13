@@ -7,7 +7,7 @@
 //  Created by Eric Oh on 7/1/14.
 //
 //
-
+/*
 class FriendTableViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate  {
 
     var srcFriend: FriendEncapsulator?;
@@ -152,4 +152,4 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
-}
+}*/

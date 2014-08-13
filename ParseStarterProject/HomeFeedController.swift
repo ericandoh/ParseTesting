@@ -447,18 +447,27 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                 });
             }
             
-            var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
-            var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
-            userLabel.textColor = UIColor.whiteColor();
-            var userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
-            userIcon.frame = CGRectMake(20, -5, 40, 40);
             
-            userLabel.text = currentPost.getAuthor();
+            var widthOfTitleBar = TITLE_BAR_WIDTH;
+            var widthOfUserIconImg = USER_ICON_WIDTH;
+            var heightOfBar = TITLE_BAR_HEIGHT;
+            var spacing = TITLE_BAR_ICON_TEXT_SPACING;
+            
+            var textToPut = currentPost.getAuthor();
+            var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
+            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+            var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+            var userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+            userLabel.textColor = TITLE_TEXT_COLOR;
+            userLabel.text = textToPut;
+            userLabel.font = USER_TITLE_TEXT_FONT;
             
             var user = FriendEncapsulator.dequeueFriendEncapsulator(currentPost.getAuthor());
             user.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
-                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: widthOfUserIconImg, height: heightOfBar))
                 userIcon.image = newUserIcon
                 userIcon.layer.cornerRadius = (userIcon.frame.size.width) / 2
                 userIcon.layer.masksToBounds = true

@@ -377,39 +377,6 @@
             </objects>
             <point key="canvasLocation" x="1008" y="2384"/>
         </scene>
-        <!--Friends-->
-        <scene sceneID="bAA-82-sWc">
-            <objects>
-                <tableViewController id="N3u-vY-mx7" customClass="FriendTableViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eqC-x1-v2Q">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" id="O2V-OE-i0z">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="O2V-OE-i0z" id="Lr8-av-vF9">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="EY2-US-9i6" appends="YES" id="vzt-pt-5fg"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="N3u-vY-mx7" id="Uym-Z1-HUP"/>
-                            <outlet property="delegate" destination="N3u-vY-mx7" id="Tgu-Hg-P4P"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Friends" id="0Rd-jM-uzD"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="N0s-fQ-pfX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="EY2-US-9i6"/>
-            </objects>
-            <point key="canvasLocation" x="1439" y="3115"/>
-        </scene>
         <!--Report a Problem-->
         <scene sceneID="fjr-la-UvI">
             <objects>
@@ -853,7 +820,7 @@
                             </button>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="70m-jn-vOq">
-                            <rect key="frame" x="89" y="7" width="142" height="30"/>
+                            <rect key="frame" x="80" y="7" width="160" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="20"/>
                             <state key="normal" title="Loading Photos">
@@ -1233,7 +1200,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="hjh-8j-OFF">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="drv-zy-Dl0">
-                                <rect key="frame" x="264" y="7" width="40" height="40"/>
+                                <rect key="frame" x="264" y="-28" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="info.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1665,7 +1632,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gjj-23-bPA">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gjj-23-bPA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zAI-az-vyZ">
@@ -1868,7 +1835,7 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BPT-wc-Nnf" firstAttribute="top" secondItem="4Io-YJ-blA" secondAttribute="bottom" constant="26" id="2fK-Gh-pdM"/>
                             <constraint firstItem="8lc-mW-qNE" firstAttribute="leading" secondItem="Fst-GP-2aj" secondAttribute="leading" constant="42" id="CzN-Dk-JEY"/>
