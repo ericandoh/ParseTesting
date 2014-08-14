@@ -138,7 +138,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             refresh();
         }
         else {
-            setLoadingImage();
+            if (backImageView == nil || backImageView!.image == nil) {
+                setLoadingImage();
+            }
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
@@ -146,6 +148,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
         super.viewDidAppear(animated);
+        self.navigationController.navigationBar.topItem.title = ""
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
             //self.navigationController.navigationBar.hidden = true;
@@ -159,7 +162,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
-        
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
@@ -210,18 +212,32 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     func setLoadingImage() {
+        NSLog("Enable the spinner!");
         loadingSpinner!.hidden = false;
         loadingSpinner!.startAnimating();
+        self.view.bringSubviewToFront(loadingSpinner!);
         frontImageView!.image = LOADING_IMG;
     }
     func switchImageToLoading(fromDirection: CompassDirection) {
+        NSLog("Switch to load, ignore next 'setting an acutal'")
         switchImage(NULL_IMG, fromDirection: fromDirection);
         setLoadingImage();
     }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        NSLog("Setting an acutal image");
         if (loadingSpinner!.hidden == false) {
+            NSLog("Disable the spinner!");
+            self.view.sendSubviewToBack(loadingSpinner!);
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
+        }
+        if (backImageView == nil) {
+            var frame: CGRect = frontImageView.frame;
+            backImageView = UIImageView(frame: frame);
+            backImageView!.hidden = true;
+            backImageView!.alpha = 0;
+            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;

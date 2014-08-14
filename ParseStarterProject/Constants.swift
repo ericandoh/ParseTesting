@@ -49,10 +49,10 @@ let MAX_IMGS_PER_SUGGEST = 5;
 
 //----------------------------Image Constants---------------------------------
 
-let NULL_IMG: UIImage = UIImage(named: "horned-logo.png");
+let NULL_IMG: UIImage = UIImage(named: "temporaryloading.png");
 
 //Whenever something needs to be loaded, this picture shows up
-let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
+let LOADING_IMG: UIImage = UIImage(named: "temporaryloading.png");
 
 //When HomeFeed is done with pictures, this picture is shown
 let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
@@ -64,7 +64,7 @@ let CAMERA_ICON = UIImage(named: "f_camera_roll.png")
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
 
 //close button image for Shop The Look while uploading
-let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
+//let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
