@@ -126,13 +126,14 @@ let UNSELECTED_COLOR = UIColor(white: 1.0, alpha: 0.4);
 //----------------------------Width/Height Constants---------------------------------
 
 //width of a fullscreen image
-let FULLSCREEN_WIDTH: CGFloat = CGFloat(320);
-
-//height of a fullscreen image
-let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
+let FULLSCREEN_WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width;
 
 //height of a fullscreen app
-let TRUE_FULLSCREEN_HEIGHT = CGFloat(568);
+let TRUE_FULLSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height;
+
+//height of a fullscreen image
+//let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
+
 
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);

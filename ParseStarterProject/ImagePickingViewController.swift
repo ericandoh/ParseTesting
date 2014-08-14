@@ -26,11 +26,13 @@ struct AssetItem {
     var highlighted: Int;
 }
 
-class ImagePickingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var optionsView: UIView!
     @IBOutlet var myCollectionView: UICollectionView!
-    @IBOutlet var myTableView: UITableView!
+    //@IBOutlet var myTableView: UITableView!
+    
+    @IBOutlet weak var myPickerView: UIPickerView!
     @IBOutlet var navigationTitle: UIButton!
     @IBOutlet weak var backImageView: UIImageView!
     @IBOutlet weak var backButton: UIButton!
@@ -163,31 +165,40 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
         
     }
     
-    //--------tableview methods------------
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int  {
+    
+    @IBAction func outsidePickerClicked(sender: UIButton) {
+        optionsView.hidden = true;
+    }
+    
+    @IBAction func optionsClickedOK(sender: UIButton) {
+        var selected = myPickerView.selectedRowInComponent(0);
+        switchViewsFromOptionsTo(selected);
+    }
+    
+    //--------uipicker methods------------
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
         return 1;
     }
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int {
         if (showingOptions) {
             return assetGroups.count + 1;
         }
         return 0;
     }
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("GalleryOption", forIndexPath: indexPath) as UITableViewCell;
-        
-        var row = indexPath.row;
-        if (row >= assetGroups.count) {
-            cell.textLabel.text = "Uncheck All Photos";
-            return cell;
+    func pickerView(pickerView: UIPickerView!, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString! {
+        var returnLine = "Uncheck All Photos";
+        if (row < assetGroups.count) {
+            returnLine = self.getGalleryFullName(row);
         }
-        var name = self.getGalleryFullName(row);
-        cell.textLabel.text = name;
-        
-        return cell;
+        var attrString = NSAttributedString(string: returnLine, attributes: [NSForegroundColorAttributeName: TITLE_TEXT_COLOR, NSFontAttributeName: TABLE_CELL_FONT]);
+        return attrString;
     }
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!)  {
-        var row = indexPath.row;
+    /*func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
+        //do nothing
+    }*/
+    func switchViewsFromOptionsTo(row: Int) {
+        self.showingOptions = false;
         if (row >= assetGroups.count) {
             for (index, item) in enumerate(currentAssets) {
                 currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
@@ -197,14 +208,12 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
             myCollectionView.reloadData();
             return;
         }
-        
         groupSelected = row;
         loadImagesForCurrent();
         optionsView.hidden = true;
         var name = getGalleryFullName(row) + " ▾";
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
     }
-    
     //--------collectionview methods------------
     func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int  {
         return 1;
@@ -364,7 +373,7 @@ class ImagePickingViewController: UIViewController, UITableViewDelegate, UITable
     @IBAction func clickedNavTitle(sender: AnyObject) {
         optionsView.hidden = false;
         self.showingOptions = true;
-        myTableView.reloadData();
+        myPickerView.reloadAllComponents();
     }
     
     

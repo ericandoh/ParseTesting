@@ -66,6 +66,7 @@
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
+            <string>HelveticaNeueLTPro-Lt</string>
         </mutableArray>
         <mutableArray key="HelveticaNeueLTPro-LtCn.otf">
             <string>HelveticaNeueLTPro-LtCn</string>
@@ -783,27 +784,48 @@
                                 </connections>
                             </collectionView>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4BK-im-wEk">
-                                <rect key="frame" x="67" y="97" width="187" height="338"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="muT-bP-afv">
-                                        <rect key="frame" x="0.0" y="0.0" width="187" height="338"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GalleryOption" id="jMU-SM-9Z7">
-                                                <rect key="frame" x="0.0" y="0.0" width="160" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jMU-SM-9Z7" id="lQ0-Va-0Eu">
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
+                                    <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="es5-Rt-P4I">
+                                        <rect key="frame" x="0.0" y="65" width="320" height="503"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="mul-0q-ucg">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="503"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <blurEffect style="dark"/>
+                                    </visualEffectView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sjM-or-e13">
+                                        <rect key="frame" x="0.0" y="65" width="320" height="503"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
-                                            <outlet property="dataSource" destination="Rfu-F6-5hC" id="1VT-Eg-sTL"/>
-                                            <outlet property="delegate" destination="Rfu-F6-5hC" id="P4l-hv-b8m"/>
+                                            <action selector="outsidePickerClicked:" destination="Rfu-F6-5hC" eventType="touchUpInside" id="9PU-lw-xhx"/>
                                         </connections>
-                                    </tableView>
+                                    </button>
+                                    <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XZe-bb-xtL">
+                                        <rect key="frame" x="20" y="164" width="280" height="175"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="Rfu-F6-5hC" id="QdN-MT-J5h"/>
+                                            <outlet property="delegate" destination="Rfu-F6-5hC" id="bEZ-Uc-KEN"/>
+                                        </connections>
+                                    </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbJ-4S-VS8">
+                                        <rect key="frame" x="40" y="345" width="240" height="40"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="19"/>
+                                        <state key="normal" title="OK" backgroundImage="backcolor.png">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="optionsClickedOK:" destination="Rfu-F6-5hC" eventType="touchUpInside" id="bkw-XH-6mK"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -865,7 +887,7 @@
                         <outlet property="backButton" destination="Vk2-Pf-mHR" id="xId-sw-mGx"/>
                         <outlet property="backImageView" destination="GGg-yD-aZT" id="oFo-xC-tOk"/>
                         <outlet property="myCollectionView" destination="pt4-ot-fjp" id="19H-UU-gKO"/>
-                        <outlet property="myTableView" destination="muT-bP-afv" id="pNj-fz-AiU"/>
+                        <outlet property="myPickerView" destination="XZe-bb-xtL" id="RZJ-U0-itC"/>
                         <outlet property="navigationTitle" destination="70m-jn-vOq" id="e68-2A-Ua7"/>
                         <outlet property="optionsView" destination="4BK-im-wEk" id="2DK-Po-mOw"/>
                         <segue destination="gqO-OJ-AGi" kind="push" identifier="ImagePreview" id="KdC-gT-A8q"/>
@@ -1060,6 +1082,7 @@
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpb-xV-UL9">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="IGx-IV-fnk">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <blurEffect style="light"/>

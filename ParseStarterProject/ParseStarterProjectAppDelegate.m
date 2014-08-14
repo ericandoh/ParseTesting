@@ -79,6 +79,20 @@
     
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor] ];
     [[UITextField appearanceWhenContainedIn: [UISearchBar class], nil] setFont:[UIFont fontWithName:@"HelveticaNeueLTPro-Lt" size:15.0]];
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"runCount"]) {
+        [defaults setObject:[NSNumber numberWithInt:1] forKey:@"runCount"];
+    }
+    else {
+        NSNumber *count = [defaults objectForKey:@"runCount"];
+        int val = [count intValue];
+        [defaults setObject:[NSNumber numberWithInt:val + 1] forKey:@"runCount"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     return YES;
 }
 
