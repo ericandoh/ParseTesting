@@ -19,6 +19,18 @@ import UIKit
             signController.failedSignUp("Usernames cannot begin with _");
             return false;
         }
+        else if (countElements(username) > 20) {
+            signController.failedSignUp("Your username \(username) is too long. Usernames must be between 1-20 characters long.");
+            return false;
+        }
+        else if (email == "") {
+            signController.failedSignUp("You must specify an email.");
+            return false;
+        }
+        else if (password == "") {
+            signController.failedSignUp("You must specify a password.");
+            return false;
+        }
         
         var userNameLabel: UILabel
         //var friendObj: PFObject = PFObject(className: "Friendship")
@@ -49,23 +61,42 @@ import UIKit
                 signController.successfulSignUp();
                 
             } else {
+                var message: String = "";
+                if (error.code == 200) {
+                    message = "Missing username!"
+                }
+                else if (error.code == 201) {
+                    message = "Missing password!"
+                }
+                else if (error.code == 202) {
+                    message = "A user with the username \(username) already exists.";
+                }
+                else if (error.code == 203) {
+                    message = "A user with the email \(email) already exists.";
+                }
+                else if (error.code == 204) {
+                    message = "An email must be specified to register an account.";
+                }
+                else {
+                    message = "Encountered an error while trying to register. Please try again.\nError Details: " + error.localizedDescription
+                }
                 //var errorString: String = error.userInfo["error"] as String;
-                var errorString = error.localizedDescription;
+                //var errorString = error.localizedDescription;
                 //display this error string to user
                 //send some sort of notif to refresh screen
-                signController.failedSignUp(errorString);
+                signController.failedSignUp(message);
             }
         });
         return true;
     }
     
     class func initialiseUser(user: PFUser, type: UserType) {
-        user["friends"] = NSArray();
+        //user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
         user["userType"] = type.toRaw();
         user["numPosts"] = 0;
-        user["followings"] = []
+        user["followings"] = NSMutableArray();
     }
     
     class func loginUser(username: String, password: String, sender: RealLoginViewController)->Bool {
@@ -78,10 +109,24 @@ import UIKit
                 logController.successfulLogin();
             }
             else {
+                if (error != nil) {
+                    if (error.code == 101) {
+                        var msgString = "Invalid username/password!"
+                        logController.failedLogin(msgString);
+                    }
+                    else {
+                        var msgString = "Failed to authenticate user; please try again in a few seconds"
+                        logController.failedLogin(msgString);
+                    }
+                }
+                else {
+                    var msgString = "Invalid username/password!"
+                    logController.failedLogin(msgString);
+                }
                 //login failed
                 //var errorString: String = error.userInfo["error"] as String;
-                var errorString = error.localizedDescription;
-                logController.failedLogin(errorString);
+                //var errorString = error.localizedDescription;
+                //logController.failedLogin(errorString);
             }
         });
         return true;
@@ -106,8 +151,8 @@ import UIKit
         //whats permissions
         //permissions at https://developers.facebook.com/docs/facebook-login/permissions/v2.0
         //sample permissions: ["user_about_me", "user_relationships", "user_birthday", "user_location"]
-        let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
-        PFFacebookUtils.logInWithPermissions(permissions, {
+        //let permissions: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
+        PFFacebookUtils.logInWithPermissions(FB_PERMISSIONS, {
             (user: PFUser!, error: NSError!) -> Void in
             var logController: NewLoginViewController = sender as NewLoginViewController;
             if (error != nil) {
@@ -298,7 +343,9 @@ import UIKit
                     NSLog("\(foundLabel) already exists as label, incrementing")
                     object.incrementKey("count");
                     object.saveInBackground();
-                    arrWithoutDuplicates.removeAtIndex(find(arrWithoutDuplicates, foundLabel)!);
+                    if let foundIndex = find(arrWithoutDuplicates, foundLabel) {
+                        arrWithoutDuplicates.removeAtIndex(foundIndex);
+                    }
                 }
                 //comment below to force use of only our labels (so users cant add new labels?)
                 for label: String in arrWithoutDuplicates {
@@ -345,6 +392,26 @@ import UIKit
         UIGraphicsEndImageContext();
         
         return image;
+    }
+    
+    class func cropImageSoNavigationWorksCorrectly(img: UIImage, frame: CGRect)->UIImage {
+        var wRatio = frame.size.width / img.size.width;
+        var hRatio = frame.size.height / img.size.height;
+        
+        var ratio = max(wRatio, hRatio);
+        
+        UIGraphicsBeginImageContext(frame.size);
+        
+        var imgNewWidth = ratio * img.size.width;
+        var imgNewHeight = ratio * img.size.height;
+        var leftMargin = (imgNewWidth - frame.size.width) / 2;
+        var topMargin = (imgNewHeight - frame.size.height) / 2;
+        img.drawInRect(CGRectMake(-leftMargin, -topMargin, imgNewWidth, imgNewHeight));
+        
+        var finalImg = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return finalImg;
     }
     
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
@@ -865,11 +932,11 @@ import UIKit
             }
             else if (controller != nil) {
                 if(objects.count == 0) {
-                    (controller! as FriendTableViewController).notifyFailure("No such user exists!");
+                    //(controller! as FriendTableViewController).notifyFailure("No such user exists!");
                 }
                 else if (error != nil) {
                     //controller.makeNotificationThatFriendYouWantedDoesntExistAndThatYouAreVeryLonely
-                    (controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
+                    //(controller! as FriendTableViewController).notifyFailure(error.localizedDescription as String);
                 }
             }
         });
@@ -987,12 +1054,12 @@ import UIKit
         return nil;
     }*/
     //call this method when either accepting a friend inv or receiving a confirmation notification
-    class func addAsFriend(friendName: String)->Array<NSObject?>? {
+    /*class func addAsFriend(friendName: String)->Array<NSObject?>? {
         NSLog("Wrong method being called, please remove!")
         PFUser.currentUser().addUniqueObject(friendName, forKey: "friends");
         PFUser.currentUser().saveEventually();
         return nil;
-    }
+    }*/
     
     //follow a user
     class func addAsFollower(followerName: String) {
@@ -1114,7 +1181,7 @@ import UIKit
     //reason this is NOT a Notification PFObject: I should NOT notify the friend that I broke up with them
     //  (stealthy friend removal) => i.e. if I want to remove a creeper I got deceived into friending
     //RECEIVING END HAS BEEN IMPLEMENTED
-    class func removeFriend(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
+    /*class func removeFriend(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
         PFUser.currentUser().removeObject(friendName, forKey: "friends");
         PFUser.currentUser().saveInBackground();
         if (!isHeartBroken) {
@@ -1140,8 +1207,9 @@ import UIKit
             });
         }
         return nil;
-    }
+    }*/
     
+    /*
     class func removeFollower(friendName: String, isHeartBroken: Bool)->Array<NSObject?>? {
         NSLog("This looks broken, if you see this code run let me know -Eric")
         PFUser.currentUser().removeObject(friendName, forKey: "following");
@@ -1169,7 +1237,7 @@ import UIKit
                 });
         }
         return nil;
-    }
+    }*/
 
     
     class func getSuggestedFollowers(numToReturn: Int, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
@@ -1245,10 +1313,10 @@ import UIKit
     }
     
     //not currently used, but might be helpful later on/nice to have a default version
-    class func getFriends()->Array<FriendEncapsulator?> {
+    /*class func getFriends()->Array<FriendEncapsulator?> {
         return getFriends(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()));
-    }
-    
+    }*/
+    /*
     //gets me a list of my friends!
     //used by friend table loader
     class func getFriends(user: FriendEncapsulator)->Array<FriendEncapsulator?> {
@@ -1271,7 +1339,7 @@ import UIKit
             returnList.append(FriendEncapsulator.dequeueFriendEncapsulator(friend));
         }
         return returnList;
-    }
+    }*/
     
     //checks that user should do whenever starting to use app on account
     /*class func initialUserChecks() {

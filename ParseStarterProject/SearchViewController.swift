@@ -14,6 +14,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @IBOutlet var searchBar: UISearchBar!
     
     @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
     
@@ -27,6 +28,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count > 1) {
+                backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
+        }
+        
 
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
@@ -91,6 +100,20 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
 
+    @IBAction func backPress(sender: UIButton) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
+        }
+    }
+    
+    
     
     // #pragma mark - Navigation
 

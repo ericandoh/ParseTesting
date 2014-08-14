@@ -13,12 +13,17 @@ import UIKit
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var settingsButton: UIButton!
     @IBOutlet var myCollectionView: UICollectionView!
-    @IBOutlet var friendsButton: UIButton!
+    
     @IBOutlet var numberPosts: UILabel!
     @IBOutlet var numberLikes: UILabel!
-    
     @IBOutlet weak var numberFollowers: UILabel!
     @IBOutlet weak var numberFollowing: UILabel!
+    
+    @IBOutlet weak var postButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var followingButton: UIButton!
+    @IBOutlet weak var followerButton: UIButton!
+    
     
     @IBOutlet weak var AnonText: UILabel!
     @IBOutlet weak var followOthersText: UILabel!
@@ -29,6 +34,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     
     var mainUser: FriendEncapsulator?;
     var amMyself: Bool = true
@@ -60,8 +66,17 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
 
     var friendList: Array<FriendEncapsulator?> = [];
     
+    //var lastIndex: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0);
+    
     override func viewDidLoad()  {
         super.viewDidLoad();
+        
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count > 1) {
+                backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
+        }
+        
         if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
@@ -84,13 +99,26 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.followerTableView.alwaysBounceVertical = false;        
         
         
-        var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
-        var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
-        userLabel.textColor = UIColor.whiteColor();
-        userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
-        userIcon!.frame = CGRectMake(20, -5, 40, 40);
+        var widthOfTitleBar = TITLE_BAR_WIDTH;
+        var widthOfUserIconImg = USER_ICON_WIDTH;
+        var heightOfBar = TITLE_BAR_HEIGHT;
+        var spacing = TITLE_BAR_ICON_TEXT_SPACING;
+        
+        
+        var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
+        
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
-            userLabel.text = mainUser!.getName({userLabel.text = self.mainUser!.getName({NSLog("Failed twice to fetch name")})});
+            
+            var textToPut = mainUser!.username;
+            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+            var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+            userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+            userLabel.textColor = TITLE_TEXT_COLOR;
+            userLabel.text = textToPut;
+            userLabel.font = USER_TITLE_TEXT_FONT;
+            
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
                 self.backImageView.image = image;
@@ -100,7 +128,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.userIcon!.layer.masksToBounds = true
                 self.userIcon!.layer.borderWidth = 0
                 self.navigationItem.titleView = view;
-                userLabel.text = self.mainUser!.username
+                //userLabel.text = self.mainUser!.username
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
                 NSLog("a");
@@ -118,6 +146,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         else {
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
+                
+                var textToPut = "Anonymous";
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+                var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 self.backImageView.image = tempImage;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
@@ -126,16 +164,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.userIcon!.layer.masksToBounds = true
                 self.userIcon!.layer.borderWidth = 0
                 self.navigationItem.titleView = view;
-                userLabel.text = "Anon User";
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
-                AnonText.hidden = true
+                AnonText.hidden = true  //<---cringe (damit bala)
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
             else {
                 // Do any additional setup after loading the view.
-                userLabel.text = ServerInteractor.getUserName();
+                
+                var textToPut = ServerInteractor.getUserName();
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+                var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
+                
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //self.userIcon.image = fetchedImage;
                     self.backImageView.image = fetchedImage;
@@ -145,7 +192,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     self.userIcon!.layer.masksToBounds = true
                     self.userIcon!.layer.borderWidth = 0
                     self.navigationItem.titleView = view;
-                    userLabel.text = self.mainUser!.username
                     view.addSubview(self.userIcon!);
                     view.addSubview(userLabel);
                     NSLog("B")
@@ -174,10 +220,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //numberLikes.text = String(mainUser!["likedPosts"].count as Int)
         //numberPosts.text = String(mainUser!.getNumPosts())
         //numberLikes.text = String(mainUser!.getNumLiked())
-        
         if (options == 0) {
+            unclickEverything();
             if (ServerInteractor.isAnonLogged()) {
                 options = 2;
+                likeButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+                numberLikes.textColor = SELECTED_COLOR;
                 myCollectionView.hidden = false
                 followerTableView.hidden = true
                 collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -185,6 +233,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 AnonText.hidden = true
             } else {
                 options = 1;
+                postButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+                numberPosts.textColor = SELECTED_COLOR;
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
                 collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
                 collectionDelegatePosts!.initialSetup();
@@ -196,8 +246,46 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        var cellIndices = myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath>;
+        for cellIndex in cellIndices {
+            var cell = myCollectionView.cellForItemAtIndexPath(cellIndex)
+            if (cell != nil) {
+                cell.alpha = 0;
+            }
+        }
+    }
+    
+    func unclickEverything() {
+        postButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberPosts.textColor = UNSELECTED_COLOR;
+        likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberLikes.textColor = UNSELECTED_COLOR;
+        followingButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowing.textColor = UNSELECTED_COLOR;
+        followerButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowers.textColor = UNSELECTED_COLOR;
+    }
+    
+    
+    @IBAction func backPress(sender: UIButton) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
+        }
+    }
+    
     
     @IBAction func userPosts(sender: AnyObject) {
+        unclickEverything();
+        postButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberPosts.textColor = SELECTED_COLOR;
         if (options != 1) {
             //collectionDelegatePosts!.resetData()
             //collectionDelegate!.serverFunction = ServerInteractor.getSubmissions;
@@ -211,7 +299,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 options = 1
             } else {
-                NSLog("C")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
 //                collectionDelegatePosts!.resetData();
 //                collectionDelegateLikes!.resetData()
@@ -235,7 +322,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 return
             } else {
-                NSLog("D")
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 collectionDelegatePosts!.resetData();
                 collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
@@ -247,33 +333,20 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userLikes(sender: AnyObject) {
+        unclickEverything();
+        likeButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberLikes.textColor = SELECTED_COLOR;
         if (options != 2) {
-            NSLog("A")
             self.numberLikes.text = String(self.mainUser!.getNumLiked())
-            NSLog("B")
-
 //            collectionDelegateLikes!.resetData()
 //            collectionDelegatePosts!.resetData();
             resetDatums(options)
-            NSLog("C")
-
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
-            NSLog("D")
-
             collectionDelegateLikes!.initialSetup();
-            NSLog("E")
-
             myCollectionView.hidden = false
-            NSLog("F")
-
             followerTableView.hidden = true
-            NSLog("G")
-
             AnonText.hidden = true
-            NSLog("H")
-
             options = 2
-            NSLog("I")
 
             SignInAnon.hidden = true
             followOthersText.hidden = true
@@ -289,11 +362,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
             collectionDelegateLikes!.initialSetup();
-            NSLog("J")
         }
     }
     
     @IBAction func userFollowing(sender: UIButton) {
+        unclickEverything();
+        followingButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowing.textColor = SELECTED_COLOR;
         if (ServerInteractor.isAnonLogged()) {
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -319,6 +394,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func userFollowers(sender: UIButton) {
+        unclickEverything();
+        followerButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal);
+        numberFollowers.textColor = SELECTED_COLOR;
         if (ServerInteractor.isAnonLogged()) {
             collectionDelegateLikes!.resetData();
             collectionDelegateLikes = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getLikedPosts, sender: self, user: mainUser);
@@ -386,9 +464,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func reloadDatums() {
-        NSLog("d")
         self.followerTableView.reloadData();
-        NSLog("n")
     }
     
     func resetDatums(options: Int) {
@@ -548,6 +624,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //no action
             }
         } else {
+            if (ServerInteractor.isAnonLogged()) {
+                //segue to go to home screen
+            }
             self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
         }
     }

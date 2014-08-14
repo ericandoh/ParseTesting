@@ -89,6 +89,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        editPostButton.hidden = true;
+        
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
@@ -114,6 +116,18 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
         //}
         
+        var frame: CGRect = frontImageView.frame;
+        backImageView = UIImageView(frame: frame);
+        backImageView!.hidden = true;
+        backImageView!.alpha = 0;
+        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+        
+        if ((imgBuffer) != nil) {
+            if (imgBuffer!.isLoadedAt(viewCounter)) {
+                configureCurrent(viewCounter);
+            }
+        }
         
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
@@ -124,38 +138,37 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             refresh();
         }
         else {
-            setLoadingImage();
+            if (backImageView == nil || backImageView!.image == nil) {
+                setLoadingImage();
+            }
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
-        
-        var frame: CGRect = frontImageView.frame;
-        backImageView = UIImageView(frame: frame);
-        backImageView!.hidden = true;
-        backImageView!.alpha = 0;
-        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-        self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        
-        editPostButton.hidden = true;
     }
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
         super.viewDidAppear(animated);
+        self.navigationController.navigationBar.topItem.title = ""
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
             //self.navigationController.navigationBar.hidden = true;
             //self.navigationController.navigationBar.translucent = true;
         //}
-        
-        if ((imgBuffer) != nil) {
-            if (imgBuffer!.isLoadedAt(viewCounter)) {
-                configureCurrent(viewCounter);
-            }
+        if (backImageView == nil) {
+            var frame: CGRect = frontImageView.frame;
+            backImageView = UIImageView(frame: frame);
+            backImageView!.hidden = true;
+            backImageView!.alpha = 0;
+            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
+        backImageView!.removeFromSuperview();
+        backImageView = nil;
+        frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image, frame: frontImageView.frame);
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(false, animated: false);
             //self.navigationController.navigationBar.hidden = false;
@@ -199,18 +212,32 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     func setLoadingImage() {
+        NSLog("Enable the spinner!");
         loadingSpinner!.hidden = false;
         loadingSpinner!.startAnimating();
+        self.view.bringSubviewToFront(loadingSpinner!);
         frontImageView!.image = LOADING_IMG;
     }
     func switchImageToLoading(fromDirection: CompassDirection) {
+        NSLog("Switch to load, ignore next 'setting an acutal'")
         switchImage(NULL_IMG, fromDirection: fromDirection);
         setLoadingImage();
     }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        NSLog("Setting an acutal image");
         if (loadingSpinner!.hidden == false) {
+            NSLog("Disable the spinner!");
+            self.view.sendSubviewToBack(loadingSpinner!);
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
+        }
+        if (backImageView == nil) {
+            var frame: CGRect = frontImageView.frame;
+            backImageView = UIImageView(frame: frame);
+            backImageView!.hidden = true;
+            backImageView!.alpha = 0;
+            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;
@@ -437,18 +464,32 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                 });
             }
             
-            var view: UIView = UIView(frame: CGRectMake(0, 0, 160, 40));
-            var userLabel: UILabel = UILabel(frame: CGRectMake(75, 0, 80, 30))
-            userLabel.textColor = UIColor.whiteColor();
-            var userIcon = UIImageView(frame: CGRectMake(40, 40, 40, 40))
-            userIcon.frame = CGRectMake(20, -5, 40, 40);
             
-            userLabel.text = currentPost.getAuthor();
+            var widthOfTitleBar = TITLE_BAR_WIDTH;
+            var widthOfUserIconImg = USER_ICON_WIDTH;
+            var heightOfBar = TITLE_BAR_HEIGHT;
+            var spacing = TITLE_BAR_ICON_TEXT_SPACING;
+            
+            var textToPut = currentPost.getAuthor();
+            var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
+            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
+            var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
+            var userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            var userLabel: UIButton = UIButton(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
+            //userLabel.textColor = TITLE_TEXT_COLOR;
+            userLabel.setTitleColor(TITLE_TEXT_COLOR, forState: UIControlState.Normal);
+            //userLabel.text = textToPut;
+            userLabel.setTitle(textToPut, forState: UIControlState.Normal);
+            //userLabel.font = USER_TITLE_TEXT_FONT;
+            userLabel.titleLabel.font = USER_TITLE_TEXT_FONT;
+            
+            userLabel.addTarget(self, action: "goToCurrentPostAuthor:", forControlEvents: UIControlEvents.TouchDown);
             
             var user = FriendEncapsulator.dequeueFriendEncapsulator(currentPost.getAuthor());
             user.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
-                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: widthOfUserIconImg, height: heightOfBar))
                 userIcon.image = newUserIcon
                 userIcon.layer.cornerRadius = (userIcon.frame.size.width) / 2
                 userIcon.layer.masksToBounds = true
@@ -469,6 +510,19 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         });
         self.topRightButton.setBackgroundImage(INFO_ICON, forState: UIControlState.Normal);
         self.navigationItem.titleView = UIView();
+    }
+    
+    func goToCurrentPostAuthor(sender: UIButton!) {
+        var friend = FriendEncapsulator.dequeueFriendEncapsulator(sender.titleLabel.text);
+        friend.exists({(exist: Bool) in
+            if (exist) {
+                if (self.navigationController != nil) {  //to avoid race conditions
+                    var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                    (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                    self.navigationController.pushViewController(nextBoard, animated: true);
+                }
+            }
+        });
     }
     
     override func didReceiveMemoryWarning() {

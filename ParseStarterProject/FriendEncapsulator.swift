@@ -158,7 +158,7 @@ class FriendEncapsulator {
         }
         else if (friendObj != nil) {
             //fetch friend + get image
-            if (!(friendObj!["userIcon"])) {
+            if (friendObj!["userIcon"] == nil) {
                 receiveAction(DEFAULT_USER_ICON);
                 return;
             }

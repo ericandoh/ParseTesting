@@ -130,7 +130,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
-        but2.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
+        but2.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 17.0);
         but1.shopIndex = index;
         but2.shopIndex = index;
         
@@ -434,7 +434,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     override func viewWillDisappear(animated: Bool) {
-        if ((self.navigationController.viewControllers as NSArray).indexOfObject(self) == NSNotFound) {
+        if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
             sendBackImages(1);
         }
         super.viewWillDisappear(animated);

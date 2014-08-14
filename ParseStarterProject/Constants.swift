@@ -49,10 +49,10 @@ let MAX_IMGS_PER_SUGGEST = 5;
 
 //----------------------------Image Constants---------------------------------
 
-let NULL_IMG: UIImage = UIImage(named: "horned-logo.png");
+let NULL_IMG: UIImage = UIImage(named: "temporaryloading.png");
 
 //Whenever something needs to be loaded, this picture shows up
-let LOADING_IMG: UIImage = UIImage(named: "horned-logo.png");
+let LOADING_IMG: UIImage = UIImage(named: "temporaryloading.png");
 
 //When HomeFeed is done with pictures, this picture is shown
 let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
@@ -64,7 +64,7 @@ let CAMERA_ICON = UIImage(named: "f_camera_roll.png")
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
 
 //close button image for Shop The Look while uploading
-let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
+//let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
@@ -106,10 +106,21 @@ let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
 
 let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_MENU_BACK_GREEN/255.0, blue: SIDE_MENU_BACK_BLUE/255.0, alpha: 1.0);
 
-let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(),
-    NSFontAttributeName: UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)];
+let TITLE_TEXT_COLOR = UIColor.whiteColor();
+
+let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0);
+
+let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0);
+
+let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
+    NSFontAttributeName: TITLE_TEXT_FONT];
 
 let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
+
+let FB_PERMISSIONS: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
+
+let SELECTED_COLOR = UIColor(white: 1.0, alpha: 0.9);
+let UNSELECTED_COLOR = UIColor(white: 1.0, alpha: 0.4);
 
 //----------------------------Width/Height Constants---------------------------------
 
@@ -140,6 +151,12 @@ let BAR_WIDTH = CGFloat(225.0);
 
 //from where swiping left triggers side menu bar
 let TRIGGER_BAR_WIDTH = CGFloat(200.0);
+
+//constants for user profile name + icon in top nav bar
+var TITLE_BAR_WIDTH = CGFloat(220);
+var USER_ICON_WIDTH = CGFloat(30);
+var TITLE_BAR_HEIGHT = CGFloat(30);
+var TITLE_BAR_ICON_TEXT_SPACING = CGFloat(5);
 
 
 //constants for the rotated table in upload flow
@@ -178,6 +195,8 @@ let INDEX_OF_NOTIF: Int = find(SIDE_MENU_ITEMS, "Notifications")!;
 //location of the upload variable in SIDE_MENU_ITEMS, modify if we change "Upload" storyboard name
 let INDEX_OF_UPLOAD: Int = find(SIDE_MENU_ITEMS, "Upload")!;
 
+let INDEX_OF_HOME: Int = find(SIDE_MENU_ITEMS, "HomeNav")!;
+
 //side menu bar items we will have
 //this references ONLY the actual names to display on the side menu table
 //let SIDE_MENU_NAMES = ["My Stash", "Upload", "Notifications", "Search", "My Profile"];
@@ -191,7 +210,7 @@ let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICO
 let SIDE_MENU_OPACITIES = [0.1, 0.25, 0.37, 0.57, 0.75, 1.0];
 
 //how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
-let DAMPENING_CONSTANT = CGFloat(4.0);
+let DAMPENING_CONSTANT = CGFloat(2.5);
 
 //----------------------------Type Constants---------------------------------
 

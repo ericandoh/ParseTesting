@@ -25,6 +25,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var backBlur: UIVisualEffectView!
     
+    @IBOutlet weak var backButton: UIButton!
     var isSearching: Bool = false;
     var searchTermList: Array<FriendEncapsulator?> = [];
     var currentTerm: String = "";
@@ -45,6 +46,14 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count > 1) {
+                backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
+        }
+        
+        
         /*someTextField.owner = self;
         
         someTextField.setTextAfterAttributing("spotting the hottest fashion wear of the year #summer #penguin #fun #awesome with my buddies @dog1 @dog2 @asdf @meepmeep #coolbro socool")*/
@@ -73,9 +82,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
-        mainUser.fetchImage({(image: UIImage)->Void in
+        /*mainUser.fetchImage({(image: UIImage)->Void in
             self.backImage.image = image;
-        });
+        });*/
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
@@ -85,11 +94,30 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         searchFriendsTableView.hidden = true;
         self.setNewBackgroundFor(nil);
         resetAndFetchSuggested();
+        
+        if (self.backImage.image == nil) {
+            var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+            mainUser.fetchImage({(image: UIImage)->Void in
+                self.backImage.image = image;
+            });
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func backPress(sender: UIButton) {
+        if (self.navigationController) {
+            if (self.navigationController.viewControllers.count == 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+            else {
+                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController.popViewControllerAnimated(true);
+            }
+        }
     }
 
     @IBAction func findFriendsFromFB(sender: UIButton) {
@@ -200,7 +228,6 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             retFunction: {
             (retList: Array<FriendEncapsulator?>) in
             self.friendsToLoad = retList.count;
-                NSLog("Fr \(self.friendsToLoad)")
             for (index, friend) in enumerate(retList) {
                 self.suggestedUsers.append(friend);
                 //self.suggestedUserImgs[friend!.username] = [];

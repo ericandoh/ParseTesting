@@ -210,8 +210,6 @@ class LinkFilledTextView: UITextView {
                     var nRange = (individualString as NSString).rangeOfString("\n");
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
-                    NSLog("F:"+forwardString);
-                    NSLog("B:"+restString);
                     let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
                     let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
                     attributedStringPiece = NSAttributedString(string: forwardString, attributes: attrDict);

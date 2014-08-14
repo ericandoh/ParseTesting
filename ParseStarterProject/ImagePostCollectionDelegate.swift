@@ -158,7 +158,10 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     func configureCell(cell: SinglePostCollectionViewCell, index: Int) {
         var post: ImagePostStructure = imgBuffer.getImagePostAt(index);
         //configure cell to set image here, etc.
-        cell.postLabel.text = "Cell \(index)"
+        //cell.postLabel.text = "Cell \(index)"
+        if (cell.imageView.image != nil) {
+            cell.alpha = 1;
+        }
         cell.imageView.image = post.image;
         UIView.animateWithDuration(0.1, animations: {() in
             cell.alpha = 1;
@@ -178,6 +181,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     
     func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
         lastThoughtEnd = imgBuffer.numItems();
+        NSLog("Updating table to have \(lastThoughtEnd)")
         return lastThoughtEnd;
     }
     func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
