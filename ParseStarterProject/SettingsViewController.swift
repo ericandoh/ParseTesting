@@ -173,10 +173,10 @@ class SettingsViewController: UIViewController {
     @IBAction func clearHistory(sender: UIButton) {
         var alert = UIAlertController(title: "Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Clear History", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var current = PFUser.currentUser();
-            current["likedPosts"] = [];
-            current["viewHistory"] = [];
-            current.saveEventually();
+            var current = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
+            current.friendObj!["likedPosts"] = [];
+            current.friendObj!["viewHistory"] = [];
+            current.friendObj!.saveEventually();
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
         self.presentViewController(alert, animated: true, completion: nil)

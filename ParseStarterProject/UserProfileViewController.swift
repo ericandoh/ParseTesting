@@ -624,6 +624,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //no action
             }
         } else {
+            if (ServerInteractor.isAnonLogged()) {
+                //segue to go to home screen
+            }
             self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
         }
     }
