@@ -43,6 +43,7 @@ import UIKit
         
         user["personFirstName"] = firstName;
         user["personLastName"] = lastName;
+        user["personFullName"] = firstName + " " + lastName;
         
         initialiseUser(user, type: UserType.DEFAULT);
         
@@ -172,6 +173,7 @@ import UIKit
                     if (error == nil) {
                         PFUser.currentUser()["personFirstName"] = result["first_name"];
                         PFUser.currentUser()["personLastName"] = result["last_name"];
+                        PFUser.currentUser()["personFullName"] = (result["first_name"] as String) + " " + (result["last_name"] as String);
                         PFUser.currentUser()["fbID"] = result["id"];
                         
                         ServerInteractor.setRandomUsernameAndSave((result["first_name"] as String).lowercaseString);
@@ -209,6 +211,7 @@ import UIKit
                     if (error == nil) {
                         PFUser.currentUser()["personFirstName"] = result["first_name"];
                         PFUser.currentUser()["personLastName"] = result["last_name"];
+                        PFUser.currentUser()["personFullName"] = (result["first_name"] as String) + " " + (result["last_name"] as String);
                         PFUser.currentUser()["fbID"] = result["id"];
                         PFUser.currentUser().saveInBackground();
                     }
@@ -1471,7 +1474,10 @@ import UIKit
         var contactList: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
         //println("records in the array \(contactList.count)")
         
-        var arrayOfQueries: Array<PFQuery> = [];
+        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        
+        var namesList: [String] = [];
+        var emailsList: [String] = [];
         
         for record:ABRecordRef in contactList {
             var contactPerson: ABRecordRef = record
@@ -1497,21 +1503,24 @@ import UIKit
             //firstName = fName as NSString;
             //lastName = lName as NSString;
             //println ("contactName \(contactName)")
-            if (firstName != "" && lastName != "") {
-                var query: PFQuery = PFUser.query();
-                query.whereKey("personFirstName", equalTo: fName);
-                query.whereKey("personLastName", equalTo: lName);
-                arrayOfQueries.append(query);
+            
+            if (firstName != "" || lastName != "") {
+                namesList.append(firstName + " " + lastName);
             }
             if (contactEmail != "") {
-                var query2 = PFUser.query();
-                query2.whereKey("email", equalTo: contactEmail);
-                arrayOfQueries.append(query2);
+                emailsList.append(contactEmail);
             }
         }
+        var query: PFQuery = PFUser.query();
+        query.whereKey("username", notContainedIn: alreadyMyFriends);
+        query.whereKey("personFullName", containedIn: namesList);
         
-        var combinedQuery = PFQuery.orQueryWithSubqueries(arrayOfQueries);
+        var query2: PFQuery = PFUser.query();
+        query2.whereKey("username", notContainedIn: alreadyMyFriends);
+        query2.whereKey("email", containedIn: emailsList);
         
+        var combinedQuery = PFQuery.orQueryWithSubqueries([query, query2]);
+        //combinedQuery.whereKey("username", notContainedIn: alreadyMyFriends);
         combinedQuery.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) in
             if (error != nil) {
@@ -1571,8 +1580,10 @@ import UIKit
                 for friendObject in friendObjs {
                     friendIds.addObject(friendObject.objectForKey("id"));
                 }
+                var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
                 var query: PFQuery = PFUser.query();
                 query.whereKey("fbID", containedIn: friendIds);
+                query.whereKey("username", notContainedIn: alreadyMyFriends);
                 query.findObjectsInBackgroundWithBlock({
                     (objects: [AnyObject]!, error: NSError!) in
                     if (error != nil) {
