@@ -40,6 +40,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     @IBOutlet weak var editPostButton: UIButton!
     
+    @IBOutlet weak var descripTextViewConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var shopLookHeightConstraint: NSLayoutConstraint!
+    
     
     var loadingSpinner: UIActivityIndicatorView?;
     
@@ -102,7 +106,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
         loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White);
-        loadingSpinner!.center = CGPointMake(FULLSCREEN_WIDTH / 2.0, FULLSCREEN_HEIGHT / 2.0);
+        loadingSpinner!.center = CGPointMake(FULLSCREEN_WIDTH / 2.0, TRUE_FULLSCREEN_HEIGHT / 2.0);
         loadingSpinner!.hidden = true;
         self.view.insertSubview(loadingSpinner!, atIndex: 0);
         
@@ -131,6 +135,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         
         // Do any additional setup after loading the view.
         descriptionTextField.owner = self;
+        self.descriptionTextField.scrollEnabled = true;
+        self.descriptionTextField.userInteractionEnabled = true;
         
         //self.view.bringSubviewToFront(frontImageView);
         //commentView.hidden = true; //this should be set in storyboard but just in case
@@ -283,7 +289,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         else if (fromDirection == CompassDirection.NORTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(FULLSCREEN_HEIGHT));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -297,7 +303,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
         else if (fromDirection == CompassDirection.SOUTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(FULLSCREEN_HEIGHT));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
             //self.backImageView!.alpha = 1;
             UIView.animateWithDuration(0.3, animations: {() in
@@ -435,11 +441,36 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         
         //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
-        descriptionTextField.setTextAfterAttributing(false, text: currentPost.getDescriptionWithTag());
+        
+        self.descripTextViewConstraint.constant = MIN_SHOPLOOK_CONSTRAINT;
+        self.shopLookHeightConstraint.constant = MIN_SHOPLOOK_CONSTRAINT;
+        
+        var descripTextToSet = currentPost.getDescriptionWithTag();
+        if (descripTextToSet == "") {
+            descripTextToSet = "Gallery of images by @"+currentPost.getAuthor();
+        }
+        descriptionTextField.setTextAfterAttributing(false, text: descripTextToSet);
+        var descripPreferredHeight = descriptionTextField.sizeThatFits(CGSizeMake(descriptionTextField.frame.size.width, CGFloat.max)).height;
+        var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
+        self.descripTextViewConstraint.constant = descripHeightToSet;
+        descriptionTextField.layoutIfNeeded();
+        
         currentPost.fetchShopLooks({
             (input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
             self.currentShopDelegate!.initialSetup(self.homeLookTable);
+            
+            var preferredTableHeight = self.homeLookTable.contentSize.height;
+            var tableHeightToSet = min(preferredTableHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - descripHeightToSet);       //343->300->333
+            self.shopLookHeightConstraint.constant = tableHeightToSet;
+            
+            if (tableHeightToSet == preferredTableHeight && descripHeightToSet != descripPreferredHeight) {
+                //table height I set was smaller, so maybe I can expand my descriptiontextfield?
+                var descripHeightToSetTry2 = min(descripPreferredHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - tableHeightToSet);
+                self.descripTextViewConstraint.constant = descripHeightToSetTry2;
+                self.descriptionTextField.layoutIfNeeded();
+            }
+            
             if (input.count == 0) {
                 self.shopTheLookPrefacer.hidden = true;
             }

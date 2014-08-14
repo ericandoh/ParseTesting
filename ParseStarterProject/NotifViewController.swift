@@ -52,14 +52,14 @@ class NotifViewController: UITableViewController {
         //view.addSubview(gradientView)
         self.tableView.backgroundView = view
         if (ServerInteractor.isAnonLogged()) {
-            var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT));
+            var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
             imageView.image = DEFAULT_USER_ICON;
             self.tableView.backgroundView.insertSubview(imageView, atIndex: 0)
         }
         else {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
             mainUser.fetchImage({(image: UIImage)->Void in
-                var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT));
+                var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
                 imageView.image = image
                 self.tableView.backgroundView.insertSubview(imageView, atIndex: 0)
             });

@@ -137,15 +137,21 @@ let TRUE_FULLSCREEN_HEIGHT = CGFloat(568);
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
+//----consts for constraints in home description-----
+let MIN_SHOPLOOK_CONSTRAINT = CGFloat(10.0);
+let MIN_SHOPLOOK_DESCRIP_CONSTRAINT = CGFloat(150.0);
+let MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT = TRUE_FULLSCREEN_HEIGHT - 75.0 - 45.0 - 40.0 - 5.0 - 60.0 - MIN_SHOPLOOK_CONSTRAINT;
+//----end home descrip-----
+
 //how dim the right side of the menu becomes when side menu (left) is triggered and pulled out
 //you can change hue in storyboard
 let SIDE_MENU_DIM = CGFloat(0.05);
 
 //ratio of width to height
-let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(FULLSCREEN_HEIGHT);
+let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(TRUE_FULLSCREEN_HEIGHT);
 
 //max size of an image
-let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * FULLSCREEN_HEIGHT;
+let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * TRUE_FULLSCREEN_HEIGHT;
 
 //side menu bar width
 let BAR_WIDTH = CGFloat(225.0);

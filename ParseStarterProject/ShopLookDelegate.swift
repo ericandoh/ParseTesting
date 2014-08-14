@@ -28,6 +28,8 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
             tableView.hidden = false;
         }
         tableView.alwaysBounceVertical = false;
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None;
+        tableView.separatorInset = UIEdgeInsetsZero;
         tableView.reloadData();
     }
     
@@ -41,6 +43,24 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         cell.textLabel.textColor = UIColor.whiteColor()
         cell.textLabel.font = TABLE_CELL_FONT;
+        
+        //BELOW IS A BUG! >:(
+        //cell.separatorInset = UIEdgeInsetsZero;
+        //cell.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
+        var needMakeSeparator: Bool = true;
+        for smallView in cell.contentView.subviews {
+            if ((smallView as UIView).tag == 60253) {
+                needMakeSeparator = false;
+                break;
+            }
+        }
+        if (needMakeSeparator) {
+            var view = UIView(frame: CGRectMake(0, cell.bounds.height - 1, cell.bounds.width, 1));
+            //view.backgroundColor = tableView.separatorColor;
+            view.backgroundColor = UIColor(white: 1.0, alpha: 0.4);
+            view.tag = 60253;
+            cell.contentView.addSubview(view);
+        }
         
         var forwardImg = UIImageView(image: FORWARD_ICON);
         

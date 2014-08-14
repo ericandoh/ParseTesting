@@ -420,14 +420,14 @@ import UIKit
         var height: Int;
         var newImgList: Array<UIImage> = [];
         var newSize: CGSize;
-        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(FULLSCREEN_HEIGHT));
+        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(TRUE_FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(TRUE_FULLSCREEN_HEIGHT));
         for (index, image: UIImage) in enumerate(images) {
             NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
             var outputImg: UIImage?;
-            if (CGFloat(image.size.height) > FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
+            if (CGFloat(image.size.height) > TRUE_FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
                 //this image is horizontal, so we resize image height to match
-                newSize = CGSize(width: CGFloat(image.size.width) * FULLSCREEN_HEIGHT / CGFloat(image.size.height), height: FULLSCREEN_HEIGHT);
+                newSize = CGSize(width: CGFloat(image.size.width) * TRUE_FULLSCREEN_HEIGHT / CGFloat(image.size.height), height: TRUE_FULLSCREEN_HEIGHT);
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
@@ -1063,10 +1063,16 @@ import UIKit
     
     //follow a user
     class func addAsFollower(followerName: String) {
-        if (contains(PFUser.currentUser()["followings"] as Array<String>, followerName)) {
+        if (ServerInteractor.isAnonLogged()) {
             return;
-        } else {
-            
+        }
+        else if (contains(PFUser.currentUser()["followings"] as Array<String>, followerName)) {
+            return;
+        }
+        else if (followerName == PFUser.currentUser().username) {
+            return;
+        }
+        else {
             ServerInteractor.postFollowerNotif(followerName);
             
             var friendObj: PFObject = PFObject(className: "Friendship")
