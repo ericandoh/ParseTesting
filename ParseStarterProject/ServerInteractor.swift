@@ -1250,7 +1250,7 @@ import UIKit
         
         var query = PFUser.query();
         query.whereKey("userType", containedIn: RELEVANT_TYPES);
-        query.whereKey("numPosts", greaterThan: 1);
+        query.whereKey("numPosts", greaterThanOrEqualTo: 1);
         query.whereKey("username", notContainedIn: alreadyMyFriends);
         query.whereKey("username", notEqualTo: PFUser.currentUser().username);
         
@@ -1273,7 +1273,7 @@ import UIKit
                     for i in 0..<fetchCount {
                         var query = PFUser.query();
                         query.whereKey("userType", containedIn: RELEVANT_TYPES);
-                        query.whereKey("numPosts", greaterThan: 1);
+                        query.whereKey("numPosts", greaterThanOrEqualTo: 1);
                         query.whereKey("username", notContainedIn: alreadyMyFriends);
                         query.whereKey("username", notEqualTo: PFUser.currentUser().username);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users

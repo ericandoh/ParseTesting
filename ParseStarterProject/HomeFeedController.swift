@@ -242,6 +242,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;
         self.backImageView!.hidden = false;
+        self.swiperNoSwipe = true;
         if (fromDirection == CompassDirection.STAY) {
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.alpha = 1;
@@ -249,6 +250,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.frontImageView!.image = toImage;
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
+                    self.swiperNoSwipe = false;
                 });
         }
         else if (fromDirection == CompassDirection.EAST) {
@@ -262,6 +264,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.frontImageView!.image = toImage;
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
+                    self.swiperNoSwipe = false;
                 });
         }
         else if (fromDirection == CompassDirection.WEST) {
@@ -275,11 +278,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.frontImageView!.image = toImage;
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
+                    self.swiperNoSwipe = false;
                 });
         }
         else if (fromDirection == CompassDirection.NORTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(FULLSCREEN_WIDTH));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
@@ -288,12 +292,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.frontImageView!.image = toImage;
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
+                    self.swiperNoSwipe = false;
                 });
         }
         else if (fromDirection == CompassDirection.SOUTH) {
             var oldOrig = self.backImageView!.frame.origin;
-            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(FULLSCREEN_WIDTH));
+            var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
+            //self.backImageView!.alpha = 1;
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.frame.origin = oldOrig;
                 self.backImageView!.alpha = 1;
@@ -301,6 +307,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                     self.frontImageView!.image = toImage;
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
+                    self.swiperNoSwipe = false;
                 });
         }
     }
@@ -530,11 +537,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func swipeUp(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            return;
+        }
         viewCounter++;
         swipeAction(true);
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            return;
+        }
         viewCounter--;
         if (viewCounter < 0) {
             viewCounter = 0;
@@ -636,6 +649,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            return;
+        }
         if (postCounter == 0) {
             if (self.navigationController) {
                 (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
@@ -660,6 +676,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     //is actually swipe left, but the new image moves in from the right
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
+        if (swiperNoSwipe) {
+            return;
+        }
         if (viewingComments) {
             return;
         }

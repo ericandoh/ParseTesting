@@ -167,6 +167,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
                 AnonText.hidden = true  //<---cringe (damit bala)
+                self.settingsButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
+                self.settingsButton.setTitle("Log In", forState: UIControlState.Normal);
+                self.settingsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
@@ -200,6 +203,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     self.getNumFollowers()
                     self.getNumFollowing()
                     self.AnonText.hidden = true
+                    self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
                 });
             }
         }
@@ -281,6 +285,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    @IBAction func anonSignIn(sender: UIButton) {
+        self.performSegueWithIdentifier("LogOffFromUserSegue", sender: self);
+    }
     
     @IBAction func userPosts(sender: AnyObject) {
         unclickEverything();
@@ -626,8 +633,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         } else {
             if (ServerInteractor.isAnonLogged()) {
                 //segue to go to home screen
+                self.performSegueWithIdentifier("LogOffFromUserSegue", sender: self);
             }
-            self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
+            else {
+                self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
+            }
         }
     }
     
