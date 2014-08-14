@@ -65,6 +65,7 @@
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
+            <string>HelveticaNeueLTPro-Lt</string>
         </mutableArray>
         <mutableArray key="HelveticaNeueLTPro-LtCn.otf">
             <string>HelveticaNeueLTPro-LtCn</string>
@@ -153,7 +154,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Z5R-ca-bUH" kind="modal" id="A5U-KF-v3T"/>
+                                    <action selector="anonSignIn:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="ATb-R7-aNr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yc1-Dg-9Fm">
@@ -344,7 +345,8 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
                                 <rect key="frame" x="264" y="7" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="SE">
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
+                                <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -372,11 +374,12 @@
                         <outlet property="postButton" destination="PcV-2s-oeW" id="vd4-bW-AI4"/>
                         <outlet property="settingsButton" destination="fIu-Ms-9co" id="kNB-tG-uhk"/>
                         <segue destination="KLW-Kf-YUh" kind="push" identifier="GotoSettingsSegue" id="Eqs-xg-Ba2"/>
+                        <segue destination="cfa-MP-8Gc" kind="modal" identifier="LogOffFromUserSegue" id="AAy-sI-hyg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Emp-ZB-3wh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1008" y="2384"/>
+            <point key="canvasLocation" x="1008" y="2389"/>
         </scene>
         <!--Report a Problem-->
         <scene sceneID="fjr-la-UvI">
@@ -870,7 +873,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n4e-zw-Woq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1439" y="2390"/>
+            <point key="canvasLocation" x="1439" y="2389"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hGt-5h-hjN">
@@ -1431,7 +1434,7 @@
                         <viewControllerLayoutGuide type="bottom" id="e2X-V9-vQ9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fhE-vx-S2V">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-xv-DUq">
@@ -1938,7 +1941,7 @@
                         <viewControllerLayoutGuide type="bottom" id="17l-0w-PJK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EoO-cL-tcl">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLe-AF-DLT">
@@ -2449,7 +2452,7 @@
                         <viewControllerLayoutGuide type="bottom" id="CSn-Ro-UqH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="srQ-G3-L8K">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vzG-b3-d22">
@@ -2534,7 +2537,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0Hu-95-juu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WHv-yr-geh">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-8p-XWM">
@@ -2683,7 +2686,7 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="A5U-KF-v3T"/>
+        <segue reference="AAy-sI-hyg"/>
         <segue reference="1Hu-E5-K1s"/>
     </inferredMetricsTieBreakers>
 </document>

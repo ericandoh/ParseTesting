@@ -24,6 +24,21 @@ wordNumberer(98682091809184604);*/
 
 ["QWERTY","AWESOME","ASAWESOMEASME"]
 
+var lst: [Int] = [];
+
+var x = 6
+sqrt(Float(x))
+
+for i in 0..<200 {
+    var r = random() % 100000000
+    lst.append(Int(sqrt(sqrt(Float(r)))));
+}
+var y: Int;
+//lst.sort({$0 > $1});
+for i in 0..<200 {
+    y = lst[i];
+}
+
 var num = random() % 100;
 
 for i in 0..<0{

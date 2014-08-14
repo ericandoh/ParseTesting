@@ -87,6 +87,7 @@ let BACK_ICON = UIImage(named: "arrow_left.png");
 //icon to show forward button (referenced in homefeed - shoplook delegate - for shoplook URL forwards)
 let FORWARD_ICON = UIImage(named: "arrow_right.png");
 
+let SETTINGS_ICON = UIImage(named: "daniel-craig.jpg");
 
 //side menu images
 let HOME_ICON = UIImage(named: "home.png");
