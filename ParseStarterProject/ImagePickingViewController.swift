@@ -80,44 +80,115 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
+        optionsView.hidden = true;  //this should be set to this by storyboard by default
         
         //NSLog("Loading View");
         // Do any additional setup after loading the view.
-        assetLibrary = ALAssetsLibrary();
-        self.assetLibrary!.enumerateGroupsWithTypes(ALAssetsGroupType(ALAssetsGroupAll), usingBlock: {
-            (group, stop) in
-            if (group) {
-                group.setAssetsFilter(ALAssetsFilter.allPhotos());
-                /*
-                group.posterImage -> small image for icon
-                */
-                self.assetGroups.append(group);
-                //if (self.assetGroups.count == 1) {
-                if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
-                    //first asset I've loaded
-                    //NSLog("First asset group, adding + loading")
-                    var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
-                    self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
-                    self.savedPhotoIndex = self.assetGroups.count - 1;
-                    self.groupSelected = self.savedPhotoIndex;
-                    self.loadImagesForCurrent();
-                }
+        //assetLibrary = ALAssetsLibrary();
+        //ImagePickingViewController.getDefaultAssetLibrary();
+        dispatch_async(dispatch_get_main_queue(), {
+            autoreleasepool {
+                var failure: ALAssetsLibraryAccessFailureBlock = {
+                    (error: NSError!)->Void in
+                    NSLog(error.description)
+                    //assetLibrary!
+                    //NSLog("Add alert view telling I couldn't open my images");
+                };
+                //var groupEnumeration: ALAssetsGroupEnumerationResultsBlock = {
+                    
+                //};
+                var libraryGroupEnumeration: ALAssetsLibraryGroupsEnumerationResultsBlock = {
+                    (group, stop) in
+                    //var insideLibrary = self.assetLibrary;
+                    if (group != nil) {
+                        group.setAssetsFilter(ALAssetsFilter.allPhotos());
+                        /*
+                        group.posterImage -> small image for icon
+                        */
+                        self.assetGroups.append(group);
+                        //if (self.assetGroups.count == 1) {
+                        if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
+                            //first asset I've loaded
+                            //NSLog("First asset group, adding + loading")
+                            var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
+                            self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
+                            self.savedPhotoIndex = self.assetGroups.count - 1;
+                            self.groupSelected = self.savedPhotoIndex;
+                            self.loadImagesForCurrent();
+                        }
+                    }
+                    else {
+                    }
+                };
+                self.assetLibrary = ALAssetsLibrary();
+                //ALAssetsGroupType(ALAssetsGroupAll)
+                self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
             }
-            }
-            , failureBlock: {
-                (error: NSError!)->Void in
-                
-                //assetLibrary!
-                //NSLog("Add alert view telling I couldn't open my images");
-            });
-        
-        optionsView.hidden = true;  //this should be set to this by storyboard by default
+        });
     }
+    /*
+    {
+    (group, stop) in
+    var insideLibrary = self.assetLibrary;
+    if (group) {
+    group.setAssetsFilter(ALAssetsFilter.allPhotos());
+    /*
+    group.posterImage -> small image for icon
+    */
+    self.assetGroups.append(group);
+    //if (self.assetGroups.count == 1) {
+    if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
+    //first asset I've loaded
+    //NSLog("First asset group, adding + loading")
+    var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
+    self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
+    self.savedPhotoIndex = self.assetGroups.count - 1;
+    self.groupSelected = self.savedPhotoIndex;
+    self.loadImagesForCurrent();
+    }
+    }
+    }
+    */
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    /*
+    func doStuff(group: ALAssetsGroup?, stop: UnsafeMutablePointer<ObjCBool>) {
+        var insideLibrary = self.assetLibrary;
+        if (group != nil) {
+            group!.setAssetsFilter(ALAssetsFilter.allPhotos());
+            /*
+            group.posterImage -> small image for icon
+            */
+            self.assetGroups.append(group!);
+            //if (self.assetGroups.count == 1) {
+            if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
+                //first asset I've loaded
+                //NSLog("First asset group, adding + loading")
+                var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
+                self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
+                self.savedPhotoIndex = self.assetGroups.count - 1;
+                self.groupSelected = self.savedPhotoIndex;
+                self.loadImagesForCurrent();
+            }
+        }
+    }*/
+    
+    //assetLibrary!
+    //NSLog("Add alert view telling I couldn't open my images");
+    /*struct Static {
+        static var token: dispatch_once_t = 0;
+        static var library: ALAssetsLibrary?;
+    }*/
+    /*class func getDefaultAssetLibrary()->ALAssetsLibrary? {
+        var token: dispatch_once_t = 0;
+        dispatch_once(&token, {() in
+            Static.library = ALAssetsLibrary();
+        });
+        return Static.library;
+    }*/
     
     func getGalleryTimeForIndex(groupIndex: Int)->String {
         return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName) as String
@@ -161,8 +232,6 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 }
             }
             });
-        
-        
     }
     
     

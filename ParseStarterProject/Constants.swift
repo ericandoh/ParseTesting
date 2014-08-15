@@ -134,7 +134,6 @@ let TRUE_FULLSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height;
 //height of a fullscreen image
 //let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
 
-
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
@@ -147,6 +146,10 @@ let MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT = TRUE_FULLSCREEN_HEIGHT - 75.0 - 45.
 //how dim the right side of the menu becomes when side menu (left) is triggered and pulled out
 //you can change hue in storyboard
 let SIDE_MENU_DIM = CGFloat(0.05);
+
+let SIDE_MENU_HEADER_HEIGHT = CGFloat(70);
+
+let SIDE_MENU_TABLE_HEIGHT = TRUE_FULLSCREEN_HEIGHT - SIDE_MENU_HEADER_HEIGHT;
 
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(TRUE_FULLSCREEN_HEIGHT);
@@ -219,6 +222,9 @@ let SIDE_MENU_OPACITIES = [0.1, 0.25, 0.37, 0.57, 0.75, 1.0];
 
 //how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
 let DAMPENING_CONSTANT = CGFloat(2.5);
+
+//side menu individual heights
+let SIDE_MENU_TABLE_CELL_HEIGHT = SIDE_MENU_TABLE_HEIGHT / CGFloat(SIDE_MENU_ITEMS.count)
 
 //----------------------------Type Constants---------------------------------
 

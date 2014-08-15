@@ -328,6 +328,9 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         var boardName = SIDE_MENU_ITEMS[indexPath.row];
         displayContent(boardName);
     }
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return SIDE_MENU_TABLE_CELL_HEIGHT;
+    }
     
     /*
     // #pragma mark - Navigation
