@@ -115,7 +115,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
             sendBackImages(1);
         }
-        super.viewWillDisappear(animated);
         backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
         //if (self.navigationController) {
         //self.navigationController.setNavigationBarHidden(false, animated: false);

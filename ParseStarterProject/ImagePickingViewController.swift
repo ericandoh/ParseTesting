@@ -149,6 +149,10 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     }
     }
     */
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
