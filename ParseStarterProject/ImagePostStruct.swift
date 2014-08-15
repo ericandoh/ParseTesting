@@ -246,7 +246,13 @@ class ImagePostStructure
             return self.image!;
         }
         else {
-            return self.images[index - 1];
+            if (index - 1 < self.images.count) {
+                return self.images[index - 1];
+            }
+            else {
+                NSLog("Whatever called this is inconsistent!");
+                return UIImage();
+            }
         }
     }
     

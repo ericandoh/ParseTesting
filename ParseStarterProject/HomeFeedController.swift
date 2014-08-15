@@ -433,6 +433,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             }*/
             if (postCounter != 0) {
                 //needLoadOnCurrent = false;
+                //crash - currentpost doesn't actually have image here!
                 self.switchImage(currentPost.getImageAt(postCounter), fromDirection: CompassDirection.STAY);
             }
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
     <dependencies>
-        <deployment version="2048" defaultVersion="1808" identifier="iOS"/>
+        <deployment version="2048" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -99,7 +99,7 @@
         <!--User-->
         <scene sceneID="HDz-ta-5fb">
             <objects>
-                <viewController storyboardIdentifier="UserProfilePage" title="User" id="Ism-7q-CMJ" customClass="UserProfileViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserProfilePage" title="User" id="Ism-7q-CMJ" customClass="UserProfileViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sXG-M8-X8H"/>
                         <viewControllerLayoutGuide type="bottom" id="Wda-xj-Qno"/>
@@ -213,7 +213,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCell" id="faJ-V0-nhN" customClass="SinglePostCollectionViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCell" id="faJ-V0-nhN" customClass="SinglePostCollectionViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -252,7 +252,7 @@
                                 <rect key="frame" x="0.0" y="115" width="320" height="453"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowerCell" id="BIF-3d-nGH" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowerCell" id="BIF-3d-nGH" customClass="UserTextTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="312" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BIF-3d-nGH" id="VgD-Zd-CWB">
@@ -265,7 +265,7 @@
                                                         <constraint firstAttribute="width" constant="40" id="p6Y-hb-fBx"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iF-hN-469" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iF-hN-469" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -385,7 +385,7 @@
         <!--Report a Problem-->
         <scene sceneID="fjr-la-UvI">
             <objects>
-                <viewController id="ueZ-d7-4dO" customClass="ReportProblemViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ueZ-d7-4dO" customClass="ReportProblemViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SIu-bb-iK1"/>
                         <viewControllerLayoutGuide type="bottom" id="jnh-Yw-A2p"/>
@@ -462,7 +462,7 @@
         <!--Settings-->
         <scene sceneID="haf-DS-fF2">
             <objects>
-                <viewController id="KLW-Kf-YUh" customClass="SettingsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="KLW-Kf-YUh" customClass="SettingsViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Sic-ci-0OA"/>
                         <viewControllerLayoutGuide type="bottom" id="cMr-5o-0dE"/>
@@ -718,7 +718,7 @@
         <!--ImagePicker-->
         <scene sceneID="9d5-Uh-EXw">
             <objects>
-                <viewController title="ImagePicker" id="Rfu-F6-5hC" customClass="ImagePickingViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ImagePicker" id="Rfu-F6-5hC" customClass="ImagePickingViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ycI-qK-lSI"/>
                         <viewControllerLayoutGuide type="bottom" id="jK5-Ey-Dm2"/>
@@ -748,7 +748,7 @@
                                     <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="4sV-xw-LmB" customClass="PreviewCollectionViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="4sV-xw-LmB" customClass="PreviewCollectionViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -940,13 +940,13 @@
         <!--Notifications-->
         <scene sceneID="GIw-Di-XCD">
             <objects>
-                <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="NIy-LE-Tj9" customClass="NotifViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="p4X-7C-fEz">
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotifCell" id="oFD-ai-3cA" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NotifCell" id="oFD-ai-3cA" customClass="UserTextTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oFD-ai-3cA" id="M4i-vK-vSd">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -958,7 +958,7 @@
                                                 <constraint firstAttribute="width" constant="40" id="Tke-Am-tZj"/>
                                             </constraints>
                                         </imageView>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                             <rect key="frame" x="55" y="5" width="210" height="40"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
@@ -1031,7 +1031,7 @@
         <!--Single Notif View Controller-->
         <scene sceneID="cxR-Vz-ipw">
             <objects>
-                <viewController id="geD-Vt-qQ8" customClass="SingleNotifViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="geD-Vt-qQ8" customClass="SingleNotifViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="f74-eD-Yoc"/>
                         <viewControllerLayoutGuide type="bottom" id="7th-gM-voU"/>
@@ -1061,7 +1061,7 @@
         <!--Home Feed Controller-->
         <scene sceneID="yIV-MD-BT5">
             <objects>
-                <viewController storyboardIdentifier="Home" id="pRL-aY-NaV" customClass="HomeFeedController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Home" id="pRL-aY-NaV" customClass="HomeFeedController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3bE-tw-3q8"/>
                         <viewControllerLayoutGuide type="bottom" id="v8x-6Y-FYl"/>
@@ -1082,7 +1082,6 @@
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zpb-xV-UL9">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="IGx-IV-fnk">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                         <blurEffect style="light"/>
@@ -1094,7 +1093,7 @@
                                             <constraint firstAttribute="height" constant="1" id="zw2-d7-kRl"/>
                                         </constraints>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="." translatesAutoresizingMaskIntoConstraints="NO" id="sJD-gT-aSa" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="." translatesAutoresizingMaskIntoConstraints="NO" id="sJD-gT-aSa" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="20" y="75" width="280" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -1165,6 +1164,20 @@
                                     <constraint firstItem="sJD-gT-aSa" firstAttribute="width" secondItem="OMB-5F-de4" secondAttribute="width" id="yBL-F5-FY3"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mou-va-zpC">
+                                <rect key="frame" x="10" y="518" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="keU-oi-l5c"/>
+                                    <constraint firstAttribute="width" constant="40" id="xIM-tr-hXr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-LtCn" family="Helvetica Neue LT Pro" pointSize="12"/>
+                                <state key="normal" backgroundImage="heart.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="likePost:" destination="pRL-aY-NaV" eventType="touchUpInside" id="vr3-Ef-FXT"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BN6-Yf-BWR">
                                 <rect key="frame" x="50" y="518" width="40" height="40"/>
                                 <constraints>
@@ -1217,42 +1230,28 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mou-va-zpC">
-                                <rect key="frame" x="10" y="518" width="40" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="keU-oi-l5c"/>
-                                    <constraint firstAttribute="width" constant="40" id="xIM-tr-hXr"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-LtCn" family="Helvetica Neue LT Pro" pointSize="12"/>
-                                <state key="normal" backgroundImage="heart.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="likePost:" destination="pRL-aY-NaV" eventType="touchUpInside" id="vr3-Ef-FXT"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="RcL-Em-b9e" secondAttribute="bottom" id="4a9-fN-gi1"/>
+                            <constraint firstItem="mou-va-zpC" firstAttribute="top" secondItem="BN6-Yf-BWR" secondAttribute="top" id="5fx-Eh-X36"/>
                             <constraint firstItem="BN6-Yf-BWR" firstAttribute="leading" secondItem="mou-va-zpC" secondAttribute="trailing" id="7Ba-JT-jXv"/>
                             <constraint firstItem="skp-OY-eru" firstAttribute="leading" secondItem="BN6-Yf-BWR" secondAttribute="trailing" id="8Q2-45-dei"/>
                             <constraint firstAttribute="trailing" secondItem="7Zw-G9-3Mn" secondAttribute="trailing" constant="10" id="E20-aM-DtL"/>
-                            <constraint firstAttribute="bottom" secondItem="BN6-Yf-BWR" secondAttribute="bottom" constant="10" id="JIX-7X-jah"/>
-                            <constraint firstAttribute="bottom" secondItem="skp-OY-eru" secondAttribute="bottom" constant="10" id="SuW-nb-kA8"/>
+                            <constraint firstItem="7Zw-G9-3Mn" firstAttribute="top" secondItem="s1V-MZ-bqM" secondAttribute="top" id="HRL-xr-ak2"/>
+                            <constraint firstItem="s1V-MZ-bqM" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="top" id="KEh-Mb-p5r"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="cgl-wc-12J"/>
                             <constraint firstAttribute="bottom" secondItem="JEl-EV-uT7" secondAttribute="bottom" id="eb7-2p-ULl"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="g0Z-rQ-7tn"/>
+                            <constraint firstItem="BN6-Yf-BWR" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="top" id="gsA-Wv-8Lw"/>
                             <constraint firstItem="mou-va-zpC" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="10" id="gwF-IG-dht"/>
                             <constraint firstItem="s1V-MZ-bqM" firstAttribute="leading" secondItem="skp-OY-eru" secondAttribute="trailing" id="h2O-qc-SSA"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="hDq-g7-kfP"/>
-                            <constraint firstAttribute="bottom" secondItem="7Zw-G9-3Mn" secondAttribute="bottom" constant="10" id="klX-AZ-htr"/>
                             <constraint firstAttribute="trailing" secondItem="JEl-EV-uT7" secondAttribute="trailing" id="qc0-ea-Yet"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="qmO-7s-xSY"/>
                             <constraint firstAttribute="bottom" secondItem="mou-va-zpC" secondAttribute="bottom" constant="10" id="tbC-YZ-RwR"/>
                             <constraint firstAttribute="trailing" secondItem="RcL-Em-b9e" secondAttribute="trailing" id="th2-As-vdq"/>
-                            <constraint firstAttribute="bottom" secondItem="s1V-MZ-bqM" secondAttribute="bottom" constant="10" id="wFu-0o-pHB"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="PZh-Be-jJe" appends="YES" id="IfI-bW-ehN"/>
@@ -1332,7 +1331,7 @@
         <!--Comment View Controller-->
         <scene sceneID="47n-dt-Vi0">
             <objects>
-                <viewController storyboardIdentifier="CommentsTestController" id="qDB-cd-cme" customClass="CommentViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommentsTestController" id="qDB-cd-cme" customClass="CommentViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zpi-Oq-juO"/>
                         <viewControllerLayoutGuide type="bottom" id="s45-Ge-O20"/>
@@ -1361,7 +1360,7 @@
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="M1W-Hd-U9k" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="M1W-Hd-U9k" customClass="UserTextTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M1W-Hd-U9k" id="ndu-hP-mSs">
@@ -1374,7 +1373,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="JI0-Xk-fTw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="44"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1489,7 +1488,7 @@
         <!--Username Setup View Controller-->
         <scene sceneID="ptc-ng-DY5">
             <objects>
-                <viewController id="B0E-wR-fsK" customClass="FBUsernameSetupViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="B0E-wR-fsK" customClass="FBUsernameSetupViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bMu-tX-yaP"/>
                         <viewControllerLayoutGuide type="bottom" id="e2X-V9-vQ9"/>
@@ -1550,7 +1549,7 @@
         <!--Start Controller-->
         <scene sceneID="zwv-W1-UcF">
             <objects>
-                <viewController id="cfa-MP-8Gc" customClass="StartController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cfa-MP-8Gc" customClass="StartController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KLQ-sr-zh0"/>
                         <viewControllerLayoutGuide type="bottom" id="vy2-4W-52w"/>
@@ -1583,7 +1582,7 @@
         <!--Side Menu Managing View Controller-->
         <scene sceneID="Pcq-HU-qzW">
             <objects>
-                <viewController id="oQL-hX-F0F" customClass="SideMenuManagingViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="oQL-hX-F0F" customClass="SideMenuManagingViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z7h-M6-J5E"/>
                         <viewControllerLayoutGuide type="bottom" id="ist-gp-Mes"/>
@@ -1616,7 +1615,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuItem" id="iyR-Dv-GTa" customClass="SideMenuTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuItem" id="iyR-Dv-GTa" customClass="SideMenuTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="160" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iyR-Dv-GTa" id="uxA-D2-eBt">
@@ -1731,7 +1730,7 @@
         <!--Find Friends-->
         <scene sceneID="su8-22-FyD">
             <objects>
-                <viewController storyboardIdentifier="FindFriendsView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Anw-Wq-Q2x" customClass="FindFriendsViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FindFriendsView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Anw-Wq-Q2x" customClass="FindFriendsViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TGF-PO-hWA"/>
                         <viewControllerLayoutGuide type="bottom" id="he7-gx-ORq"/>
@@ -1800,7 +1799,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="Aio-uW-Mc1" customClass="SuggestedHeaderView" customModule="ParseStarterProject" customModuleProvider="target">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Header" id="Aio-uW-Mc1" customClass="SuggestedHeaderView" customModule="FashionStash" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -1879,7 +1878,7 @@
                                 <rect key="frame" x="0.0" y="109" width="320" height="459"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchFriendCell" id="d6T-S9-WYU" customClass="UserTextTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchFriendCell" id="d6T-S9-WYU" customClass="UserTextTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d6T-S9-WYU" id="vMu-JP-xHs">
@@ -1892,7 +1891,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="PzA-Z7-D8o"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIk-ky-EjX" customClass="LinkFilledTextView" customModule="ParseStarterProject" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIk-ky-EjX" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2007,7 +2006,7 @@
         <!--Log in-->
         <scene sceneID="ajb-T3-ml5">
             <objects>
-                <viewController id="Z5R-ca-bUH" customClass="NewLoginViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Z5R-ca-bUH" customClass="NewLoginViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kSO-Gc-Mbh"/>
                         <viewControllerLayoutGuide type="bottom" id="17l-0w-PJK"/>
@@ -2076,7 +2075,7 @@
         <!--Search View Controller-->
         <scene sceneID="Ya9-qu-hy2">
             <objects>
-                <viewController storyboardIdentifier="SearchWindow" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d93-87-W5i" customClass="SearchViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchWindow" useStoryboardIdentifierAsRestorationIdentifier="YES" id="d93-87-W5i" customClass="SearchViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ReR-TV-mNd"/>
                         <viewControllerLayoutGuide type="bottom" id="rIy-Mp-g7Y"/>
@@ -2136,7 +2135,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCell" id="a2e-F6-1GB" customClass="SinglePostCollectionViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PostCell" id="a2e-F6-1GB" customClass="SinglePostCollectionViewCell" customModule="FashionStash" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2199,7 +2198,7 @@
         <!--ImagePreview-->
         <scene sceneID="dJH-XE-0Yx">
             <objects>
-                <viewController restorationIdentifier="ImagePreview" storyboardIdentifier="ImagePreview" title="ImagePreview" id="gqO-OJ-AGi" userLabel="ImagePreview" customClass="ImagePreviewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ImagePreview" storyboardIdentifier="ImagePreview" title="ImagePreview" id="gqO-OJ-AGi" userLabel="ImagePreview" customClass="ImagePreviewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y6y-yY-045"/>
                         <viewControllerLayoutGuide type="bottom" id="lHx-EV-sBv"/>
@@ -2255,11 +2254,11 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="ParseStarterProject" customModuleProvider="target">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="FashionStash" customModuleProvider="target">
                                                 <rect key="frame" x="85" y="-62" width="150" height="285"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideCell" id="0Es-dJ-V3Z" customClass="SideTableViewCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideCell" id="0Es-dJ-V3Z" customClass="SideTableViewCell" customModule="FashionStash" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Es-dJ-V3Z" id="dWX-hD-r8l">
@@ -2518,7 +2517,7 @@
         <!--Login-->
         <scene sceneID="BBQ-Cj-GdR">
             <objects>
-                <viewController id="qU9-dM-KP1" customClass="RealLoginViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="qU9-dM-KP1" customClass="RealLoginViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0jX-Jv-apx"/>
                         <viewControllerLayoutGuide type="bottom" id="CSn-Ro-UqH"/>
