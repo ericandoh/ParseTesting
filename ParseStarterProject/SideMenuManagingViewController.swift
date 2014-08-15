@@ -171,6 +171,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             if (refreshingHome) {
                 old = self.viewControllerDictionary[contentString];
                 content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+                setContentConstraints(content)
                 self.viewControllerDictionary[contentString] = content;
             }
         }
@@ -180,6 +181,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             } else {
                 content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
             }
+            setContentConstraints(content);
             self.viewControllerDictionary[contentString] = content;
         }
         content.view.alpha = 0;
@@ -232,6 +234,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             
             //self.currentlyShowing = contentString;
             self.sideView.hidden = true;
+            self.view.layoutIfNeeded();
+            self.view.layoutSubviews();
             });
     }
     func hideContentController(content: UIViewController) {
@@ -268,7 +272,19 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             needRemove.append(self.viewControllerDictionary[contentString]!);
         }
         var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+        setContentConstraints(content);
         self.viewControllerDictionary[contentString] = content;
+    }
+    func setContentConstraints(controller: UIViewController) {
+        let viewsDictionary: NSDictionary = ["view": self.view]
+        //var verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
+        //var horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
+        var horizontalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: FULLSCREEN_WIDTH);
+        var verticalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: TRUE_FULLSCREEN_HEIGHT);
+        controller.view.addConstraint(verticalConstraint);
+        controller.view.addConstraint(horizontalConstraint);
+        controller.view.setNeedsLayout();
+        controller.view.setNeedsUpdateConstraints();
     }
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
         return SIDE_MENU_ITEMS.count;

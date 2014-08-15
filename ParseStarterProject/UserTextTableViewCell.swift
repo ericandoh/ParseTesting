@@ -60,7 +60,7 @@ class UserTextTableViewCell: UITableViewCell {
                     //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     if (friendAtTimeOfSnapshot!.username == involvedUser!.username) {
                         self.userImage!.image = fetchedImage;
-                        self.userImage!.autoresizingMask = UIViewAutoresizing.None;
+                        //self.userImage!.autoresizingMask = UIViewAutoresizing.None;
                         //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
                         self.userImage!.layer.cornerRadius = (40.0) / 2
                         //self.userImage!.layer.cornerRadius = (40.0) / 2

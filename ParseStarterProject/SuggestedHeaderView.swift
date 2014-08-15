@@ -32,7 +32,7 @@ class SuggestedHeaderView: UICollectionReusableView {
             involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
                 //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.iconImage!.image = fetchedImage;
-                self.iconImage!.autoresizingMask = UIViewAutoresizing.None;
+                //self.iconImage!.autoresizingMask = UIViewAutoresizing.None;
                 //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
                 self.iconImage!.layer.cornerRadius = (40.0) / 2
                 //self.userImage!.layer.cornerRadius = (40.0) / 2

@@ -150,6 +150,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
+        
     }
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
