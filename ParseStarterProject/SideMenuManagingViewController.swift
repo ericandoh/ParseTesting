@@ -171,7 +171,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             if (refreshingHome) {
                 old = self.viewControllerDictionary[contentString];
                 content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
-                setContentConstraints(content)
+                //setContentConstraints(content)
                 self.viewControllerDictionary[contentString] = content;
             }
         }
@@ -181,7 +181,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             } else {
                 content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
             }
-            setContentConstraints(content);
+            //setContentConstraints(content);
             self.viewControllerDictionary[contentString] = content;
         }
         content.view.alpha = 0;
@@ -197,8 +197,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             
             if (self.viewControllerDictionary[previouslyShowing] == nil) {
                 self.addChildViewController(content);
-                content.view.frame = self.contentArea.frame;
-                self.view.addSubview(content.view);
+                //content.view.frame = self.contentArea.frame;
+                self.contentArea.addSubview(content.view);    //new
+                self.setContentConstraints(content);
+                //self.view.addSubview(content.view);
                 content.didMoveToParentViewController(self);
                 UIView.animateWithDuration(0.3, animations: {()->Void in
                     content.view.alpha = 1;
@@ -211,9 +213,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                 
                 old!.willMoveToParentViewController(nil);
                 self.addChildViewController(content);
-                content.view.frame = self.contentArea.frame;
-                self.view.addSubview(content.view);
-                //content.didMoveToParentViewController(self);
+                //content.view.frame = self.contentArea.frame;
+                self.contentArea.addSubview(content.view);    //new
+                self.setContentConstraints(content);
+                //self.view.addSubview(content.view);
                 UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut,
                     animations: {()->Void in
                     content.view.alpha = 1;
@@ -272,19 +275,30 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             needRemove.append(self.viewControllerDictionary[contentString]!);
         }
         var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
-        setContentConstraints(content);
+        //setContentConstraints(content);
         self.viewControllerDictionary[contentString] = content;
     }
     func setContentConstraints(controller: UIViewController) {
-        let viewsDictionary: NSDictionary = ["view": self.view]
+        //let viewsDictionary: NSDictionary = ["view": self.contentArea]
         //var verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
         //var horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|[view(==40)]|", options: NSLayoutFormatOptions.fromRaw(0)!, metrics: nil, views: viewsDictionary);
-        var horizontalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: FULLSCREEN_WIDTH);
-        var verticalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: TRUE_FULLSCREEN_HEIGHT);
-        controller.view.addConstraint(verticalConstraint);
-        controller.view.addConstraint(horizontalConstraint);
-        controller.view.setNeedsLayout();
-        controller.view.setNeedsUpdateConstraints();
+        //var horizontalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: FULLSCREEN_WIDTH);
+        //var verticalConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0, constant: TRUE_FULLSCREEN_HEIGHT);
+        //controller.view.addConstraint(verticalConstraint);
+        //controller.view.addConstraint(horizontalConstraint);
+        //controller.view.setNeedsLayout();
+        //controller.view.setNeedsUpdateConstraints();
+        var myConstraints = controller.view.constraints();
+        controller.view.removeConstraints(myConstraints);
+        var topConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0);
+        var leadingConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0);
+        var trailingConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0);
+        var bottomConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0);
+        self.contentArea.addConstraint(topConstraint);
+        self.contentArea.addConstraint(leadingConstraint);
+        self.contentArea.addConstraint(trailingConstraint);
+        self.contentArea.addConstraint(bottomConstraint);
+        controller.view.addConstraints(myConstraints);
     }
     func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
         return SIDE_MENU_ITEMS.count;

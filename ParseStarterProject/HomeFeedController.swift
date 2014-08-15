@@ -93,6 +93,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSLog("\(self.view.frame.height)");
+        
         editPostButton.hidden = true;
         
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
@@ -121,7 +123,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         //}
         
         var frame: CGRect = frontImageView.frame;
-        backImageView = UIImageView(frame: frame);
+        //backImageView = UIImageView(frame: frame);
+        backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
         backImageView!.hidden = true;
         backImageView!.alpha = 0;
         backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
@@ -170,6 +173,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         //self.imgBuffer!.loadSet();
+        NSLog("\(self.view.frame.height)");
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -219,21 +223,19 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     func setLoadingImage() {
-        NSLog("Enable the spinner!");
         loadingSpinner!.hidden = false;
         loadingSpinner!.startAnimating();
         self.view.bringSubviewToFront(loadingSpinner!);
         frontImageView!.image = LOADING_IMG;
     }
     func switchImageToLoading(fromDirection: CompassDirection) {
-        NSLog("Switch to load, ignore next 'setting an acutal'")
-        switchImage(NULL_IMG, fromDirection: fromDirection);
-        setLoadingImage();
+        switchImage(LOADING_IMG, fromDirection: fromDirection);
+        loadingSpinner!.hidden = false;
+        loadingSpinner!.startAnimating();
+        self.view.bringSubviewToFront(loadingSpinner!);
     }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
-        NSLog("Setting an acutal image");
         if (loadingSpinner!.hidden == false) {
-            NSLog("Disable the spinner!");
             self.view.sendSubviewToBack(loadingSpinner!);
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
@@ -440,6 +442,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         }
     }
     func startViewingComments(currentPost: ImagePostStructure) {
+        
+        if (loadingSpinner!.hidden == false) {
+            self.view.sendSubviewToBack(loadingSpinner!);
+            loadingSpinner!.stopAnimating();
+            loadingSpinner!.hidden = true;
+        }
         
         //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
