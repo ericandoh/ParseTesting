@@ -41,6 +41,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             self.navigationController.interactivePopGestureRecognizer.enabled = false;
         }
         
+        searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;

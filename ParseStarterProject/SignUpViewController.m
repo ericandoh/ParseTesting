@@ -35,15 +35,18 @@
     self.userTextField.borderStyle = UITextBorderStyleNone;
     self.userTextField.layer.borderWidth = 1;
     self.userTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.userTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     
     self.passwordTextField.borderStyle = UITextBorderStyleNone;
     self.passwordTextField.layer.borderWidth = 1;
     self.passwordTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.passwordTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     
     self.emailTextField.borderStyle = UITextBorderStyleNone;
     self.emailTextField.layer.borderWidth = 1;
     self.emailTextField.layer.borderColor = [[UIColor whiteColor] CGColor];
-    
+    self.emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+
 }
 
 - (void)didReceiveMemoryWarning

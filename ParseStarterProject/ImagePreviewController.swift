@@ -72,7 +72,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.layer.borderColor = UIColor.whiteColor().CGColor;
         //textView.layer.cornerRadius = 8;
         textView.delegate = self;
+        textView.keyboardAppearance = UIKeyboardAppearance.Dark;
         
+        labelBar.keyboardAppearance = UIKeyboardAppearance.Dark
         labelBar.borderStyle = UITextBorderStyle.None;
         labelBar.layer.borderWidth = 1;
         labelBar.layer.borderColor = UIColor.whiteColor().CGColor;

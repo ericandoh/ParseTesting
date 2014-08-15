@@ -61,6 +61,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController.navigationBar.topItem.title = "Find Followers";
         // Do any additional setup after loading the view.
         
+        searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
