@@ -256,6 +256,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             searchResult = currentTerm;
         }
         else {
+            //crashed here
+            //maybe array check index out of range
             searchResult = searchTermList[indexPath.row - 1];
         }
         startSearch(searchResult);

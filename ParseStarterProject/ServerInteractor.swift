@@ -1486,7 +1486,7 @@ import UIKit
             var firstName: String = fName as NSString;
             
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
-            var lastName: String = lName as NSString;
+            var lastName: String = lName as NSString;   //crashed here again
             
             var cEmails: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
             var contactEmail = "";

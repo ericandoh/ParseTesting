@@ -204,12 +204,19 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         var numAssets = assetGroups[groupSelected].numberOfAssets();
         
         currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1));
-        
+        //currentAssets = [];
+        self.myCollectionView.reloadData();
         /*for (loc, check: ImageIndex) in enumerate(highlightOrder) {
             if (check.groupNum == groupSelected) {
                 currentAssets[check.index].highlighted = loc;
             }
         }*/
+        for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
+            if (check.groupNum == self.groupSelected) {
+                self.currentAssets[check.index].highlighted = loc;
+                //self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
+            }
+        }
         var currentGroup = assetGroups[groupSelected];
         currentGroup.enumerateAssetsUsingBlock({
             (result, index, stop) in
@@ -221,12 +228,26 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
                 self.backImageView.image = assetImg;
             }
-            self.currentAssets[index].asset = result;
-            self.myCollectionView.reloadData();
+            if(index < self.currentAssets.count) {
+                self.currentAssets[index].asset = result;
+                self.myCollectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow: index + 1, inSection: 0)]);
+            }
+            else {
+                var currentCount = self.currentAssets.count;
+                self.currentAssets += Array(count: index-currentCount + 1, repeatedValue: AssetItem(asset: nil, highlighted: -1));
+                self.currentAssets[index].asset = result;
+                var indexPaths: Array<NSIndexPath> = [];
+                for i in currentCount..<(index+1) {
+                    indexPaths.append(NSIndexPath(forRow: i + 1, inSection: 0));
+                }
+                self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
+            }
+            //self.currentAssets[index].asset = result;
+            //self.myCollectionView.reloadData();
             if (index == numAssets - 1) {
                 for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
                     if (check.groupNum == self.groupSelected) {
-                        self.currentAssets[check.index].highlighted = loc;
+                        //self.currentAssets[check.index].highlighted = loc;
                         self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
                     }
                 }
@@ -308,7 +329,11 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         
         row--;
-        
+        if (self.currentAssets[row].asset == nil) {
+            cell.label.text = "";
+            cell.image.image = UIImage();
+            return cell;
+        }
         cell.image.image = UIImage(CGImage: self.currentAssets[row].asset!.thumbnail().takeUnretainedValue());
         if (self.currentAssets[row].highlighted != -1) {
             //cell.backgroundColor = UIColor.yellowColor();
@@ -356,7 +381,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
             imagePicker.delegate = self;
             imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
-            imagePicker.mediaTypes = [kUTTypeImage];
+            imagePicker.mediaTypes = [kUTTypeImage];    //crashed here
             imagePicker.allowsEditing = false;
             self.presentViewController(imagePicker, animated:false, completion:nil);
             usingCamera = true;

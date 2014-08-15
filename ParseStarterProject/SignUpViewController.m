@@ -8,7 +8,7 @@
 
 #import "ParseStarterProjectAppDelegate.h"
 #import "SignUpViewController.h"
-#import "ParseStarterProject-Swift.h"
+#import "FashionStash-Swift.h"
 
 @implementation SignUpViewController
 

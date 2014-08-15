@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "09ABC06C13A1D52D009C3FCF"
-               BuildableName = "ParseStarterProject.app"
-               BlueprintName = "ParseStarterProject"
-               ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+               BuildableName = "FashionStash.app"
+               BlueprintName = "FashionStash"
+               ReferencedContainer = "container:FashionStash.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09ABC06C13A1D52D009C3FCF"
-            BuildableName = "ParseStarterProject.app"
-            BlueprintName = "ParseStarterProject"
-            ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            BuildableName = "FashionStash.app"
+            BlueprintName = "FashionStash"
+            ReferencedContainer = "container:FashionStash.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -52,9 +52,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09ABC06C13A1D52D009C3FCF"
-            BuildableName = "ParseStarterProject.app"
-            BlueprintName = "ParseStarterProject"
-            ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            BuildableName = "FashionStash.app"
+            BlueprintName = "FashionStash"
+            ReferencedContainer = "container:FashionStash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -70,9 +70,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "09ABC06C13A1D52D009C3FCF"
-            BuildableName = "ParseStarterProject.app"
-            BlueprintName = "ParseStarterProject"
-            ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            BuildableName = "FashionStash.app"
+            BlueprintName = "FashionStash"
+            ReferencedContainer = "container:FashionStash.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
