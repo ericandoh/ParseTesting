@@ -110,6 +110,19 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             backImageView.image = receivedImages[0];
         }*/
     }
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
+            sendBackImages(1);
+        }
+        super.viewWillDisappear(animated);
+        backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+        //if (self.navigationController) {
+        //self.navigationController.setNavigationBarHidden(false, animated: false);
+        //self.navigationController.navigationBar.hidden = false;
+        //self.navigationController.navigationBar.translucent = false;
+        //}
+    }
     
     func setPlaceholderText() {
         placeholding = true;
@@ -433,12 +446,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-    override func viewWillDisappear(animated: Bool) {
-        if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
-            sendBackImages(1);
-        }
-        super.viewWillDisappear(animated);
-    }
+    
     
 /*
     // #pragma mark - Navigation
