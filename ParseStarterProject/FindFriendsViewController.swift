@@ -88,6 +88,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
+        searchBar.resignFirstResponder();
         searchBar.text = "";
         isSearching = false;
         searchTermList = [];
@@ -176,6 +177,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         if (searchText == "") {
+            searchBar.resignFirstResponder();
             if (isSearching) {
                 isSearching = false;
                 searchTermList = [];
@@ -325,22 +327,30 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.pressedTableAt(indexPath);
     }
+    func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
+        pressedTableAt(FriendEncapsulator.dequeueFriendEncapsulator(searchBar.text.lowercaseString));
+    }
     func pressedTableAt(indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
         var searchResult: String = "";
         var friend: FriendEncapsulator?;
+        friend = searchTermList[indexPath.row];
+        pressedTableAt(friend!);
+    }
+    func pressedTableAt(friend: FriendEncapsulator) {
+        searchBar.resignFirstResponder();
         //if (index == 0) {
             //searchResult = currentTerm;
             //friend = FriendEncapsulator(friendName: searchResult);
         //}
         //else {
-        friend = searchTermList[indexPath.row];
+        
         //}
         //startSearch(searchResult);
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
         
         //var friend = FriendEncapsulator(friendName: searchResult);
-        friend!.exists({(exist: Bool) in
+        friend.exists({(exist: Bool) in
             if (exist) {
                 self.searchBar.text = "";
                 self.isSearching = false;
@@ -348,11 +358,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.searchFriendsTableView.hidden = true;
                 self.setNewBackgroundFor(nil);
                 var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-                (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
+                (nextBoard as UserProfileViewController).receiveUserInfo(friend);
                 self.navigationController.pushViewController(nextBoard, animated: true);
             }
             else {
-                let alert: UIAlertController = UIAlertController(title: "No user found!", message: "User \(searchResult) does not exist", preferredStyle: UIAlertControllerStyle.Alert);
+                let alert: UIAlertController = UIAlertController(title: "No user found!", message: "User \(friend.username) does not exist", preferredStyle: UIAlertControllerStyle.Alert);
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                     //canceled
                     }));

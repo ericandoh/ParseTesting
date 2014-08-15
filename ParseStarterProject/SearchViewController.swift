@@ -152,7 +152,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     //------------search bar functions---------------
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         if (searchText == "") {
-            
             //no need to do jack when 0
             if (doingSearch == 1) {
                 /*if (collectionDelegateSearch) {
@@ -164,7 +163,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 doingSearch = 0;
                 myTable.hidden = true;
                 myCollectionView.hidden = false;
-                self.navigationController.navigationBar.topItem.title = "Search";
+                self.navigationController.navigationBar.topItem.title = "Popular";
             }
             else if (doingSearch == 2) {
                 /*if (collectionDelegateSearch) {
@@ -177,8 +176,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 //myTable.hidden = true;
                 //myCollectionView.hidden = false;
                 //add animations here;
-                self.navigationController.navigationBar.topItem.title = "Search";
+                self.navigationController.navigationBar.topItem.title = "Popular";
             }
+            NSLog("A");
+            searchBar.resignFirstResponder();
         }
         else if (searchText != "") {
             if (doingSearch == 0) {
@@ -260,8 +261,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             //maybe array check index out of range
             searchResult = searchTermList[indexPath.row - 1];
         }
+        searchBar.resignFirstResponder();
         startSearch(searchResult);
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
+    }
+    func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
+        searchBar.resignFirstResponder();
+        startSearch(searchBar.text);
+    }
+    func searchBarCancelButtonClicked(searchBar: UISearchBar!) {
+        NSLog("....adfajfosa")
     }
     func startSearch(searchResult: String) {
         //starts a search with a term

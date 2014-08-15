@@ -54,7 +54,6 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func keyboardWillShow(notif: NSNotification) {
-        NSLog("Keyboard Will Show")
         
         let s: NSValue = notif.userInfo[UIKeyboardFrameEndUserInfoKey] as NSValue;
         let rect :CGRect = s.CGRectValue();
@@ -72,7 +71,6 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func keyboardWillHide(notif: NSNotification) {
         
-        NSLog("Keyboard Will Hide")
         let s: NSValue = notif.userInfo[UIKeyboardFrameBeginUserInfoKey] as NSValue;
         let rect :CGRect = s.CGRectValue();
 
@@ -117,8 +115,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             var alert = UIAlertController(title: "Error!", message: "Anonymous users can't post comments!", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
             self.presentViewController(alert, animated: true, completion: nil)
+            self.commentTextField.resignFirstResponder();
         } else {
-
+            self.commentTextField.resignFirstResponder();
             var commentToAdd = commentTextField.text;
         
             var comment = currentPost!.addComment(commentToAdd);
