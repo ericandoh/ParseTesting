@@ -54,6 +54,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 
         // Do any additional setup after loading the view.
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
+        tapRecognizer.cancelsTouchesInView = false;
         self.myTable.addGestureRecognizer(tapRecognizer);
         myTable.hidden = true;
         

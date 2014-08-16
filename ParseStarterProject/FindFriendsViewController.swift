@@ -71,6 +71,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
         self.searchFriendsTableView.estimatedRowHeight = 60.0;
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
+        tapRecognizer.cancelsTouchesInView = false;
         self.searchFriendsTableView.addGestureRecognizer(tapRecognizer);
 
         

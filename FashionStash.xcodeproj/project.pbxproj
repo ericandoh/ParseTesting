@@ -147,8 +147,9 @@
 		D9DEE62B199EB3EB00F08CC5 /* follow.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE629199EB3EB00F08CC5 /* follow.png */; };
 		D9DEE62C199EB3EB00F08CC5 /* followed.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE62A199EB3EB00F08CC5 /* followed.png */; };
 		D9DEE62E199EB41200F08CC5 /* close_button.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE62D199EB41200F08CC5 /* close_button.png */; };
-		D9DEE630199EB42F00F08CC5 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE62F199EB42F00F08CC5 /* settings.png */; };
 		D9DEE632199EB4A900F08CC5 /* delete_swipe_info_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE631199EB4A900F08CC5 /* delete_swipe_info_bar.png */; };
+		D9DEE636199EF62300F08CC5 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE635199EF62300F08CC5 /* settings.png */; };
+		D9DEE638199F0C1100F08CC5 /* tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE637199F0C1100F08CC5 /* tutorial.png */; };
 		D9F89B19195CCD9700849B1D /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B18195CCD9700849B1D /* StartController.swift */; };
 		D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1C195CE30600849B1D /* ImagePost.swift */; };
 		D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */; };
@@ -309,8 +310,9 @@
 		D9DEE629199EB3EB00F08CC5 /* follow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = follow.png; sourceTree = "<group>"; };
 		D9DEE62A199EB3EB00F08CC5 /* followed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = followed.png; sourceTree = "<group>"; };
 		D9DEE62D199EB41200F08CC5 /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close_button.png; sourceTree = "<group>"; };
-		D9DEE62F199EB42F00F08CC5 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		D9DEE631199EB4A900F08CC5 /* delete_swipe_info_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete_swipe_info_bar.png; sourceTree = "<group>"; };
+		D9DEE635199EF62300F08CC5 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		D9DEE637199F0C1100F08CC5 /* tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial.png; sourceTree = "<group>"; };
 		D9F89B18195CCD9700849B1D /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		D9F89B1C195CE30600849B1D /* ImagePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePost.swift; sourceTree = "<group>"; };
 		D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostStruct.swift; sourceTree = "<group>"; };
@@ -428,8 +430,8 @@
 			children = (
 				D91E5EA0199BBDA50041CB3F /* logo_menu.png */,
 				D9DEE629199EB3EB00F08CC5 /* follow.png */,
-				D9DEE62F199EB42F00F08CC5 /* settings.png */,
 				D9DEE62D199EB41200F08CC5 /* close_button.png */,
+				D9DEE635199EF62300F08CC5 /* settings.png */,
 				D9DEE62A199EB3EB00F08CC5 /* followed.png */,
 				D93CD466199540E4001F0253 /* arrow_left.png */,
 				D93CD467199540E4001F0253 /* arrow_right.png */,
@@ -536,6 +538,7 @@
 		D99B5FCF196DBB2500662A39 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				D9DEE637199F0C1100F08CC5 /* tutorial.png */,
 				D93CD47C19954157001F0253 /* logo.png */,
 				D9DEE627199EB3DB00F08CC5 /* unknown_user.png */,
 				D9BB5926199A803900367408 /* plus.png */,
@@ -684,7 +687,7 @@
 				D93CD465199540CA001F0253 /* backcolor.png in Resources */,
 				D9BB5966199A844100367408 /* HelveticaNeueLTPro-BdOu.otf in Resources */,
 				D9BB5987199A844100367408 /* HelveticaNeueLTPro-ThCnO.otf in Resources */,
-				D9DEE630199EB42F00F08CC5 /* settings.png in Resources */,
+				D9DEE636199EF62300F08CC5 /* settings.png in Resources */,
 				D9BB598A199A844100367408 /* HelveticaNeueLTPro-ThIt.otf in Resources */,
 				D9BB598D199A844100367408 /* HelveticaNeueLTPro-UltLtCnO.otf in Resources */,
 				D9BB5978199A844100367408 /* HelveticaNeueLTPro-Lt.otf in Resources */,
@@ -739,6 +742,7 @@
 				D9BB5969199A844100367408 /* HelveticaNeueLTPro-BlkCnO.otf in Resources */,
 				D9201C03199A7B8B004018A1 /* user.png in Resources */,
 				D996F6AC195C8B2B009E97B0 /* daniel-craig.jpg in Resources */,
+				D9DEE638199F0C1100F08CC5 /* tutorial.png in Resources */,
 				D9BB5977199A844100367408 /* HelveticaNeueLTPro-It.otf in Resources */,
 				D9201BF5199A7AF8004018A1 /* camera.png in Resources */,
 				D9BB597D199A844100367408 /* HelveticaNeueLTPro-LtIt.otf in Resources */,

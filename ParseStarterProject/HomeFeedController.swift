@@ -153,7 +153,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
-        
+        var defaults = NSUserDefaults();
+        if (defaults.objectForKey("ranTutorial") == nil) {
+            defaults.setObject(NSDate(), forKey: "ranTutorial");
+            defaults.synchronize();
+            //set up tutorial
+            var tutorialOverlay = UIButton(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE, forState: UIControlState.Normal);
+            tutorialOverlay.addTarget(self, action: "closeTutorial:", forControlEvents: UIControlEvents.TouchDown)
+            self.view.addSubview(tutorialOverlay);
+            self.view.bringSubviewToFront(tutorialOverlay);
+        }
     }
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
@@ -923,6 +933,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                // self.presentViewController(controller, animated: true, completion: nil)
             }
         }
+    }
+    func closeTutorial(button: UIButton) {
+        UIView.animateWithDuration(0.6, animations: {() in
+            button.alpha = 0;
+            }, completion: {(success: Bool) in
+                button.hidden = true;
+                button.removeFromSuperview();
+        });
     }
     
         /*CATransition* transition = [CATransition animation];

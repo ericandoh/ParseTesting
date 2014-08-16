@@ -423,14 +423,14 @@ import UIKit
         var height: Int;
         var newImgList: Array<UIImage> = [];
         var newSize: CGSize;
-        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(TRUE_FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(TRUE_FULLSCREEN_HEIGHT));
+        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT));
         for (index, image: UIImage) in enumerate(images) {
             NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
             var outputImg: UIImage?;
-            if (CGFloat(image.size.height) > TRUE_FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
+            if (CGFloat(image.size.height) > IMGSAVE_FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
                 //this image is horizontal, so we resize image height to match
-                newSize = CGSize(width: CGFloat(image.size.width) * TRUE_FULLSCREEN_HEIGHT / CGFloat(image.size.height), height: TRUE_FULLSCREEN_HEIGHT);
+                newSize = CGSize(width: CGFloat(image.size.width) * IMGSAVE_FULLSCREEN_HEIGHT / CGFloat(image.size.height), height: IMGSAVE_FULLSCREEN_HEIGHT);
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;

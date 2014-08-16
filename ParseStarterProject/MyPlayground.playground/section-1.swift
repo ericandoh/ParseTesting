@@ -22,6 +22,7 @@ wordNumberer(409298);
 wordNumberer(50194809);
 wordNumberer(98682091809184604);*/
 
+/*
 ["QWERTY","AWESOME","ASAWESOMEASME"]
 
 var lst: [Int] = [];
@@ -87,7 +88,26 @@ for index in 1...999 {
     }
 }
 
-counter
+counter*/
+
+var text = "HI";
+
+var error: NSError?;
+
+var pattern = "(#.+?(?=\\b|\\n))|(@.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
+var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+
+var matches = regex.matchesInString(text, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(text))) as [NSTextCheckingResult];
+
+var lstOfStrings: Array<String> = [];
+
+for match in matches {
+    var attributedStringPiece: NSAttributedString;
+    //var piece = aString.substringWithRange();
+    var individualString: String = ((text as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length);
+    lstOfStrings.append(individualString);
+}
+lstOfStrings
 
 
 
