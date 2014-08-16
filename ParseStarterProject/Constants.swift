@@ -134,7 +134,8 @@ let FULLSCREEN_WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width;
 let TRUE_FULLSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height;
 
 //height of a fullscreen image
-//let FULLSCREEN_HEIGHT: CGFloat = CGFloat(518);
+//optimize for 5s, will crop naturally for 4s anyways
+let IMGSAVE_FULLSCREEN_HEIGHT: CGFloat = CGFloat(568);
 
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
