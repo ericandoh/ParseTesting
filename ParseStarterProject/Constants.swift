@@ -87,7 +87,7 @@ let BACK_ICON = UIImage(named: "arrow_left.png");
 //icon to show forward button (referenced in homefeed - shoplook delegate - for shoplook URL forwards)
 let FORWARD_ICON = UIImage(named: "arrow_right.png");
 
-let SETTINGS_ICON = UIImage(named: "daniel-craig.jpg");
+let SETTINGS_ICON = UIImage(named: "settings.png");
 
 //side menu images
 let HOME_ICON = UIImage(named: "home.png");
@@ -96,6 +96,8 @@ let USER_ICON = UIImage(named: "user.png");
 let NOTIF_ICON = UIImage(named: "flag.png");
 let FIND_ICON = UIImage(named: "magnifyingglass.png");
 let UPLOAD_ICON = UIImage(named: "camera.png");
+
+let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
 
 let GREEN_HEX = 0x94eed2;
 

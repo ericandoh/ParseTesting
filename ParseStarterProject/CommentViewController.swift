@@ -119,6 +119,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         } else {
             self.commentTextField.resignFirstResponder();
             var commentToAdd = commentTextField.text;
+            
+            if (commentToAdd == "") {
+                return;
+            }
         
             var comment = currentPost!.addComment(commentToAdd);
             commentList.append(comment);

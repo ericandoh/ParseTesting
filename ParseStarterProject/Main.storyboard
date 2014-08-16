@@ -1074,7 +1074,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JEl-EV-uT7">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="des-15-BaF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="des-15-BaF">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcL-Em-b9e">
@@ -1241,6 +1241,7 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="des-15-BaF" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="29n-jA-t5o"/>
                             <constraint firstAttribute="bottom" secondItem="RcL-Em-b9e" secondAttribute="bottom" id="4a9-fN-gi1"/>
                             <constraint firstItem="mou-va-zpC" firstAttribute="top" secondItem="BN6-Yf-BWR" secondAttribute="top" id="5fx-Eh-X36"/>
                             <constraint firstItem="BN6-Yf-BWR" firstAttribute="leading" secondItem="mou-va-zpC" secondAttribute="trailing" id="7Ba-JT-jXv"/>
@@ -1250,11 +1251,14 @@
                             <constraint firstItem="s1V-MZ-bqM" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="top" id="KEh-Mb-p5r"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="cgl-wc-12J"/>
                             <constraint firstAttribute="bottom" secondItem="JEl-EV-uT7" secondAttribute="bottom" id="eb7-2p-ULl"/>
+                            <constraint firstAttribute="bottom" secondItem="des-15-BaF" secondAttribute="bottom" id="fy7-86-FUT"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="g0Z-rQ-7tn"/>
+                            <constraint firstAttribute="trailing" secondItem="des-15-BaF" secondAttribute="trailing" id="gU9-O0-cra"/>
                             <constraint firstItem="BN6-Yf-BWR" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="top" id="gsA-Wv-8Lw"/>
                             <constraint firstItem="mou-va-zpC" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="10" id="gwF-IG-dht"/>
                             <constraint firstItem="s1V-MZ-bqM" firstAttribute="leading" secondItem="skp-OY-eru" secondAttribute="trailing" id="h2O-qc-SSA"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="hDq-g7-kfP"/>
+                            <constraint firstItem="des-15-BaF" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="oeO-tU-3Oc"/>
                             <constraint firstAttribute="trailing" secondItem="JEl-EV-uT7" secondAttribute="trailing" id="qc0-ea-Yet"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="qmO-7s-xSY"/>
                             <constraint firstAttribute="bottom" secondItem="mou-va-zpC" secondAttribute="bottom" constant="10" id="tbC-YZ-RwR"/>
@@ -2095,7 +2099,7 @@
                                     <action selector="loginWithFacebook:" destination="Z5R-ca-bUH" eventType="touchUpInside" id="M3U-Qa-EoZ"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
                                 <rect key="frame" x="40" y="240" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                 <state key="normal" title="Don't sign me in - I want to browse!" backgroundImage="backcolor.png">
@@ -2200,14 +2204,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="106" height="194"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cc-ii-nHD">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cc-ii-nHD">
                                                     <rect key="frame" x="33" y="40" width="40" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8uC-f5-JcH">
                                                     <rect key="frame" x="0.0" y="0.0" width="106" height="194"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -2293,9 +2299,9 @@
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="deleteSwipeInfoBar.png" translatesAutoresizingMaskIntoConstraints="NO" id="XYF-s5-5sl">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete_swipe_info_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="XYF-s5-5sl">
                                 <rect key="frame" x="15" y="70" width="290" height="35"/>
-                                <color key="backgroundColor" red="0.91372555489999996" green="0.8078432083" blue="0.50980395079999996" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
                             <scrollView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="top" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uk-HZ-4aK">
                                 <rect key="frame" x="0.0" y="65" width="320" height="503"/>
@@ -2850,7 +2856,7 @@
         <image name="arrow_right.png" width="50" height="50"/>
         <image name="backcolor.png" width="460" height="73"/>
         <image name="comment.png" width="40" height="40"/>
-        <image name="deleteSwipeInfoBar.png" width="290" height="35"/>
+        <image name="delete_swipe_info_bar.png" width="290" height="35"/>
         <image name="edit.png" width="40" height="40"/>
         <image name="follow.png" width="67" height="70"/>
         <image name="gradient.png" width="640" height="1138"/>
@@ -2871,6 +2877,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="AAy-sI-hyg"/>
-        <segue reference="8GE-Sz-0lp"/>
+        <segue reference="4Kk-nU-xea"/>
     </inferredMetricsTieBreakers>
 </document>

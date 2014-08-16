@@ -585,6 +585,9 @@ import UIKit
                 notifToUpdate["viewed"] = false;
                 notifToUpdate.saveEventually();
             }
+            else {
+                ServerInteractor.sendFirstLike(newPost);
+            }
         });
     }
     class func updateCommentNotif(newPost: ImagePostStructure) {
@@ -602,6 +605,9 @@ import UIKit
                 notifToUpdate["bumpedAt"] = NSDate();
                 notifToUpdate["viewed"] = false;
                 notifToUpdate.saveEventually();
+            }
+            else {
+                ServerInteractor.sendCommentNotif(newPost);
             }
         });
     }
