@@ -527,5 +527,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             textView.resignFirstResponder();
         }
     }
-
+    /*override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        super.touchesBegan(touches, withEvent: event);
+        self.view.endEditing(true);
+        //textView.resignFirstResponder();
+    }*/
 }

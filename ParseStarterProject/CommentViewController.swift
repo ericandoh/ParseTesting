@@ -43,6 +43,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.commentTextField.borderStyle = UITextBorderStyle.None
         self.commentTextField.layer.borderWidth = 1
         self.commentTextField.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
+        self.commentTableView.addGestureRecognizer(tapRecognizer);
+        
         //self.commentTextField.layer.cornerRadius = 5.0
         self.commentTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
@@ -168,7 +172,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
         cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false, sender: self);
-        
+        cell.descriptionBox.otherAction = {
+            () in
+            var x = self.commentTextField.resignFirstResponder();
+        };
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
@@ -182,6 +189,13 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         var estimatedWidth = 40.0 + 20.0 * estimatedLines;
         
         return estimatedWidth
+    }
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        NSLog("W");
+        self.commentTextField.resignFirstResponder();
+    }
+    func isTapped(sender: UITapGestureRecognizer) {
+        self.commentTextField.resignFirstResponder();
     }
     /*func makeTableImage(index: Int) {
         var author = commentList[index].author;

@@ -70,6 +70,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
         self.searchFriendsTableView.estimatedRowHeight = 60.0;
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
+        self.searchFriendsTableView.addGestureRecognizer(tapRecognizer);
+
         
         self.searchBar.translucent = true;
         self.searchBar.tintColor = UIColor.whiteColor()
@@ -452,5 +455,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         // Pass the selected object to the new view controller.
     }
     */
-
+    func isTapped(sender: UITapGestureRecognizer) {
+        self.searchBar.resignFirstResponder();
+    }
 }
