@@ -185,6 +185,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 searchFriendsTableView.hidden = true;
                 self.setNewBackgroundFor(nil)
                 resetAndFetchSuggested();
+                searchBar.resignFirstResponder();
+                let delay  = 0.1 * Double(NSEC_PER_SEC);
+                let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                dispatch_after(time, dispatch_get_main_queue(), {
+                    var x = searchBar.resignFirstResponder()
+                    }
+                );
             }
             return;
         }
@@ -194,12 +201,14 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             searchFriendsTableView.hidden = false;
             self.view.bringSubviewToFront(searchFriendsTableView);
             self.setNewBackgroundFor(searchFriendsTableView)
+
         }
         currentTerm = searchText;
         searchTermList = [];
         searchingType = SearchUserType.BY_NAME;
         ServerInteractor.getSearchUsers(searchText, receiveSizeOfQuery, receiveStringResult, endStringQuery);
     }
+    
     func receiveSizeOfQuery(size: Int) {
         searchTermList = Array<FriendEncapsulator?>(count: size, repeatedValue: nil);
         //here or in endStringQuery?

@@ -42,11 +42,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         }
         
         searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
+        searchBar.resignFirstResponder()
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController.navigationBar.shadowImage = UIImage();
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.topItem.title = "Popular";
+        
         //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
@@ -69,8 +71,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.searchBar.layer.backgroundColor = UIColor.clearColor().CGColor;
         self.searchBar.layer.borderWidth=0.75;
         self.searchBar.layer.borderColor = UIColor.whiteColor().CGColor*/
-        
-        
         
         
         self.searchBar.translucent = true;
@@ -114,7 +114,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         }
     }
     
-    
+    /*func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
+        /*if([searchText length] == 0) {
+            [searchBar performSelector: ""(resignFirstResponder)
+            withObject: nil
+            afterDelay: 0.1];
+        }*/
+        /*if (currentTerm == "") {
+            searchBar.performSelector("keyboardWillHide:"(resignFirstResponder()), withObject: nil, afterDelay: 0.1)
+        }*/
+    }*/
     
     // #pragma mark - Navigation
 
@@ -181,6 +190,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             }
             NSLog("A");
             searchBar.resignFirstResponder();
+            let delay  = 0.1 * Double(NSEC_PER_SEC);
+            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+            dispatch_after(time, dispatch_get_main_queue(), {
+                var x = searchBar.resignFirstResponder()
+                }
+            );
+            //searchBar.performSelector("hideKeyboardStuff", withObject: self, afterDelay: 0.1);
+            
         }
         else if (searchText != "") {
             if (doingSearch == 0) {
