@@ -80,22 +80,27 @@ class UserTextTableViewCell: UITableViewCell {
         //nextAction.setTitle("", forState: UIControlState.Normal);
         if(enableFriending) {
             //self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
-            sideConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
             if (involvedUser != nil) {
-                ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
-                    self.friendAction = amFollowing;
-                    self.nextAction.hidden = false;
-                    if (amFollowing == true) {
-                        self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
-                    }
-                    else if (amFollowing == false) {
-                        self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
-                    }
-                    else {
-                        //do nothing, server failed to fetch!
-                        NSLog("Failure? \(amFollowing)")
-                    }
-                });
+                if (involvedUser!.username == ServerInteractor.getUserName()) {
+                    sideConstraint.constant = CONTRACTED_TEXT_CELL_VALUE;
+                }
+                else {
+                    sideConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
+                    ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
+                        self.friendAction = amFollowing;
+                        self.nextAction.hidden = false;
+                        if (amFollowing == true) {
+                            self.nextAction.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                        }
+                        else if (amFollowing == false) {
+                            self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                        }
+                        else {
+                            //do nothing, server failed to fetch!
+                            NSLog("Failure? \(amFollowing)")
+                        }
+                    });
+                }
             }
             //check if I am already friends with this dude
         }

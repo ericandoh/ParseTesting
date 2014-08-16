@@ -117,7 +117,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
             sendBackImages(1);
         }
-        backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+        if (backImageView.image != nil) {
+            backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+        }
         //if (self.navigationController) {
         //self.navigationController.setNavigationBarHidden(false, animated: false);
         //self.navigationController.navigationBar.hidden = false;
@@ -153,8 +155,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but1.setTitle(shopTheLook[index].title, forState: UIControlState.Normal);
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but1.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left;
-        //but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
-        but2.setTitle("X", forState: UIControlState.Normal);
+        but2.setImage(CLOSE_SHOP_EDIT_ICON, forState: UIControlState.Normal);
+        //but2.setTitle("X", forState: UIControlState.Normal);
         but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but2.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center;
         //shopButton.backgroundColor = UIColor.blackColor();

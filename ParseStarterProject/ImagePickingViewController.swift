@@ -11,6 +11,7 @@ import UIKit
 import AssetsLibrary
 
 let SAVED_PHOTOS_NAME = "Saved Photos"
+let CAMERA_ROLL_NAME = "Camera Roll"
 
 struct ImageIndex: Equatable {
     var groupNum: Int;
@@ -51,13 +52,15 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     var usingCamera: Bool = false;
     
-    var savedPhotoIndex: Int = -1;
+    var savedPhotoIndex: Int = 0;
     
     var retList: Array<UIImage> = [];
     
     var prevLabel: String = "";
     var prevDescrip: String = "";
     var shopLook: Array<ShopLook> = [];
+    
+    var imageRenderDirection: Int = 0;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,8 +89,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         // Do any additional setup after loading the view.
         //assetLibrary = ALAssetsLibrary();
         //ImagePickingViewController.getDefaultAssetLibrary();
-        dispatch_async(dispatch_get_main_queue(), {
-            autoreleasepool {
+        //dispatch_async(dispatch_get_main_queue(), {
+            //autoreleasepool {
                 var failure: ALAssetsLibraryAccessFailureBlock = {
                     (error: NSError!)->Void in
                     NSLog(error.description)
@@ -107,7 +110,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                         */
                         self.assetGroups.append(group);
                         //if (self.assetGroups.count == 1) {
-                        if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
+                        if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME || self.getGalleryTimeForIndex(self.assetGroups.count - 1) == CAMERA_ROLL_NAME) {
                             //first asset I've loaded
                             //NSLog("First asset group, adding + loading")
                             var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
@@ -123,8 +126,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 self.assetLibrary = ALAssetsLibrary();
                 //ALAssetsGroupType(ALAssetsGroupAll)
                 self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
-            }
-        });
+           // }
+        //});
     }
     /*
     {
@@ -151,7 +154,9 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     */
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+        if (backImageView.image != nil) {
+            backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -205,11 +210,14 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     func loadImagesForCurrent() {
         //fills up collection view
+        NSLog("\(groupSelected) and \(assetGroups.count)")
         var numAssets = assetGroups[groupSelected].numberOfAssets();
         
         currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1));
         //currentAssets = [];
         self.myCollectionView.reloadData();
+        imageRenderDirection = 0;
+        var firstDate = NSDate();
         /*for (loc, check: ImageIndex) in enumerate(highlightOrder) {
             if (check.groupNum == groupSelected) {
                 currentAssets[check.index].highlighted = loc;
@@ -222,6 +230,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         var currentGroup = assetGroups[groupSelected];
+        var totalEnumerated: Int = 0;
         currentGroup.enumerateAssetsUsingBlock({
             (result, index, stop) in
             //NSLog("Loading asset \(index)")
@@ -231,24 +240,38 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             if (index == 0) {
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
                 self.backImageView.image = assetImg;
+                firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
+            }
+            else if (index == 1) {
+                var secondDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
+                if (firstDate.compare(secondDate) == NSComparisonResult.OrderedAscending) {
+                    self.imageRenderDirection = -1;
+                    //self.currentAssets[numAssets - 1].asset = self.currentAssets[0].asset
+                }
+                else if (firstDate.compare(secondDate) == NSComparisonResult.OrderedDescending) {
+                    //direction is right
+                    self.imageRenderDirection = 1;
+                }
             }
             if(index < self.currentAssets.count) {
                 self.currentAssets[index].asset = result;
-                self.myCollectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow: index + 1, inSection: 0)]);
+                //self.myCollectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow: index + 1, inSection: 0)]);
             }
             else {
                 var currentCount = self.currentAssets.count;
                 self.currentAssets += Array(count: index-currentCount + 1, repeatedValue: AssetItem(asset: nil, highlighted: -1));
                 self.currentAssets[index].asset = result;
-                var indexPaths: Array<NSIndexPath> = [];
-                for i in currentCount..<(index+1) {
-                    indexPaths.append(NSIndexPath(forRow: i + 1, inSection: 0));
-                }
-                self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
+                //var indexPaths: Array<NSIndexPath> = [];
+                //for i in currentCount..<(index+1) {
+                    //indexPaths.append(NSIndexPath(forRow: i + 1, inSection: 0));
+                //}
+                //self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
             }
             //self.currentAssets[index].asset = result;
             //self.myCollectionView.reloadData();
-            if (index == numAssets - 1) {
+            totalEnumerated++;
+            if (totalEnumerated == numAssets) {
+                self.myCollectionView.reloadData();
                 for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
                     if (check.groupNum == self.groupSelected) {
                         //self.currentAssets[check.index].highlighted = loc;
@@ -331,8 +354,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             cell.image.image = CAMERA_ICON;
             return cell;
         }
-        
         row--;
+        
+        if(imageRenderDirection == -1) {
+            row = self.currentAssets.count - 1 - row;
+        }
+        
         if (self.currentAssets[row].asset == nil) {
             cell.label.text = "";
             cell.image.image = UIImage();
@@ -360,6 +387,9 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             return;
         }
         row--;
+        if(imageRenderDirection == -1) {
+            row = self.currentAssets.count - 1 - row;
+        }
         if (self.currentAssets[row].highlighted == -1) {
             //needs to be highlighted
             var assetItem: AssetItem =  self.currentAssets[row];
@@ -381,27 +411,44 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     //camera methods
     func cameraAction() {
-        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
-            var imagePicker :UIImagePickerController = UIImagePickerController(nibName: "UIImagePickerController", bundle: nil);
-            imagePicker.delegate = self;
-            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
-            imagePicker.mediaTypes = [kUTTypeImage];    //crashed here
-            imagePicker.allowsEditing = false;
-            self.presentViewController(imagePicker, animated:false, completion:nil);
-            usingCamera = true;
+        if (!UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+            NSLog("Camera not available");
+            self.imageSavingError("Camera Not Available!");
         }
         else {
-            NSLog("Camera not available");
-            imageSavingError("Camera Not Available!");
+            self.usingCamera = true;
+            ImagePickingViewController.startCameraFromViewController(self, usingDelegate: self)
+            NSLog("Done showing");
+        }
+    }
+    
+    class func startCameraFromViewController(controller: UIViewController, usingDelegate delegate: protocol<UIImagePickerControllerDelegate, UINavigationControllerDelegate>)-> Bool {
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
+            
+            var imagePicker :UIImagePickerController = UIImagePickerController();
+            imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            imagePicker.mediaTypes = NSArray(object: kUTTypeImage);
+            imagePicker.allowsEditing = false;
+            imagePicker.delegate = delegate;
+
+            controller.presentViewController(imagePicker, animated:true, completion:nil);
+            
+            return true;
+        }
+        else {
+            return false;
         }
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: NSDictionary) {
+        NSLog("Done");
         var mediaType: NSString = info[UIImagePickerControllerMediaType] as NSString;
         self.dismissViewControllerAnimated(false, completion: {
             ()->Void in
-            if (mediaType == "") {//kUTTypeImage) {
+            if (mediaType == kUTTypeImage) {//kUTTypeImage) {
                 var image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
+                self.backImageView.image = image;
+                NSLog("A");
                 //add code here to do something with image I just picked
                 if (self.usingCamera) {
                     /*UIImageWriteToSavedPhotosAlbum(image,
@@ -409,16 +456,19 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     "image:finishedSavingWithError:contextInfo:",
                     nil);*/
                     //self.assetLibrary!.saveImage(image, toAlbum: "Touch", withCompletionBlock: {(error: NSError!) in });
-                    self.assetLibrary!.writeImageToSavedPhotosAlbum(image.CGImage, metadata: nil, completionBlock:
+                    NSLog("B");
+                    self.assetLibrary!.writeImageToSavedPhotosAlbum(image.CGImage, orientation: ALAssetOrientation.Right, completionBlock:
                         {(assertURL: NSURL!, error: NSError!) in
+                            NSLog("C");
                             if (error) {
                                 self.imageSavingError("Failed to save image");
                             }
                             else {
                                 //do stuff with image
+                                NSLog("D");
                                 self.assetLibrary!.assetForURL(assertURL, resultBlock: {(asset: ALAsset!) in
                                     //we have our asset
-                                    
+                                    NSLog("E");
                                     self.groupSelected = self.savedPhotoIndex;
                                     //just added an image, so should shift all currently selected images by one index
                                     for (index, imageIndex) in enumerate(self.highlightOrder) {

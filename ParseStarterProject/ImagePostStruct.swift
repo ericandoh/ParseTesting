@@ -111,13 +111,16 @@ class ImagePostStructure
             ServerInteractor.removeFromLikedPosts(myObj.objectId);
         }
         else {
-            if (getLikes() == 0) {
-                ServerInteractor.sendFirstLike(self);
+            if (PFUser.currentUser().username == getAuthor()) {
+                //do NOT send a notification
             }
             else {
                 //bump that old notification back up to the spotlight
                 ServerInteractor.updateLikeNotif(self);
             }
+            //if (getLikes() == 0) {
+            //ServerInteractor.sendFirstLike(self);
+            //}
             myObj.incrementKey("likes")
             ServerInteractor.appendToLikedPosts(myObj.objectId)
         }
@@ -425,14 +428,17 @@ class ImagePostStructure
             commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
             commentArray = myObj["comments"] as NSMutableArray;
         }
-        if (commentArray.count == 0) {
-            //make a new notification
-            ServerInteractor.sendCommentNotif(self);
+        if (PFUser.currentUser().username == getAuthor()) {
+            //do NOT send a notification
         }
         else {
             //bump notification
             ServerInteractor.updateCommentNotif(self);
         }
+        //else if (commentArray.count == 0) {
+        //make a new notification
+        //ServerInteractor.sendCommentNotif(self);
+        //}
         var author = PFUser.currentUser().username;
         commentAuthorArray.insertObject(author, atIndex: commentAuthorArray.count)
         commentArray.insertObject(comment, atIndex: commentArray.count);

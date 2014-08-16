@@ -212,7 +212,7 @@ class LinkFilledTextView: UITextView {
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
                     let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
                     let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
-                    attributedStringPiece = NSAttributedString(string: forwardString, attributes: attrDict);
+                    attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
@@ -224,7 +224,7 @@ class LinkFilledTextView: UITextView {
                     
                     let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
                     let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
-                    attributedStringPiece = NSAttributedString(string: forwardString, attributes: attrDict);
+                    attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
@@ -236,7 +236,7 @@ class LinkFilledTextView: UITextView {
                     
                     let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
                     let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
-                    attributedStringPiece = NSAttributedString(string: forwardString, attributes: attrDict);
+                    attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
@@ -244,7 +244,7 @@ class LinkFilledTextView: UITextView {
                 else {
                     let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
                     let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
-                    attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+                    attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
@@ -257,14 +257,14 @@ class LinkFilledTextView: UITextView {
             else if (individualString.hasPrefix("#")) {
                 let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
                 let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
-                attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+                attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else if (individualString.hasPrefix("@")) {
                 let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
                 let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
-                attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
+                attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
