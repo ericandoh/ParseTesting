@@ -53,7 +53,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
         // Do any additional setup after loading the view.
-        
+        var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
+        self.myTable.addGestureRecognizer(tapRecognizer);
         myTable.hidden = true;
         
         //self.searchBar.barStyle = UIBarStyle.BlackTranslucent
@@ -313,5 +314,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //collectionDelegateSearch!.resetData();
         collectionDelegateMain!.resetData();
         collectionDelegateSearch!.initialSetup();
+    }
+    func isTapped(sender: UITapGestureRecognizer) {
+        self.searchBar.resignFirstResponder();
     }
 }

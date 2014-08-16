@@ -1489,10 +1489,16 @@ import UIKit
             var contactPerson: ABRecordRef = record
             
             var fName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty).takeRetainedValue();
-            var firstName: String = fName as NSString;
+            var firstName: String = "";
+            if (fName != nil) {
+                firstName = fName as NSString;
+            }
             
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
-            var lastName: String = lName as NSString;   //crashed here again
+            var lastName: String = "";
+            if (lName != nil) {
+                lastName = lName as NSString;   //crashed here again
+            }
             
             var cEmails: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
             var contactEmail = "";
