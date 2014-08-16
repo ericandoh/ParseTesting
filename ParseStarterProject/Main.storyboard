@@ -64,8 +64,6 @@
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
-            <string>HelveticaNeueLTPro-Lt</string>
-            <string>HelveticaNeueLTPro-Lt</string>
         </mutableArray>
         <mutableArray key="HelveticaNeueLTPro-LtCn.otf">
             <string>HelveticaNeueLTPro-LtCn</string>
@@ -1514,8 +1512,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="thP-YL-RPA">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-xv-DUq">
-                                <rect key="frame" x="36" y="228" width="243" height="30"/>
+                                <rect key="frame" x="40" y="175" width="240" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
@@ -1526,21 +1527,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="          Set Your Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuO-jK-rVH">
-                                <rect key="frame" x="40" y="110" width="240" height="40"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This username will be visible to everyone and cannot be changed" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="240" translatesAutoresizingMaskIntoConstraints="NO" id="B4e-SV-ETh">
-                                <rect key="frame" x="40" y="300" width="240" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y0w-y8-6TN">
-                                <rect key="frame" x="40" y="375" width="240" height="40"/>
+                                <rect key="frame" x="40" y="275" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="15"/>
                                 <state key="normal" title="Submit" backgroundImage="backcolor.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2066,7 +2054,7 @@
             </objects>
             <point key="canvasLocation" x="154" y="102"/>
         </scene>
-        <!--Log in-->
+        <!--New Login View Controller-->
         <scene sceneID="ajb-T3-ml5">
             <objects>
                 <viewController id="Z5R-ca-bUH" customClass="NewLoginViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
@@ -2078,10 +2066,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="B2t-y0-sa4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLe-AF-DLT">
-                                <rect key="frame" x="40" y="140" width="240" height="40"/>
+                                <rect key="frame" x="40" y="200" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
-                                <state key="normal" title="Register" backgroundImage="backcolor.png">
+                                <state key="normal" title="Register" backgroundImage="backcolorsolid.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2090,9 +2081,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TuC-K4-2wg">
-                                <rect key="frame" x="40" y="190" width="240" height="40"/>
+                                <rect key="frame" x="40" y="250" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
-                                <state key="normal" title="Login/Register with Facebook" backgroundImage="backcolor.png">
+                                <state key="normal" title="Login/Register with Facebook" backgroundImage="backcolorsolid.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2101,7 +2092,7 @@
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mro-7G-d8K">
-                                <rect key="frame" x="40" y="240" width="240" height="40"/>
+                                <rect key="frame" x="40" y="300" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                 <state key="normal" title="Don't sign me in - I want to browse!" backgroundImage="backcolor.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2112,9 +2103,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URl-MG-9o6">
-                                <rect key="frame" x="40" y="90" width="240" height="40"/>
+                                <rect key="frame" x="40" y="150" width="240" height="40"/>
+                                <color key="backgroundColor" red="0.63921568630000003" green="1" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
-                                <state key="normal" title="Login!" backgroundImage="backcolor.png">
+                                <state key="normal" title="Login!" backgroundImage="backcolorsolid.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2122,10 +2114,41 @@
                                     <segue destination="qU9-dM-KP1" kind="push" id="7cC-uB-1Uk"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="5kH-o5-oAs">
+                                <rect key="frame" x="130" y="380" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="7Bv-GZ-jgN"/>
+                                    <constraint firstAttribute="height" constant="60" id="vhy-2S-Tph"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9nf-zE-2Hm">
+                                <rect key="frame" x="0.0" y="380" width="130" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="fpG-gx-EJF"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6M-nu-RhT">
+                                <rect key="frame" x="190" y="380" width="130" height="1"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="7xn-ja-9pe"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5kH-o5-oAs" firstAttribute="leading" secondItem="9nf-zE-2Hm" secondAttribute="trailing" id="BKB-iR-c5d"/>
+                            <constraint firstItem="P6M-nu-RhT" firstAttribute="width" secondItem="9nf-zE-2Hm" secondAttribute="width" id="RWL-vO-UNk"/>
+                            <constraint firstItem="P6M-nu-RhT" firstAttribute="leading" secondItem="5kH-o5-oAs" secondAttribute="trailing" id="bKO-Ic-x3g"/>
+                            <constraint firstAttribute="bottom" secondItem="9nf-zE-2Hm" secondAttribute="bottom" constant="123" id="cc4-Hn-A8M"/>
+                            <constraint firstAttribute="bottom" secondItem="5kH-o5-oAs" secondAttribute="bottom" constant="64" id="nMJ-u1-Jvm"/>
+                            <constraint firstAttribute="bottom" secondItem="P6M-nu-RhT" secondAttribute="bottom" constant="123" id="nsS-50-Etu"/>
+                            <constraint firstItem="9nf-zE-2Hm" firstAttribute="leading" secondItem="EoO-cL-tcl" secondAttribute="leading" id="wcg-QE-aoS"/>
+                            <constraint firstAttribute="trailing" secondItem="P6M-nu-RhT" secondAttribute="trailing" id="xu3-yy-G3I"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Log in" id="5BD-bY-Cbe"/>
+                    <navigationItem key="navigationItem" id="5BD-bY-Cbe"/>
                     <connections>
                         <segue destination="B0E-wR-fsK" kind="push" identifier="SetUsername" id="5Cf-tw-DTD"/>
                         <segue destination="oQL-hX-F0F" kind="modal" identifier="JumpIn" id="4Kk-nU-xea"/>
@@ -2637,7 +2660,7 @@
             </objects>
             <point key="canvasLocation" x="1912" y="1660"/>
         </scene>
-        <!--Login-->
+        <!--Real Login View Controller-->
         <scene sceneID="BBQ-Cj-GdR">
             <objects>
                 <viewController id="qU9-dM-KP1" customClass="RealLoginViewController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
@@ -2649,6 +2672,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="zFu-Mu-Kri">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vzG-b3-d22">
                                 <rect key="frame" x="20" y="192" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2682,7 +2708,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K9x-5D-7T5">
                                 <rect key="frame" x="40" y="300" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
-                                <state key="normal" title="Login" backgroundImage="backcolor.png">
+                                <state key="normal" title="Login" backgroundImage="backcolorsolid.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2704,7 +2730,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Login" id="4ZL-Xh-ylH">
+                    <navigationItem key="navigationItem" id="4ZL-Xh-ylH">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="Qkw-c2-t5m">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5Kw-ZS-cio">
                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
@@ -2728,7 +2754,7 @@
             </objects>
             <point key="canvasLocation" x="1008" y="-158"/>
         </scene>
-        <!--Register-->
+        <!--Sign Up View Controller-->
         <scene sceneID="GbN-ib-ZeW">
             <objects>
                 <viewController storyboardIdentifier="RegisterScene" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vp5-wb-cPq" customClass="SignUpViewController" sceneMemberID="viewController">
@@ -2740,13 +2766,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-8p-XWM">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="Twg-8p-XWM">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IjE-rg-ihq">
-                                <rect key="frame" x="20" y="231" width="280" height="30"/>
+                                <rect key="frame" x="20" y="160" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
@@ -2761,7 +2787,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aaT-tM-w4u">
-                                <rect key="frame" x="20" y="269" width="280" height="30"/>
+                                <rect key="frame" x="20" y="200" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
@@ -2776,7 +2802,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4NY-eO-D54">
-                                <rect key="frame" x="20" y="307" width="280" height="30"/>
+                                <rect key="frame" x="20" y="240" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
@@ -2791,9 +2817,9 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oC2-eE-nru">
-                                <rect key="frame" x="40" y="350" width="240" height="40"/>
+                                <rect key="frame" x="40" y="320" width="240" height="40"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
-                                <state key="normal" title="Sign me up!" backgroundImage="backcolor.png">
+                                <state key="normal" title="Sign me up!" backgroundImage="backcolorsolid.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2804,7 +2830,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Register" id="szm-Ia-HJF">
+                    <navigationItem key="navigationItem" id="szm-Ia-HJF">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="xK1-4y-EEF">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fVw-Dz-rYW">
                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
@@ -2874,9 +2900,11 @@
         <image name="arrow_left.png" width="50" height="50"/>
         <image name="arrow_right.png" width="50" height="50"/>
         <image name="backcolor.png" width="460" height="73"/>
+        <image name="backcolorsolid.png" width="460" height="73"/>
         <image name="comment.png" width="40" height="40"/>
         <image name="delete_swipe_info_bar.png" width="290" height="35"/>
         <image name="edit.png" width="40" height="40"/>
+        <image name="fashtitlescreen.png" width="640" height="1138"/>
         <image name="follow.png" width="67" height="70"/>
         <image name="gradient.png" width="640" height="1138"/>
         <image name="heart.png" width="40" height="40"/>
@@ -2896,6 +2924,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="AAy-sI-hyg"/>
-        <segue reference="jrF-7g-MJv"/>
+        <segue reference="4Kk-nU-xea"/>
     </inferredMetricsTieBreakers>
 </document>
