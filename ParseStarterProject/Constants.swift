@@ -99,6 +99,8 @@ let UPLOAD_ICON = UIImage(named: "camera.png");
 
 let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
 
+let TUTORIAL_IMAGE = UIImage(named: "tutorial.png");
+
 let GREEN_HEX = 0x94eed2;
 
 //163,255,198
