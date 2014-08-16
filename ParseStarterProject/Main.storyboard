@@ -441,6 +441,16 @@
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M6r-Si-mbX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapBackground:" destination="ueZ-d7-4dO" eventType="touchUpInside" id="HGi-Tj-foG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -462,6 +472,7 @@
                         <outlet property="backImage" destination="W6M-Kf-hTD" id="UOW-dh-T7K"/>
                         <outlet property="report" destination="eXy-Sq-9ke" id="Ozk-04-EEi"/>
                         <outlet property="reportGuide" destination="P5n-dn-5a8" id="6Jx-Kq-abq"/>
+                        <outlet property="tapBackgroundOutlet" destination="M6r-Si-mbX" id="qDg-ys-mKS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uM1-HI-te2" userLabel="First Responder" sceneMemberID="firstResponder"/>

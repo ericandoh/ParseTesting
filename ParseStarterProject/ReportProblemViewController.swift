@@ -16,6 +16,8 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var report: UITextView!
     
+    @IBOutlet weak var tapBackgroundOutlet: UIButton!
+    
     var placeholding: Bool = false;
     var prevDescrip: String = "";
     
@@ -27,6 +29,8 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         self.navigationController.navigationBar.topItem.title = "Settings";
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
     
+        report.keyboardAppearance = UIKeyboardAppearance.Dark
+        
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
             self.backImage.image = image;
@@ -37,7 +41,17 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         report.layer.borderWidth = 1;
         report.layer.borderColor = UIColor.whiteColor().CGColor;
         //report.layer.cornerRadius = 5
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         
+    }
+    
+    func keyboardWillShow(notif: NSNotification) {
+        tapBackgroundOutlet.hidden = false
+    }
+
+    @IBAction func tapBackground(sender: AnyObject) {
+        report.resignFirstResponder()
+        tapBackgroundOutlet.hidden = true
     }
     
     @IBAction func submitReport(sender: AnyObject) {

@@ -90,11 +90,21 @@ for index in 1...999 {
 
 counter*/
 
-var text = "HI";
+var text = "@as hello #hi ##hi # #hik @@meepmeep";
 
 var error: NSError?;
 
-var pattern = "(#.+?(?=\\b|\\n))|(@.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
+var pattern = "([#]+.+?(?=\\b|\\n))|(@+(?=@))|([@]+.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
+
+//+ 1 or more
+//* 0 or more
+//(?=BALA) ends in BALA but parsed expr does not include BALA (i.e. ERICBALA)
+//| or
+// \\b = line break (end of line)
+// \\n new line
+// $ end of line (the absolute end), do NOT include this in pattern ERIC$
+//. any char
+
 var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
 
 var matches = regex.matchesInString(text, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(text))) as [NSTextCheckingResult];
