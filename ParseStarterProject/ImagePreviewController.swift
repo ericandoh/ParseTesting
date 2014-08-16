@@ -43,6 +43,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var backImageView: UIImageView!
     
+    @IBOutlet weak var tapBackgroundOutlet: UIButton!
     
     var movingWindow: Bool = false;
     
@@ -79,6 +80,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         labelBar.layer.borderWidth = 1;
         labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        
         labelBar.text = prevLabel;
         if (prevDescrip == "") {
             setPlaceholderText();
@@ -106,11 +109,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             backImageView.image = receivedImages[0];
         }
     }
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         /*if (receivedImages.count > 0) {
             backImageView.image = receivedImages[0];
         }*/
+        tapBackgroundOutlet.hidden = true;
+
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -126,6 +132,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         //self.navigationController.navigationBar.translucent = false;
         //}
     }
+    
+    func keyboardWillShow(notif: NSNotification) {
+        tapBackgroundOutlet.hidden = false;
+        
+    }
+
     
     func setPlaceholderText() {
         placeholding = true;
@@ -213,9 +225,15 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
+    @IBAction func tapBackground(sender: AnyObject) {
+        textView.resignFirstResponder()
+        labelBar.resignFirstResponder();
+        tapBackgroundOutlet.hidden = true;
+    }
     
     @IBAction func textFieldReturn(sender: AnyObject) {
         sender.resignFirstResponder()
+        tapBackgroundOutlet.hidden = true;
     }
     
     @IBAction func reject(sender: AnyObject) {
@@ -241,6 +259,15 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         self.highlightOrder = hOrder;
         self.shopTheLook = prevShop;
     }
+    
+   /* override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
+        var touch: UITouch = event.allTouches().anyObject() as UITouch;
+        if (textView.isFirstResponder() && touch.view != textView) {
+            textView.resignFirstResponder()
+        }
+        super.touchesBegan(touches, withEvent: event)
+    }*/
+    
     
     func receiveImage(imageValues: Array<UIImage>, post: ImagePostStructure) {
         
@@ -525,6 +552,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         if (textView.text == "") {
             setPlaceholderText();
             textView.resignFirstResponder();
+            tapBackgroundOutlet.hidden = true;
         }
     }
     /*override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
