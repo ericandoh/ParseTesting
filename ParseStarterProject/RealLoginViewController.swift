@@ -42,6 +42,11 @@ class RealLoginViewController: UIViewController {
         ServerInteractor.loginUser(username, password: password, sender: self);
     }
 
+    @IBAction func textFieldReturn(sender: AnyObject) {
+        sender.resignFirstResponder()
+    }
+    
+    
     @IBAction func forgotPassword(sender: UIButton) {
         let alert: UIAlertController = UIAlertController(title: "Reset password", message: "Enter your email and we'll send you directions on resetting your password!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler(nil);
@@ -86,6 +91,10 @@ class RealLoginViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder();
+        return true
+    }
     
     @IBAction func backPress(sender: UIButton) {
         self.navigationController.popViewControllerAnimated(true);

@@ -214,6 +214,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    @IBAction func textFieldReturn(sender: AnyObject) {
+        sender.resignFirstResponder()
+    }
+    
     @IBAction func reject(sender: AnyObject) {
         if (self.navigationController) {
             if (self.navigationController.parentViewController) {

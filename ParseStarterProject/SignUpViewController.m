@@ -79,6 +79,10 @@
     }
 }
 
+- (IBAction)textFieldReturn:(UITextField *)sender {
+    [sender resignFirstResponder];
+}
+
 
 - (void) successfulSignUp {
     [self performSegueWithIdentifier:@"JumpIn" sender:self];
