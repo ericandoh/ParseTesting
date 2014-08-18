@@ -158,6 +158,8 @@
 		D9F9200C19A2736500E63FE8 /* Onboarding_5S.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */; };
 		D9F9200D19A2736500E63FE8 /* Onboarding_4.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200B19A2736500E63FE8 /* Onboarding_4.png */; };
 		D9F9200F19A2A60000E63FE8 /* FashionStash_Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */; };
+		D9F9201119A2B29600E63FE8 /* BlurringDarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */; };
+		D9F9201719A2C27600E63FE8 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F9201619A2C27600E63FE8 /* UIImage+ImageEffects.m */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -326,6 +328,9 @@
 		D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_5S.png; sourceTree = "<group>"; };
 		D9F9200B19A2736500E63FE8 /* Onboarding_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_4.png; sourceTree = "<group>"; };
 		D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FashionStash_Empty.png; sourceTree = "<group>"; };
+		D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlurringDarkView.swift; sourceTree = "<group>"; };
+		D9F9201519A2C27600E63FE8 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		D9F9201619A2C27600E63FE8 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +404,7 @@
 			isa = PBXGroup;
 			children = (
 				D9CB01F6195B462A0009D402 /* ParseStarterProject-Bridging-Header.h */,
+				D9F9201419A2C24F00E63FE8 /* ImageBlur */,
 				D914F7FB19883AC400A59314 /* Delegates */,
 				D9F89B15195CBA7400849B1D /* ServerSide */,
 				D97FCED21954E66F007D5EE6 /* Models */,
@@ -470,6 +476,7 @@
 				D94185F6198AA7BD00844697 /* LinkFilledTextView.swift */,
 				D923909B19929107001B5CBE /* SuggestedHeaderView.swift */,
 				D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */,
+				D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -633,6 +640,15 @@
 				D9A1E5AD196B4EDB00935062 /* PostComment.swift */,
 			);
 			name = ServerSide;
+			sourceTree = "<group>";
+		};
+		D9F9201419A2C24F00E63FE8 /* ImageBlur */ = {
+			isa = PBXGroup;
+			children = (
+				D9F9201519A2C27600E63FE8 /* UIImage+ImageEffects.h */,
+				D9F9201619A2C27600E63FE8 /* UIImage+ImageEffects.m */,
+			);
+			name = ImageBlur;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -820,6 +836,7 @@
 				24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */,
 				D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */,
 				D97FCEC91954E63E007D5EE6 /* SignUpViewController.m in Sources */,
+				D9F9201719A2C27600E63FE8 /* UIImage+ImageEffects.m in Sources */,
 				24BA50A6197DC78B00916814 /* FBUsernameSetupViewController.swift in Sources */,
 				D923E4CD1989B3E900C12429 /* ShopLookDelegate.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
@@ -836,6 +853,7 @@
 				D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
 				D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */,
+				D9F9201119A2B29600E63FE8 /* BlurringDarkView.swift in Sources */,
 				D914F7FF198854A400A59314 /* CustomImageBuffer.swift in Sources */,
 				D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */,
 			);
@@ -882,7 +900,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -912,7 +930,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 			};
@@ -940,7 +958,7 @@
 				GCC_PREFIX_HEADER = "ParseStarterProject/FashionStash-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ParseStarterProject/FashionStash-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
 				PROVISIONING_PROFILE = "51e9b003-ad91-46a7-b9fb-c9a6b81a02bd";
@@ -971,7 +989,7 @@
 				GCC_PREFIX_HEADER = "ParseStarterProject/FashionStash-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ParseStarterProject/FashionStash-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
 				PROVISIONING_PROFILE = "51e9b003-ad91-46a7-b9fb-c9a6b81a02bd";

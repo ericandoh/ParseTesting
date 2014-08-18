@@ -13,3 +13,5 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import <AddressBook/AddressBook.h>
+
+#import "UIImage+ImageEffects.h"

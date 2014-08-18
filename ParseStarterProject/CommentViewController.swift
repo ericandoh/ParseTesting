@@ -16,7 +16,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet var commentTableView: UITableView!
     
     @IBOutlet weak var commentsTextFieldConstraint: NSLayoutConstraint!
-    @IBOutlet var backImgView: UIImageView!
+    @IBOutlet var backImgView: BlurringDarkView!
     var commentList: Array<PostComment> = [];
     
     var postImageList: Dictionary<String, UIImage> = [:];
@@ -99,7 +99,8 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                     self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
                 }
                 });
-            backImgView.image = backImg!;
+            //backImgView.image = backImg!;
+            backImgView.setImageAndBlur(backImg!);
         }
         self.navigationController.navigationBar.topItem.title = "Comments"
     }

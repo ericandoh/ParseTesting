@@ -35,7 +35,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     @IBOutlet weak var myPickerView: UIPickerView!
     @IBOutlet var navigationTitle: UIButton!
-    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
     
     var assetLibrary: ALAssetsLibrary?;
@@ -83,6 +83,11 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
+        
+        var toolbar = UIToolbar(frame: optionsView.frame);
+        toolbar.barStyle = UIBarStyle.Black;
+        toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+        self.optionsView.insertSubview(toolbar, atIndex: 0);
         optionsView.hidden = true;  //this should be set to this by storyboard by default
         
         //NSLog("Loading View");
@@ -132,7 +137,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (backImageView.image != nil) {
-            backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame));
         }
     }
     
@@ -181,7 +186,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }
             if (index == 0) {
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
-                self.backImageView.image = assetImg;
+                //self.backImageView.image = assetImg;
+                self.backImageView.setImageAndBlur(assetImg);
                 firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
             }
             else if (index == 1) {
@@ -396,7 +402,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             ()->Void in
             if (mediaType == kUTTypeImage) {//kUTTypeImage) {
                 var image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
-                self.backImageView.image = image;
+                //self.backImageView.image = image;
+                self.backImageView.setImageAndBlur(image);
                 //add code here to do something with image I just picked
                 if (self.usingCamera) {
                     /*UIImageWriteToSavedPhotosAlbum(image,

@@ -33,7 +33,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var followerTableView: UITableView!
     
     
-    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
     
     var mainUser: FriendEncapsulator?;
@@ -121,7 +121,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             
             mainUser!.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
-                self.backImageView.image = image;
+                //self.backImageView.image = image;
+                self.backImageView.setImageAndBlur(image);
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -157,7 +158,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.text = textToPut;
                 userLabel.font = USER_TITLE_TEXT_FONT;
                 var tempImage: UIImage = DEFAULT_USER_ICON;
-                self.backImageView.image = tempImage;
+                //self.backImageView.image = tempImage;
+                self.backImageView.setImageAndBlur(tempImage);
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
                 self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
@@ -188,7 +190,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //self.userIcon.image = fetchedImage;
-                    self.backImageView.image = fetchedImage;
+                    //self.backImageView.image = fetchedImage;
+                    self.backImageView.setImageAndBlur(fetchedImage);
                     var newUserIcon = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     self.userIcon!.image = newUserIcon
                     self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2

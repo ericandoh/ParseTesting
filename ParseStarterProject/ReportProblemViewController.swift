@@ -10,7 +10,7 @@ import Foundation
 
 class ReportProblemViewController: UIViewController, UITextViewDelegate {
 
-    @IBOutlet weak var backImage: UIImageView!
+    @IBOutlet weak var backImage: BlurringDarkView!
     
     @IBOutlet weak var reportGuide: UITextView!
     
@@ -33,7 +33,8 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
-            self.backImage.image = image;
+            //self.backImage.image = image;
+            self.backImage.setImageAndBlur(image);
         });
         
         self.reportGuide.editable = false

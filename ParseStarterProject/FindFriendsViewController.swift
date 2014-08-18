@@ -22,8 +22,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
     @IBOutlet var searchFriendsTableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet weak var backImage: UIImageView!
-    @IBOutlet weak var backBlur: UIVisualEffectView!
+    @IBOutlet weak var backImage: BlurringDarkView!
+    //@IBOutlet weak var backBlur: UIVisualEffectView!
     
     @IBOutlet weak var backButton: UIButton!
     var isSearching: Bool = false;
@@ -104,7 +104,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         if (self.backImage.image == nil) {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
             mainUser.fetchImage({(image: UIImage)->Void in
-                self.backImage.image = image;
+                //self.backImage.image = image;
+                self.backImage.setImageAndBlur(image);
             });
         }
     }
@@ -164,12 +165,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             //set background images to wayyy back
             //backImage
             //backBlur
-            self.view.sendSubviewToBack(backBlur);
+            //self.view.sendSubviewToBack(backBlur);
             self.view.sendSubviewToBack(backImage);
         }
         else {
             self.view.insertSubview(backImage, belowSubview: view!);
-            self.view.insertSubview(backBlur, belowSubview: view!);
+            //self.view.insertSubview(backBlur, belowSubview: view!);
             self.view.insertSubview(searchBar, aboveSubview: view!);
         }
     }

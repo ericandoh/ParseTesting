@@ -12,7 +12,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
-    @IBOutlet weak var backImage: UIImageView!
+    @IBOutlet weak var backImage: BlurringDarkView!
     
     @IBAction func changePassword(sender: AnyObject) {
         let alert: UIAlertController = UIAlertController(title: "Change your password!",message: "Enter your passwords", preferredStyle: UIAlertControllerStyle.Alert);
@@ -123,7 +123,8 @@ class SettingsViewController: UIViewController {
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
-            self.backImage.image = image;
+            //self.backImage.image = image;
+            self.backImage.setImageAndBlur(image);
         });
     }
     

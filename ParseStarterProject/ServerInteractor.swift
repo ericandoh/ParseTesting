@@ -416,6 +416,47 @@ import UIKit
         
         return finalImg;
     }
+    class func blurBackImage(img: UIImage)->UIImage {
+        //var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+        /*
+        var ciContext = CIContext(options: nil);
+        
+        var imageToBlur = CIImage(CGImage: img.CGImage);
+        //var transform = CGAffineTransformIdentity;
+        //imageToBlur.imageByApplyingTransform(transform);
+        var gaussianBlurFilter = CIFilter(name: "CIGaussianBlur");
+        gaussianBlurFilter.setDefaults();
+        gaussianBlurFilter.setValue(imageToBlur, forKey: kCIInputImageKey);
+        var blurLevel = CGFloat(20.0);
+        gaussianBlurFilter.setValue(NSNumber(float: Float(blurLevel)), forKey: "inputRadius");
+        //var transform = CGAffineTransformIdentity;
+        //var transformValue = NSValue(&transform, withObjCType: CGAffineTransform);
+        //NSValue.value
+        //gaussianBlurFilter.setValue(transformValue, forKey: "inputTransform")
+        var result = gaussianBlurFilter.valueForKey(kCIOutputImageKey) as CIImage;
+        var resultingRect = imageToBlur.extent();
+        resultingRect.origin.x += blurLevel;
+        resultingRect.origin.y += blurLevel;
+        resultingRect.size.width -= blurLevel*2.0;
+        resultingRect.size.height -= blurLevel*2.0;
+        var cgImage = ciContext.createCGImage(result, fromRect: resultingRect)
+        
+        var backBlurredImage = UIImage(CGImage: cgImage);
+        return backBlurredImage;*/
+        return img.applyDarkEffect();
+    }
+    class func darkenImage(img: UIImage)->UIImage {
+        return img.applyDarkEffect();
+        /*var rect = CGRectMake(0, 0, img.size.width, img.size.height)
+        UIGraphicsBeginImageContext(CGSizeMake(img.size.width, img.size.height))
+        var context = UIGraphicsGetCurrentContext();
+        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
+        CGContextFillRect(context, rect);
+        img.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.55);
+        var newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage;*/
+    }
     class func cropImageSoWidthIs(img: UIImage, targetWidth: CGFloat)->UIImage {
         
         var widthHeightImgRatio = img.size.width / img.size.height;
@@ -423,7 +464,7 @@ import UIKit
         if (widthHeightImgRatio > CROP_WIDTH_HEIGHT_LIMIT_RATIO) {
             
             var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
-            
+            /*
             var ciContext = CIContext(options: nil);
             
             var imageToBlur = CIImage(CGImage: croppedPicture.CGImage);
@@ -446,7 +487,8 @@ import UIKit
             resultingRect.size.height -= blurLevel*2.0;
             var cgImage = ciContext.createCGImage(result, fromRect: resultingRect)
             
-            var backBlurredImage = UIImage(CGImage: cgImage);
+            var backBlurredImage = UIImage(CGImage: cgImage);*/
+            var backBlurredImage = ServerInteractor.blurBackImage(croppedPicture);
             
             //width is longer than my limit, I will display as a full image with blackspace
             var wRatio = targetWidth / img.size.width;
@@ -456,10 +498,11 @@ import UIKit
             var rect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
             
             UIGraphicsBeginImageContext(CGSizeMake(FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
-            var context = UIGraphicsGetCurrentContext();
-            CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
-            CGContextFillRect(context, rect);
-            backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.55);
+            //var context = UIGraphicsGetCurrentContext();
+            //CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
+            //CGContextFillRect(context, rect);
+            //backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.55);
+            backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 1.0);
             var rect2: CGRect = CGRect(x: 0, y: (TRUE_FULLSCREEN_HEIGHT - targetHeight) / 2.0, width: targetWidth, height: targetHeight);
             img.drawInRect(rect2)
             var newImage = UIGraphicsGetImageFromCurrentImageContext()

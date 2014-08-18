@@ -41,7 +41,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet var backDirectionImage: UIImageView!
     
-    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backImageView: BlurringDarkView!
     
     @IBOutlet weak var tapBackgroundOutlet: UIButton!
     
@@ -106,7 +106,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         sideTableView.setEditing(false, animated: false);
         
         if (receivedImages.count > 0) {
-            backImageView.image = receivedImages[0];
+            //backImageView.image = receivedImages[0];
+            self.backImageView.setImageAndBlur(receivedImages[0]);
         }
     }
 
@@ -124,7 +125,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             sendBackImages(1);
         }
         if (backImageView.image != nil) {
-            backImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame);
+            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame));
         }
         //if (self.navigationController) {
         //self.navigationController.setNavigationBarHidden(false, animated: false);

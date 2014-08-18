@@ -20,6 +20,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBOutlet var descriptionTextField: LinkFilledTextView!
     
+    @IBOutlet weak var descriptionBackImage: UIImageView!
     
     //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel!
@@ -516,6 +517,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
         }
+        var imgToDescrip = frontImageView.image;
+        descriptionBackImage.image = imgToDescrip.applyDarkEffect();
         
         //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();

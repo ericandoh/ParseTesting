@@ -44,9 +44,9 @@ class NotifViewController: UITableViewController {
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var custView: UIView = UIView()
-        let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-        effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
-        custView.addSubview(effectView)
+        //let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        //effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
+        //custView.addSubview(effectView)
         //let gradientView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
         //gradientView.image = GRADIENT_IMG
         //view.addSubview(gradientView)
@@ -54,15 +54,17 @@ class NotifViewController: UITableViewController {
         //self.view.insertSubview(custView, atIndex: 0);
         
         if (ServerInteractor.isAnonLogged()) {
-            var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
-            imageView.image = DEFAULT_USER_ICON;
+            var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            imageView.setImageAndBlur(DEFAULT_USER_ICON);
+            //imageView.image = DEFAULT_USER_ICON;
             custView.insertSubview(imageView, atIndex: 0)
         }
         else {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
             mainUser.fetchImage({(image: UIImage)->Void in
-                var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
-                imageView.image = image
+                var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+                imageView.setImageAndBlur(image);
+                //imageView.image = image
                 custView.insertSubview(imageView, atIndex: 0)
             });
         }

@@ -34,6 +34,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         outOfMenuButton.hidden = true;
         outOfMenuButton.alpha = 0;
         displayContentController(SIDE_MENU_ITEMS[0]);
+        
+        var toolbar = UIToolbar(frame: sideView.frame);
+        toolbar.barStyle = UIBarStyle.Black;
+        toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+        //toolbar.barTintColor = UIColor.blackColor();
+        self.sideView.insertSubview(toolbar, atIndex: 0);
     }
     
     override func didReceiveMemoryWarning() {

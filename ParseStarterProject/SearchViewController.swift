@@ -13,7 +13,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @IBOutlet var myCollectionView: UICollectionView!
     @IBOutlet var searchBar: UISearchBar!
     
-    @IBOutlet weak var backImageView: UIImageView!
+    @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
@@ -168,7 +168,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         if (collectionDelegateMain!.imgBuffer.numItems() > 0) {
             var post = collectionDelegateMain!.getPost(0);
             post.loadImage({(imgStruct: ImagePostStructure, index: Int) in
-                self.backImageView.image = imgStruct.image!;
+                //self.backImageView.image = imgStruct.image!;
+                self.backImageView.setImageAndBlur(imgStruct.image!);
             }, index: 0)
         }
     }
