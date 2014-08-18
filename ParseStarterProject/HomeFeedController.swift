@@ -93,6 +93,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        frontImageView.contentMode = UIViewContentMode.Center;
+        
         editPostButton.hidden = true;
         
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
@@ -125,7 +127,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
         backImageView!.hidden = true;
         backImageView!.alpha = 0;
-        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         
         if ((imgBuffer) != nil) {
@@ -157,7 +160,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             defaults.synchronize();
             //set up tutorial
             var tutorialOverlay = UIButton(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
-            tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE, forState: UIControlState.Normal);
+            if (UIScreen.mainScreen().bounds.height == CGFloat(568.0)) {
+                tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE_5, forState: UIControlState.Normal);
+            }
+            else {
+                tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE_4, forState: UIControlState.Normal);
+            }
             tutorialOverlay.addTarget(self, action: "closeTutorial:", forControlEvents: UIControlEvents.TouchDown)
             self.view.addSubview(tutorialOverlay);
             self.view.bringSubviewToFront(tutorialOverlay);
@@ -177,7 +185,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
-            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            backImageView!.contentMode = UIViewContentMode.Center;
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         //self.imgBuffer!.loadSet();
@@ -244,6 +253,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         self.view.bringSubviewToFront(loadingSpinner!);
     }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+        
+        var toImage = ServerInteractor.cropImageSoWidthIs(toImage, targetWidth: FULLSCREEN_WIDTH);
+        
         if (loadingSpinner!.hidden == false) {
             self.view.sendSubviewToBack(loadingSpinner!);
             loadingSpinner!.stopAnimating();
@@ -254,7 +266,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
-            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+            backImageView!.contentMode = UIViewContentMode.Center;
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         self.backImageView!.image = toImage;

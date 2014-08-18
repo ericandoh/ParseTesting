@@ -68,7 +68,7 @@ let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
 
 let NORMAL_HEART = UIImage(named: "heart.png")
 
-let LIKED_HEART = UIImage(named: "heartredglow.png");
+let LIKED_HEART = UIImage(named: "hearted.png");
 
 let GRADIENT_IMG = UIImage(named: "gradient.png")
 
@@ -99,7 +99,8 @@ let UPLOAD_ICON = UIImage(named: "camera.png");
 
 let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
 
-let TUTORIAL_IMAGE = UIImage(named: "tutorial.png");
+let TUTORIAL_IMAGE_4 = UIImage(named: "Onboarding_4.png");
+let TUTORIAL_IMAGE_5 = UIImage(named: "Onboarding_5S.png");
 
 let GREEN_HEX = 0x94eed2;
 
@@ -135,9 +136,15 @@ let FULLSCREEN_WIDTH: CGFloat = UIScreen.mainScreen().bounds.size.width;
 //height of a fullscreen app
 let TRUE_FULLSCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height;
 
+//width of a fullscreen image
+//optimize for 5s, will crop naturally for 4s anyways
+//double for retina
+let IMGSAVE_FULLSCREEN_WIDTH: CGFloat = CGFloat(640);
+
 //height of a fullscreen image
 //optimize for 5s, will crop naturally for 4s anyways
-let IMGSAVE_FULLSCREEN_HEIGHT: CGFloat = CGFloat(568);
+//double for retina
+let IMGSAVE_FULLSCREEN_HEIGHT: CGFloat = CGFloat(1136);
 
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
@@ -157,7 +164,12 @@ let SIDE_MENU_HEADER_HEIGHT = CGFloat(70);
 let SIDE_MENU_TABLE_HEIGHT = TRUE_FULLSCREEN_HEIGHT - SIDE_MENU_HEADER_HEIGHT;
 
 //ratio of width to height
-let WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(TRUE_FULLSCREEN_HEIGHT);
+let WIDTH_HEIGHT_RATIO = CGFloat(IMGSAVE_FULLSCREEN_WIDTH) / CGFloat(IMGSAVE_FULLSCREEN_HEIGHT);
+
+let THIS_WIDTH_HEIGHT_RATIO = CGFloat(FULLSCREEN_WIDTH) / CGFloat(TRUE_FULLSCREEN_HEIGHT);
+
+//ratio between crop and show
+let CROP_WIDTH_HEIGHT_LIMIT_RATIO = CGFloat(1.0);    //width over height
 
 //max size of an image
 let MAX_IMAGE_SIZE = FULLSCREEN_WIDTH * TRUE_FULLSCREEN_HEIGHT;

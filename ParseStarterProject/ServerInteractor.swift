@@ -416,6 +416,63 @@ import UIKit
         
         return finalImg;
     }
+    class func cropImageSoWidthIs(img: UIImage, targetWidth: CGFloat)->UIImage {
+        
+        var widthHeightImgRatio = img.size.width / img.size.height;
+        
+        if (widthHeightImgRatio > CROP_WIDTH_HEIGHT_LIMIT_RATIO) {
+            
+            var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+            
+            var ciContext = CIContext(options: nil);
+            
+            var imageToBlur = CIImage(CGImage: croppedPicture.CGImage);
+            //var transform = CGAffineTransformIdentity;
+            //imageToBlur.imageByApplyingTransform(transform);
+            var gaussianBlurFilter = CIFilter(name: "CIGaussianBlur");
+            gaussianBlurFilter.setDefaults();
+            gaussianBlurFilter.setValue(imageToBlur, forKey: kCIInputImageKey);
+            var blurLevel = CGFloat(20.0);
+            gaussianBlurFilter.setValue(NSNumber(float: Float(blurLevel)), forKey: "inputRadius");
+            //var transform = CGAffineTransformIdentity;
+            //var transformValue = NSValue(&transform, withObjCType: CGAffineTransform);
+            //NSValue.value
+            //gaussianBlurFilter.setValue(transformValue, forKey: "inputTransform")
+            var result = gaussianBlurFilter.valueForKey(kCIOutputImageKey) as CIImage;
+            var resultingRect = imageToBlur.extent();
+            resultingRect.origin.x += blurLevel;
+            resultingRect.origin.y += blurLevel;
+            resultingRect.size.width -= blurLevel*2.0;
+            resultingRect.size.height -= blurLevel*2.0;
+            var cgImage = ciContext.createCGImage(result, fromRect: resultingRect)
+            
+            var backBlurredImage = UIImage(CGImage: cgImage);
+            
+            //width is longer than my limit, I will display as a full image with blackspace
+            var wRatio = targetWidth / img.size.width;
+            //var hRatio = frame.size.height / img.size.height;
+            var targetHeight = wRatio * img.size.height;
+            //NSLog("\(targetWidth)- \(targetHeight)")
+            var rect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
+            
+            UIGraphicsBeginImageContext(CGSizeMake(FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+            var context = UIGraphicsGetCurrentContext();
+            CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
+            CGContextFillRect(context, rect);
+            backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.3);
+            var rect2: CGRect = CGRect(x: 0, y: (TRUE_FULLSCREEN_HEIGHT - targetHeight) / 2.0, width: targetWidth, height: targetHeight);
+            img.drawInRect(rect2)
+            var newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            return newImage;
+            //return ServerInteractor.imageWithImage(img, scaledToSize: CGSizeMake(targetWidth, targetHeight));
+        }
+        else {
+            //i need to scale image to fit the screen dimensions!
+            return cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+        }
+    }
     
     class func preprocessImages(images: Array<UIImage>)->Array<UIImage> {
         var individualRatio: Float;
@@ -423,7 +480,7 @@ import UIKit
         var height: Int;
         var newImgList: Array<UIImage> = [];
         var newSize: CGSize;
-        var cropRect = CGRectMake(CGFloat(FULLSCREEN_WIDTH / 2), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT / 2), CGFloat(FULLSCREEN_WIDTH), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT));
+        var cropRect = CGRectMake(CGFloat(IMGSAVE_FULLSCREEN_WIDTH / 2), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT / 2), CGFloat(IMGSAVE_FULLSCREEN_WIDTH), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT));
         for (index, image: UIImage) in enumerate(images) {
             NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
@@ -436,9 +493,9 @@ import UIKit
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
                 UIGraphicsEndImageContext();
             }
-            else if (CGFloat(image.size.width) > FULLSCREEN_WIDTH && CGFloat(individualRatio) < WIDTH_HEIGHT_RATIO) {
+            else if (CGFloat(image.size.width) > IMGSAVE_FULLSCREEN_WIDTH && CGFloat(individualRatio) < WIDTH_HEIGHT_RATIO) {
                 //this image is vertical, so we resize image width to match
-                newSize = CGSize(width: FULLSCREEN_WIDTH, height: CGFloat(image.size.height) * FULLSCREEN_WIDTH / CGFloat(image.size.width));
+                newSize = CGSize(width: IMGSAVE_FULLSCREEN_WIDTH, height: CGFloat(image.size.height) * IMGSAVE_FULLSCREEN_WIDTH / CGFloat(image.size.width));
                 UIGraphicsBeginImageContext(newSize);
                 image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;

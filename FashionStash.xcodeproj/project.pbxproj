@@ -149,12 +149,14 @@
 		D9DEE638199F0C1100F08CC5 /* tutorial.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE637199F0C1100F08CC5 /* tutorial.png */; };
 		D9DEE642199F162B00F08CC5 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE641199F162B00F08CC5 /* settings.png */; };
 		D9DEE644199F18FC00F08CC5 /* backcolorsolid.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE643199F18FC00F08CC5 /* backcolorsolid.png */; };
-		D9DEE646199F1CDF00F08CC5 /* heartredglow.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE645199F1CDF00F08CC5 /* heartredglow.png */; };
 		D9DEE64C199F1E4800F08CC5 /* unknown_user.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE64B199F1E4800F08CC5 /* unknown_user.png */; };
 		D9DEE64E199F1FD800F08CC5 /* fashtitlescreen.png in Resources */ = {isa = PBXBuildFile; fileRef = D9DEE64D199F1FD800F08CC5 /* fashtitlescreen.png */; };
 		D9F89B19195CCD9700849B1D /* StartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B18195CCD9700849B1D /* StartController.swift */; };
 		D9F89B1D195CE30600849B1D /* ImagePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1C195CE30600849B1D /* ImagePost.swift */; };
 		D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */; };
+		D9F9200919A272C900E63FE8 /* hearted.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200819A272C900E63FE8 /* hearted.png */; };
+		D9F9200C19A2736500E63FE8 /* Onboarding_5S.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */; };
+		D9F9200D19A2736500E63FE8 /* Onboarding_4.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200B19A2736500E63FE8 /* Onboarding_4.png */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -314,12 +316,14 @@
 		D9DEE637199F0C1100F08CC5 /* tutorial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tutorial.png; sourceTree = "<group>"; };
 		D9DEE641199F162B00F08CC5 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		D9DEE643199F18FC00F08CC5 /* backcolorsolid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = backcolorsolid.png; sourceTree = "<group>"; };
-		D9DEE645199F1CDF00F08CC5 /* heartredglow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heartredglow.png; sourceTree = "<group>"; };
 		D9DEE64B199F1E4800F08CC5 /* unknown_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unknown_user.png; sourceTree = "<group>"; };
 		D9DEE64D199F1FD800F08CC5 /* fashtitlescreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fashtitlescreen.png; sourceTree = "<group>"; };
 		D9F89B18195CCD9700849B1D /* StartController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartController.swift; sourceTree = "<group>"; };
 		D9F89B1C195CE30600849B1D /* ImagePost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePost.swift; sourceTree = "<group>"; };
 		D9F89B1E195CF70300849B1D /* ImagePostStruct.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostStruct.swift; sourceTree = "<group>"; };
+		D9F9200819A272C900E63FE8 /* hearted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hearted.png; sourceTree = "<group>"; };
+		D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_5S.png; sourceTree = "<group>"; };
+		D9F9200B19A2736500E63FE8 /* Onboarding_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_4.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -472,9 +476,9 @@
 			isa = PBXGroup;
 			children = (
 				D9BB5993199AD2FF00367408 /* edit.png */,
-				D9DEE645199F1CDF00F08CC5 /* heartredglow.png */,
 				D9BB5994199AD2FF00367408 /* share.png */,
 				D9BB5995199AD2FF00367408 /* comment.png */,
+				D9F9200819A272C900E63FE8 /* hearted.png */,
 				D9BB5996199AD2FF00367408 /* heart.png */,
 				D93CD47A1995414E001F0253 /* info.png */,
 			);
@@ -546,6 +550,8 @@
 			children = (
 				D9DEE637199F0C1100F08CC5 /* tutorial.png */,
 				D93CD47C19954157001F0253 /* logo.png */,
+				D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */,
+				D9F9200B19A2736500E63FE8 /* Onboarding_4.png */,
 				D9BB5926199A803900367408 /* plus.png */,
 				D9DEE64B199F1E4800F08CC5 /* unknown_user.png */,
 				D923909D1992D278001B5CBE /* f_camera_roll.png */,
@@ -682,6 +688,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D9DEE62E199EB41200F08CC5 /* close_button.png in Resources */,
+				D9F9200D19A2736500E63FE8 /* Onboarding_4.png in Resources */,
 				D9BB5970199A844100367408 /* HelveticaNeueLTPro-ExO.otf in Resources */,
 				D9BB5967199A844100367408 /* HelveticaNeueLTPro-Blk.otf in Resources */,
 				D9DEE642199F162B00F08CC5 /* settings.png in Resources */,
@@ -690,7 +697,6 @@
 				D9DEE62B199EB3EB00F08CC5 /* follow.png in Resources */,
 				D9DEE62C199EB3EB00F08CC5 /* followed.png in Resources */,
 				D9BB596D199A844100367408 /* HelveticaNeueLTPro-Cn.otf in Resources */,
-				D9DEE646199F1CDF00F08CC5 /* heartredglow.png in Resources */,
 				D9201BFD199A7B4D004018A1 /* home.png in Resources */,
 				D93CD465199540CA001F0253 /* backcolor.png in Resources */,
 				D9BB5966199A844100367408 /* HelveticaNeueLTPro-BdOu.otf in Resources */,
@@ -733,6 +739,7 @@
 				D9BB597E199A844100367408 /* HelveticaNeueLTPro-Md.otf in Resources */,
 				D9DEE644199F18FC00F08CC5 /* backcolorsolid.png in Resources */,
 				D9BB5989199A844100367408 /* HelveticaNeueLTPro-ThExO.otf in Resources */,
+				D9F9200C19A2736500E63FE8 /* Onboarding_5S.png in Resources */,
 				D9BB5985199A844100367408 /* HelveticaNeueLTPro-Th.otf in Resources */,
 				D9BB5991199A844100367408 /* HelveticaNeueLTPro-XBlkCn.otf in Resources */,
 				D9BB5974199A844100367408 /* HelveticaNeueLTPro-HvEx.otf in Resources */,
@@ -758,6 +765,7 @@
 				D9BB5964199A844100367408 /* HelveticaNeueLTPro-BdExO.otf in Resources */,
 				D9BB5961199A844100367408 /* HelveticaNeueLTPro-BdCn.otf in Resources */,
 				D9BB597B199A844100367408 /* HelveticaNeueLTPro-LtEx.otf in Resources */,
+				D9F9200919A272C900E63FE8 /* hearted.png in Resources */,
 				D9BB596C199A844100367408 /* HelveticaNeueLTPro-BlkIt.otf in Resources */,
 				D9BB5975199A844100367408 /* HelveticaNeueLTPro-HvExO.otf in Resources */,
 				D9201BFF199A7B68004018A1 /* magnifyingglass.png in Resources */,
