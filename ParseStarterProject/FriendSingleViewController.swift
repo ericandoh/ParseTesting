@@ -9,7 +9,7 @@
 //
 
 import UIKit
-
+/*
 class FriendSingleViewController: UIViewController {
 
     @IBOutlet var userIcon: UIImageView!
@@ -43,3 +43,4 @@ class FriendSingleViewController: UIViewController {
         NSLog("Not yet implemented")
     }
 }
+*/

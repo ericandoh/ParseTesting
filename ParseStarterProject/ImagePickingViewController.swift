@@ -129,29 +129,6 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
            // }
         //});
     }
-    /*
-    {
-    (group, stop) in
-    var insideLibrary = self.assetLibrary;
-    if (group) {
-    group.setAssetsFilter(ALAssetsFilter.allPhotos());
-    /*
-    group.posterImage -> small image for icon
-    */
-    self.assetGroups.append(group);
-    //if (self.assetGroups.count == 1) {
-    if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
-    //first asset I've loaded
-    //NSLog("First asset group, adding + loading")
-    var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
-    self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
-    self.savedPhotoIndex = self.assetGroups.count - 1;
-    self.groupSelected = self.savedPhotoIndex;
-    self.loadImagesForCurrent();
-    }
-    }
-    }
-    */
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (backImageView.image != nil) {
@@ -163,42 +140,6 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    /*
-    func doStuff(group: ALAssetsGroup?, stop: UnsafeMutablePointer<ObjCBool>) {
-        var insideLibrary = self.assetLibrary;
-        if (group != nil) {
-            group!.setAssetsFilter(ALAssetsFilter.allPhotos());
-            /*
-            group.posterImage -> small image for icon
-            */
-            self.assetGroups.append(group!);
-            //if (self.assetGroups.count == 1) {
-            if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME) {
-                //first asset I've loaded
-                //NSLog("First asset group, adding + loading")
-                var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
-                self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
-                self.savedPhotoIndex = self.assetGroups.count - 1;
-                self.groupSelected = self.savedPhotoIndex;
-                self.loadImagesForCurrent();
-            }
-        }
-    }*/
-    
-    //assetLibrary!
-    //NSLog("Add alert view telling I couldn't open my images");
-    /*struct Static {
-        static var token: dispatch_once_t = 0;
-        static var library: ALAssetsLibrary?;
-    }*/
-    /*class func getDefaultAssetLibrary()->ALAssetsLibrary? {
-        var token: dispatch_once_t = 0;
-        dispatch_once(&token, {() in
-            Static.library = ALAssetsLibrary();
-        });
-        return Static.library;
-    }*/
-    
     func getGalleryTimeForIndex(groupIndex: Int)->String {
         return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName) as String
     }

@@ -191,7 +191,6 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         return estimatedWidth
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        NSLog("W");
         self.commentTextField.resignFirstResponder();
     }
     func isTapped(sender: UITapGestureRecognizer) {

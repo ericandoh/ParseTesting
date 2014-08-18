@@ -93,8 +93,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSLog("\(self.view.frame.height)");
-        
         editPostButton.hidden = true;
         
         self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
@@ -183,7 +181,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         //self.imgBuffer!.loadSet();
-        NSLog("\(self.view.frame.height)");
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -440,12 +437,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         if (indexAtTimeOfRequest == viewCounter) {
             //im still on the same image post, phew!
             var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-            /*if (currentPost.isViewingComments(postCounter)) {
-                NSLog("This should not run")
-                self.viewingComments = true;
-                //self.frontImageView!.image = oldImg;
-                self.startViewingComments(currentPost);
-            }*/
             if (postCounter != 0) {
                 //needLoadOnCurrent = false;
                 //crash - currentpost doesn't actually have image here!
