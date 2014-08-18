@@ -53,7 +53,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     var backImageView: UIImageView?;
     
-    var noImagesView: UILabel?;
+    var noImagesView: UIImageView?;
     
     var swiperNoSwipe: Bool = false;
     var pannerNoPan: Bool = false;
@@ -275,13 +275,16 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 loadingSpinner!.hidden = true;
             }
             //make a view that says we have no images!;
-            noImagesView = UILabel(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            noImagesView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, NOBODY_HOME_FEED_BACKGROUND.size.height * FULLSCREEN_WIDTH / NOBODY_HOME_FEED_BACKGROUND.size.width));
+            noImagesView!.contentMode = UIViewContentMode.ScaleAspectFit;
+            noImagesView!.image = NOBODY_HOME_FEED_BACKGROUND;
+            /*noImagesView = UILabel(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
             noImagesView!.textColor = UIColor.whiteColor();
             noImagesView!.textAlignment = NSTextAlignment.Center;
             noImagesView!.numberOfLines = 0;
             noImagesView!.lineBreakMode = NSLineBreakMode.ByWordWrapping;
             noImagesView!.font = TITLE_TEXT_FONT;
-            noImagesView!.text = "You are not following anyone! Open the side menu (top left) and click on \"Find Friends\" to follow people. ";
+            noImagesView!.text = "You are not following anyone! Open the side menu (top left) and click on \"Find Friends\" to follow people. ";*/
             self.view.addSubview(noImagesView!);
             //self.view.insertSubview(noImagesView, aboveSubview: frontImageView);
             self.view.bringSubviewToFront(noImagesView!);

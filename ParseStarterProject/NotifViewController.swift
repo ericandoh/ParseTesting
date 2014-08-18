@@ -43,38 +43,48 @@ class NotifViewController: UITableViewController {
         self.navigationController.navigationBar.topItem.title = "Notifications";
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
-        var view: UIView = UIView()
+        var custView: UIView = UIView()
         let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
-        view.addSubview(effectView)
+        custView.addSubview(effectView)
         //let gradientView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
         //gradientView.image = GRADIENT_IMG
         //view.addSubview(gradientView)
-        self.tableView.backgroundView = view
+        self.tableView.backgroundView = custView
+        //self.view.insertSubview(custView, atIndex: 0);
+        
         if (ServerInteractor.isAnonLogged()) {
             var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
             imageView.image = DEFAULT_USER_ICON;
-            self.tableView.backgroundView.insertSubview(imageView, atIndex: 0)
+            custView.insertSubview(imageView, atIndex: 0)
         }
         else {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
             mainUser.fetchImage({(image: UIImage)->Void in
                 var imageView: UIImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
                 imageView.image = image
-                self.tableView.backgroundView.insertSubview(imageView, atIndex: 0)
+                custView.insertSubview(imageView, atIndex: 0)
             });
         }
         
         
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 50.0;
+        
+        var refreshControl = UIRefreshControl();
+        refreshControl.addTarget(self, action: "refreshNeeded:", forControlEvents: UIControlEvents.ValueChanged);
+        self.refreshControl = refreshControl;
+        tableView.insertSubview(self.refreshControl, aboveSubview: custView)
+        //custView.addSubview(refreshControl);
+        //tableView.bringSubviewToFront(refreshControl);
+        self.tableView.backgroundView.layer.zPosition -= 1;
     }
     
     override func viewDidAppear(animated: Bool) {
         //notifList = Array<InAppNotification>();
         //NSLog("Populating notifs")
         populateNotifs();
-        self.tableView.reloadData();    //is this needed
+        //self.tableView.reloadData();    //is this needed
     }
     
     @IBAction func backPress(sender: UIButton) {
@@ -95,6 +105,10 @@ class NotifViewController: UITableViewController {
        
         ServerInteractor.getNotifications(self);
     }
+    func populateNotifs(refresher: UIRefreshControl) {
+        ServerInteractor.getNotifications(self, refreshControl: refresher);
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -246,6 +260,10 @@ class NotifViewController: UITableViewController {
             var destination = segue!.destinationViewController as SingleNotifViewController;
             destination.receiveNotifObject(notifObj);
         }
+    }
+    func refreshNeeded(sender: UIRefreshControl) {
+        populateNotifs(sender);
+        //self.tableView.reloadData();    //is this needed
     }
 
 }

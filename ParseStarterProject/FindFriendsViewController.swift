@@ -58,7 +58,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         someTextField.setTextAfterAttributing("spotting the hottest fashion wear of the year #summer #penguin #fun #awesome with my buddies @dog1 @dog2 @asdf @meepmeep #coolbro socool")*/
         
-        self.navigationController.navigationBar.topItem.title = "Find Followers";
+        self.navigationController.navigationBar.topItem.title = "Find Friends";
         // Do any additional setup after loading the view.
         
         searchBar.keyboardAppearance = UIKeyboardAppearance.Dark

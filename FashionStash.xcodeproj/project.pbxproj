@@ -157,6 +157,7 @@
 		D9F9200919A272C900E63FE8 /* hearted.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200819A272C900E63FE8 /* hearted.png */; };
 		D9F9200C19A2736500E63FE8 /* Onboarding_5S.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */; };
 		D9F9200D19A2736500E63FE8 /* Onboarding_4.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200B19A2736500E63FE8 /* Onboarding_4.png */; };
+		D9F9200F19A2A60000E63FE8 /* FashionStash_Empty.png in Resources */ = {isa = PBXBuildFile; fileRef = D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */; };
 		DD952FCB16E7F5CF00470144 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E18B1E1624CB5700B17A67 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
@@ -324,6 +325,7 @@
 		D9F9200819A272C900E63FE8 /* hearted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hearted.png; sourceTree = "<group>"; };
 		D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_5S.png; sourceTree = "<group>"; };
 		D9F9200B19A2736500E63FE8 /* Onboarding_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Onboarding_4.png; sourceTree = "<group>"; };
+		D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FashionStash_Empty.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,6 +552,7 @@
 			children = (
 				D9DEE637199F0C1100F08CC5 /* tutorial.png */,
 				D93CD47C19954157001F0253 /* logo.png */,
+				D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */,
 				D9F9200A19A2736500E63FE8 /* Onboarding_5S.png */,
 				D9F9200B19A2736500E63FE8 /* Onboarding_4.png */,
 				D9BB5926199A803900367408 /* plus.png */,
@@ -731,6 +734,7 @@
 				D9BB5982199A844100367408 /* HelveticaNeueLTPro-MdExO.otf in Resources */,
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,
 				D9BB5988199A844100367408 /* HelveticaNeueLTPro-ThEx.otf in Resources */,
+				D9F9200F19A2A60000E63FE8 /* FashionStash_Empty.png in Resources */,
 				D93CD47B1995414E001F0253 /* info.png in Resources */,
 				D9BB5990199A844100367408 /* HelveticaNeueLTPro-UltLtIt.otf in Resources */,
 				D9DEE64C199F1E4800F08CC5 /* unknown_user.png in Resources */,

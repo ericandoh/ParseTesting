@@ -172,6 +172,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         var currentGroup = assetGroups[groupSelected];
         var totalEnumerated: Int = 0;
+        var reloadAtIndexPaths: Array<NSIndexPath> = [];
         currentGroup.enumerateAssetsUsingBlock({
             (result, index, stop) in
             //NSLog("Loading asset \(index)")
@@ -196,12 +197,14 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }
             if(index < self.currentAssets.count) {
                 self.currentAssets[index].asset = result;
+                reloadAtIndexPaths.append(NSIndexPath(forRow: index+1, inSection: 0));
                 //self.myCollectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow: index + 1, inSection: 0)]);
             }
             else {
                 var currentCount = self.currentAssets.count;
                 self.currentAssets += Array(count: index-currentCount + 1, repeatedValue: AssetItem(asset: nil, highlighted: -1));
                 self.currentAssets[index].asset = result;
+                reloadAtIndexPaths.append(NSIndexPath(forRow: index+1, inSection: 0));
                 //var indexPaths: Array<NSIndexPath> = [];
                 //for i in currentCount..<(index+1) {
                     //indexPaths.append(NSIndexPath(forRow: i + 1, inSection: 0));
@@ -219,6 +222,11 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                         self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
                     }
                 }
+            }
+            else if (reloadAtIndexPaths.count > 10) {
+                //reload table every 10
+                self.myCollectionView.reloadItemsAtIndexPaths(reloadAtIndexPaths);
+                reloadAtIndexPaths = [];
             }
             });
     }

@@ -102,6 +102,8 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
 let TUTORIAL_IMAGE_4 = UIImage(named: "Onboarding_4.png");
 let TUTORIAL_IMAGE_5 = UIImage(named: "Onboarding_5S.png");
 
+let NOBODY_HOME_FEED_BACKGROUND = UIImage(named: "FashionStash_Empty.png");
+
 let GREEN_HEX = 0x94eed2;
 
 //163,255,198

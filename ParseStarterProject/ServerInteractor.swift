@@ -1023,8 +1023,10 @@ import UIKit
             retFunc(Int(result));
         })
     }
-    
     class func getNotifications(controller: NotifViewController) {
+        ServerInteractor.getNotifications(controller, refreshControl: nil);
+    }
+    class func getNotifications(controller: NotifViewController, refreshControl: UIRefreshControl?) {
         if (isAnonLogged()) {
             if (controller.notifList.count == 0) {
                 controller.notifList.append(InAppNotification(message: "To see your notifications sign up and make an account!"));
@@ -1053,6 +1055,9 @@ import UIKit
                     }
                     if (controller.notifList.count == 0) {
                         controller.tableView.reloadData();
+                        if (refreshControl != nil) {
+                            refreshControl!.endRefreshing()
+                        }
                     }
                 }
                 for index:Int in 0..<objects.count {
@@ -1079,6 +1084,9 @@ import UIKit
                         controller.notifList[index] = item;
                     }
                     controller.notifList[index]!.assignMessage(controller);
+                }
+                if (refreshControl != nil) {
+                    refreshControl!.endRefreshing()
                 }
             } else {
                 // Log details of the failure
