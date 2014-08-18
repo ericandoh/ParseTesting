@@ -84,24 +84,36 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.searchBar.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default);
         var searchBackImg = ServerInteractor.imageWithColorForSearch(UIColor.clearColor(), andHeight: 32);
         self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
-        
-        
-        collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getExplore, sender: self);
-        collectionDelegateMain!.myFinishFunction = self.setBackImage;
-        if (currentTerm != "") {
-            startSearch(currentTerm);
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+        if (collectionDelegateMain == nil) {
+            collectionDelegateMain = ImagePostCollectionDelegate(disableOnAnon: false, collectionView: self.myCollectionView, serverFunction2: ServerInteractor.getExplore, sender: self);
+            collectionDelegateMain!.myFinishFunction = self.setBackImage;
+            if (currentTerm != "") {
+                startSearch(currentTerm);
+            }
+            else {
+                collectionDelegateMain!.initialSetup();
+            }
         }
         else {
-            collectionDelegateMain!.initialSetup();
+            self.myCollectionView.reloadData();
         }
-        
-        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    override func viewWillDisappear(animated: Bool) {
+        var cellIndices = myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath>;
+        for cellIndex in cellIndices {
+            var cell = myCollectionView.cellForItemAtIndexPath(cellIndex)
+            if (cell != nil) {
+                cell.alpha = 0;
+            }
+        }
+    }
 
     @IBAction func backPress(sender: UIButton) {
         if (self.navigationController) {

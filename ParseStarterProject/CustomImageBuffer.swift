@@ -201,6 +201,7 @@ class CustomImageBuffer: NSObject {
         }
     }
     func resetData() {
+        NSLog("Resetting img buffer");
         if (loaderType != 3) {
             loadedPosts = [];
         }

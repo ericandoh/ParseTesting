@@ -180,6 +180,9 @@ let BAR_WIDTH = CGFloat(225.0);
 //from where swiping left triggers side menu bar
 let TRIGGER_BAR_WIDTH = CGFloat(200.0);
 
+//how much I have to drag down before it triggers
+let PULLDOWN_THRESHOLD = CGFloat(200.0);
+
 //constants for user profile name + icon in top nav bar
 var TITLE_BAR_WIDTH = CGFloat(220);
 var USER_ICON_WIDTH = CGFloat(30);
@@ -228,7 +231,7 @@ let INDEX_OF_HOME: Int = find(SIDE_MENU_ITEMS, "HomeNav")!;
 //side menu bar items we will have
 //this references ONLY the actual names to display on the side menu table
 //let SIDE_MENU_NAMES = ["My Stash", "Upload", "Notifications", "Search", "My Profile"];
-let SIDE_MENU_NAMES = ["Home", "Explore", "Profile", "Notifications", "Find People", "Upload"];
+let SIDE_MENU_NAMES = ["Home", "Explore", "Profile", "Notifications", "Find Friends", "Upload"];
 
 //side menu bar images we will have
 let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICON, UPLOAD_ICON];

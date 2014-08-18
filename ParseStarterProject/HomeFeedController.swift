@@ -12,7 +12,7 @@ import UIKit
 
 let HOME_OWNER = "HOME";
 
-class HomeFeedController: UIViewController, UIActionSheetDelegate {
+class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate {
     
     //@IBOutlet var commentView: UIView               //use this for hiding and showing
     @IBOutlet var descriptionPage: UIView!
@@ -44,12 +44,19 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     @IBOutlet weak var shopLookHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var topPullToRefresh: UILabel!
+    
+    @IBOutlet weak var bottomPullToRefresh: UILabel!
+    
     
     var loadingSpinner: UIActivityIndicatorView?;
     
-    var backImageView: UIImageView?;      //deprecated
+    var backImageView: UIImageView?;
+    
+    var noImagesView: UILabel?;
     
     var swiperNoSwipe: Bool = false;
+    var pannerNoPan: Bool = false;
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -89,6 +96,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     var imgBuffer: CustomImageBuffer?;
     
     var currentShopDelegate: ShopLookDelegate?;
+    
+    var totalTranslationByPan: CGFloat = CGFloat(0.0);
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +144,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             if (imgBuffer!.isLoadedAt(viewCounter)) {
                 configureCurrent(viewCounter);
             }
+            if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+                imgBuffer!.loadSet();
+            }
         }
         
         // Do any additional setup after loading the view.
@@ -170,6 +182,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             self.view.addSubview(tutorialOverlay);
             self.view.bringSubviewToFront(tutorialOverlay);
         }
+        
+        var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "motionPanned:");
+        panGestureRecognizer.delegate = self;
+        self.view.addGestureRecognizer(panGestureRecognizer);
+        
     }
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
@@ -223,6 +240,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     //to refresh all images in feed
     func refresh() {
+        if (noImagesView != nil) {
+            noImagesView!.removeFromSuperview();
+            noImagesView = nil;
+        }
         viewCounter = 0;
         postCounter = 0;
         refreshNeeded = false;
@@ -230,13 +251,40 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         setLoadingImage();
         if (imgBuffer != nil) {
             imgBuffer!.resetData();
+            imgBuffer!.loadSet();
+            if ((imgBuffer) != nil) {
+                if (imgBuffer!.isLoadedAt(viewCounter)) {
+                    configureCurrent(viewCounter);
+                }
+            }
             //self.imgBuffer!.loadSet();
-            self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
-            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
+            //self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
+            //self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
         }
         else {
             self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
-            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
+            self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: checkForNoImages, configureCellFunction: configureCurrent);
+        }
+    }
+    
+    func checkForNoImages() {
+        if (self.imgBuffer!.numItems() == 0) {
+            if (loadingSpinner!.hidden == false) {
+                self.view.sendSubviewToBack(loadingSpinner!);
+                loadingSpinner!.stopAnimating();
+                loadingSpinner!.hidden = true;
+            }
+            //make a view that says we have no images!;
+            noImagesView = UILabel(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            noImagesView!.textColor = UIColor.whiteColor();
+            noImagesView!.textAlignment = NSTextAlignment.Center;
+            noImagesView!.numberOfLines = 0;
+            noImagesView!.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+            noImagesView!.font = TITLE_TEXT_FONT;
+            noImagesView!.text = "You are not following anyone! Open the side menu (top left) and click on \"Find Friends\" to follow people. ";
+            self.view.addSubview(noImagesView!);
+            //self.view.insertSubview(noImagesView, aboveSubview: frontImageView);
+            self.view.bringSubviewToFront(noImagesView!);
         }
     }
     
@@ -262,7 +310,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             loadingSpinner!.hidden = true;
         }
         if (backImageView == nil) {
-            var frame: CGRect = frontImageView.frame;
+            //var frame: CGRect = frontImageView.frame;
+            var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
@@ -594,7 +643,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func swipeUp(sender: UISwipeGestureRecognizer) {
-        if (swiperNoSwipe) {
+        if (swiperNoSwipe || pannerNoPan) {
             return;
         }
         viewCounter++;
@@ -602,7 +651,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
-        if (swiperNoSwipe) {
+        if (swiperNoSwipe || pannerNoPan) {
             return;
         }
         viewCounter--;
@@ -652,10 +701,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             //show end of file screen, refresh if needed
             if (self.navigationController) {
                 viewCounter = imgBuffer!.numItems() - 1;
-                if (imgBuffer!.isLoadedAt(viewCounter)) {
+                /*if (imgBuffer!.isLoadedAt(viewCounter)) {
                     var currentPost = imgBuffer!.getImagePostAt(viewCounter);
                     pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
-                }
+                }*/
                 return;
             }
             else {
@@ -706,7 +755,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     }
     
     @IBAction func swipeLeft(sender: UISwipeGestureRecognizer) {
-        if (swiperNoSwipe) {
+        if (swiperNoSwipe || pannerNoPan) {
             return;
         }
         if (postCounter == 0) {
@@ -733,7 +782,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
     
     //is actually swipe left, but the new image moves in from the right
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        if (swiperNoSwipe) {
+        if (swiperNoSwipe || pannerNoPan) {
             return;
         }
         if (viewingComments) {
@@ -938,6 +987,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
             }
         }
     }
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer!, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer!) -> Bool {
+        if (otherGestureRecognizer.delegate is HomeFeedController) {
+            return true;
+        }
+        return false;
+    }
     func closeTutorial(button: UIButton) {
         UIView.animateWithDuration(0.6, animations: {() in
             button.alpha = 0;
@@ -945,6 +1000,109 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate {
                 button.hidden = true;
                 button.removeFromSuperview();
         });
+    }
+    func motionPanned(sender: UIPanGestureRecognizer) {
+        if (swiperNoSwipe) {
+            //turn this on as well if I'm redrawing stuff
+            return;
+        }
+        if (viewingComments) {
+            return;
+        }
+        let isRefreshStart = viewCounter == 0;
+        let isRefreshEnd = viewCounter >= imgBuffer!.numItems() - 1 && imgBuffer!.didHitEnd();
+        if ((!isRefreshStart) && (!isRefreshEnd)) {
+            pannerNoPan = false;
+        }
+        let velocity = sender.velocityInView(self.view);
+        if (sender.state == UIGestureRecognizerState.Ended) {
+            if ((isRefreshEnd || isRefreshStart) && pannerNoPan) {
+                //self.switchImageToLoading(CompassDirection.NORTH);
+                pannerNoPan = false;
+                swiperNoSwipe = true;
+                var referenceY = self.frontImageView!.frame.origin.y;
+                var currentY = self.backImageView!.frame.origin.y;
+                topPullToRefresh.hidden = true;
+                bottomPullToRefresh.hidden = true;
+                if (abs(referenceY - currentY) > PULLDOWN_THRESHOLD) {
+                    var oldOrig = self.frontImageView.frame.origin;
+                    var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
+                    if (referenceY < currentY) {
+                        newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
+                    }
+                    UIView.animateWithDuration(0.15, animations: {() in
+                        self.backImageView!.frame.origin = newOrig;
+                        }, completion: {(success: Bool) in
+                            self.backImageView!.alpha = 0;
+                            self.backImageView!.hidden = true;
+                            self.backImageView!.frame.origin = oldOrig;
+                            self.backImageView!.image = self.frontImageView.image;
+                            self.swiperNoSwipe = false;
+                            self.refresh();
+                    });
+                }
+                else {
+                    var newOrig = self.frontImageView.frame.origin;
+                    UIView.animateWithDuration(0.15, animations: {() in
+                        self.backImageView!.frame.origin = newOrig;
+                        }, completion: {(success: Bool) in
+                            self.frontImageView.image = self.backImageView!.image;
+                            self.backImageView!.alpha = 0;
+                            self.backImageView!.hidden = true;
+                            self.swiperNoSwipe = false;
+                    });
+                }
+            }
+        }
+        else {
+            if (backImageView == nil) {
+                //var frame: CGRect = frontImageView.frame;
+                var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
+                backImageView = UIImageView(frame: frame);
+                backImageView!.hidden = true;
+                backImageView!.alpha = 0;
+                //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+                backImageView!.contentMode = UIViewContentMode.Center;
+                self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+            }
+            if (isRefreshStart || isRefreshEnd) {
+                if (!pannerNoPan) {
+                    //self.backImageView!.image = self.frontImageView!.image;
+                    //self.backImageView!.alpha = 1;
+                    //self.backImageView!.frame.origin = self.frontImageView!.frame.origin;
+                }
+                var referenceY = self.frontImageView!.frame.origin.y;
+                var oldOrig = self.backImageView!.frame.origin;
+                var currentY = oldOrig.y;
+                var newY = currentY + velocity.y / 60.0;
+                if (newY > referenceY && isRefreshStart) {
+                    if (!pannerNoPan) {
+                        self.backImageView!.image = self.frontImageView!.image;
+                        self.backImageView!.alpha = 1;
+                        pannerNoPan = true;
+                        self.backImageView!.hidden = false;
+                        self.frontImageView.image = LOADING_IMG;
+                        topPullToRefresh.hidden = false;
+                        self.view.insertSubview(topPullToRefresh, belowSubview: self.backImageView!);
+                    }
+                    var newOrig = CGPoint(x: oldOrig.x, y: newY);
+                    self.backImageView!.frame.origin = newOrig;
+                }
+                else if (newY < referenceY && isRefreshEnd) {
+                    if (!pannerNoPan) {
+                        self.backImageView!.image = self.frontImageView!.image;
+                        self.backImageView!.alpha = 1;
+                        pannerNoPan = true;
+                        self.backImageView!.hidden = false;
+                        self.frontImageView.image = LOADING_IMG;
+                        bottomPullToRefresh.hidden = false;
+                        self.view.insertSubview(bottomPullToRefresh, belowSubview: self.backImageView!);
+                    }
+                    var newOrig = CGPoint(x: oldOrig.x, y: newY);
+                    self.backImageView!.frame.origin = newOrig;
+                }
+            }
+        }
     }
     
         /*CATransition* transition = [CATransition animation];

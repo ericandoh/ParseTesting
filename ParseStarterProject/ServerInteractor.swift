@@ -459,7 +459,7 @@ import UIKit
             var context = UIGraphicsGetCurrentContext();
             CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor);
             CGContextFillRect(context, rect);
-            backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.3);
+            backBlurredImage.drawInRect(rect, blendMode: kCGBlendModeNormal, alpha: 0.55);
             var rect2: CGRect = CGRect(x: 0, y: (TRUE_FULLSCREEN_HEIGHT - targetHeight) / 2.0, width: targetWidth, height: targetHeight);
             img.drawInRect(rect2)
             var newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -777,9 +777,10 @@ import UIKit
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil) {
                 if (objects.count == 0 && isFirst) {
-                    //I'm probably following 0 people, or the ppl I'm following dont got jack
+                    //I'm probably following 0 people, or the ppl I'm following dont have pictures
                     NSLog("Out of posts to follow")
-                    ServerInteractor.getExplore(loadCount, excludes: [], notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
+                    //ServerInteractor.getExplore(loadCount, excludes: [], notifyQueryFinish: notifyQueryFinish, finishFunction: finishFunction);
+                    notifyQueryFinish(0);
                     return;
                 }
                 // The find succeeded.
