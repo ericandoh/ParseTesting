@@ -74,10 +74,11 @@ class NotifViewController: UITableViewController {
         var refreshControl = UIRefreshControl();
         refreshControl.addTarget(self, action: "refreshNeeded:", forControlEvents: UIControlEvents.ValueChanged);
         self.refreshControl = refreshControl;
-        tableView.insertSubview(self.refreshControl, aboveSubview: custView)
+        //tableView.insertSubview(self.refreshControl, aboveSubview: custView)
         //custView.addSubview(refreshControl);
         //tableView.bringSubviewToFront(refreshControl);
-        self.tableView.backgroundView.layer.zPosition -= 1;
+        self.refreshControl.layer.zPosition = self.tableView.backgroundView.layer.zPosition + 1;
+        //self.tableView.backgroundView.layer.zPosition -= 1;
     }
     
     override func viewDidAppear(animated: Bool) {

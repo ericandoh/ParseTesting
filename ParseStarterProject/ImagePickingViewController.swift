@@ -397,7 +397,6 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             if (mediaType == kUTTypeImage) {//kUTTypeImage) {
                 var image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
                 self.backImageView.image = image;
-                NSLog("A");
                 //add code here to do something with image I just picked
                 if (self.usingCamera) {
                     /*UIImageWriteToSavedPhotosAlbum(image,
@@ -405,19 +404,15 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     "image:finishedSavingWithError:contextInfo:",
                     nil);*/
                     //self.assetLibrary!.saveImage(image, toAlbum: "Touch", withCompletionBlock: {(error: NSError!) in });
-                    NSLog("B");
                     self.assetLibrary!.writeImageToSavedPhotosAlbum(image.CGImage, orientation: ALAssetOrientation.Right, completionBlock:
                         {(assertURL: NSURL!, error: NSError!) in
-                            NSLog("C");
                             if (error) {
                                 self.imageSavingError("Failed to save image");
                             }
                             else {
                                 //do stuff with image
-                                NSLog("D");
                                 self.assetLibrary!.assetForURL(assertURL, resultBlock: {(asset: ALAsset!) in
                                     //we have our asset
-                                    NSLog("E");
                                     self.groupSelected = self.savedPhotoIndex;
                                     //just added an image, so should shift all currently selected images by one index
                                     for (index, imageIndex) in enumerate(self.highlightOrder) {
@@ -425,6 +420,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                                             self.highlightOrder[index] = ImageIndex(groupNum: self.savedPhotoIndex, index: imageIndex.index + 1, asset: asset);
                                         }
                                     }
+                                    NSLog("Should reload here, does it?");
                                     self.loadImagesForCurrent();
                                     var name = self.getGalleryFullName(self.savedPhotoIndex) + " ▾";
                                     self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
