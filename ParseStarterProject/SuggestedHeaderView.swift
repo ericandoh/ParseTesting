@@ -20,6 +20,8 @@ class SuggestedHeaderView: UICollectionReusableView {
     var friendAction: Bool = false;
     
     var gestureSet: Bool = false;
+
+    var alerter:CompatibleAlertViews?;
     
     
     func extraConfigurations(involvedUser: FriendEncapsulator?, sender: UIViewController) {
@@ -86,8 +88,8 @@ class SuggestedHeaderView: UICollectionReusableView {
         else if (friendAction == true) {
             //unfollow me (if u wish!)
             
-            var alerter = CompatibleAlertViews(presenter: self.owner!);
-            alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+            alerter = CompatibleAlertViews(presenter: self.owner!);
+            alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                 () in
                 ServerInteractor.removeAsFollower(username);
                 //update button

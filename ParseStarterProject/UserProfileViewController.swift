@@ -66,6 +66,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
 
     var friendList: Array<FriendEncapsulator?> = [];
     
+    var alerter: CompatibleAlertViews?;
+    
     //var lastIndex: NSIndexPath = NSIndexPath(forRow: 0, inSection: 0);
     
     override func viewDidLoad()  {
@@ -618,8 +620,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             else if (friendAction == true) {
                 //unfollow me (if u wish!)
                 
-                var alerter = CompatibleAlertViews(presenter: self);
-                alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                self.alerter = CompatibleAlertViews(presenter: self);
+                alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                     () in
                     ServerInteractor.removeAsFollower(username);
                     //update button

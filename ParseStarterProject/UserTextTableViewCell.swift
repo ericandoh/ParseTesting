@@ -32,6 +32,7 @@ class UserTextTableViewCell: UITableViewCell {
     var owner: UIViewController?;
     
     var friendAction: Bool = false;
+    var alerter:CompatibleAlertViews?;
 
     /*override init(style: UITableViewCellStyle, reuseIdentifier: String) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -187,8 +188,8 @@ class UserTextTableViewCell: UITableViewCell {
         else if (friendAction == true) {
             //unfollow me (if u wish!)
             
-            var alerter = CompatibleAlertViews(presenter: self.owner!);
-            alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+            alerter = CompatibleAlertViews(presenter: self.owner!);
+            alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                 () in
                 ServerInteractor.removeAsFollower(username);
                 //update button

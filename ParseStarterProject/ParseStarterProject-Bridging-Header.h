@@ -10,8 +10,6 @@
 
 #import "SignUpViewController.h"
 
-#import "ObjCAlertShower.h"
-
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import <AddressBook/AddressBook.h>

@@ -40,7 +40,6 @@
 		D9201C01199A7B79004018A1 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = D9201C00199A7B79004018A1 /* map.png */; };
 		D9201C03199A7B8B004018A1 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = D9201C02199A7B8B004018A1 /* user.png */; };
 		D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */; };
-		D923504019A3EBC500AB8CAC /* ObjCAlertShower.m in Sources */ = {isa = PBXBuildFile; fileRef = D923503F19A3EBC500AB8CAC /* ObjCAlertShower.m */; };
 		D923909C19929107001B5CBE /* SuggestedHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923909B19929107001B5CBE /* SuggestedHeaderView.swift */; };
 		D923909E1992D278001B5CBE /* f_camera_roll.png in Resources */ = {isa = PBXBuildFile; fileRef = D923909D1992D278001B5CBE /* f_camera_roll.png */; };
 		D923E4CD1989B3E900C12429 /* ShopLookDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */; };
@@ -211,8 +210,6 @@
 		D9201C00199A7B79004018A1 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		D9201C02199A7B8B004018A1 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		D92326D9197833BA00F60B16 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
-		D923503E19A3EBC500AB8CAC /* ObjCAlertShower.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCAlertShower.h; sourceTree = "<group>"; };
-		D923503F19A3EBC500AB8CAC /* ObjCAlertShower.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCAlertShower.m; sourceTree = "<group>"; };
 		D923909B19929107001B5CBE /* SuggestedHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestedHeaderView.swift; sourceTree = "<group>"; };
 		D923909D1992D278001B5CBE /* f_camera_roll.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f_camera_roll.png; sourceTree = "<group>"; };
 		D923E4CC1989B3E900C12429 /* ShopLookDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookDelegate.swift; sourceTree = "<group>"; };
@@ -483,8 +480,6 @@
 				D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */,
 				D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */,
 				D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */,
-				D923503E19A3EBC500AB8CAC /* ObjCAlertShower.h */,
-				D923503F19A3EBC500AB8CAC /* ObjCAlertShower.m */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -864,7 +859,6 @@
 				D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */,
 				D9F9201119A2B29600E63FE8 /* BlurringDarkView.swift in Sources */,
 				D914F7FF198854A400A59314 /* CustomImageBuffer.swift in Sources */,
-				D923504019A3EBC500AB8CAC /* ObjCAlertShower.m in Sources */,
 				D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,7 +950,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -968,10 +962,10 @@
 				GCC_PREFIX_HEADER = "ParseStarterProject/FashionStash-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ParseStarterProject/FashionStash-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
-				PROVISIONING_PROFILE = "51e9b003-ad91-46a7-b9fb-c9a6b81a02bd";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
@@ -999,10 +993,10 @@
 				GCC_PREFIX_HEADER = "ParseStarterProject/FashionStash-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "ParseStarterProject/FashionStash-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
-				PROVISIONING_PROFILE = "51e9b003-ad91-46a7-b9fb-c9a6b81a02bd";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

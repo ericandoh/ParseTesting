@@ -48,7 +48,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.commentTableView.addGestureRecognizer(tapRecognizer);
         
         //self.commentTextField.layer.cornerRadius = 5.0
-        self.commentTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        if (iOS_VERSION > 7.0) {
+            self.commentTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardDidHideNotification, object: nil)
     }

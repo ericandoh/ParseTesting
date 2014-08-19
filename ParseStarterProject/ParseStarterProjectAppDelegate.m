@@ -77,9 +77,11 @@
                                                     UIRemoteNotificationTypeSound];*/
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    
+    //if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_0) {
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor] ];
     [[UITextField appearanceWhenContainedIn: [UISearchBar class], nil] setFont:[UIFont fontWithName:@"HelveticaNeueLTPro-Lt" size:15.0]];
-    
+    //}
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if (![defaults objectForKey:@"runCount"]) {

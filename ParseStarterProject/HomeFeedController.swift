@@ -99,6 +99,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     var currentShopDelegate: ShopLookDelegate?;
     
     var totalTranslationByPan: CGFloat = CGFloat(0.0);
+
+    var alerter:CompatibleAlertViews?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -822,8 +824,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             var username = currentPost.getAuthor();
             ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
                 if (amFollowing == true) {
-                    var alerter = CompatibleAlertViews(presenter: self);
-                    alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                    self.alerter = CompatibleAlertViews(presenter: self);
+                    self.alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                         () in
                         ServerInteractor.removeAsFollower(username);
                         //update button
@@ -955,8 +957,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             })
         case 2:
             
-            var alerter = CompatibleAlertViews(presenter: self);
-            alerter.makeNoticeWithAction("Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", actionName: "Delete", buttonAction: {
+            alerter = CompatibleAlertViews(presenter: self);
+            alerter!.makeNoticeWithAction("Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", actionName: "Delete", buttonAction: {
                 () in
                 var currentPost = self.imgBuffer!.getImagePostAt(self.viewCounter);
                 //delete this post!

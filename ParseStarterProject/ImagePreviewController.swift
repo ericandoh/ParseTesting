@@ -64,6 +64,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     var existingPost: ImagePostStructure?;
     
+    var alerter:CompatibleAlertViews?;
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -73,9 +75,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.layer.borderColor = UIColor.whiteColor().CGColor;
         //textView.layer.cornerRadius = 8;
         textView.delegate = self;
-        textView.keyboardAppearance = UIKeyboardAppearance.Dark;
-        
-        labelBar.keyboardAppearance = UIKeyboardAppearance.Dark
+        if (iOS_VERSION > 7.0) {
+            textView.keyboardAppearance = UIKeyboardAppearance.Dark;
+            labelBar.keyboardAppearance = UIKeyboardAppearance.Dark
+
+        }
         labelBar.borderStyle = UITextBorderStyle.None;
         labelBar.layer.borderWidth = 1;
         labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
@@ -387,6 +391,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBAction func addShopTheLook(sender: UIButton) {
+        self.alerter = CompatibleAlertViews(presenter: self);
+        
+        alerter!.makeNoticeWithActionAndFieldAndField("Add-Shop the Look!", message: "Describe it!", actionName: "Submit", actionHolder1: "Title/Short Description", actionHolder2: "Link where I can get it!", buttonAction: {
+            (field1: String, field2: String) in
+            var title = field1;
+            var urlLink = field2;
+            self.addManualShopTheLook(ShopLook(title: title, urlLink: urlLink));
+        });
+        
+        /*
         let alert: UIAlertController = UIAlertController(title: "Add-Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Title/Short Description";
@@ -402,11 +416,20 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     func editShopTheLook(sender: UIButton!) {
         var thisButton = sender as ShopTextButton;
         let index = thisButton.shopIndex;
+        
+        alerter!.makeNoticeWithActionAndFieldAndField("Edit-Shop the Look!", message: "Describe it!", actionName: "Submit", actionHolder1: "Title/Short Description", actionHolder2: "Link where I can get it!", actionString1: shopTheLook[index].title, actionString2: shopTheLook[index].urlLink, buttonAction: {
+            (field1: String, field2: String) in
+            var title = field1;
+            var urlLink = field2;
+            self.shopTheLook[index] = ShopLook(title: title, urlLink: urlLink);
+            thisButton.setTitle(title, forState: UIControlState.Normal);
+        });
+        /*
         let alert: UIAlertController = UIAlertController(title: "Edit-Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Title/Short Description";
@@ -425,14 +448,14 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     func removeShopTheLook(sender: UIButton!) {
         let thisButton = sender as ShopTextButton;
         let index = thisButton.shopIndex;
         
-        var alerter = CompatibleAlertViews(presenter: self);
-        alerter.makeNoticeWithAction("Delete?", message: "Delete this ShopTheLook?", actionName: "Delete!", buttonAction: {
+        alerter = CompatibleAlertViews(presenter: self);
+        alerter!.makeNoticeWithAction("Delete?", message: "Delete this ShopTheLook?", actionName: "Delete!", buttonAction: {
             () in
             for i in (index+1)..<(self.shopButtons.count) {
                 var oldY = BOX_START_Y + CGFloat(i - 1) * LABEL_BOX_HEIGHT;

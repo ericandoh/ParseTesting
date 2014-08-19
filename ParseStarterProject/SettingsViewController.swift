@@ -14,55 +14,45 @@ class SettingsViewController: UIViewController {
     
     @IBOutlet weak var backImage: BlurringDarkView!
     
+    var alerter:CompatibleAlertViews?;
+
     @IBAction func changePassword(sender: AnyObject) {
-        let alert: UIAlertController = UIAlertController(title: "Change your password!",message: "Enter your passwords", preferredStyle: UIAlertControllerStyle.Alert);
-        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
-            field.placeholder = "Old password";
-        });
-        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
-            field.placeholder = "New password";
-        });
-        alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
-            field.placeholder = "New password";
-        });
-        alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var oldPass = (alert.textFields[0] as UITextField).text;
-            var newPass = (alert.textFields[1] as UITextField).text;
-            var newPassConfirm = (alert.textFields[2] as UITextField).text;
-            PFUser.logInWithUsernameInBackground(PFUser.currentUser().username, password: oldPass, block: { (user: PFUser!, error: NSError!) in
-                if (error == nil) {
-                    if (newPassConfirm == newPass) {
-                        PFUser.currentUser().password = newPassConfirm
-                        PFUser.currentUser().saveEventually()
-                        CompatibleAlertViews.makeNotice("Success!", message: "Your password has been changed!", presenter: self);
-                        /*var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                        NSLog("You came too!")
-                        self.presentViewController(alert, animated: true, completion: nil)*/
-                    } else {
-                        CompatibleAlertViews.makeNotice("Oops!", message: "The passwords don't match!", presenter: self);
-
-                        /*var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                        self.presentViewController(alert, animated: true, completion: nil)*/
-                        self.passAlert()
-                    }
-                } else {
-                    CompatibleAlertViews.makeNotice("Oops!", message: "Your old password is incorrect!", presenter: self);
-                    /*var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                    self.presentViewController(alert, animated: true, completion: nil)*/
-                    }
-                });
-            }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
-            //canceled
-        }));
-        self.presentViewController(alert, animated: true, completion: nil)
-
+        self.passAlert();
     }
     
     func passAlert() {
+        
+        alerter = CompatibleAlertViews(presenter: self);
+        alerter!.makeNoticeWithActionAndFieldAndField("Change your password", message: "Enter passwords", actionName: "Submit", actionHolder1: "Old password", actionHolder2: "New password", actionString1: "", actionString2: "", secure1: true, secure2: true, buttonAction: {
+            (field1: String, field2: String) in
+            var oldPass = field1;
+            var newPass = field2;
+            PFUser.logInWithUsernameInBackground(PFUser.currentUser().username, password: oldPass, block: { (user: PFUser!, error: NSError!) in
+                if (error == nil) {
+                    self.alerter!.makeNoticeWithActionAndField("Verify password", message: "Enter your new password again to verify", actionName: "Submit", actionHolder: "New password", secure: true, buttonAction: {(field: String) in
+                        if (field == field2) {
+                            PFUser.currentUser().password = newPass
+                            PFUser.currentUser().saveEventually()
+                            CompatibleAlertViews.makeNotice("Success!", message: "Your password has been changed!", presenter: self);
+                            /*var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
+                            self.presentViewController(alert, animated: true, completion: nil)*/
+                        }
+                        else {
+                            CompatibleAlertViews.makeNotice("Oops!", message: "The passwords don't match!", presenter: self);
+                            /*var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+                            self.presentViewController(alert, animated: true, completion: nil)*/
+                            self.passAlert()
+                        }
+                    });
+                } else {
+                    CompatibleAlertViews.makeNotice("Oops!", message: "Your old password is incorrect!", presenter: self);
+                    //var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
+                }
+            });
+        })
+
+        /*
         let alert: UIAlertController = UIAlertController(title: "Change your password!",message: "Enter your passwords", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Old password";
@@ -101,7 +91,7 @@ class SettingsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
         }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
     /*@IBAction func reportProblem(sender: AnyObject) {
@@ -180,8 +170,8 @@ class SettingsViewController: UIViewController {
     
     
     @IBAction func clearHistory(sender: UIButton) {
-        var alerter = CompatibleAlertViews(presenter: self);
-        alerter.makeNoticeWithAction("Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", actionName: "Clear History", buttonAction: {
+        alerter = CompatibleAlertViews(presenter: self);
+        alerter!.makeNoticeWithAction("Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", actionName: "Clear History", buttonAction: {
             () in
             var current = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
             current.friendObj!["likedPosts"] = [];
