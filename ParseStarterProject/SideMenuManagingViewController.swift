@@ -35,17 +35,43 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         outOfMenuButton.alpha = 0;
         displayContentController(SIDE_MENU_ITEMS[0]);
         
+        self.view.opaque = false;
+        self.view.backgroundColor = UIColor.clearColor();
+        
         var toolbar = UIToolbar(frame: sideView.frame);
         toolbar.barStyle = UIBarStyle.Black;
         toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-        //toolbar.barTintColor = UIColor.blackColor();
+        toolbar.setTranslatesAutoresizingMaskIntoConstraints(false);
         self.sideView.insertSubview(toolbar, atIndex: 0);
+        
+        var topConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0);
+        var leadingConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0);
+        var trailingConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0);
+        var bottomConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0);
+        self.sideView.addConstraint(topConstraint);
+        self.sideView.addConstraint(leadingConstraint);
+        self.sideView.addConstraint(trailingConstraint);
+        self.sideView.addConstraint(bottomConstraint);
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
         
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        if (sideView.center.x > 0) {
+            var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
+            var y = self.sideView.center.y;
+            var point = CGPoint(x: x, y: y);
+            sideView.center = point;
+            var toolbar = UIToolbar(frame: sideView.frame);
+            toolbar.barStyle = UIBarStyle.Black;
+            toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+            self.sideView.insertSubview(toolbar, atIndex: 0);
+            
+        }
     }
     /*@IBAction func buttonOne(sender: AnyObject) {
         displayContentController("White");
@@ -204,9 +230,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         content.view.alpha = 0;
         hideSideBar({
             (success: Bool)->Void in
-            
-            
-            
             /*self.addChildViewController(content);
             content.view.frame = self.contentArea.frame;
             self.view.addSubview(content.view);
