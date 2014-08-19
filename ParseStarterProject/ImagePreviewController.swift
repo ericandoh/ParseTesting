@@ -225,8 +225,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
             
             //reset submission page
-            if (self.navigationController) {
-                if (self.navigationController.parentViewController) {
+            if ((self.navigationController) != nil) {
+                if ((self.navigationController.parentViewController) != nil) {
                     var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
                     overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                     overlord.openHome();
@@ -246,8 +246,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func reject(sender: AnyObject) {
-        if (self.navigationController) {
-            if (self.navigationController.parentViewController) {
+        if ((self.navigationController) != nil) {
+            if ((self.navigationController.parentViewController) != nil) {
                 var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
                 overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                 overlord.openHome();
@@ -367,7 +367,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             //cant delete last image in post
             return;
         }
-        if (indexPath) {
+        if ((indexPath) != nil) {
             highlightOrder.removeAtIndex(indexPath.row);
             receivedImages.removeAtIndex(indexPath.row);
             sideTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right);

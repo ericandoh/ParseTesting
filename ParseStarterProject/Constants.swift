@@ -128,7 +128,7 @@ let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0);
 
 let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0);
 
-let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
+let TITLE_TEXT_ATTRIBUTES = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
     NSFontAttributeName: TITLE_TEXT_FONT];
 
 let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)

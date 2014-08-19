@@ -10,7 +10,7 @@ import UIKit
 
 class BlurringDarkView: UIImageView {
 
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
         self.initialiseOthers();
     }

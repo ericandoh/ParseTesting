@@ -30,7 +30,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         super.viewDidLoad()
         
         
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
@@ -116,7 +116,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
 
     @IBAction func backPress(sender: UIButton) {
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
                 (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();

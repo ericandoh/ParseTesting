@@ -55,7 +55,7 @@ class RealLoginViewController: UIViewController {
             var email = (alert.textFields[0] as UITextField).text;
             PFUser.requestPasswordResetForEmailInBackground(email, block: {
                 (succeeded: Bool, error: NSError!) in
-                if (error) {
+                if ((error) != nil) {
                     NSLog("Encountered an error sending an email!");
                 }
                 if (succeeded) {

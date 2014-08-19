@@ -707,7 +707,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         if (viewCounter >= imgBuffer!.numItems()) {
             //show end of file screen, refresh if needed
-            if (self.navigationController) {
+            if ((self.navigationController) != nil) {
                 viewCounter = imgBuffer!.numItems() - 1;
                 /*if (imgBuffer!.isLoadedAt(viewCounter)) {
                     var currentPost = imgBuffer!.getImagePostAt(viewCounter);
@@ -767,7 +767,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             return;
         }
         if (postCounter == 0) {
-            if (self.navigationController) {
+            if ((self.navigationController) != nil) {
                 (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
             }
             else {
@@ -801,7 +801,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func sideMenu(sender: UIButton) {
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
                 (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();

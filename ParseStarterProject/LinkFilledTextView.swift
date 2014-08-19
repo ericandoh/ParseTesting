@@ -47,7 +47,7 @@ class LinkFilledTextView: UITextView {
         self.textColor = UIColor.whiteColor();
     }
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
         //self.owner = owner;
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));

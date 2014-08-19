@@ -71,7 +71,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad()  {
         super.viewDidLoad();
         
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
@@ -253,9 +253,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillDisappear(animated: Bool) {
-        var cellIndices = myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath>;
+        var cellIndices = myCollectionView.indexPathsForVisibleItems()// as Array<NSIndexPath>;
         for cellIndex in cellIndices {
-            var cell = myCollectionView.cellForItemAtIndexPath(cellIndex)
+            var cell = myCollectionView.cellForItemAtIndexPath(cellIndex as NSIndexPath)
             if (cell != nil) {
                 cell.alpha = 0;
             }
@@ -275,7 +275,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     @IBAction func backPress(sender: UIButton) {
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
                 (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();

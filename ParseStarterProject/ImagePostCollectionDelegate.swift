@@ -61,7 +61,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     }
     //for search, when showing popular feeds
     init(disableOnAnon: Bool, collectionView: UICollectionView,
-        serverFunction2: (serverFunction: (loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
+        serverFunction2: ((loadCount: Int, excludes: Array<ImagePostStructure?>, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)->Void)?, sender: UIViewController) {
             
             self.myCollectionView = collectionView;
             self.owner = sender;
@@ -215,8 +215,8 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
                 requestedBuffer = false;
             }
         }
-        for path: NSIndexPath in myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath> {
-            if (path.row >= (imgBuffer.numItems() - 1 - CELLS_BEFORE_RELOAD)) {
+        for path in myCollectionView.indexPathsForVisibleItems() { //as Array<NSIndexPath> {
+            if ((path as NSIndexPath).row >= (imgBuffer.numItems() - 1 - CELLS_BEFORE_RELOAD)) {
                 if (!requestedBuffer) {
                     requestedBuffer = true;
                     self.loadSet();

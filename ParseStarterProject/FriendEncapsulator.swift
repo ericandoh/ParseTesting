@@ -94,7 +94,7 @@ class FriendEncapsulator {
                 }
                 else if (error != nil) {
                     // Log details of the failure
-                    NSLog("Error: %@ %@", error, error.userInfo)
+                    NSLog("Error: %@ %@", error, error.userInfo!)
                 }
                 else if (objects.count == 0) {
                     NSLog("Can't find user: \(self.username)")
@@ -142,7 +142,7 @@ class FriendEncapsulator {
             }
             else if (error != nil) {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Error: %@ %@", error, error.userInfo!)
                 result(false);
             }
             else if (objects.count == 0) {
@@ -169,7 +169,7 @@ class FriendEncapsulator {
                     receiveAction(self.friendImg!);
                 }
                 else {
-                    NSLog("Error: %@ %@", error, error.userInfo)
+                    NSLog("Error: %@ %@", error, error.userInfo!)
                     receiveAction(DEFAULT_USER_ICON);
                 }
             });
@@ -186,7 +186,7 @@ class FriendEncapsulator {
                 }
                 else if (error != nil) {
                     // Log details of the failure
-                    NSLog("Error: %@ %@", error, error.userInfo)
+                    NSLog("Error: %@ %@", error, error.userInfo!)
                 }
                 else if (objects.count == 0) {
                     NSLog("Can't find user: \(self.username)")

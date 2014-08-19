@@ -371,7 +371,7 @@ class ImagePostStructure
             if (error == nil) {
                 self.myObj = object;
                 var commentAuthorArray = NSArray();
-                if (self.myObj["commentAuthor"]) {
+                if ((self.myObj["commentAuthor"]) != nil) {
                     commentAuthorArray = self.myObj["commentAuthor"] as NSArray
                 }
                 var commentArray = self.myObj["comments"] as NSArray;

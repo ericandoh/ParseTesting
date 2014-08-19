@@ -59,7 +59,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
 
     func keyboardWillShow(notif: NSNotification) {
         
-        let s: NSValue = notif.userInfo[UIKeyboardFrameEndUserInfoKey] as NSValue;
+        let s: NSValue = notif.userInfo![UIKeyboardFrameEndUserInfoKey] as NSValue;
         let rect :CGRect = s.CGRectValue();
         
         commentsTextFieldConstraint.constant = CGFloat(15.0) + rect.height;
@@ -75,7 +75,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func keyboardWillHide(notif: NSNotification) {
         
-        let s: NSValue = notif.userInfo[UIKeyboardFrameBeginUserInfoKey] as NSValue;
+        let s: NSValue = notif.userInfo![UIKeyboardFrameBeginUserInfoKey] as NSValue;
         let rect :CGRect = s.CGRectValue();
 
         commentsTextFieldConstraint.constant = CGFloat(15.0)

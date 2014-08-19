@@ -65,7 +65,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             if (self.navigationController.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
@@ -146,7 +146,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     func getGalleryTimeForIndex(groupIndex: Int)->String {
-        return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName) as String
+        var thisAsset: ALAssetsGroup = assetGroups[groupIndex];
+        let val = thisAsset.valueForProperty(ALAssetsGroupPropertyName) as String;
+        return "";
+        //return (val as String)
+        //return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName as String) as String
+        
     }
     func getGalleryFullName(groupIndex: Int)->String {
         var name: String = getGalleryTimeForIndex(groupIndex);
@@ -181,7 +186,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         currentGroup.enumerateAssetsUsingBlock({
             (result, index, stop) in
             //NSLog("Loading asset \(index)")
-            if (!result) {
+            if (result == nil) {
                 return;
             }
             if (index == 0) {
@@ -413,7 +418,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     //self.assetLibrary!.saveImage(image, toAlbum: "Touch", withCompletionBlock: {(error: NSError!) in });
                     self.assetLibrary!.writeImageToSavedPhotosAlbum(image.CGImage, orientation: ALAssetOrientation.Right, completionBlock:
                         {(assertURL: NSURL!, error: NSError!) in
-                            if (error) {
+                            if ((error) != nil) {
                                 self.imageSavingError("Failed to save image");
                             }
                             else {
@@ -478,7 +483,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     
     @IBAction func previousButton(sender: UIButton) {
-        if (self.navigationController) {
+        if ((self.navigationController) != nil) {
             (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
         }
         else {

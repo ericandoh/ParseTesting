@@ -103,7 +103,7 @@ import UIKit
     class func loginUser(username: String, password: String, sender: RealLoginViewController)->Bool {
         PFUser.logInWithUsernameInBackground(username, password: password, block: { (user: PFUser!, error: NSError!) in
             var logController: RealLoginViewController = sender;
-            if (user) {
+            if ((user) != nil) {
                 //successful log in
                 //ServerInteractor.initialUserChecks();
                 ImagePostStructure.unreadAllPosts();
@@ -158,7 +158,7 @@ import UIKit
             var logController: NewLoginViewController = sender as NewLoginViewController;
             if (error != nil) {
                 NSLog("Error message: \(error!.description)");
-            } else if !user {
+            } else if (user == nil) {
                 logController.failedLogin("Uh oh. The user cancelled the Facebook login.");
             } else if user.isNew {
                 //logController.failedLogin("User signed up and logged in through Facebook!")
@@ -591,7 +591,7 @@ import UIKit
                 (succeeded: Bool, error: NSError!)->Void in
                 if (succeeded && error == nil) {
                     var myUser: PFUser = PFUser.currentUser();
-                    if (!(myUser["userIcon"])) {
+                    if ((myUser["userIcon"]) == nil) {
                         //above may set to last submitted picture...? sometimes??
                         //might consider just resizing image to a smaller icon value and saving it again
                         PFUser.currentUser()["userIcon"] = newPost.myObj["imageFile"];
@@ -837,7 +837,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Post Error: %@ %@", error, error.userInfo)
+                NSLog("Post Error: %@ %@", error, error.userInfo!)
                 notifyQueryFinish(0);
             }
         }
@@ -899,7 +899,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Post Error: %@ %@", error, error.userInfo)
+                NSLog("Post Error: %@ %@", error, error.userInfo!)
                 notifyQueryFinish(0);
             }
         }
@@ -933,7 +933,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Error: %@ %@", error, error.userInfo!)
                 notifyQueryFinish(0);
             }
         }
@@ -958,7 +958,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Error: %@ %@", error, error.userInfo!)
                 notifyQueryFinish(userIndex, 0);
             }
         }
@@ -987,7 +987,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Error: %@ %@", error, error.userInfo!)
                 notifyQueryFinish(0);
             }
         }
@@ -1133,7 +1133,7 @@ import UIKit
                 }
             } else {
                 // Log details of the failure
-                NSLog("Error: %@ %@", error, error.userInfo)
+                NSLog("Error: %@ %@", error, error.userInfo!)
             }
         }
     }
@@ -1599,15 +1599,16 @@ import UIKit
             
             var fName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty).takeRetainedValue();
             var firstName: String = "";
-            if (fName != nil) {
+
+            //if (fName != nil) {
                 firstName = fName as NSString;
-            }
+            //}
             
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
             var lastName: String = "";
-            if (lName != nil) {
+            //if (lName != nil) {
                 lastName = lName as NSString;   //crashed here again
-            }
+            //}
             
             var cEmails: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
             var contactEmail = "";
@@ -1699,7 +1700,7 @@ import UIKit
                 var friendObjs = result.objectForKey("data") as NSArray;
                 var friendIds = NSMutableArray(capacity: friendObjs.count);
                 for friendObject in friendObjs {
-                    friendIds.addObject(friendObject.objectForKey("id"));
+                    friendIds.addObject(friendObject.objectForKey("id")!);
                 }
                 var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
                 var query: PFQuery = PFUser.query();

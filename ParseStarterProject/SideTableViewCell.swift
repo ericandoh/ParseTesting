@@ -15,7 +15,7 @@ class SideTableViewCell: UITableViewCell {
     //this isnt used cuz of rotation issue :\
     //@IBOutlet weak var previewCellImage: UIImageView!
     
-    required init(coder aDecoder: NSCoder!) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
     

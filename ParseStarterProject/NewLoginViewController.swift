@@ -39,7 +39,7 @@ class NewLoginViewController: UIViewController {
         self.navigationController.navigationBar.translucent = true;
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -50,7 +50,7 @@ class NewLoginViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
        // self.performSegueWithIdentifier("SetUsernameSegue", sender: self)
-        if (segue!.identifier) {
+        if ((segue!.identifier) != nil) {
             if (segue!.identifier == "RegisterSegue") {
                 var next: SignUpViewController = segue!.destinationViewController as SignUpViewController
                 //next.updateUserFields(self.userTextField.text, withPassword: self.passwordTextField.text)

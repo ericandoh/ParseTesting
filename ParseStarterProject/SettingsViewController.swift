@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
             var newPass = (alert.textFields[1] as UITextField).text;
             var newPassConfirm = (alert.textFields[2] as UITextField).text;
             PFUser.logInWithUsernameInBackground(PFUser.currentUser().username, password: oldPass, block: { (user: PFUser!, error: NSError!) in
-                if (!error) {
+                if (error == nil) {
                     if (newPassConfirm == newPass) {
                         PFUser.currentUser().password = newPassConfirm
                         PFUser.currentUser().saveEventually()
@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController {
             var newPass = (alert.textFields[1] as UITextField).text;
             var newPassConfirm = (alert.textFields[2] as UITextField).text;
             PFUser.logInWithUsernameInBackground(PFUser.currentUser().username, password: oldPass, block: { (user: PFUser!, error: NSError!) in
-                if (!error) {
+                if (error == nil) {
                     if (newPassConfirm == newPass) {
                         PFUser.currentUser().password = newPassConfirm
                         PFUser.currentUser().saveEventually()

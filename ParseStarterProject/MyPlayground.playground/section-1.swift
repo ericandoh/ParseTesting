@@ -2,6 +2,8 @@
 
 import UIKit
 
+a=6;
+
 /*
 func wordNumberer(num: Int)->String {
     if (num > 1000000) {
