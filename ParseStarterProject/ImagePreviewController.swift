@@ -90,6 +90,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             textView.text = prevDescrip;
         }
         
+        
         scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
         if (shopTheLook.count > 0) {
@@ -132,6 +133,13 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         //self.navigationController.navigationBar.hidden = false;
         //self.navigationController.navigationBar.translucent = false;
         //}
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews();
+        scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
+        if (shopTheLook.count > 0) {
+            scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * LABEL_BOX_HEIGHT);
+        }
     }
     
     func keyboardWillShow(notif: NSNotification) {

@@ -481,6 +481,9 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         if (self.navigationController) {
             (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
         }
+        else {
+            NSLog("If this is logging, somehow this imagepicker lost its navigation controller. Uh oh!")
+        }
     }
     
     @IBAction func nextButton(sender: UIButton) {
