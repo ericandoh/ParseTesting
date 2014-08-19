@@ -2,6 +2,8 @@
 //  CustomImageBuffer.swift
 //  ParseStarterProject
 //
+//  Class that buffers images from the server asynchronously and fetches more if necessary
+//
 //  Created by Eric Oh on 7/29/14.
 //
 //

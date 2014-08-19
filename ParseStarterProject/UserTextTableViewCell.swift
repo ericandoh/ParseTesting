@@ -186,6 +186,17 @@ class UserTextTableViewCell: UITableViewCell {
         }
         else if (friendAction == true) {
             //unfollow me (if u wish!)
+            
+            var alerter = CompatibleAlertViews(presenter: self.owner!);
+            alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                () in
+                ServerInteractor.removeAsFollower(username);
+                //update button
+                self.friendAction = false
+                self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+            });
+            
+            /*
             let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 ServerInteractor.removeAsFollower(username);
@@ -196,7 +207,7 @@ class UserTextTableViewCell: UITableViewCell {
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
             }));
-            self.owner!.presentViewController(alert, animated: true, completion: nil)
+            self.owner!.presentViewController(alert, animated: true, completion: nil)*/
         }
         else {
             //no action

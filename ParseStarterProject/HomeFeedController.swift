@@ -822,7 +822,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             var username = currentPost.getAuthor();
             ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
                 if (amFollowing == true) {
-                    let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                    var alerter = CompatibleAlertViews(presenter: self);
+                    alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                        () in
+                        ServerInteractor.removeAsFollower(username);
+                        //update button
+                        self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
+                    });
+                    
+                    /*let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
                     alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                         ServerInteractor.removeAsFollower(username);
                         //update button
@@ -831,7 +839,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                         //canceled
                     }));
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.presentViewController(alert, animated: true, completion: nil)*/
                 }
                 else if (amFollowing == false) {
                     //ServerInteractor.postFollowerNotif(username, controller: self);
@@ -946,6 +954,16 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.navigationController.pushViewController(imageEditingControl, animated: true);
             })
         case 2:
+            
+            var alerter = CompatibleAlertViews(presenter: self);
+            alerter.makeNoticeWithAction("Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", actionName: "Delete", buttonAction: {
+                () in
+                var currentPost = self.imgBuffer!.getImagePostAt(self.viewCounter);
+                //delete this post!
+                ServerInteractor.removePost(currentPost);
+            });
+            
+            /*
             let alert: UIAlertController = UIAlertController(title: "Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Default, handler: {
                 (action: UIAlertAction!)->Void in
@@ -956,7 +974,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {
                 (action: UIAlertAction!)->Void in
             }));
-            self.presentViewController(alert, animated: true, completion: nil);
+            self.presentViewController(alert, animated: true, completion: nil);*/
         default:
             break;
         }

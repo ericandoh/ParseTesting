@@ -60,11 +60,13 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         reportObj["username"] = PFUser.currentUser().username
         reportObj["report"] = report.text
         reportObj.saveEventually()
+        CompatibleAlertViews.makeNotice("Thank You!", message: "Your report has been submitted", presenter: self);
+        /*
         var alert = UIAlertController(title: "Thank You!", message: "Your report has been submitted", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) in
             var x = self.navigationController.popViewControllerAnimated(true);
         }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
         report.text = ""
     }
     

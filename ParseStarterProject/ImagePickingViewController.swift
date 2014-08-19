@@ -453,11 +453,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }});
     }
     func imageSavingError(errorString: String) {
-        let alert: UIAlertController = UIAlertController(title: "Image failure", message: errorString, preferredStyle: UIAlertControllerStyle.Alert);
+        CompatibleAlertViews.makeNotice("Image failure", message: errorString, presenter: self)
+        /*let alert: UIAlertController = UIAlertController(title: "Image failure", message: errorString, preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion:nil);

@@ -91,11 +91,12 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
                     UIApplication.sharedApplication().openURL(urlToOpen);
                 }
                 else {
-                    let alert: UIAlertController = UIAlertController(title: "URL Invalid", message: "URL for this ShopTheLook is invalid!\n\nURL: "+urlString, preferredStyle: UIAlertControllerStyle.Alert);
+                    CompatibleAlertViews.makeNotice("URL Invalid", message: "URL for this ShopTheLook is invalid!\n\nURL: "+urlString, presenter: owner)
+                    /*let alert: UIAlertController = UIAlertController(title: "URL Invalid", message: "URL for this ShopTheLook is invalid!\n\nURL: "+urlString, preferredStyle: UIAlertControllerStyle.Alert);
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                         //canceled
                         }));
-                    owner.presentViewController(alert, animated: true, completion: nil)
+                    owner.presentViewController(alert, animated: true, completion: nil)*/
                 }
             }
         }

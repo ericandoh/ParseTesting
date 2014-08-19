@@ -34,20 +34,24 @@ class SettingsViewController: UIViewController {
                     if (newPassConfirm == newPass) {
                         PFUser.currentUser().password = newPassConfirm
                         PFUser.currentUser().saveEventually()
-                        var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
+                        CompatibleAlertViews.makeNotice("Success!", message: "Your password has been changed!", presenter: self);
+                        /*var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
                         NSLog("You came too!")
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.presentViewController(alert, animated: true, completion: nil)*/
                     } else {
-                        var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
+                        CompatibleAlertViews.makeNotice("Oops!", message: "The passwords don't match!", presenter: self);
+
+                        /*var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.presentViewController(alert, animated: true, completion: nil)*/
                         self.passAlert()
                     }
                 } else {
-                    var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
+                    CompatibleAlertViews.makeNotice("Oops!", message: "Your old password is incorrect!", presenter: self);
+                    /*var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.presentViewController(alert, animated: true, completion: nil)*/
                     }
                 });
             }));
@@ -78,17 +82,19 @@ class SettingsViewController: UIViewController {
                     if (newPassConfirm == newPass) {
                         PFUser.currentUser().password = newPassConfirm
                         PFUser.currentUser().saveEventually()
-                        var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
-                        NSLog("You came too!")
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        CompatibleAlertViews.makeNotice("Success!", message: "Your password has been changed!", presenter: self);
+                        /*var alert = UIAlertController(title: "Success!", message: "Your password has been changed!", preferredStyle: UIAlertControllerStyle.Alert);
+                        self.presentViewController(alert, animated: true, completion: nil)*/
                     } else {
-                        var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
+                        CompatibleAlertViews.makeNotice("Oops!", message: "The passwords don't match!", presenter: self);
+                        /*var alert = UIAlertController(title: "Oops!", message: "The passwords don't match!", preferredStyle: UIAlertControllerStyle.Alert);
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.presentViewController(alert, animated: true, completion: nil)*/
                         self.passAlert()
                     }
                 } else {
-                    var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
+                    CompatibleAlertViews.makeNotice("Oops!", message: "Your old password is incorrect!", presenter: self);
+                    //var alert = UIAlertController(title: "Oops", message: "Your old password is incorrect!", preferredStyle: UIAlertControllerStyle.Alert);
                 }
             });
         }));
@@ -129,9 +135,11 @@ class SettingsViewController: UIViewController {
     }
     
     func blankAlertWithMessage(title: String, message:String) {
+        CompatibleAlertViews.makeNotice(title, message: message, presenter: self);
+        /*
         var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
     @IBAction func connectAccount(sender: UIButton) {
@@ -172,6 +180,15 @@ class SettingsViewController: UIViewController {
     
     
     @IBAction func clearHistory(sender: UIButton) {
+        var alerter = CompatibleAlertViews(presenter: self);
+        alerter.makeNoticeWithAction("Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", actionName: "Clear History", buttonAction: {
+            () in
+            var current = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
+            current.friendObj!["likedPosts"] = [];
+            current.friendObj!["viewHistory"] = [];
+            current.friendObj!.saveEventually();
+        });
+        /*
         var alert = UIAlertController(title: "Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Clear History", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             var current = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
@@ -180,7 +197,7 @@ class SettingsViewController: UIViewController {
             current.friendObj!.saveEventually();
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
     @IBAction func backPress(sender: UIButton) {

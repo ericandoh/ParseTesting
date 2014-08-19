@@ -176,9 +176,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func notLinkedWithFBAlert() {
-        var alert = UIAlertController(title: "Not linked with FB!", message: "This account is not linked with Facebook! Go to settings to link your account with Facebook", preferredStyle: UIAlertControllerStyle.Alert);
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-        self.presentViewController(alert, animated: true, completion: nil)
+        CompatibleAlertViews.makeNotice("Not linked with FB!", message: "This account is not linked with Facebook! Go to settings to link your account with Facebook", presenter: self);
+        //var alert = UIAlertController(title: "Not linked with FB!", message: "This account is not linked with Facebook! Go to settings to link your account with Facebook", preferredStyle: UIAlertControllerStyle.Alert);
+        //alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+        //self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
@@ -400,11 +401,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.navigationController.pushViewController(nextBoard, animated: true);
             }
             else {
-                let alert: UIAlertController = UIAlertController(title: "No user found!", message: "User \(friend.username) does not exist", preferredStyle: UIAlertControllerStyle.Alert);
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
+                CompatibleAlertViews.makeNotice("No user found!", message: "User \(friend.username) does not exist", presenter: self);
+
+                //let alert: UIAlertController = UIAlertController(title: "No user found!", message: "User \(friend.username) does not exist", preferredStyle: UIAlertControllerStyle.Alert);
+                //alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                     //canceled
-                    }));
-                self.presentViewController(alert, animated: true, completion: nil)
+                //    }));
+                //self.presentViewController(alert, animated: true, completion: nil)
             }
 
         });

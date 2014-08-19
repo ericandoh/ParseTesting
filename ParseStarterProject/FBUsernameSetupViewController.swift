@@ -48,10 +48,11 @@ class FBUsernameSetupViewController: UIViewController {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil)  {
                 if (objects.count != 0) {
-                    var alert = UIAlertController(title: "Error!", message: "Username already exists!", preferredStyle: UIAlertControllerStyle.Alert);
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
-                        self.presentViewController(alert, animated: true, completion: nil)
-                        self.noRepeat = false
+                    CompatibleAlertViews.makeNotice("Error!", message: "Username already exists!", presenter: self);
+                    //var alert = UIAlertController(title: "Error!", message: "Username already exists!", preferredStyle: UIAlertControllerStyle.Alert);
+                    //alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil));
+                    //self.presentViewController(alert, animated: true, completion: nil)
+                    self.noRepeat = false
                 } else {
                     self.setUsername()
                     self.noRepeat = true

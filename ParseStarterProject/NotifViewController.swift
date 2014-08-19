@@ -44,6 +44,7 @@ class NotifViewController: UITableViewController {
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var custView: UIView = UIView()
+        custView.backgroundColor = UIColor.blackColor();
         //let effectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         //effectView.frame = CGRect(x: 0, y: 0, width: FULLSCREEN_WIDTH, height: TRUE_FULLSCREEN_HEIGHT)
         //custView.addSubview(effectView)

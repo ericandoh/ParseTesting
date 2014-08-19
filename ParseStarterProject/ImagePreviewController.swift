@@ -387,7 +387,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBAction func addShopTheLook(sender: UIButton) {
-        let alert: UIAlertController = UIAlertController(title: "Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
+        let alert: UIAlertController = UIAlertController(title: "Add-Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Title/Short Description";
         });
@@ -407,7 +407,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func editShopTheLook(sender: UIButton!) {
         var thisButton = sender as ShopTextButton;
         let index = thisButton.shopIndex;
-        let alert: UIAlertController = UIAlertController(title: "Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
+        let alert: UIAlertController = UIAlertController(title: "Edit-Shop the Look!", message: "Describe it!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Title/Short Description";
             });
@@ -430,6 +430,29 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func removeShopTheLook(sender: UIButton!) {
         let thisButton = sender as ShopTextButton;
         let index = thisButton.shopIndex;
+        
+        var alerter = CompatibleAlertViews(presenter: self);
+        alerter.makeNoticeWithAction("Delete?", message: "Delete this ShopTheLook?", actionName: "Delete!", buttonAction: {
+            () in
+            for i in (index+1)..<(self.shopButtons.count) {
+                var oldY = BOX_START_Y + CGFloat(i - 1) * LABEL_BOX_HEIGHT;
+                self.shopButtons[i].frame = CGRectMake(BOX_X, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT);
+                self.shopButtons[i].shopIndex = i-1;
+                (self.shopButtons[i].subviews[0] as ShopTextButton).shopIndex = i - 1;
+                (self.shopButtons[i].subviews[1] as ShopTextButton).shopIndex = i - 1;
+            }
+            
+            var button = self.shopButtons.removeAtIndex(index)
+            self.shopTheLook.removeAtIndex(index);
+            button.removeFromSuperview();
+            
+            self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - LABEL_BOX_HEIGHT;
+            //self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - LABEL_BOX_HEIGHT;
+            
+            self.scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * LABEL_BOX_HEIGHT);
+        });
+        
+        /*
         let alert: UIAlertController = UIAlertController(title: "Delete?", message: "Delete this ShopTheLook?", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Delete!", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             
@@ -453,15 +476,17 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
             //canceled
             }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
     
     @IBAction func whatIsShopTheLook(sender: UIButton) {
-        let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
+        CompatibleAlertViews.makeNotice("What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", presenter: self);
+        
+        /*let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     func addManualShopTheLook(look: ShopLook) {
         //function for pushing down stack

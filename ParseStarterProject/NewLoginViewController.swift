@@ -71,12 +71,13 @@ class NewLoginViewController: UIViewController {
         self.performSegueWithIdentifier("JumpIn", sender: self)
     }
     func failedLogin(msg: String) {
+        CompatibleAlertViews.makeNotice("Login Failed", message: msg, presenter: self);
+        /*
         let alert: UIAlertController = UIAlertController(title: "Login Failed", message: msg, preferredStyle: UIAlertControllerStyle.Alert);
-        
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
             //canceled
         }));
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
 }

@@ -530,11 +530,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func notifyFailure(message: String) {
+    /*func notifyFailure(message: String) {
         var alert = UIAlertController(title: "Friend?", message: message, preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil));
         self.presentViewController(alert, animated: true, completion: nil)
-    }
+    }*/
     
     
     // #pragma mark - Navigation
@@ -617,6 +617,17 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }
             else if (friendAction == true) {
                 //unfollow me (if u wish!)
+                
+                var alerter = CompatibleAlertViews(presenter: self);
+                alerter.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                    () in
+                    ServerInteractor.removeAsFollower(username);
+                    //update button
+                    self.friendAction = false
+                    self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                });
+                
+                /*
                 let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
                 alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                     ServerInteractor.removeAsFollower(username);
@@ -627,7 +638,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                     //canceled
                 }));
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.presentViewController(alert, animated: true, completion: nil)*/
             }
             else {
                 //no action
