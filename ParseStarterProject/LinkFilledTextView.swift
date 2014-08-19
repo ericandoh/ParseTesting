@@ -38,9 +38,26 @@ class LinkFilledTextView: UITextView {
     
     var baseTextColor: UIColor = UIColor.whiteColor();
     
+    override init(frame: CGRect) {
+        super.init(frame: frame);
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
+        self.userInteractionEnabled = false;
+        //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+        self.editable = false;
+        self.textColor = UIColor.whiteColor();
+    }
+    
     required init(coder aDecoder: NSCoder!) {
         super.init(coder: aDecoder);
         //self.owner = owner;
+        self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
+        self.userInteractionEnabled = false;
+        //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
+        self.editable = false;
+        self.textColor = UIColor.whiteColor();
+    }
+    override init(frame: CGRect, textContainer: NSTextContainer!) {
+        super.init(frame: frame, textContainer: textContainer);
         self.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "getPressedWordWithRecognizer:"));
         self.userInteractionEnabled = false;
         //self.addObserver(self, forKeyPath: "contentSize", options: NSKeyValueObservingOptions.fromRaw(0)!, context: nil);
@@ -207,7 +224,7 @@ class LinkFilledTextView: UITextView {
             if (canBoldFirst) {
                 canBoldFirst = false;
                 var restString = individualString;
-                if ((individualString as NSString).containsString("\n")) {
+                if  (individualString.rangeOfString("\n") != nil) {
                     var nRange = (individualString as NSString).rangeOfString("\n");
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
@@ -218,7 +235,7 @@ class LinkFilledTextView: UITextView {
                     canRespond = true;
                     self.userInteractionEnabled = true;
                 }
-                else if ((individualString as NSString).containsString(":")) {
+                else if (individualString.rangeOfString(":") != nil) {
                     var nRange = (individualString as NSString).rangeOfString(":");
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
@@ -230,7 +247,7 @@ class LinkFilledTextView: UITextView {
                     canRespond = true;
                     self.userInteractionEnabled = true;
                 }
-                else if ((individualString as NSString).containsString(" ")) {
+                else if (individualString.rangeOfString(" ") != nil) {
                     var nRange = (individualString as NSString).rangeOfString(" ");
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);

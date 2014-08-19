@@ -36,7 +36,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         
         // Do any additional setup after loading the view.
-        self.commentTableView.rowHeight = UITableViewAutomaticDimension;
+        //self.commentTableView.rowHeight = UITableViewAutomaticDimension;
         self.commentTableView.estimatedRowHeight = 50.0;
         //self.navigationTitle.setTitle("Comments", forState: UIControlState.Normal);
         self.commentTextField.backgroundColor = UIColor.clearColor()
@@ -180,6 +180,15 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        var author = commentList[index].author;
+        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+        
+        var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false);
+        
+        return recHeight;
+    }
     func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         var index: Int = indexPath.row;
         var author = commentList[index].author;
@@ -187,7 +196,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         var estimatedLines = CGFloat(countElements(text)) / 34.0;
         
-        var estimatedWidth = 40.0 + 20.0 * estimatedLines;
+        var estimatedWidth = 50.0 + 20.0 * estimatedLines;
         
         return estimatedWidth
     }

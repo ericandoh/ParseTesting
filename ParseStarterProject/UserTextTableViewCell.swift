@@ -12,6 +12,10 @@ let EXPANDED_TEXT_CELL_VALUE = CGFloat(55.0);
 
 let CONTRACTED_TEXT_CELL_VALUE = CGFloat(5.0);
 
+let MARGINS_TO_TOP = CGFloat(5.0);
+
+let MIN_IMAGE_HEIGHT = CGFloat(40.0);
+
 class UserTextTableViewCell: UITableViewCell {
 
     @IBOutlet var userImage: UIImageView!;
@@ -37,6 +41,7 @@ class UserTextTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.contentView.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -50,6 +55,7 @@ class UserTextTableViewCell: UITableViewCell {
         //clicking on the image segues to that user's profile page
         //clicking on the message is handled by the linkfilledtextview
         //clicking on the (optional) right button allows you to follow that user
+        //self.contentView.setTranslatesAutoresizingMaskIntoConstraints(false);
         owner = sender;
         self.userImage!.image = nil;
         if (involvedUser != nil) {
@@ -133,6 +139,32 @@ class UserTextTableViewCell: UITableViewCell {
         //self.layoutIfNeeded();
         //self.frame = frame;
         //self.sizeToFit();
+    }
+    class func getDesiredHeightForCellWith(involvedUser: FriendEncapsulator?, message: String, enableFriending: Bool)->CGFloat {
+        //assume all cells have total width
+        var cellTotalWidth = FULLSCREEN_WIDTH;
+        if (involvedUser != nil) {
+            if(enableFriending && involvedUser!.username != ServerInteractor.getUserName()) {
+                //we need a friend icon
+                cellTotalWidth -= EXPANDED_TEXT_CELL_VALUE * 2;
+            }
+            else {
+                cellTotalWidth -= EXPANDED_TEXT_CELL_VALUE;
+                cellTotalWidth -= CONTRACTED_TEXT_CELL_VALUE;
+            }
+        }
+        else {
+            //do nothing, our text box will take up the cell total width;
+            cellTotalWidth -= CONTRACTED_TEXT_CELL_VALUE * 2;
+        }
+        var descripBox = LinkFilledTextView(frame: CGRectMake(0, 0, cellTotalWidth, MIN_IMAGE_HEIGHT));
+        descripBox.setTextAfterAttributing(false, text: message);
+        var recommendedSize = descripBox.sizeThatFits(CGSizeMake(cellTotalWidth, CGFloat.max));
+        var recommendedDescripHeight = recommendedSize.height;
+        var actualDescripHeight = max(MIN_IMAGE_HEIGHT, recommendedDescripHeight);
+        var realCellHeight = actualDescripHeight + 2*MARGINS_TO_TOP;
+        NSLog("\(realCellHeight)")
+        return realCellHeight + 2;
     }
     func setTextFieldLighter() {
         self.descriptionBox.setTextColorBeforeAttributing(UIColor(white: 1.0, alpha: 0.4))

@@ -92,7 +92,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         followerTableView.allowsSelectionDuringEditing = true
         
-        self.followerTableView.rowHeight = UITableViewAutomaticDimension;
+        //self.followerTableView.rowHeight = UITableViewAutomaticDimension;
         self.followerTableView.estimatedRowHeight = 50.0;
         
         self.followerTableView.alwaysBounceVertical = false;        
@@ -586,6 +586,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
         return "Unfollow"
     }*/
+    
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return tableView.estimatedRowHeight;
+    }
     
     func configureSettingsButton() {
         ServerInteractor.amFollowingUser(mainUser!.username, retFunction: {(amFollowing: Bool) in
