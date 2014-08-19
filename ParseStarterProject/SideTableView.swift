@@ -19,11 +19,33 @@ class SideTableView: UITableView {
         // Initialization code
         rotateWithFramePreserved();
     }
+    override func awakeFromNib() {
+        super.awakeFromNib();
+        //rotateWithFramePreserved();
+    }
     func rotateWithFramePreserved() {
+        //self.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        //self.autoresizingMask = UIViewAutoresizing.None;
+        self.setTranslatesAutoresizingMaskIntoConstraints(true);
+        //var superview = self.superview;
+        //self.removeFromSuperview()
         var currentFrame: CGRect = self.frame;
         self.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI) / 2);
-        self.frame = CGRectMake(currentFrame.origin.y, currentFrame.origin.x, currentFrame.height, currentFrame.width);
-        self.frame = currentFrame;
+        /*if (iOS8) {
+            //self.frame = CGRectMake(currentFrame.origin.y, currentFrame.origin.x, currentFrame.height, currentFrame.width);
+            //self.frame = currentFrame;
+            self.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI) / 2);
+        }
+        else {
+            self.frame = CGRectMake(currentFrame.origin.x, currentFrame.origin.y, currentFrame.width, currentFrame.height);
+            self.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI) / 2);
+            //self.frame = currentFrame;
+        }*/
+        
+        //if (superview != nil) {
+            //superview!.addSubview(self);
+        //}
+        //self.layoutIfNeeded();
     }
 
     /*

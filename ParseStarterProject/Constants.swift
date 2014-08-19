@@ -8,6 +8,14 @@
 
 import Foundation
 
+//----------------------------System Constants---------------------------------
+let Device = UIDevice.currentDevice()
+
+private let iosVersion = NSString(string: Device.systemVersion).doubleValue
+
+let iOS8 = iosVersion >= 8
+let iOS7 = iosVersion >= 7 && iosVersion < 8
+
 //----------------------------Loading Constants---------------------------------
 
 //preface all descriptions with a comment describing what the constant acts as

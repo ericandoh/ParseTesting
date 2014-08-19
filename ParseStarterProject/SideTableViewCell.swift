@@ -38,6 +38,7 @@ class SideTableViewCell: UITableViewCell {
             //cellImage = UIImageView(frame: CGRectMake(0, 0, (currentFrame.width-CGFloat(SIDE_MARGINS * 0)), currentFrame.height));
             //var mainView = UIView(frame: CGRectMake(0, 0, cellImage!.image.size.width, cellImage!.image.size.height));
             cellImage = UIImageView(frame: CGRectMake(0, 0, PREVIEW_CELL_WIDTH, PREVIEW_CELL_HEIGHT));
+            
             cellImage!.contentMode = UIViewContentMode.ScaleAspectFill;
             var mainView = UIView(frame: CGRectMake(0, 0, PREVIEW_CELL_WIDTH, PREVIEW_CELL_HEIGHT));
             mainView.addSubview(cellImage!);
@@ -45,7 +46,10 @@ class SideTableViewCell: UITableViewCell {
             cellImage!.clipsToBounds = true;
             self.contentView.addSubview(cellImage!);*/
             //self.backgroundView = cellImage!;
-            self.backgroundView = mainView;
+            
+            
+            //self.backgroundView = mainView;
+            self.backgroundView = cellImage;
         }
         
         //self.transform = CGAffineTransformMakeRotation(M_PI / 2);
@@ -68,7 +72,12 @@ class SideTableViewCell: UITableViewCell {
     }
     func setImage(img: UIImage) {
         var rotImg = UIImage(CGImage: img.CGImage, scale: 0.25, orientation: UIImageOrientation.Right);
+        
+        
         cellImage!.image = rotImg;
+        
+        
+        
         /*previewCellImage.image = rotImg;
         previewCellImage.frame = CGRectMake(-bounds.width / CGFloat(4.0), SIDE_MARGINS, bounds.width, bounds.height - SIDE_MARGINS);
         //self.layoutSubviews();
