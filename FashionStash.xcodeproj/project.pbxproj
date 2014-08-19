@@ -45,7 +45,7 @@
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D92D8A9D1999960100A41D96 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */; };
 		D92D8A9F1999CA5300A41D96 /* RealLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */; };
-		D9383F8A19A2CC4B003FD65F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07113A1D52D009C3FCF /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D9383F8A19A2CC4B003FD65F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07113A1D52D009C3FCF /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		D9383F8B19A2CC54003FD65F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07313A1D52D009C3FCF /* Foundation.framework */; };
 		D9383F8C19A2CC65003FD65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B213A1D7EB00DA740F /* CFNetwork.framework */; };
 		D93CD465199540CA001F0253 /* backcolor.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD464199540CA001F0253 /* backcolor.png */; };

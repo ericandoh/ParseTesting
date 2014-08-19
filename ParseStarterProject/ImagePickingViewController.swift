@@ -146,11 +146,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         // Dispose of any resources that can be recreated.
     }
     func getGalleryTimeForIndex(groupIndex: Int)->String {
-        var thisAsset: ALAssetsGroup = assetGroups[groupIndex];
-        let val = thisAsset.valueForProperty(ALAssetsGroupPropertyName) as String;
-        return "";
-        //return (val as String)
-        //return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName as String) as String
+        return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName as String) as String
         
     }
     func getGalleryFullName(groupIndex: Int)->String {
