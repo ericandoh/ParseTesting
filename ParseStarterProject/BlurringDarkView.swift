@@ -25,8 +25,6 @@ class BlurringDarkView: UIImageView {
     
     func setImageAndBlur(img: UIImage) {
         var newImg = img.applyDarkEffect();
-        //var newImg = ServerInteractor.darkenImage(ServerInteractor.blurBackImage(img));
-        //darken image here
         self.image = newImg;
     }
     

@@ -192,7 +192,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     override func viewDidAppear(animated: Bool) {
         //check if page needs a refresh
         super.viewDidAppear(animated);
-        self.navigationController.navigationBar.topItem.title = ""
+        if (self.navigationController != nil) {
+            self.navigationController.navigationBar.topItem.title = ""  //crashed here
+        }
         //if (self.navigationController) {
             //self.navigationController.setNavigationBarHidden(true, animated: false);
             //self.navigationController.navigationBar.hidden = true;
