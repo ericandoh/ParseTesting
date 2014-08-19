@@ -587,10 +587,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return "Unfollow"
     }*/
     
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return tableView.estimatedRowHeight;
-    }
-    
     func configureSettingsButton() {
         ServerInteractor.amFollowingUser(mainUser!.username, retFunction: {(amFollowing: Bool) in
             self.friendAction = amFollowing;
@@ -666,6 +662,18 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
         
     }
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        
+        if (friendList[index] != nil) {
+            var text = friendList[index]!.username;
+            var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friendList[index], message: text, enableFriending: true);
+            
+            return recHeight;
+        }
+        return tableView.estimatedRowHeight;
+    }
+    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (self.navigationController != nil) {

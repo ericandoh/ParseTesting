@@ -70,7 +70,7 @@ class NotifViewController: UITableViewController {
         }
         
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        //self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.estimatedRowHeight = 50.0;
         
         var refreshControl = UIRefreshControl();
@@ -167,24 +167,6 @@ class NotifViewController: UITableViewController {
         }
         
         
-    
-        
-        //cell.textLabel.text = member.messageString;
-        
-
-        
-        /*let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-        
-        var temp = indexPath!.row;
-        
-        
-        var member: InAppNotification = notifList[temp] as InAppNotification;
-        
-        
-        cell.textLabel.text = member.messageString;*/
-        
         cell.descriptionBox.otherAction = {
             () in
             self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None);
@@ -192,6 +174,29 @@ class NotifViewController: UITableViewController {
         }
         
         return cell
+    }
+    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        
+        var member: InAppNotification = notifList[index]! as InAppNotification;
+        var recHeight: CGFloat = CGFloat(tableView.estimatedRowHeight);
+        
+        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw()) {
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
+        }
+        else if (member.type == NotificationType.IMAGE_POST_COMMENT.toRaw()) {
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
+        }
+        else if (member.type == "ImagePost") {
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
+        }
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(member.getSender(), message: member.messageString, enableFriending: true);
+        }
+        else {
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
+        }
+        return recHeight;
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

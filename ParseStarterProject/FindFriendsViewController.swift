@@ -68,8 +68,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
-        self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
-        self.searchFriendsTableView.estimatedRowHeight = 60.0;
+        //self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
+        self.searchFriendsTableView.estimatedRowHeight = 50.0;
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
         tapRecognizer.cancelsTouchesInView = false;
         self.searchFriendsTableView.addGestureRecognizer(tapRecognizer);
@@ -331,6 +331,29 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
+    
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        var recHeight: CGFloat = CGFloat(0);
+        if (index < searchTermList.count && searchTermList[index] != nil) {
+            //to avoid race conditions
+            var friend = searchTermList[index]!;
+            var author = searchTermList[index]!.username;
+            if (delayedSearchType == SearchUserType.BY_CONTACTS) {
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulator(author), message: "\n", enableFriending: true)
+            }
+            else if (delayedSearchType == SearchUserType.BY_FACEBOOK ) {
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulator(author), message: "\n", enableFriending: true)
+            }
+            else {
+                var text = author;
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: true)
+            }
+        }
+        return recHeight;
+    }
+    
+    
     func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         
         if (searchingType == SearchUserType.BY_FACEBOOK || searchingType == SearchUserType.BY_CONTACTS) {
