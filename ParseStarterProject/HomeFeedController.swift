@@ -169,6 +169,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
             topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
         }
+        /*
         var defaults = NSUserDefaults();
         if (defaults.objectForKey("ranTutorial") == nil) {
             defaults.setObject(NSDate(), forKey: "ranTutorial");
@@ -184,7 +185,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             tutorialOverlay.addTarget(self, action: "closeTutorial:", forControlEvents: UIControlEvents.TouchDown)
             self.view.addSubview(tutorialOverlay);
             self.view.bringSubviewToFront(tutorialOverlay);
-        }
+        }*/
         
         var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "motionPanned:");
         panGestureRecognizer.delegate = self;

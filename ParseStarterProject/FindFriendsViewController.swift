@@ -110,7 +110,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             });
         }
     }
-
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated);
+        suggestedUsers = [];
+        searchBar.text = "";
+        suggestedCollectionView.reloadData();
+        searchFriendsTableView.hidden = true;
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

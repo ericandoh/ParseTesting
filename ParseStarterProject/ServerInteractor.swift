@@ -1363,14 +1363,92 @@ import UIKit
         return nil;
     }*/
 
-    
     class func getSuggestedFollowers(numToReturn: Int, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
-        //screw it I'm going to make it random 3 followers for now
-        //let NUM_FOLLOWERS_TO_QUERY: Int32 = 3;
-        
+        NSLog("Getting from suggested users list first")
         var toRet: Array<FriendEncapsulator?> = [];
         
         var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        
+        var query = PFQuery(className: "SuggestedUsers");
+        query.whereKey("username", notContainedIn: alreadyMyFriends);
+        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+        
+        //-----add orderby type (rank by popularity?)-------------WORK NEED
+        //query......
+        //------------------------
+        
+        
+        query.countObjectsInBackgroundWithBlock({(result: Int32, error: NSError!) in
+            if (error == nil) {
+                if (result == 0) {
+                    //retFunction(retList: []);
+                    ServerInteractor.getSuggestedFollowersRandom([], numToReturn: numToReturn, retFunction: retFunction);
+                }
+                else {
+                    var nums = 0;
+                    var fetchCount = min(numToReturn, Int(result));
+                    NSLog("Fetching \(fetchCount), with results \(Int(result))")
+                    //getFunction(fetchCount);
+                    var scrambleOrder = ServerInteractor.scrambler(0, end: Int(result), need: fetchCount);
+                    for i in 0..<fetchCount {
+                        var query = PFQuery(className: "SuggestedUsers");
+                        query.whereKey("username", notContainedIn: alreadyMyFriends);
+                        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+                        //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
+                        //make this unique numbers
+                        query.skip = scrambleOrder[i];
+                        NSLog("\(query.skip) skip")
+                        //WORK NEED
+                        query.limit = 1;
+                        query.findObjectsInBackgroundWithBlock({
+                            (objects: [AnyObject]!, error: NSError!) in
+                            NSLog("Query returned")
+                            if (error != nil) {
+                                NSLog("Couldn't find followers");
+                                retFunction(retList: []);
+                                return;
+                            }
+                            if (objects.count == 0) {
+                                NSLog("No results?!?");
+                            }
+                            //for index: Int in 0..<objects.count {
+                            var returnedObject = objects[0] as PFObject;
+                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(returnedObject["username"] as String));
+                            //}
+                            nums += 1;
+                            if (nums == fetchCount) {
+                                if (fetchCount < numToReturn) {
+                                    ServerInteractor.getSuggestedFollowersRandom(toRet, numToReturn: (numToReturn - fetchCount), retFunction: retFunction);
+                                }
+                                else {
+                                    NSLog("Done");
+                                    retFunction(retList: toRet);
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+            else {
+                NSLog("Error querying for suggested followers")
+                //getFunction(0);
+                retFunction(retList: []);
+            }
+        });
+    }
+    
+    class func getSuggestedFollowersRandom(toRetPrev: Array<FriendEncapsulator?>, numToReturn: Int, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+        //screw it I'm going to make it random 3 followers for now
+        //let NUM_FOLLOWERS_TO_QUERY: Int32 = 3;
+        NSLog("We got \(toRetPrev.count) users from suggested, lets fill rest of gap randomly - \(numToReturn)")
+        var toRet: Array<FriendEncapsulator?> = toRetPrev;
+        var excludeNamesList: Array<String> = [];
+        for i in 0..<toRetPrev.count {
+            excludeNamesList.append(toRetPrev[i]!.username);
+        }
+        
+        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        alreadyMyFriends = alreadyMyFriends + excludeNamesList;
         
         var query = PFUser.query();
         query.whereKey("userType", containedIn: RELEVANT_TYPES);
@@ -1417,11 +1495,12 @@ import UIKit
                             if (objects.count == 0) {
                                 NSLog("No results?!?");
                             }
-                            for index: Int in 0..<objects.count {
-                                toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser));
-                            }
+                            //for index: Int in 0..<objects.count {
+                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(objects[0] as PFUser));
+                            //}
                             nums += 1;
                             if (nums == fetchCount) {
+                                NSLog("Done");
                                 retFunction(retList: toRet);
                             }
                         })
@@ -1599,16 +1678,19 @@ import UIKit
             
             var fName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonFirstNameProperty).takeRetainedValue();
             var firstName: String = "";
-
-            //if (fName != nil) {
+            var ffName: AnyObject?;
+            ffName = fName;
+            if (ffName != nil) {
                 firstName = fName as NSString;
-            //}
+            }
             
             var lName: AnyObject = ABRecordCopyValue(contactPerson, kABPersonLastNameProperty).takeRetainedValue();
             var lastName: String = "";
-            //if (lName != nil) {
+            var llName: AnyObject?;
+            llName = lName;
+            if (llName != nil) {
                 lastName = lName as NSString;   //crashed here again
-            //}
+            }
             
             var cEmails: ABMultiValueRef = ABRecordCopyValue(contactPerson, kABPersonEmailProperty).takeRetainedValue();
             var contactEmail = "";
