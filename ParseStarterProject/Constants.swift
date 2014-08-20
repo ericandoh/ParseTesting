@@ -52,7 +52,7 @@ let CELLS_BEFORE_RELOAD = 9;
 //let MYCOMMENT_LOAD_COUNT = 20
 
 //for suggest friends page, how many users to suggest + how many images per each user to preview
-let NUM_TO_SUGGEST = 10;
+let NUM_TO_SUGGEST = 25;
 let MAX_IMGS_PER_SUGGEST = 5;
 
 //----------------------------Image Constants---------------------------------

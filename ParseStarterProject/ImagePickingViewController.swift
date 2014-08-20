@@ -430,6 +430,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                                     }
                                     NSLog("Should reload here, does it?");
                                     self.loadImagesForCurrent();
+                                    self.myCollectionView.reloadData();
                                     var name = self.getGalleryFullName(self.savedPhotoIndex) + " ▾";
                                     self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
                                     

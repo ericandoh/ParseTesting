@@ -36,6 +36,29 @@ class InAppNotification {
         messageString = message;
         personalObj = dataObject
     }*/
+    func getPushMessage()->String {
+        //this assumes the object is already fetched (since we just made it!)
+        //or should it not? (if we're bumping one
+        
+        self.type = self.personalObj!["type"] as String;
+        
+        var msgToSend: String = "Message";
+        var fromWho: String = self.personalObj!["sender"] as String
+        
+        switch self.type {
+        case "ImagePost":
+            msgToSend = "Your picture has been posted!";
+        case NotificationType.IMAGE_POST_LIKE.toRaw():
+            msgToSend  = fromWho + " just liked your post!";
+        case NotificationType.IMAGE_POST_COMMENT.toRaw():
+            msgToSend  = fromWho + " just commented on your post!";
+        case NotificationType.FOLLOWER_NOTIF.toRaw():
+            msgToSend  = fromWho + " started following you!";
+        default:
+            msgToSend = self.personalObj!["message"] as String
+        }
+        return msgToSend
+    }
     func assignMessage(listener: NotifViewController) {
         //fetch notification message as necessary
         if (personalObj != nil) {

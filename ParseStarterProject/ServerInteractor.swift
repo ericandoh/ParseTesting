@@ -58,7 +58,8 @@ import UIKit
                 //ServerInteractor.initialUserChecks();
                 //user's first notification
                 ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
-                ImagePostStructure.unreadAllPosts();
+                ServerInteractor.runOnAllInitialUser();
+                //ImagePostStructure.unreadAllPosts();
                 signController.successfulSignUp();
                 
             } else {
@@ -106,7 +107,8 @@ import UIKit
             if ((user) != nil) {
                 //successful log in
                 //ServerInteractor.initialUserChecks();
-                ImagePostStructure.unreadAllPosts();
+                //ImagePostStructure.unreadAllPosts();
+                ServerInteractor.runOnAllInitialUser();
                 logController.successfulLogin();
             }
             else {
@@ -138,6 +140,7 @@ import UIKit
             var start: StartController = sender as StartController;
             if (error == nil) {
                // ServerInteractor.initialUserChecks();
+                ServerInteractor.runOnAllInitialUser();
                 start.approveUser();
             }
             else {
@@ -184,7 +187,8 @@ import UIKit
                 user.saveEventually();
                 //logController.successfulLogin();
                 //logController.performSegueWithIdentifier("SetUsernameSegue", sender: logController)
-                ImagePostStructure.unreadAllPosts();
+                //ImagePostStructure.unreadAllPosts();
+                ServerInteractor.runOnAllInitialUser();
                 logController.facebookLogin()
                 
                 //var userID = userData.name
@@ -218,7 +222,8 @@ import UIKit
                 });
                 //logController.failedLogin("User logged in through Facebook!")
                 //ServerInteractor.initialUserChecks();
-                ImagePostStructure.unreadAllPosts();
+                //ImagePostStructure.unreadAllPosts();
+                ServerInteractor.runOnAllInitialUser();
                 logController.successfulLogin();
             }
         });
@@ -292,6 +297,13 @@ import UIKit
     class func getCurrentUser()->FriendEncapsulator {
         return FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
     }
+
+    class func runOnAllInitialUser() {
+        ImagePostStructure.unreadAllPosts();
+        PFInstallation.currentInstallation().setObject(PFUser.currentUser(), forKey: "user");
+        PFInstallation.currentInstallation().saveEventually();
+    }
+
     //------------------Image Post related methods---------------------------------------
     
     
@@ -683,7 +695,9 @@ import UIKit
                 var notifToUpdate = objects[0] as PFObject;
                 notifToUpdate["bumpedAt"] = NSDate();
                 notifToUpdate["viewed"] = false;
+                notifToUpdate["sender"] = PFUser.currentUser().username;
                 notifToUpdate.saveEventually();
+                ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: notifToUpdate, wasRead: false));
             }
             else {
                 ServerInteractor.sendFirstLike(newPost);
@@ -704,7 +718,9 @@ import UIKit
                 var notifToUpdate = objects[0] as PFObject;
                 notifToUpdate["bumpedAt"] = NSDate();
                 notifToUpdate["viewed"] = false;
+                notifToUpdate["sender"] = PFUser.currentUser().username;
                 notifToUpdate.saveEventually();
+                ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: notifToUpdate, wasRead: false));
             }
             else {
                 ServerInteractor.sendCommentNotif(newPost);
@@ -1039,6 +1055,11 @@ import UIKit
                 
                 targetObject.saveInBackground();
                 
+                //send push notification if applicable
+                if (targetUserName == PFUser.currentUser().username) {
+                    return;
+                }
+                ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: targetObject, wasRead: false))
             }
             else if (controller != nil) {
                 if(objects.count == 0) {
@@ -1051,6 +1072,15 @@ import UIKit
             }
         });
         return nil; //useless statement to suppress useless stupid xcode thing
+    }
+    class func sendPushNotificationForNotif(notif: InAppNotification) {
+        var pushQuery = PFUser.query();
+        pushQuery.whereKey("username", equalTo: notif.getSender().username);
+        
+        var pushNotif = PFPush();
+        pushNotif.setQuery(pushQuery);
+        pushNotif.setMessage(notif.getPushMessage());
+        pushNotif.sendPushInBackground();
     }
     
     class func getNumUnreadNotifications(retFunc: (Int)->Void) {
