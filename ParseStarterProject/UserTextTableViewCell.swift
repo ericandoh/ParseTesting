@@ -164,7 +164,6 @@ class UserTextTableViewCell: UITableViewCell {
         var recommendedDescripHeight = recommendedSize.height;
         var actualDescripHeight = max(MIN_IMAGE_HEIGHT, recommendedDescripHeight);
         var realCellHeight = actualDescripHeight + 2*MARGINS_TO_TOP;
-        NSLog("\(realCellHeight)")
         return realCellHeight + 2;
     }
     func setTextFieldLighter() {
