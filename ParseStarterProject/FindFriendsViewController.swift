@@ -265,6 +265,12 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         var friend = self.suggestedUsers[userIndex]!;
         self.suggestedUserImgs[friend.username] = [];
         self.suggestedUserCounts[friend.username] = number;
+        if (number == 0) {
+            friendsToLoad--;
+            if (friendsToLoad == 0) {
+                isLoadingSuggestedFriends = false;
+            }
+        }
     }
     func finishFunction(userIndex: Int, post: ImagePostStructure, index: Int) {
         var friend = self.suggestedUsers[userIndex]!;
