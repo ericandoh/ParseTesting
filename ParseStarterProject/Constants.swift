@@ -262,13 +262,13 @@ let SIDE_MENU_TABLE_CELL_HEIGHT = SIDE_MENU_TABLE_HEIGHT / CGFloat(SIDE_MENU_ITE
 
 //settings option menu stuff
 let SET_PRIVACY_NAME = "Privacy";
-let SET_PRIVACY_OPTIONS = ["Privacy", "Change password", "Connect Account with Facebook"]
+let SET_PRIVACY_OPTIONS = ["Privacy", "Change password", "Connect account with Facebook"]
 
 let SET_SUPPORT_NAME = "Support";
-let SET_SUPPORT_OPTIONS = ["Support", "Terms of Service", "Report a problem", "About FashionStash", "FAQ"];
+let SET_SUPPORT_OPTIONS = ["Support", "Terms of service", "Report a problem", "About FashionStash", "FAQ"];
 
 let SET_USAGE_NAME = "Usage";
-let SET_USAGE_OPTIONS = ["Usage", "Push Notifications", "Share Settings", "Disable Account", "Clear Search"];
+let SET_USAGE_OPTIONS = ["Usage", "Notification settings", "Share settings", "Disable account", "Clear search history"];
 
 let SETTINGS_HEADER_NAMES: Array<String> = [SET_PRIVACY_NAME, SET_SUPPORT_NAME, SET_USAGE_NAME];
 let SETTINGS_OPTIONS: Array<String> = (SET_PRIVACY_OPTIONS + SET_SUPPORT_OPTIONS) + SET_USAGE_OPTIONS;

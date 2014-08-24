@@ -54,9 +54,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         var optionName = SETTINGS_OPTIONS[indexPath.row];
         if (contains(SETTINGS_HEADER_NAMES, optionName)) {
             cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 18);
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
         }
         else {
             cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
+            cell.selectionStyle = UITableViewCellSelectionStyle.Gray;
         }
         cell.textLabel.text = optionName;
         cell.textLabel.textColor = UIColor.whiteColor();
@@ -65,7 +67,35 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         //do nothing for now....
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true);
+        var optionName = SETTINGS_OPTIONS[indexPath.row];
+        if (contains(SETTINGS_HEADER_NAMES, optionName)) {
+            return;
+        }
+        switch optionName {
+            case "Change password":
+                self.changePassword();
+            case "Connect account with Facebook":
+                self.connectAccount();
+            case "Terms of service":
+                self.termsOfService();
+            case "Report a problem":
+                self.reportProblem();
+            case "About FashionStash":
+                self.aboutFS();
+            //case "FAQ":
+            //case "Notification settings":
+            //case "Share settings":
+            case "Disable account":
+                self.disableAccount();
+            case "Clear search history":
+                self.clearHistory();
+            default:
+                self.doNothing();
+        }
+    }
+    func doNothing() {
+        blankAlertWithMessage("NULL", message: "If you are reading this message, this is a failure on part of us. We will add this feature as soon as possible! Sorry");
     }
     func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         var index: Int = indexPath.row;
@@ -110,12 +140,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //---------------end tableview methods----------------
     
-    @IBAction func changePassword(sender: AnyObject) {
+    func changePassword() {
         self.passAlert();
     }
     
     func passAlert() {
-        
         alerter = CompatibleAlertViews(presenter: self);
         alerter!.makeNoticeWithActionAndFieldAndField("Change your password", message: "Enter passwords", actionName: "Submit", actionHolder1: "Old password", actionHolder2: "New password", actionString1: "", actionString2: "", secure1: true, secure2: true, buttonAction: {
             (field1: String, field2: String) in
@@ -211,7 +240,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
-    @IBAction func connectAccount(sender: UIButton) {
+    func connectAccount() {
         if (!PFFacebookUtils.isLinkedWithUser(PFUser.currentUser())) {
             PFFacebookUtils.linkUser(PFUser.currentUser(), permissions: FB_PERMISSIONS, block: {
                 (succeeded: Bool, error: NSError!) in
@@ -234,21 +263,21 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    @IBAction func termsOfService(sender: UIButton) {
+    func termsOfService() {
         blankAlertWithMessage("Terms of Service", message: "If you are reading this message, this is a failure on part of us. We will add a Terms of Service as soon as possible! Sorry");
     }
     
-    @IBAction func aboutFS(sender: UIButton) {
+    func aboutFS() {
         blankAlertWithMessage("About FashionStash", message: "FashionStash is not just an app, but a place to share with the community the trendy styles and designs of the world. We believe that anybody can become a fashion enthusiast and strive to help you develop your own sense of fashion by delivering to you the very best fashion to your stash!");
     }
     
     
-    @IBAction func disableAccount(sender: UIButton) {
+    func disableAccount() {
         blankAlertWithMessage("In implementation", message: "Sorry, we will implement this feature very soon! Our programmers are working hard to add more features and this should be in the next update");
     }
     
     
-    @IBAction func clearHistory(sender: UIButton) {
+    func clearHistory() {
         alerter = CompatibleAlertViews(presenter: self);
         alerter!.makeNoticeWithAction("Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", actionName: "Clear History", buttonAction: {
             () in
@@ -267,6 +296,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
         self.presentViewController(alert, animated: true, completion: nil)*/
+    }
+    func reportProblem() {
+        self.performSegueWithIdentifier("ReportProblem", sender: self);
     }
     
     @IBAction func backPress(sender: UIButton) {
