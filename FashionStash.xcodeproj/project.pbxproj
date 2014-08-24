@@ -63,6 +63,7 @@
 		D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */; };
 		D956BAFC198FE2C1009CE92E /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D956BAFB198FE2C1009CE92E /* CommentViewController.swift */; };
 		D95938C4199C351100F18689 /* temporaryloading.png in Resources */ = {isa = PBXBuildFile; fileRef = D95938C3199C351100F18689 /* temporaryloading.png */; };
+		D95E662B19AA8444007ED067 /* LikedUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95E662A19AA8444007ED067 /* LikedUsersViewController.swift */; };
 		D95EA0111986AB9B000A3037 /* ImagePickingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */; };
 		D95EA0131986AD72000A3037 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */; };
 		D95EA0171986D2A5000A3037 /* SideTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95EA0161986D2A5000A3037 /* SideTableView.swift */; };
@@ -230,6 +231,7 @@
 		D95469C8198AF69700F105C5 /* UserTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTextTableViewCell.swift; sourceTree = "<group>"; };
 		D956BAFB198FE2C1009CE92E /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		D95938C3199C351100F18689 /* temporaryloading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temporaryloading.png; sourceTree = "<group>"; };
+		D95E662A19AA8444007ED067 /* LikedUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikedUsersViewController.swift; sourceTree = "<group>"; };
 		D95EA0101986AB9B000A3037 /* ImagePickingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickingViewController.swift; sourceTree = "<group>"; };
 		D95EA0121986AD72000A3037 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		D95EA0161986D2A5000A3037 /* SideTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideTableView.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				D956BAFB198FE2C1009CE92E /* CommentViewController.swift */,
 				D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */,
 				24F51C6B199B05AA004E9C7C /* ReportProblemViewController.swift */,
+				D95E662A19AA8444007ED067 /* LikedUsersViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -835,6 +838,7 @@
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
 				D956BAFC198FE2C1009CE92E /* CommentViewController.swift in Sources */,
 				D914F7FD19883CD000A59314 /* ImagePostCollectionDelegate.swift in Sources */,
+				D95E662B19AA8444007ED067 /* LikedUsersViewController.swift in Sources */,
 				D996F6B4195C9ACD009E97B0 /* InAppNotification.swift in Sources */,
 				D97FCED71954E67D007D5EE6 /* SamplePFObjectOverride.m in Sources */,
 				24BA50AA197DE71300916814 /* ServerInteractor.swift in Sources */,

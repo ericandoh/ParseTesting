@@ -57,6 +57,7 @@ class ImagePostStructure
         NSLog("Size of my image array: \(imgArray)");
         myObj["author"] = PFUser.currentUser().username;
         myObj["likes"] = 0;
+        myObj["likers"] = [];
         myObj["passes"] = 0;
         NSLog("Deprecated line here, please remove")
         myObj["exclusive"] = PostExclusivity.EVERYONE.toRaw();//exclusivity.toRaw();
@@ -105,8 +106,12 @@ class ImagePostStructure
     }
     func like() {
         //increment like counter for this post
+        //var likers = PFUser.currentUser()["likers"] as NSMutableArray
+        if (myObj["likers"] == nil) {
+            myObj["likers"] = [];
+        }
         if (isLikedByUser()) {
-            //myObj.decrementKey("likes")
+            myObj.removeObject(ServerInteractor.getUserName(), forKey: "likers");
             myObj.incrementKey("likes", byAmount: -1);
             ServerInteractor.removeFromLikedPosts(myObj.objectId);
         }
@@ -118,10 +123,9 @@ class ImagePostStructure
                 //bump that old notification back up to the spotlight
                 ServerInteractor.updateLikeNotif(self);
             }
-            //if (getLikes() == 0) {
-            //ServerInteractor.sendFirstLike(self);
-            //}
+            myObj.addUniqueObject(ServerInteractor.getUserName(), forKey: "likers");
             myObj.incrementKey("likes")
+            
             ServerInteractor.appendToLikedPosts(myObj.objectId)
         }
         myObj.saveInBackground()
@@ -134,6 +138,14 @@ class ImagePostStructure
     }
     func getLikes()->Int {
         return myObj["likes"] as Int
+    }
+    func getLikers()->Array<String> {
+        if (myObj["likers"] == nil) {
+            myObj["likers"] = [];
+            myObj.saveInBackground();
+            return [];
+        }
+        return (myObj["likers"]) as Array<String>;
     }
     func getPasses()->Int {
         return myObj["passes"] as Int
@@ -160,6 +172,10 @@ class ImagePostStructure
             return false;
         }
         return (myObj["author"] as String) == PFUser.currentUser().username;
+    }
+    func getAgeAsString()->String {
+        var date = myObj.createdAt;
+        return ServerInteractor.timeNumberer(date);
     }
     func loadImage() {
         NSLog("loadImage() - this function seems unused");

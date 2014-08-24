@@ -151,10 +151,10 @@ class InAppNotification {
     }
     
     func getSender()->FriendEncapsulator {
-        if (type != NotificationType.FOLLOWER_NOTIF.toRaw()) {
+        //if (type != NotificationType.FOLLOWER_NOTIF.toRaw()) {
             //Post does not have image associated with it
-            NSLog("Cannot retrieve follower from non-follower post notification")
-        }
+            //NSLog("Cannot retrieve follower from non-follower post notification")
+        //}
         var obj: String = self.personalObj!["sender"] as String
         return FriendEncapsulator.dequeueFriendEncapsulator(obj);
     }

@@ -24,6 +24,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
     @IBOutlet var pageCounter: UILabel!
+    
+    @IBOutlet weak var descripLikeCounter: UIButton!
+    
+    @IBOutlet weak var descripAgeCounter: UIButton!
+    
     @IBOutlet var frontImageView: UIImageView!
     
     @IBOutlet var topLeftButton: UIButton!
@@ -564,6 +569,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.shopTheLookPrefacer.hidden = false;
             }
             });
+        self.descripLikeCounter.setTitle(String(currentPost.getLikes()) + " likes", forState: UIControlState.Normal)
+        self.descripAgeCounter.setTitle(currentPost.getAgeAsString(), forState: UIControlState.Normal);
         if (descriptionPage.hidden) {
             descriptionPage.alpha = 0;
             descriptionPage.hidden = false;
@@ -878,6 +885,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             else {
                 likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
             }
+            if (viewingComments) {
+                self.descripLikeCounter.setTitle(String(post.getLikes()) + " likes", forState: UIControlState.Normal)
+            }
         }
         //likePostOutlet.hidden = true
     }
@@ -983,6 +993,21 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
     }
     
+    @IBAction func viewLikes(sender: UIButton) {
+        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
+            //there is no image for this post - no posts on feed
+            //or i am at ending page (VC >= post count)
+            //no post = no comments
+            //this might happen due to network problems
+            return;
+        }
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+        if (currentPost.getLikes() == 0) {
+            return;
+        }
+        self.performSegueWithIdentifier("ViewLikersSegue", sender: self);
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue!.identifier == "ViewCommentsSegue") {
             if (segue!.destinationViewController is CommentViewController) {
@@ -1013,6 +1038,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 //controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 //[self presentViewController:controller animated:YES completion:nil];
                // self.presentViewController(controller, animated: true, completion: nil)
+            }
+        }
+        else if (segue!.identifier == "ViewLikersSegue") {
+            if (segue!.destinationViewController is LikedUsersViewController) {
+                var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
+                var currentImg = frontImageView.image;
+                (segue!.destinationViewController as LikedUsersViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg);
             }
         }
     }

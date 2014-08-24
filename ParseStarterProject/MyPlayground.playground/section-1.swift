@@ -2,7 +2,44 @@
 
 import UIKit
 
-a=6;
+func timeNumberer(fromDate: NSDate)->String {
+    var currentDate = NSDate();
+    
+    var calender = NSCalendar(calendarIdentifier: NSGregorianCalendar);
+    var components = calender.components(NSCalendarUnit.SecondCalendarUnit|NSCalendarUnit.MinuteCalendarUnit|NSCalendarUnit.HourCalendarUnit|NSCalendarUnit.DayCalendarUnit|NSCalendarUnit.MonthCalendarUnit|NSCalendarUnit.YearCalendarUnit, fromDate: fromDate, toDate: currentDate, options: NSCalendarOptions.fromMask(0));
+    
+    components.second;
+    components.minute;
+    components.hour;
+    components.day;
+    components.month;
+    components.year;
+    
+    if (components.year != 0) {
+        return "\(components.year)y"
+    }
+    else if (components.month != 0) {
+        return "\(components.month)m"
+    }
+    else if (components.day != 0 && components.day >= 7) {
+        return "\(components.day / 7)w"
+    }
+    else if (components.day != 0) {
+        return "\(components.day)d"
+    }
+    else if (components.hour != 0) {
+        return "\(components.hour)h"
+    }
+    else if (components.minute != 0) {
+        return "\(components.minute)m"
+    }
+    else {
+        return "\(components.second)s"
+    }
+}
+
+var oneWeekAgo = NSDate().dateByAddingTimeInterval(-2229810);
+timeNumberer(oneWeekAgo);
 
 /*
 func wordNumberer(num: Int)->String {
@@ -92,6 +129,7 @@ for index in 1...999 {
 
 counter*/
 
+/*
 var text = "@as hello #hi ##hi # #hik @@meepmeep";
 
 var error: NSError?;
@@ -120,7 +158,7 @@ for match in matches {
     lstOfStrings.append(individualString);
 }
 lstOfStrings
+*/
 
 
-
-
+*/
