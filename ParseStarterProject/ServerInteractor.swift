@@ -99,6 +99,7 @@ import UIKit
         user["userType"] = type.toRaw();
         user["numPosts"] = 0;
         user["followings"] = NSMutableArray();
+        user["receivePush"] = true;
     }
     
     class func loginUser(username: String, password: String, sender: RealLoginViewController)->Bool {
@@ -1074,8 +1075,10 @@ import UIKit
         return nil; //useless statement to suppress useless stupid xcode thing
     }
     class func sendPushNotificationForNotif(notif: InAppNotification) {
+        //send only to users who have push notifications enabled (default)
         var pushQuery = PFUser.query();
         pushQuery.whereKey("username", equalTo: notif.getSender().username);
+        pushQuery.whereKey("receivePush", equalTo: false);
         
         var pushNotif = PFPush();
         pushNotif.setQuery(pushQuery);
