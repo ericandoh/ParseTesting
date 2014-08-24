@@ -1078,12 +1078,28 @@ import UIKit
         //send only to users who have push notifications enabled (default)
         var pushQuery = PFUser.query();
         pushQuery.whereKey("username", equalTo: notif.getSender().username);
-        pushQuery.whereKey("receivePush", equalTo: false);
+        pushQuery.whereKey("receivePush", equalTo: true);
         
         var pushNotif = PFPush();
         pushNotif.setQuery(pushQuery);
         pushNotif.setMessage(notif.getPushMessage());
         pushNotif.sendPushInBackground();
+    }
+    class func togglePushSettings() {
+        var toggled = PFUser.currentUser()["receivePush"] as Bool;
+        PFUser.currentUser()["receivePush"] = !(toggled);
+        PFUser.currentUser().saveEventually();
+    }
+    class func isPushEnabled()->Bool {
+        var toggled: Bool = true;
+        if (PFUser.currentUser()["receivePush"] == nil) {
+            PFUser.currentUser()["receivePush"] = toggled;
+            PFUser.currentUser().saveEventually();
+        }
+        else {
+            toggled = PFUser.currentUser()["receivePush"] as Bool;
+        }
+        return toggled;
     }
     
     class func getNumUnreadNotifications(retFunc: (Int)->Void) {

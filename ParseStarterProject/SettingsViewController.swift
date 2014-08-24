@@ -56,6 +56,16 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 18);
             cell.selectionStyle = UITableViewCellSelectionStyle.None;
         }
+        else if (optionName == "Notification settings") {
+            if (ServerInteractor.isPushEnabled()) {
+                optionName = "Disable push notifications"
+            }
+            else {
+                optionName = "Enable push notifications"
+            }
+            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
+            cell.selectionStyle = UITableViewCellSelectionStyle.Gray;
+        }
         else {
             cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
             cell.selectionStyle = UITableViewCellSelectionStyle.Gray;
@@ -84,7 +94,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             case "About FashionStash":
                 self.aboutFS();
             //case "FAQ":
-            //case "Notification settings":
+            case "Notification settings":
+                self.changeNotificationSettings(tableView, indexPath: indexPath);
             //case "Share settings":
             case "Disable account":
                 self.disableAccount();
@@ -140,6 +151,17 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //---------------end tableview methods----------------
     
+    func changeNotificationSettings(tableView: UITableView, indexPath: NSIndexPath) {
+        ServerInteractor.togglePushSettings();
+        tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic);
+        if (ServerInteractor.isPushEnabled()) {
+            blankAlertWithMessage("Push Notifications", message: "Push Notifications have been enabled");
+        }
+        else {
+            blankAlertWithMessage("Push Notifications", message: "Push Notifications have been disabled");
+        }
+    }
+
     func changePassword() {
         self.passAlert();
     }
