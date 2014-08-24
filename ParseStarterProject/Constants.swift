@@ -97,6 +97,8 @@ let FORWARD_ICON = UIImage(named: "arrow_right.png");
 
 let SETTINGS_ICON = UIImage(named: "settings.png");
 
+let DEFAULT_BUTTON_SOLID_BACKGROUND = UIImage(named: "backcolorsolid.png");
+
 //side menu images
 let HOME_ICON = UIImage(named: "home.png");
 let EXPLORE_ICON = UIImage(named: "map.png");
@@ -257,6 +259,19 @@ let DAMPENING_CONSTANT = CGFloat(2.5);
 
 //side menu individual heights
 let SIDE_MENU_TABLE_CELL_HEIGHT = SIDE_MENU_TABLE_HEIGHT / CGFloat(SIDE_MENU_ITEMS.count)
+
+//settings option menu stuff
+let SET_PRIVACY_NAME = "Privacy";
+let SET_PRIVACY_OPTIONS = ["Privacy", "Change password", "Connect Account with Facebook"]
+
+let SET_SUPPORT_NAME = "Support";
+let SET_SUPPORT_OPTIONS = ["Support", "Terms of Service", "Report a problem", "About FashionStash", "FAQ"];
+
+let SET_USAGE_NAME = "Usage";
+let SET_USAGE_OPTIONS = ["Usage", "Push Notifications", "Share Settings", "Disable Account", "Clear Search"];
+
+let SETTINGS_HEADER_NAMES: Array<String> = [SET_PRIVACY_NAME, SET_SUPPORT_NAME, SET_USAGE_NAME];
+let SETTINGS_OPTIONS: Array<String> = (SET_PRIVACY_OPTIONS + SET_SUPPORT_OPTIONS) + SET_USAGE_OPTIONS;
 
 //----------------------------Type Constants---------------------------------
 

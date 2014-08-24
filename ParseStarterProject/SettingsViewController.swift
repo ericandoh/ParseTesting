@@ -10,12 +10,106 @@ import Foundation
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+//let SETTINGS_TABLEVIEW_HEADER_HEIGHT = CGFloat(40);
+
+//let SETTINGS_TABLE_INSET = CGFloat(10);
+
+class SettingsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var backImage: BlurringDarkView!
     
     var alerter:CompatibleAlertViews?;
 
+    override func viewDidLoad() {
+        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController.navigationBar.shadowImage = UIImage();
+        self.navigationController.navigationBar.translucent = true;
+        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController.navigationBar.topItem.title = "Settings";
+        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        mainUser.fetchImage({(image: UIImage)->Void in
+            //self.backImage.image = image;
+            self.backImage.setImageAndBlur(image);
+        });
+    }
+    
+    
+    //---------------tableview methods----------------
+    /*func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return SETTINGS_OPTIONS.count;
+    }*/
+    
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        return SETTINGS_OPTIONS.count;
+    }
+    
+    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath) as UITableViewCell;
+        
+        cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        cell.textLabel.numberOfLines = 0;
+
+        var optionName = SETTINGS_OPTIONS[indexPath.row];
+        if (contains(SETTINGS_HEADER_NAMES, optionName)) {
+            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 18);
+        }
+        else {
+            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
+        }
+        cell.textLabel.text = optionName;
+        cell.textLabel.textColor = UIColor.whiteColor();
+
+        return cell;
+    }
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        //do nothing for now....
+        
+    }
+    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        var index: Int = indexPath.row;
+        var optionName = SETTINGS_OPTIONS[indexPath.row];
+        if (contains(SETTINGS_HEADER_NAMES, optionName)) {
+            return 40;
+        }
+        else {
+            return 30;
+        }
+    }
+    /*
+    func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
+        var view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, SETTINGS_TABLEVIEW_HEADER_HEIGHT));
+        var label = UILabel(frame: CGRectMake(SETTINGS_TABLE_INSET, 0, tableView.frame.size.width - 2 * SETTINGS_TABLE_INSET, SETTINGS_TABLEVIEW_HEADER_HEIGHT));
+        label.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 18);
+        label.text = SETTINGS_HEADER_NAMES[section];
+        label.backgroundColor = UIColor.clearColor();
+        label.textColor = UIColor.whiteColor();
+
+        var topLine = UIImageView(frame: CGRectMake(SETTINGS_TABLE_INSET, 0, tableView.frame.size.width - 2 * SETTINGS_TABLE_INSET, 1));
+        topLine.backgroundColor = UIColor.whiteColor();
+        var bottomLine = UIImageView(frame: CGRectMake(SETTINGS_TABLE_INSET, SETTINGS_TABLEVIEW_HEADER_HEIGHT - 1, tableView.frame.size.width - 2 * SETTINGS_TABLE_INSET, 1));
+        bottomLine.backgroundColor = UIColor.whiteColor();
+
+        var backTransparentView = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, SETTINGS_TABLEVIEW_HEADER_HEIGHT));
+        backTransparentView.image = DEFAULT_BUTTON_SOLID_BACKGROUND;
+        backTransparentView.alpha = 0.9;
+
+        view.addSubview(backTransparentView);
+        view.addSubview(label);
+        //view.addSubview(topLine);
+        //view.addSubview(bottomLine);
+        view.backgroundColor = UIColor.clearColor();
+        return view;
+    }*/
+    /*
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int)->CGFloat
+    {
+        return SETTINGS_TABLEVIEW_HEADER_HEIGHT;
+    }*/
+    
+    //---------------end tableview methods----------------
+    
     @IBAction func changePassword(sender: AnyObject) {
         self.passAlert();
     }
@@ -107,21 +201,6 @@ class SettingsViewController: UIViewController {
         if (!ServerInteractor.isAnonLogged()) {
             ServerInteractor.logOutUser();
         }
-    }
-    
-    override func viewDidLoad() {
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.topItem.title = "Settings";
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
-        
-        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
-        mainUser.fetchImage({(image: UIImage)->Void in
-            //self.backImage.image = image;
-            self.backImage.setImageAndBlur(image);
-        });
     }
     
     func blankAlertWithMessage(title: String, message:String) {
