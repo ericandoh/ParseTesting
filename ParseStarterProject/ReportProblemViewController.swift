@@ -28,9 +28,9 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         self.navigationController.view.backgroundColor = UIColor.clearColor();
         self.navigationController.navigationBar.topItem.title = "Settings";
         self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
-    
-        report.keyboardAppearance = UIKeyboardAppearance.Dark
-        
+        if (iOS_VERSION > 7.0) {
+            report.keyboardAppearance = UIKeyboardAppearance.Dark
+        }
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
             //self.backImage.image = image;

@@ -20,9 +20,10 @@ class RealLoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark;
-        usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark;
-
+        if (iOS_VERSION > 7.0) {
+            passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark;
+            usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark;
+        }
         usernameTextField.borderStyle = UITextBorderStyle.None;
         usernameTextField.layer.borderWidth = 1;
         usernameTextField.layer.borderColor = UIColor.whiteColor().CGColor;
