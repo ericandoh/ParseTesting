@@ -86,9 +86,9 @@ class RealLoginViewController: UIViewController {
         /*
         let alert: UIAlertController = UIAlertController(title: "Reset password", message: "Enter your email and we'll send you directions on resetting your password!", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addTextFieldWithConfigurationHandler(nil);
-        (alert.textFields[0] as UITextField).placeholder = "Your Email"
+        (alert.textFields![0] as UITextField).placeholder = "Your Email"
         alert.addAction(UIAlertAction(title: "Reset P/W", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var email = (alert.textFields[0] as UITextField).text;
+            var email = (alert.textFields![0] as UITextField).text;
             PFUser.requestPasswordResetForEmailInBackground(email, block: {
                 (succeeded: Bool, error: NSError!) in
                 if ((error) != nil) {
@@ -141,13 +141,13 @@ class RealLoginViewController: UIViewController {
     }
     
     @IBAction func backPress(sender: UIButton) {
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
     /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

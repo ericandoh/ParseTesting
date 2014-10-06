@@ -69,9 +69,9 @@ class SuggestedHeaderView: UICollectionReusableView {
         }
     }
     func isTapped() {
-        var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+        var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
         (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
-        self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+        self.owner!.navigationController!.pushViewController(nextBoard, animated: true);
     }
     
     @IBAction func friendMe(sender: UIButton) {

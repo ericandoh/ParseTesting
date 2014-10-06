@@ -24,24 +24,24 @@ class NotifViewController: UITableViewController {
         super.viewDidLoad()
         
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
-            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        if (self.navigationController!.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController!.interactivePopGestureRecognizer.enabled = false;
         }
         //notifList = Array<InAppNotification>();
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.topItem.title = "Notifications";
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.topItem.title = "Notifications";
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var custView: UIView = UIView()
         custView.backgroundColor = UIColor.blackColor();
@@ -80,7 +80,7 @@ class NotifViewController: UITableViewController {
         //tableView.insertSubview(self.refreshControl, aboveSubview: custView)
         //custView.addSubview(refreshControl);
         //tableView.bringSubviewToFront(refreshControl);
-        self.refreshControl.layer.zPosition = self.tableView.backgroundView.layer.zPosition + 1;
+        self.refreshControl!.layer.zPosition = self.tableView.backgroundView.layer.zPosition + 1;
         //self.tableView.backgroundView.layer.zPosition -= 1;
     }
     
@@ -93,13 +93,13 @@ class NotifViewController: UITableViewController {
     
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController.popViewControllerAnimated(true);
+                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
@@ -127,19 +127,17 @@ class NotifViewController: UITableViewController {
         return 1;
     }
 
-    override func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         return notifList.count
     }
-    
-    override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        
-        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UserTextTableViewCell;
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("NotifCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
         
-        var temp = indexPath!.row;
+        var temp = indexPath.row;
         
         
         var member: InAppNotification = notifList[temp]! as InAppNotification;
@@ -171,12 +169,12 @@ class NotifViewController: UITableViewController {
         cell.descriptionBox.otherAction = {
             () in
             self.tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: UITableViewScrollPosition.None);
-            self.pressedNotifAt(indexPath!);
+            self.pressedNotifAt(indexPath);
         }
         
         return cell
     }
-    override func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         
         var member: InAppNotification = notifList[index]! as InAppNotification;
@@ -215,9 +213,9 @@ class NotifViewController: UITableViewController {
                     var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
                     var onlyImagePost = ImagePostStructure.dequeueImagePost(obj);
                     imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
-                    var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+                    var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                     newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
-                    self.navigationController.pushViewController(newHome, animated: true);
+                    self.navigationController!.pushViewController(newHome, animated: true);
                 }
                 else {
                     NSLog("App Notification object couldn't be found");
@@ -229,9 +227,9 @@ class NotifViewController: UITableViewController {
             //self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
             if (self.navigationController != nil) {
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(member.friendName);
-                var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                self.navigationController.pushViewController(nextBoard, animated: true);
+                self.navigationController!.pushViewController(nextBoard, animated: true);
             }
         }
         else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
@@ -248,10 +246,10 @@ class NotifViewController: UITableViewController {
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
-        var id: String = segue!.identifier;
+        var id: String = segue.identifier;
         
         let temp: Int = self.tableView.indexPathForSelectedRow().row;
         
@@ -265,8 +263,8 @@ class NotifViewController: UITableViewController {
             var destination = segue!.destinationViewController as FriendRequestViewController;
             destination.receiveNotifObject(notifObj);
         }*/
-        if (segue!.destinationViewController is SingleNotifViewController) {
-            var destination = segue!.destinationViewController as SingleNotifViewController;
+        if (segue.destinationViewController is SingleNotifViewController) {
+            var destination = segue.destinationViewController as SingleNotifViewController;
             destination.receiveNotifObject(notifObj);
         }
     }

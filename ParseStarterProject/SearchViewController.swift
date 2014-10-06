@@ -31,27 +31,27 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
         
 
-        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
-            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        if (self.navigationController!.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController!.interactivePopGestureRecognizer.enabled = false;
         }
         if (iOS_VERSION > 7.0) {
             searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         }
         searchBar.resignFirstResponder()
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.topItem.title = "Popular";
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.topItem.title = "Popular";
         
         //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
         // Do any additional setup after loading the view.
         var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped:");
@@ -118,13 +118,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController.popViewControllerAnimated(true);
+                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
@@ -143,10 +143,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        var id: String = segue!.identifier;
+        var id: String = segue.identifier;
         
         if (id == "SearchSegue") {
             
@@ -189,7 +189,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 doingSearch = 0;
                 myTable.hidden = true;
                 myCollectionView.hidden = false;
-                self.navigationController.navigationBar.topItem.title = "Popular";
+                self.navigationController!.navigationBar.topItem.title = "Popular";
             }
             else if (doingSearch == 2) {
                 /*if (collectionDelegateSearch) {
@@ -202,7 +202,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 //myTable.hidden = true;
                 //myCollectionView.hidden = false;
                 //add animations here;
-                self.navigationController.navigationBar.topItem.title = "Popular";
+                self.navigationController!.navigationBar.topItem.title = "Popular";
             }
             NSLog("A");
             searchBar.resignFirstResponder();
@@ -256,15 +256,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     //--------------table view functions------------
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (currentTerm == "") {
             return 0;
         }
         return 1 + searchTermList.count;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("SearchCell", forIndexPath: indexPath) as UITableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("SearchCell", forIndexPath: indexPath) as UITableViewCell
         
         var index: Int = indexPath.row;
         
@@ -310,7 +310,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //starts a search with a term
         currentTerm = searchResult;
         searchBar.text = searchResult;  //set the search bar to match the search query
-        //self.navigationController.navigationBar.topItem.title = searchResult;
+        //self.navigationController!.navigationBar.topItem.title = searchResult;
         self.title = searchResult;
         doingSearch = 2;
         myTable.hidden = true;

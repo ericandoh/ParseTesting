@@ -19,8 +19,12 @@
     //[Parse setApplicationId:@"KdJujqIAaEuNW9YvsAQhnOOHUGsMMDhFJeOrlz6h" <----- old credentials, where did you get them?
     //              clientKey:@"I0VPBQaCngaQFzfpgu0c13OpvbPOZfWxAx4UiVvG"];
     
-    [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
-                  clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
+    // Development credentials
+    // [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
+    //              clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
+    
+    [Parse setApplicationId:@"1gUsdgWfyYAICL9pQX3ghv97zrMPZOVWf5Hz7GPi"
+                    clientKey:@"otdpUPZinqlZzEJKDOpL3L7RzylgwywCYTpxI39i"];
     
     //
     // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as
@@ -144,6 +148,7 @@
     if (application.applicationState == UIApplicationStateInactive) {
         [PFAnalytics trackAppOpenedWithRemoteNotificationPayload:userInfo];
     }
+    [PFPush handlePush:userInfo];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

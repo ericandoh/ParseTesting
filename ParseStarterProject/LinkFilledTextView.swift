@@ -112,9 +112,9 @@ class LinkFilledTextView: UITextView {
             if (typeOfString == ExternalViewLink.TAG) {
                 var searchTerm = realText.substringFromIndex(1);
                 if (self.owner!.navigationController != nil) {
-                    var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
+                    var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("SearchWindow") as UIViewController;
                     (nextBoard as SearchViewController).currentTerm = searchTerm;
-                    self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                    self.owner!.navigationController!.pushViewController(nextBoard, animated: true);
                 }
             }
             else if (typeOfString == ExternalViewLink.USER) {
@@ -126,9 +126,9 @@ class LinkFilledTextView: UITextView {
                 friend.exists({(exist: Bool) in
                     if (exist) {
                         if (self.owner!.navigationController != nil) {  //to avoid race conditions
-                            var nextBoard : UIViewController = self.owner!.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                            var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                             (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                            self.owner!.navigationController.pushViewController(nextBoard, animated: true);
+                            self.owner!.navigationController!.pushViewController(nextBoard, animated: true);
                         }
                     }
                     });

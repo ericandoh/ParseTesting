@@ -174,7 +174,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         suppressMenu = false;
         var selectedRow = -1;
         if let selectedIndex = sideTableView.indexPathForSelectedRow() {
-            selectedRow = sideTableView.indexPathForSelectedRow().row;
+            selectedRow = selectedIndex.row;
         }
         var indexInArray = find(SIDE_MENU_ITEMS, contentString);
         
@@ -213,16 +213,16 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             }
             if (refreshingHome) {
                 old = self.viewControllerDictionary[contentString];
-                content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+                content = self.storyboard!.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
                 //setContentConstraints(content)
                 self.viewControllerDictionary[contentString] = content;
             }
         }
         else {
             if ((ServerInteractor.isAnonLogged()) && ((contentString == "Upload") || (contentString == "FindFriends"))) {
-                content = self.storyboard.instantiateViewControllerWithIdentifier("Anon") as UIViewController;
+                content = self.storyboard!.instantiateViewControllerWithIdentifier("Anon") as UIViewController;
             } else {
-                content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+                content = self.storyboard!.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
             }
             //setContentConstraints(content);
             self.viewControllerDictionary[contentString] = content;
@@ -314,7 +314,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         if (self.viewControllerDictionary[contentString] != nil) {
             needRemove.append(self.viewControllerDictionary[contentString]!);
         }
-        var content = self.storyboard.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
+        var content = self.storyboard!.instantiateViewControllerWithIdentifier(contentString) as UIViewController;
         //setContentConstraints(content);
         self.viewControllerDictionary[contentString] = content;
     }
@@ -340,11 +340,11 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.contentArea.addConstraint(bottomConstraint);
         controller.view.addConstraints(myConstraints);
     }
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SIDE_MENU_ITEMS.count;
     }
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: SideMenuTableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as SideMenuTableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: SideMenuTableViewCell = tableView.dequeueReusableCellWithIdentifier("SideMenuItem", forIndexPath: indexPath) as SideMenuTableViewCell
         
         //cell.textLabel.text = SIDE_MENU_NAMES[indexPath.row];
         cell.titleLabel.text = SIDE_MENU_NAMES[indexPath.row];
@@ -398,7 +398,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         var boardName = SIDE_MENU_ITEMS[indexPath.row];
         displayContent(boardName);
     }
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return SIDE_MENU_TABLE_CELL_HEIGHT;
     }
     
@@ -406,7 +406,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     // #pragma mark - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using segue.destinationViewController.
     // Pass the selected object to the new view controller.
     }

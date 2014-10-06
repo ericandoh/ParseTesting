@@ -114,13 +114,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         editPostButton.hidden = true;
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
-        //self.navigationController.navigationBar.barStyle = UIBarStyle.Default
+        //self.navigationController!.navigationBar.barStyle = UIBarStyle.Default
         
         //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
@@ -133,10 +133,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //self.navigationTitle.setTitle("", forState: UIControlState.Normal);
         
         //if (self.navigationController) {
-            //self.navigationController.setNavigationBarHidden(true, animated: false);
-            //self.navigationController.navigationBar.hidden = true;
-            //self.navigationController.navigationBar.translucent = true;
-            //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController.view, cache: true);
+            //self.navigationController!.setNavigationBarHidden(true, animated: false);
+            //self.navigationController!.navigationBar.hidden = true;
+            //self.navigationController!.navigationBar.translucent = true;
+            //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController!.view, cache: true);
         //}
         
         var frame: CGRect = frontImageView.frame;
@@ -201,12 +201,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //check if page needs a refresh
         super.viewDidAppear(animated);
         if (self.navigationController != nil) {
-            self.navigationController.navigationBar.topItem.title = ""  //crashed here
+            self.navigationController!.navigationBar.topItem!.title = ""  //crashed here
         }
         //if (self.navigationController) {
-            //self.navigationController.setNavigationBarHidden(true, animated: false);
-            //self.navigationController.navigationBar.hidden = true;
-            //self.navigationController.navigationBar.translucent = true;
+            //self.navigationController!.setNavigationBarHidden(true, animated: false);
+            //self.navigationController!.navigationBar.hidden = true;
+            //self.navigationController!.navigationBar.translucent = true;
         //}
         if (backImageView == nil) {
             var frame: CGRect = frontImageView.frame;
@@ -224,18 +224,18 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         backImageView!.removeFromSuperview();
         backImageView = nil;
         if (frontImageView.image != nil) {
-            frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image, frame: frontImageView.frame);
+            frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
         }
         //if (self.navigationController) {
-            //self.navigationController.setNavigationBarHidden(false, animated: false);
-            //self.navigationController.navigationBar.hidden = false;
-            //self.navigationController.navigationBar.translucent = false;
+            //self.navigationController!.setNavigationBarHidden(false, animated: false);
+            //self.navigationController!.navigationBar.hidden = false;
+            //self.navigationController!.navigationBar.translucent = false;
         //}
     }
     /*override func viewWillDisappear(animated: Bool) {
         if (self.navigationController) {
-            if (self.navigationController.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
-                var lastIndex = self.navigationController.viewControllers.count - 1;
+            if (self.navigationController!.viewControllers.bridgeToObjectiveC().indexOfObject(self) == NSNotFound) {
+                var lastIndex = self.navigationController!.viewControllers.count - 1;
             }
         }
         super.viewWillDisappear(animated);
@@ -528,7 +528,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             loadingSpinner!.hidden = true;
         }
         var imgToDescrip = frontImageView.image;
-        descriptionBackImage.image = imgToDescrip.applyDarkEffect();
+        descriptionBackImage.image = imgToDescrip!.applyDarkEffect();
         
         //authorTextField.text = currentPost.getAuthor();
         //descriptionTextField.text = currentPost.getDescription();
@@ -613,7 +613,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //userLabel.text = textToPut;
             userLabel.setTitle(textToPut, forState: UIControlState.Normal);
             //userLabel.font = USER_TITLE_TEXT_FONT;
-            userLabel.titleLabel.font = USER_TITLE_TEXT_FONT;
+            userLabel.titleLabel!.font = USER_TITLE_TEXT_FONT;
             
             userLabel.addTarget(self, action: "goToCurrentPostAuthor:", forControlEvents: UIControlEvents.TouchDown);
             
@@ -644,13 +644,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     func goToCurrentPostAuthor(sender: UIButton!) {
-        var friend = FriendEncapsulator.dequeueFriendEncapsulator(sender.titleLabel.text);
+        var friend = FriendEncapsulator.dequeueFriendEncapsulator(sender.titleLabel!.text!);
         friend.exists({(exist: Bool) in
             if (exist) {
                 if (self.navigationController != nil) {  //to avoid race conditions
-                    var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                    var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                     (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                    self.navigationController.pushViewController(nextBoard, animated: true);
+                    self.navigationController!.pushViewController(nextBoard, animated: true);
                 }
             }
         });
@@ -778,7 +778,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         if (postCounter == 0) {
             if ((self.navigationController) != nil) {
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
             }
             else {
                 (self.parentViewController as SideMenuManagingViewController).openMenu();
@@ -812,13 +812,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func sideMenu(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController.popViewControllerAnimated(true);
+                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
@@ -930,13 +930,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             return;
         }
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-        var contentString = "FashionStash - Image Post by user @"+currentPost.getAuthor();
+        var contentString: String = "FashionStash - Image Post by user @"+currentPost.getAuthor();
         if (viewingComments) {
             contentString += (": " + currentPost.getDescriptionWithTag())
         }
-        var contentImage = frontImageView!.image;
+        var contentImage: UIImage = frontImageView!.image!;
         
-        var activityController = UIActivityViewController(activityItems: [contentString, contentImage], applicationActivities: nil);
+        let activityController: UIActivityViewController = UIActivityViewController(activityItems: [contentString, contentImage], applicationActivities: nil);
         self.presentViewController(activityController, animated: true, completion: {
             () in
             //nothing
@@ -962,9 +962,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //edit this post, segue to imagepreviewcontroller with right specs
             var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
             currentPost.loadAllImages({(result: Array<UIImage>) in
-                var imageEditingControl = self.storyboard.instantiateViewControllerWithIdentifier("ImagePreview") as ImagePreviewController;
+                var imageEditingControl = self.storyboard!.instantiateViewControllerWithIdentifier("ImagePreview") as ImagePreviewController;
                 imageEditingControl.receiveImage(result, post: currentPost)
-                self.navigationController.pushViewController(imageEditingControl, animated: true);
+                self.navigationController!.pushViewController(imageEditingControl, animated: true);
             })
         case 2:
             
@@ -1008,9 +1008,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.performSegueWithIdentifier("ViewLikersSegue", sender: self);
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        if (segue!.identifier == "ViewCommentsSegue") {
-            if (segue!.destinationViewController is CommentViewController) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "ViewCommentsSegue") {
+            if (segue.destinationViewController is CommentViewController) {
               //  vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical; // Rises from below
                 
                 // vc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve; // Fade
@@ -1021,30 +1021,31 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
               
                 var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
                 var currentImg = frontImageView.image;
-                (segue!.destinationViewController as CommentViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg);
+                (segue.destinationViewController as CommentViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg!);
+                
                 
                 /*UIView.animateWithDuration(0.3, animations: {
                     ()->Void in
                     //[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
                     //[self.navigationController pushViewController:nextView animated:NO];
-                    //[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController.view cache:NO];
+                    //[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:self.navigationController!.view cache:NO];
                     UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
-                    self.navigationController.pushViewController(CommentViewController(), animated: false)
-                    UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: self.navigationController.view, cache: false)
+                    self.navigationController!.pushViewController(CommentViewController(), animated: false)
+                    UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: self.navigationController!.view, cache: false)
                 });*/
 
                 //UIViewController *controller = [self.storyboard instantiateViewControllerWithIdentifier:@"YourStoryboardID"];
-                //var controller: UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("CommentsTestController") as UIViewController
+                //var controller: UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CommentsTestController") as UIViewController
                 //controller.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 //[self presentViewController:controller animated:YES completion:nil];
                // self.presentViewController(controller, animated: true, completion: nil)
             }
         }
-        else if (segue!.identifier == "ViewLikersSegue") {
-            if (segue!.destinationViewController is LikedUsersViewController) {
+        else if (segue.identifier == "ViewLikersSegue") {
+            if (segue.destinationViewController is LikedUsersViewController) {
                 var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
                 var currentImg = frontImageView.image;
-                (segue!.destinationViewController as LikedUsersViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg);
+                (segue.destinationViewController as LikedUsersViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg!);
             }
         }
     }
@@ -1182,15 +1183,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
     //--------------------TableView delegate methods-------------------------
     
-    /*func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    /*func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
         return commentList.count + 1;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
         
         var index: Int = indexPath.row;
         
@@ -1223,7 +1224,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 var currentPost: ImagePostStructure = self.imgBuffer!.getImagePostAt(self.viewCounter);
                 
                 //textFields[0].text
-                currentPost.addComment((alert.textFields[0] as UITextField).text);
+                currentPost.addComment((alert.textFields![0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in

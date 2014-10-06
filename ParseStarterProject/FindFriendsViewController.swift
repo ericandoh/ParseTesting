@@ -48,7 +48,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
@@ -58,16 +58,16 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         
         someTextField.setTextAfterAttributing("spotting the hottest fashion wear of the year #summer #penguin #fun #awesome with my buddies @dog1 @dog2 @asdf @meepmeep #coolbro socool")*/
         
-        self.navigationController.navigationBar.topItem.title = "Find Friends";
+        self.navigationController!.navigationBar.topItem!.title = "Find Friends";
         // Do any additional setup after loading the view.
         if (iOS_VERSION > 7.0) {
             searchBar.keyboardAppearance = UIKeyboardAppearance.Dark
         }
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         //self.searchFriendsTableView.rowHeight = UITableViewAutomaticDimension;
         self.searchFriendsTableView.estimatedRowHeight = 50.0;
@@ -123,13 +123,13 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController.popViewControllerAnimated(true);
+                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
@@ -289,7 +289,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     
 
     //-------------------tableview methods-------------------
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (!isSearching) {
             return 0;
         }
@@ -297,9 +297,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         //return 1 + searchTermList.count;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
         var index: Int = indexPath.row;
@@ -316,7 +317,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 });
                 cell.descriptionBox.otherAction = {
                     () in
-                    self.pressedTableAt(indexPath!);
+                    self.pressedTableAt(indexPath);
                 }
             }
             else if (delayedSearchType == SearchUserType.BY_FACEBOOK ) {
@@ -327,7 +328,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 });
                 cell.descriptionBox.otherAction = {
                     () in
-                    self.pressedTableAt(indexPath!);
+                    self.pressedTableAt(indexPath);
                 }
             }
             else {
@@ -346,7 +347,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         return cell;
     }
     
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         var recHeight: CGFloat = CGFloat(0);
         if (index < searchTermList.count && searchTermList[index] != nil) {
@@ -368,7 +369,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     
-    func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if (searchingType == SearchUserType.BY_FACEBOOK || searchingType == SearchUserType.BY_CONTACTS) {
             return 80.0;
@@ -409,9 +410,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.searchTermList = [];
                 self.searchFriendsTableView.hidden = true;
                 self.setNewBackgroundFor(nil);
-                var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                self.navigationController.pushViewController(nextBoard, animated: true);
+                self.navigationController!.pushViewController(nextBoard, animated: true);
             }
             else {
                 CompatibleAlertViews.makeNotice("No user found!", message: "User \(friend.username) does not exist", presenter: self);
@@ -428,10 +429,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     //-------------------collectionview methods-------------------
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return suggestedUsers.count;
     }
-    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var user = suggestedUsers[section];
         var userString: String = user!.username;
         if (suggestedUserImgs[userString] != nil) {
@@ -440,7 +441,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         return 0;
     }
     
-    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("SuggestedCell", forIndexPath: indexPath) as UICollectionViewCell;
         
         let section = indexPath.section;
@@ -457,7 +458,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         return cell;
         
     }
-    func collectionView(collectionView: UICollectionView!, viewForSupplementaryElementOfKind kind: String!, atIndexPath indexPath: NSIndexPath!) -> UICollectionReusableView! {
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView! {
         if (kind == UICollectionElementKindSectionHeader) {
             var reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", forIndexPath: indexPath) as SuggestedHeaderView;
             let section = indexPath.section;
@@ -482,16 +483,16 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
 
         var onlyImagePost = (suggestedUserImgs[username]!)[row];
         imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [onlyImagePost]);
-        var newHome = self.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+        var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
         newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
-        self.navigationController.pushViewController(newHome, animated: true);
+        self.navigationController!.pushViewController(newHome, animated: true);
     }
     
     /*
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

@@ -66,22 +66,22 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         super.viewDidLoad()
         
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
 
-        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
-            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        if (self.navigationController!.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController!.interactivePopGestureRecognizer.enabled = false;
         }
         
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         
         var toolbar = UIToolbar(frame: optionsView.frame);
@@ -137,7 +137,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
         if (backImageView.image != nil) {
-            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame));
+            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image!, frame: backImageView.frame));
         }
     }
     
@@ -250,16 +250,16 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     //--------uipicker methods------------
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int {
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1;
     }
-    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if (showingOptions) {
             return assetGroups.count + 1;
         }
         return 0;
     }
-    func pickerView(pickerView: UIPickerView!, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString! {
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         var returnLine = "Uncheck All Photos";
         if (row < assetGroups.count) {
             returnLine = self.getGalleryFullName(row);
@@ -288,17 +288,17 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
     }
     //--------collectionview methods------------
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView!) -> Int  {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  {
         return 1;
     }
-    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (assetGroups.count == 0) {
             return 1;
         }
         //NSLog("We are returning that we have \(self.currentAssets.count) cells")
         return self.currentAssets.count + 1;
     }
-    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell!  {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
         var cell: PreviewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PreviewCollectionViewCell;
         var row = indexPath.row;
         
@@ -464,8 +464,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion:nil);
         /*if (self.navigationController) {
-        if (self.navigationController.parentViewController) {
-        var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+        if (self.navigationController!.parentViewController) {
+        var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
         overlord.openHome();
         }
         }*/
@@ -482,7 +482,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     @IBAction func previousButton(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
+            (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
         }
         else {
             NSLog("If this is logging, somehow this imagepicker lost its navigation controller. Uh oh!")
@@ -530,7 +530,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     // #pragma mark - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.destinationViewController is ImagePreviewController) {

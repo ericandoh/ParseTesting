@@ -28,11 +28,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         
         // Do any additional setup after loading the view.
@@ -104,7 +104,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
         }
-        self.navigationController.navigationBar.topItem.title = "Comments"
+        self.navigationController!.navigationBar.topItem.title = "Comments"
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -145,29 +145,29 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func backPress(sender: UIButton) {
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
     
     /*
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
     */
     
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
         return commentList.count;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
         var index: Int = indexPath.row;
@@ -182,7 +182,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         var author = commentList[index].author;
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
@@ -233,7 +233,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 var currentPost: ImagePostStructure = self.imgBuffer!.getImagePostAt(self.viewCounter);
                 
                 //textFields[0].text
-                currentPost.addComment((alert.textFields[0] as UITextField).text);
+                currentPost.addComment((alert.textFields![0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in

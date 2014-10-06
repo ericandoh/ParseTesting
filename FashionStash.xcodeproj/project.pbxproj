@@ -28,6 +28,9 @@
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
 		D907219019A3C6EA00EE53B8 /* CompatibleAlertViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */; };
+		D909F22019E216C400C0AB8C /* icon60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D909F21F19E216C400C0AB8C /* icon60@2x.png */; };
+		D909F22219E2172200C0AB8C /* icon40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D909F22119E2172200C0AB8C /* icon40@2x.png */; };
+		D909F22419E2177200C0AB8C /* icon29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D909F22319E2177200C0AB8C /* icon29@2x.png */; };
 		D9130EC3197D957D0063E081 /* NewCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9130EC2197D957D0063E081 /* NewCameraViewController.swift */; };
 		D914F7F4198805DD00A59314 /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */; };
 		D914F7FD19883CD000A59314 /* ImagePostCollectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D914F7FC19883CD000A59314 /* ImagePostCollectionDelegate.swift */; };
@@ -46,7 +49,7 @@
 		D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92566641964A59F00189250 /* FriendEncapsulator.swift */; };
 		D92D8A9D1999960100A41D96 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */; };
 		D92D8A9F1999CA5300A41D96 /* RealLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */; };
-		D9383F8A19A2CC4B003FD65F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07113A1D52D009C3FCF /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		D9383F8A19A2CC4B003FD65F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07113A1D52D009C3FCF /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		D9383F8B19A2CC54003FD65F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09ABC07313A1D52D009C3FCF /* Foundation.framework */; };
 		D9383F8C19A2CC65003FD65F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B213A1D7EB00DA740F /* CFNetwork.framework */; };
 		D93CD465199540CA001F0253 /* backcolor.png in Resources */ = {isa = PBXBuildFile; fileRef = D93CD464199540CA001F0253 /* backcolor.png */; };
@@ -199,6 +202,9 @@
 		743D7B6C157DA60100084B67 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		97E18B1E1624CB5700B17A67 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompatibleAlertViews.swift; sourceTree = "<group>"; };
+		D909F21F19E216C400C0AB8C /* icon60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon60@2x.png"; sourceTree = "<group>"; };
+		D909F22119E2172200C0AB8C /* icon40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon40@2x.png"; sourceTree = "<group>"; };
+		D909F22319E2177200C0AB8C /* icon29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon29@2x.png"; sourceTree = "<group>"; };
 		D9130EC2197D957D0063E081 /* NewCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCameraViewController.swift; sourceTree = "<group>"; };
 		D914F7F3198805DD00A59314 /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		D914F7FC19883CD000A59314 /* ImagePostCollectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePostCollectionDelegate.swift; sourceTree = "<group>"; };
@@ -428,6 +434,7 @@
 		09ABC07813A1D52D009C3FCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D909F21E19E216B800C0AB8C /* app icons */,
 				D9BB5928199A844100367408 /* Fashion Stash Fonts */,
 				24A4812919944DB3001BE688 /* backgrounds */,
 				D93CD46F19954121001F0253 /* sideicons */,
@@ -468,6 +475,16 @@
 				24A4812719944DA5001BE688 /* gradient.png */,
 			);
 			name = backgrounds;
+			sourceTree = "<group>";
+		};
+		D909F21E19E216B800C0AB8C /* app icons */ = {
+			isa = PBXGroup;
+			children = (
+				D909F22319E2177200C0AB8C /* icon29@2x.png */,
+				D909F22119E2172200C0AB8C /* icon40@2x.png */,
+				D909F21F19E216C400C0AB8C /* icon60@2x.png */,
+			);
+			name = "app icons";
 			sourceTree = "<group>";
 		};
 		D914F7FB19883AC400A59314 /* Delegates */ = {
@@ -715,6 +732,7 @@
 				D9DEE62E199EB41200F08CC5 /* close_button.png in Resources */,
 				D9F9200D19A2736500E63FE8 /* Onboarding_4.png in Resources */,
 				D9BB5970199A844100367408 /* HelveticaNeueLTPro-ExO.otf in Resources */,
+				D909F22019E216C400C0AB8C /* icon60@2x.png in Resources */,
 				D9BB5967199A844100367408 /* HelveticaNeueLTPro-Blk.otf in Resources */,
 				D9DEE642199F162B00F08CC5 /* settings.png in Resources */,
 				D9BB598B199A844100367408 /* HelveticaNeueLTPro-UltLt.otf in Resources */,
@@ -773,6 +791,7 @@
 				D9BB5979199A844100367408 /* HelveticaNeueLTPro-LtCn.otf in Resources */,
 				D97FCEBC1954E60A007D5EE6 /* Main.storyboard in Resources */,
 				D923909E1992D278001B5CBE /* f_camera_roll.png in Resources */,
+				D909F22419E2177200C0AB8C /* icon29@2x.png in Resources */,
 				D9BB598E199A844100367408 /* HelveticaNeueLTPro-UltLtEx.otf in Resources */,
 				24A4812819944DA5001BE688 /* gradient.png in Resources */,
 				D91E5EA1199BBDA50041CB3F /* logo_menu.png in Resources */,
@@ -797,6 +816,7 @@
 				D9201BFF199A7B68004018A1 /* magnifyingglass.png in Resources */,
 				D9BB5973199A844100367408 /* HelveticaNeueLTPro-HvCnO.otf in Resources */,
 				D9BB595E199A844100367408 /* didot-htf-b24-bold-ital.otf in Resources */,
+				D909F22219E2172200C0AB8C /* icon40@2x.png in Resources */,
 				D9BB5968199A844100367408 /* HelveticaNeueLTPro-BlkCn.otf in Resources */,
 				D93CD468199540E4001F0253 /* arrow_left.png in Resources */,
 				D9BB5983199A844100367408 /* HelveticaNeueLTPro-MdIt.otf in Resources */,
@@ -911,6 +931,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/eoh/Documents/dev/ParseTesting/ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -941,6 +962,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/eoh/Documents/dev/ParseTesting/ParseStarterProject/ParseStarterProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};
@@ -970,7 +993,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/eoh/Documents/dev/ParseTesting/ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1001,7 +1024,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = FashionStash;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/eoh/Documents/dev/ParseTesting/ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};

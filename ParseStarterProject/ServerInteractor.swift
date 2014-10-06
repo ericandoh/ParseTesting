@@ -57,7 +57,7 @@ import UIKit
                 //sees if user has pending items to process
                 //ServerInteractor.initialUserChecks();
                 //user's first notification
-                ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                ServerInteractor.postDefaultNotif("Welcome to FashionStash! Thank you for signing up for our app!");
                 ServerInteractor.runOnAllInitialUser();
                 //ImagePostStructure.unreadAllPosts();
                 signController.successfulSignUp();
@@ -249,7 +249,7 @@ import UIKit
                         ServerInteractor.makeNewTerm(firstName);
                         PFUser.currentUser().saveInBackground();
                     }
-                    ServerInteractor.postDefaultNotif("Welcome to InsertAppName! Thank you for signing up for our app!");
+                    ServerInteractor.postDefaultNotif("Welcome to FashionStash! Thank you for signing up for our app!");
                 } else {
                     NSLog("Query for my terms failed")
                 }

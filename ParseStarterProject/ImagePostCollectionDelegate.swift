@@ -179,7 +179,7 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
     }
     
     
-    func collectionView(collectionView: UICollectionView!, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         lastThoughtEnd = imgBuffer.numItems();
         NSLog("Updating table to have \(lastThoughtEnd)")
         return lastThoughtEnd;

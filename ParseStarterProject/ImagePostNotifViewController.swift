@@ -91,15 +91,15 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
     
     //--------------------TableView delegate methods-------------------------
     
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
         return commentList.count + 1;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UITableViewCell
         
         var index: Int = indexPath.row;
         
@@ -129,7 +129,7 @@ class ImagePostNotifViewController: UIViewController, UITableViewDelegate, UITab
                 
                 var currentPost: ImagePostStructure = ImagePostStructure(inputObj: obj)
                 
-                currentPost.addComment((alert.textFields[0] as UITextField).text);
+                currentPost.addComment((alert.textFields![0] as UITextField).text);
                 
                 self.commentList = Array<PostComment>();
                 currentPost.fetchComments({(input: NSArray)->Void in

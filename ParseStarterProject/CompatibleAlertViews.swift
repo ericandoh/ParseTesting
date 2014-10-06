@@ -69,10 +69,10 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
             alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
                 field.placeholder = actionHolder;
             });
-            (alert.textFields[0] as UITextField).secureTextEntry = secure;
+            (alert.textFields![0] as UITextField).secureTextEntry = secure;
             alert.addAction(UIAlertAction(title: actionName, style: UIAlertActionStyle.Default, handler: {
                 (action: UIAlertAction!) -> Void in
-                buttonAction((alert.textFields[0] as UITextField).text);
+                buttonAction((alert.textFields![0] as UITextField).text);
                 return;
             }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
@@ -87,7 +87,7 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
             alert.addButtonWithTitle(actionName);
             alert.addButtonWithTitle("Cancel");
             alert.title = title;
-            alert.textFieldAtIndex(0).placeholder = actionHolder;
+            alert.textFieldAtIndex(0)!.placeholder = actionHolder;
             alert.show();
             
         }
@@ -108,13 +108,13 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
             alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
                 field.placeholder = actionHolder2;
             });
-            (alert.textFields[0] as UITextField).text = actionString1;
-            (alert.textFields[1] as UITextField).text = actionString2;
-            (alert.textFields[0] as UITextField).secureTextEntry = secure1;
-            (alert.textFields[1] as UITextField).secureTextEntry = secure2;
+            (alert.textFields![0] as UITextField).text = actionString1;
+            (alert.textFields![1] as UITextField).text = actionString2;
+            (alert.textFields![0] as UITextField).secureTextEntry = secure1;
+            (alert.textFields![1] as UITextField).secureTextEntry = secure2;
             alert.addAction(UIAlertAction(title: actionName, style: UIAlertActionStyle.Default, handler: {
                 (action: UIAlertAction!) -> Void in
-                buttonAction((alert.textFields[0] as UITextField).text, (alert.textFields[1] as UITextField).text);
+                buttonAction((alert.textFields![0] as UITextField).text, (alert.textFields![1] as UITextField).text);
                 return;
             }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil));
@@ -129,9 +129,9 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
             alert.addButtonWithTitle(actionName);
             alert.addButtonWithTitle("Cancel");
             alert.title = title;
-            alert.textFieldAtIndex(0).placeholder = actionHolder1;
-            alert.textFieldAtIndex(1).placeholder = actionHolder2;
-            alert.textFieldAtIndex(1).secureTextEntry = false;
+            alert.textFieldAtIndex(0)!.placeholder = actionHolder1;
+            alert.textFieldAtIndex(1)!.placeholder = actionHolder2;
+            alert.textFieldAtIndex(1)!.secureTextEntry = false;
             alert.show();
             
         }
@@ -146,10 +146,10 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
                 self.myAction1!();
             }
             else if (self.myAction2 != nil) {
-                self.myAction2!(alertView.textFieldAtIndex(0).text);
+                self.myAction2!(alertView.textFieldAtIndex(0)!.text);
             }
             else if (self.myAction3 != nil) {
-                self.myAction3!(alertView.textFieldAtIndex(0).text, alertView.textFieldAtIndex(1).text)
+                self.myAction3!(alertView.textFieldAtIndex(0)!.text, alertView.textFieldAtIndex(1)!.text)
             }
         default:
             var x = 5;

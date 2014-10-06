@@ -126,16 +126,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        if (!(self.navigationController.viewControllers as NSArray).containsObject(self)) {
+        if (!(self.navigationController!.viewControllers as NSArray).containsObject(self)) {
             sendBackImages(1);
         }
         if (backImageView.image != nil) {
             backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame));
         }
         //if (self.navigationController) {
-        //self.navigationController.setNavigationBarHidden(false, animated: false);
-        //self.navigationController.navigationBar.hidden = false;
-        //self.navigationController.navigationBar.translucent = false;
+        //self.navigationController!.setNavigationBarHidden(false, animated: false);
+        //self.navigationController!.navigationBar.hidden = false;
+        //self.navigationController!.navigationBar.translucent = false;
         //}
     }
     override func viewDidLayoutSubviews() {
@@ -223,15 +223,15 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
         if (isEditingExisting) {
             ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
-            self.navigationController.popViewControllerAnimated(true);
+            self.navigationController!.popViewControllerAnimated(true);
         }
         else {
             ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
             
             //reset submission page
             if ((self.navigationController) != nil) {
-                if ((self.navigationController.parentViewController) != nil) {
-                    var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+                if ((self.navigationController!.parentViewController) != nil) {
+                    var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
                     overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                     overlord.openHome();
                 }
@@ -251,8 +251,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBAction func reject(sender: AnyObject) {
         if ((self.navigationController) != nil) {
-            if ((self.navigationController.parentViewController) != nil) {
-                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+            if ((self.navigationController!.parentViewController) != nil) {
+                var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
                 overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                 overlord.openHome();
             }
@@ -304,12 +304,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func addMoreImages(sender: UIButton) {
         //NSLog("Deprecated!")
         //sendBackImages(2);
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
     
     
     @IBAction func toggleEdit(sender: UIButton) {
-        var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+        var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
         var mainOrigin = self.mainView.frame.origin;
         if (sideTableView.editing) {
             navigationTitle.setTitle("Edit Post", forState: UIControlState.Normal);
@@ -409,8 +409,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             field.placeholder = "Link where I can get it!";
             });
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var title = (alert.textFields[0] as UITextField).text;
-            var urlLink = (alert.textFields[1] as UITextField).text;
+            var title = (alert.textFields![0] as UITextField).text;
+            var urlLink = (alert.textFields![1] as UITextField).text;
             self.addManualShopTheLook(ShopLook(title: title, urlLink: urlLink));
             }));
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
@@ -437,11 +437,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         alert.addTextFieldWithConfigurationHandler({(field: UITextField!) in
             field.placeholder = "Link where I can get it!";
             });
-        (alert.textFields[0] as UITextField).text = shopTheLook[index].title;
-        (alert.textFields[1] as UITextField).text = shopTheLook[index].urlLink;
+        (alert.textFields![0] as UITextField).text = shopTheLook[index].title;
+        (alert.textFields![1] as UITextField).text = shopTheLook[index].urlLink;
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var title = (alert.textFields[0] as UITextField).text;
-            var urlLink = (alert.textFields[1] as UITextField).text;
+            var title = (alert.textFields![0] as UITextField).text;
+            var urlLink = (alert.textFields![1] as UITextField).text;
             self.shopTheLook[index] = ShopLook(title: title, urlLink: urlLink);
             thisButton.setTitle(title, forState: UIControlState.Normal);
             }));
@@ -524,9 +524,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     func sendBackImages(seeBack: Int) {
         self.receivedImages = [];
-        var currentIndex = self.navigationController.viewControllers.count;
+        var currentIndex = self.navigationController!.viewControllers.count;
         if (currentIndex >= seeBack) {
-            var prevController: UIViewController = self.navigationController.viewControllers[currentIndex - seeBack] as UIViewController;
+            var prevController: UIViewController = self.navigationController!.viewControllers[currentIndex - seeBack] as UIViewController;
             if (prevController is ImagePickingViewController) {
                 var sendBackText = "";
                 if (!placeholding) {
@@ -543,7 +543,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         //-------THIS METHOD DOES NOT RUN--------------
         
@@ -559,11 +559,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int  {
         return 1;
     }
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return receivedImages.count;
     }
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell: SideTableViewCell = tableView!.dequeueReusableCellWithIdentifier("SideCell", forIndexPath: indexPath) as SideTableViewCell;
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: SideTableViewCell = tableView.dequeueReusableCellWithIdentifier("SideCell", forIndexPath: indexPath) as SideTableViewCell;
         
         //cell.textLabel.text = "Yolo";
         

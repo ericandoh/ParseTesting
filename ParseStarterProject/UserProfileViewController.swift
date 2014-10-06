@@ -74,21 +74,21 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad();
         
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count > 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
                 backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
         
-        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
-            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        if (self.navigationController!.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController!.interactivePopGestureRecognizer.enabled = false;
         }
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        //self.navigationController.navigationBar.topItem.title = "User Profile";
-        //self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        //self.navigationController!.navigationBar.topItem.title = "User Profile";
+        //self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         followerTableView.allowsMultipleSelectionDuringEditing = false
         
@@ -259,7 +259,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         for cellIndex in cellIndices {
             var cell = myCollectionView.cellForItemAtIndexPath(cellIndex as NSIndexPath)
             if (cell != nil) {
-                cell.alpha = 0;
+                cell!.alpha = 0;
             }
         }
     }
@@ -278,13 +278,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
-                (self.navigationController.parentViewController as SideMenuManagingViewController).openMenu();
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController.popViewControllerAnimated(true);
+                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
@@ -523,8 +523,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     /*func resizingImage(image: UIImage) -> UIImage {
-        image.size.height = self.navigationController.navigationBar.frame.size.height
-        image.size.width = self.navigationController.navigationBar.frame.size.width
+        image.size.height = self.navigationController!.navigationBar.frame.size.height
+        image.size.width = self.navigationController!.navigationBar.frame.size.width
     }*/
     
     override func didReceiveMemoryWarning() {
@@ -542,16 +542,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     // #pragma mark - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
         
-        if (segue != nil && segue!.identifier != nil) {
-            if (segue!.identifier == "SeeFriendsSegue") {
+        /*if (segue != nil && segue.identifier != nil?) {
+            if (segue.identifier == "SeeFriendsSegue") {
                 if (mainUser != nil) {
                     //(segue!.destinationViewController as FriendTableViewController).receiveMasterFriend(mainUser!);
                 }
-            }
+            }*/
             /*else if (segue!.identifier == "ImagePostSegue") {
                 if (mainUser) {
                     var indexPaths: [NSIndexPath] = myCollectionView.indexPathsForSelectedItems() as [NSIndexPath];
@@ -567,7 +567,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     //(segue!.destinationViewController as ImagePostNotifViewController).receiveImagePost(loadedPosts[lastSelect]!);
                 }
             }*/
-        }
+        //}
     }
     
     @IBAction func debugPurposeButton(sender: UIButton) {
@@ -578,7 +578,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     //--------------------------TableView Functions-------------------------
     
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return friendList.count;
     }
     
@@ -657,9 +657,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("FollowerCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("FollowerCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
         
@@ -675,7 +675,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return cell
         
     }
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         
         if (friendList[index] != nil) {
@@ -691,9 +691,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (self.navigationController != nil) {
             var temp = indexPath.row
-            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
             (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
-            self.navigationController.pushViewController(nextBoard, animated: true);
+            self.navigationController!.pushViewController(nextBoard, animated: true);
         }
     }
 }

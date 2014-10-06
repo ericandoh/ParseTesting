@@ -53,7 +53,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
         return 1
     }
     
-    override func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
@@ -65,7 +65,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
     }
     
     override func tableView(tableView: UITableView?, cellForRowAtIndexPath indexPath: NSIndexPath?) -> UITableViewCell? {
-        let cell: UITableViewCell = tableView!.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
         // Configure the cell...
         
         var temp = indexPath!.row;
@@ -115,10 +115,10 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             let alert: UIAlertController = UIAlertController(title: "Add Follower", message: "Enter your friend's username", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addTextFieldWithConfigurationHandler(nil);
             alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                //ServerInteractor.postFollowerNotif((alert.textFields[0] as UITextField).text, controller: self);
-                ServerInteractor.addAsFriend((alert.textFields[0] as UITextField).text);
-                ServerInteractor.addAsFollower((alert.textFields[0] as UITextField).text)
-                //ServerInteractor.findFollowing((alert.textFields[0] as UITextField).text)
+                //ServerInteractor.postFollowerNotif((alert.textFields![0] as UITextField).text, controller: self);
+                ServerInteractor.addAsFriend((alert.textFields![0] as UITextField).text);
+                ServerInteractor.addAsFollower((alert.textFields![0] as UITextField).text)
+                //ServerInteractor.findFollowing((alert.textFields![0] as UITextField).text)
                 }));
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
                 //canceled
@@ -138,7 +138,7 @@ class FriendTableViewController: UITableViewController, UITableViewDataSource, U
             
             (nextBoard as UserProfileViewController).receiveUserInfo(friendList[index]!);
             
-            self.navigationController.pushViewController(nextBoard, animated: true);
+            self.navigationController!.pushViewController(nextBoard, animated: true);
             
         }
     }

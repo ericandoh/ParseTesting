@@ -21,12 +21,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     var alerter:CompatibleAlertViews?;
 
     override func viewDidLoad() {
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.topItem.title = "Settings";
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.topItem.title = "Settings";
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
         mainUser.fetchImage({(image: UIImage)->Void in
@@ -41,11 +41,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return SETTINGS_OPTIONS.count;
     }*/
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return SETTINGS_OPTIONS.count;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath) as UITableViewCell;
         
         cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func doNothing() {
         blankAlertWithMessage("NULL", message: "If you are reading this message, this is a failure on part of us. We will add this feature as soon as possible! Sorry");
     }
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         var optionName = SETTINGS_OPTIONS[indexPath.row];
         if (contains(SETTINGS_HEADER_NAMES, optionName)) {
@@ -209,9 +209,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             field.placeholder = "Confirm password";
         });
         alert.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-            var oldPass = (alert.textFields[0] as UITextField).text;
-            var newPass = (alert.textFields[1] as UITextField).text;
-            var newPassConfirm = (alert.textFields[2] as UITextField).text;
+            var oldPass = (alert.textFields![0] as UITextField).text;
+            var newPass = (alert.textFields![1] as UITextField).text;
+            var newPassConfirm = (alert.textFields![2] as UITextField).text;
             PFUser.logInWithUsernameInBackground(PFUser.currentUser().username, password: oldPass, block: { (user: PFUser!, error: NSError!) in
                 if (error == nil) {
                     if (newPassConfirm == newPass) {
@@ -324,7 +324,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func backPress(sender: UIButton) {
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
     
     

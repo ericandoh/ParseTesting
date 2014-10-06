@@ -33,7 +33,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData();
     }
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shopLooks.count;
     }
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!  {

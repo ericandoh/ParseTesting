@@ -33,8 +33,8 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     }*/
     override func viewDidLoad()  {
         super.viewDidLoad();
-        if (self.navigationController.respondsToSelector("interactivePopGestureRecognizer")) {
-            self.navigationController.interactivePopGestureRecognizer.enabled = false;
+        if (self.navigationController!.respondsToSelector("interactivePopGestureRecognizer")) {
+            self.navigationController!.interactivePopGestureRecognizer.enabled = false;
         }
     }
     override func viewDidAppear(animated: Bool)  {
@@ -112,7 +112,7 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
     // #pragma mark - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if (segue.destinationViewController is ImagePreviewController) {
@@ -166,8 +166,8 @@ class NewCameraViewController: UIViewController, UIImagePickerControllerDelegate
         self.dismissViewControllerAnimated(true, completion:nil);
         //self.tabBarController.selectedIndex = 0;
         if (self.navigationController) {
-            if (self.navigationController.parentViewController) {
-                var overlord = self.navigationController.parentViewController as SideMenuManagingViewController;
+            if (self.navigationController!.parentViewController) {
+                var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
                 overlord.openHome();
             }
         }

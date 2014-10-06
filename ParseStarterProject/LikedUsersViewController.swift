@@ -21,11 +21,11 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
 
         myTableView.estimatedRowHeight = 50.0;
         // Do any additional setup after loading the view.
@@ -43,7 +43,7 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             myTableView.reloadData();
             backImage.setImageAndBlur(backImg!);
         }
-        self.navigationController.navigationBar.topItem.title = "Liked By"
+        self.navigationController!.navigationBar.topItem.title = "Liked By"
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,16 +58,16 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    func tableView(tableView: UITableView?, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
         return likingUsers.count;
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: UserTextTableViewCell = tableView!.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as UserTextTableViewCell;
         
         // Configure the cell...
         var index: Int = indexPath.row;
@@ -76,7 +76,7 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
-    func tableView(tableView: UITableView!, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         
         var text = likingUsers[index].username;
@@ -88,22 +88,22 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (self.navigationController != nil) {
             var temp = indexPath.row
-            var nextBoard : UIViewController = self.storyboard.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+            var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
             (nextBoard as UserProfileViewController).receiveUserInfo(likingUsers[temp]);
-            self.navigationController.pushViewController(nextBoard, animated: true);
+            self.navigationController!.pushViewController(nextBoard, animated: true);
         }
     }
     
     
     @IBAction func backPress(sender: UIButton) {
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
 
     /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

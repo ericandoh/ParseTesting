@@ -22,12 +22,12 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
     var prevDescrip: String = "";
     
     override func viewDidLoad() {
-        self.navigationController.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
-        self.navigationController.navigationBar.shadowImage = UIImage();
-        self.navigationController.navigationBar.translucent = true;
-        self.navigationController.view.backgroundColor = UIColor.clearColor();
-        self.navigationController.navigationBar.topItem.title = "Settings";
-        self.navigationController.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
+        self.navigationController!.navigationBar.shadowImage = UIImage();
+        self.navigationController!.navigationBar.translucent = true;
+        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.topItem.title = "Settings";
+        self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         if (iOS_VERSION > 7.0) {
             report.keyboardAppearance = UIKeyboardAppearance.Dark
         }
@@ -64,14 +64,14 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         /*
         var alert = UIAlertController(title: "Thank You!", message: "Your report has been submitted", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) in
-            var x = self.navigationController.popViewControllerAnimated(true);
+            var x = self.navigationController!.popViewControllerAnimated(true);
         }));
         self.presentViewController(alert, animated: true, completion: nil)*/
         report.text = ""
     }
     
     @IBAction func backPress(sender: UIButton) {
-        self.navigationController.popViewControllerAnimated(true);
+        self.navigationController!.popViewControllerAnimated(true);
     }
 }
 
