@@ -111,7 +111,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             
             var textToPut = mainUser!.username;
-            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT] as NSDictionary);
             var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
             var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
             userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
@@ -150,7 +150,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             if (ServerInteractor.isAnonLogged()) {
                 
                 var textToPut = "Anonymous";
-                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT] as NSDictionary);
                 var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
                 var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
                 userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
@@ -158,7 +158,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
                 userLabel.font = USER_TITLE_TEXT_FONT;
-                var tempImage: UIImage = DEFAULT_USER_ICON;
+                var tempImage: UIImage = DEFAULT_USER_ICON!;
                 //self.backImageView.image = tempImage;
                 self.backImageView.setImageAndBlur(tempImage);
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
@@ -180,7 +180,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 // Do any additional setup after loading the view.
                 
                 var textToPut = ServerInteractor.getUserName();
-                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT] as NSDictionary);
                 var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
                 var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
                 userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));

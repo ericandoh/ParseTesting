@@ -112,7 +112,7 @@ let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
 let TUTORIAL_IMAGE_4 = UIImage(named: "Onboarding_4.png");
 let TUTORIAL_IMAGE_5 = UIImage(named: "Onboarding_5S.png");
 
-let NOBODY_HOME_FEED_BACKGROUND = UIImage(named: "FashionStash_Empty.png");
+let NOBODY_HOME_FEED_BACKGROUND: UIImage = UIImage(named: "FashionStash_Empty.png");
 
 let GREEN_HEX = 0x94eed2;
 
@@ -130,8 +130,8 @@ let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0);
 
 let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0);
 
-let TITLE_TEXT_ATTRIBUTES = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
-    NSFontAttributeName: TITLE_TEXT_FONT];
+let TITLE_TEXT_ATTRIBUTES: NSDictionary = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
+    NSFontAttributeName: TITLE_TEXT_FONT] as NSDictionary;
 
 let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
 

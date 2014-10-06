@@ -603,7 +603,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             var textToPut = currentPost.getAuthor();
             var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
-            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
+            let textDict: NSDictionary = NSDictionary(objects: [NSFontAttributeName as AnyObject], forKeys: [USER_TITLE_TEXT_FONT as AnyObject]);
+            var labelSize = (textToPut as NSString).sizeWithAttributes(textDict);
             var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
             var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
             var userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));

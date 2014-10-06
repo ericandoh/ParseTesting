@@ -188,7 +188,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             if (index == 0) {
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
                 //self.backImageView.image = assetImg;
-                self.backImageView.setImageAndBlur(assetImg);
+                self.backImageView.setImageAndBlur(assetImg!);
                 firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
             }
             else if (index == 1) {
@@ -264,7 +264,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         if (row < assetGroups.count) {
             returnLine = self.getGalleryFullName(row);
         }
-        var attrString = NSAttributedString(string: returnLine, attributes: [NSForegroundColorAttributeName: TITLE_TEXT_COLOR, NSFontAttributeName: TABLE_CELL_FONT]);
+        var attrString = NSAttributedString(string: returnLine, attributes: [NSForegroundColorAttributeName: (TITLE_TEXT_COLOR as AnyObject), NSFontAttributeName: (TABLE_CELL_FONT as AnyObject)]);
         return attrString;
     }
     /*func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
@@ -504,7 +504,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             groupSelected = index.groupNum;
             row = index.index;
             asset = index.asset!; //self.currentAssets[row];
-            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue()));
+            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!);
         }
         //call some function to segue and get ready to pass this list on
         self.performSegueWithIdentifier("ImagePreview", sender: self);
@@ -540,7 +540,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         else {
             NSLog("Destination View Controller mismatch???");
-            NSLog("Id: %@", segue.identifier);
+            NSLog("Id: %@", segue.identifier!);
         }
     }
     
