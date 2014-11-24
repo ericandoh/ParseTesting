@@ -40,7 +40,7 @@ class NotifViewController: UITableViewController {
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
-        self.navigationController!.navigationBar.topItem.title = "Notifications";
+        self.navigationController!.navigationBar.topItem!.title = "Notifications";
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var custView: UIView = UIView()
@@ -80,7 +80,11 @@ class NotifViewController: UITableViewController {
         //tableView.insertSubview(self.refreshControl, aboveSubview: custView)
         //custView.addSubview(refreshControl);
         //tableView.bringSubviewToFront(refreshControl);
-        self.refreshControl!.layer.zPosition = self.tableView.backgroundView.layer.zPosition + 1;
+        
+        self.refreshControl!.layer.zPosition = self.tableView.backgroundView!.layer.zPosition + CGFloat(1);
+        //self.refreshControl!.layer.zPosition = self.tableView.backgroundView.layer.zPosition + CGFloat(1);
+        
+        
         //self.tableView.backgroundView.layer.zPosition -= 1;
     }
     
@@ -149,16 +153,16 @@ class NotifViewController: UITableViewController {
             cell.setTextFieldNormal();
         }
         
-        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw()) {
+        if (member.type == NotificationType.IMAGE_POST_LIKE.rawValue) {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
-        else if (member.type == NotificationType.IMAGE_POST_COMMENT.toRaw()) {
+        else if (member.type == NotificationType.IMAGE_POST_COMMENT.rawValue) {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
         else if (member.type == "ImagePost") {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
         }
-        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.rawValue) {
             cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: true, sender: self)
         }
         else {
@@ -180,16 +184,16 @@ class NotifViewController: UITableViewController {
         var member: InAppNotification = notifList[index]! as InAppNotification;
         var recHeight: CGFloat = CGFloat(tableView.estimatedRowHeight);
         
-        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw()) {
+        if (member.type == NotificationType.IMAGE_POST_LIKE.rawValue) {
             recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
         }
-        else if (member.type == NotificationType.IMAGE_POST_COMMENT.toRaw()) {
+        else if (member.type == NotificationType.IMAGE_POST_COMMENT.rawValue) {
             recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
         }
         else if (member.type == "ImagePost") {
             recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(nil, message: member.messageString, enableFriending: false);
         }
-        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.rawValue) {
             recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(member.getSender(), message: member.messageString, enableFriending: true);
         }
         else {
@@ -207,7 +211,7 @@ class NotifViewController: UITableViewController {
         
         var member: InAppNotification = notifList[temp]! as InAppNotification;
         
-        if (member.type == NotificationType.IMAGE_POST_LIKE.toRaw() || member.type == NotificationType.IMAGE_POST_COMMENT.toRaw() || member.type == "ImagePost") {
+        if (member.type == NotificationType.IMAGE_POST_LIKE.rawValue || member.type == NotificationType.IMAGE_POST_COMMENT.rawValue || member.type == "ImagePost") {
             member.getImagePost().fetchIfNeededInBackgroundWithBlock({(obj: PFObject!, error: NSError!) in
                 if (error == nil) {
                     var imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: NOTIF_OWNER);
@@ -223,7 +227,7 @@ class NotifViewController: UITableViewController {
             });
             //self.performSegueWithIdentifier("ImagePostSegue", sender: self);
         }
-        else if (member.type == NotificationType.FOLLOWER_NOTIF.toRaw()) {
+        else if (member.type == NotificationType.FOLLOWER_NOTIF.rawValue) {
             //self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
             if (self.navigationController != nil) {
                 var friend = FriendEncapsulator.dequeueFriendEncapsulator(member.friendName);
@@ -232,11 +236,11 @@ class NotifViewController: UITableViewController {
                 self.navigationController!.pushViewController(nextBoard, animated: true);
             }
         }
-        else if (member.type == NotificationType.PLAIN_TEXT.toRaw()) {
+        else if (member.type == NotificationType.PLAIN_TEXT.rawValue) {
             //self.performSegueWithIdentifier("DefaultNotifSegue", sender: self);
         }
         /* else {
-        if (member.type == NotificationType.FRIEND_ACCEPT.toRaw()) {
+        if (member.type == NotificationType.FRIEND_ACCEPT.rawValue) {
         member.personalObj!.deleteInBackground()
         }
         
@@ -249,9 +253,9 @@ class NotifViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
-        var id: String = segue.identifier;
+        var id: String = segue.identifier!;
         
-        let temp: Int = self.tableView.indexPathForSelectedRow().row;
+        let temp: Int = self.tableView.indexPathForSelectedRow()!.row;
         
         let notifObj: InAppNotification = notifList[temp]!;
         

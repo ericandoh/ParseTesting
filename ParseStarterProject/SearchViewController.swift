@@ -48,7 +48,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
-        self.navigationController!.navigationBar.topItem.title = "Popular";
+        self.navigationController!.navigationBar.topItem!.title = "Popular";
         
         //self.navigationTitle.setTitle("Popular", forState: UIControlState.Normal);
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
@@ -110,8 +110,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         var cellIndices = myCollectionView.indexPathsForVisibleItems() as Array<NSIndexPath>;
         for cellIndex in cellIndices {
             var cell = myCollectionView.cellForItemAtIndexPath(cellIndex)
-            if (cell != nil) {
-                cell.alpha = 0;
+            if let exist_cell = cell {
+                exist_cell.alpha = 0;
             }
         }
     }
@@ -146,11 +146,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        var id: String = segue.identifier;
+        var id: String = segue.identifier!;
         
         if (id == "SearchSegue") {
             
-            let temp: Int = myTable.indexPathForSelectedRow().row;
+            let temp: Int = myTable.indexPathForSelectedRow()!.row;
             
             //tell my search result controller to receive item
             //var controller = segue!.destinationViewController as SearchResultsController;
@@ -189,7 +189,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 doingSearch = 0;
                 myTable.hidden = true;
                 myCollectionView.hidden = false;
-                self.navigationController!.navigationBar.topItem.title = "Popular";
+                self.navigationController!.navigationBar.topItem!.title = "Popular";
             }
             else if (doingSearch == 2) {
                 /*if (collectionDelegateSearch) {
@@ -202,7 +202,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 //myTable.hidden = true;
                 //myCollectionView.hidden = false;
                 //add animations here;
-                self.navigationController!.navigationBar.topItem.title = "Popular";
+                self.navigationController!.navigationBar.topItem!.title = "Popular";
             }
             NSLog("A");
             searchBar.resignFirstResponder();
@@ -269,16 +269,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         var index: Int = indexPath.row;
         
         if (index == 0) {
-            cell.textLabel.text = "Search for \"" + currentTerm + "\"!";
-            cell.textLabel.textColor = UIColor.whiteColor();
-            cell.textLabel.font = TABLE_CELL_FONT;
+            cell.textLabel!.text = "Search for \"" + currentTerm + "\"!";
+            cell.textLabel!.textColor = UIColor.whiteColor();
+            cell.textLabel!.font = TABLE_CELL_FONT;
         }
         else {
             if (index - 1 < searchTermList.count) {
                 //to avoid race conditions
-                cell.textLabel.text = searchTermList[index - 1];
-                cell.textLabel.textColor = UIColor.whiteColor();
-                cell.textLabel.font = TABLE_CELL_FONT;
+                cell.textLabel!.text = searchTermList[index - 1];
+                cell.textLabel!.textColor = UIColor.whiteColor();
+                cell.textLabel!.font = TABLE_CELL_FONT;
             }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -310,7 +310,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         //starts a search with a term
         currentTerm = searchResult;
         searchBar.text = searchResult;  //set the search bar to match the search query
-        //self.navigationController!.navigationBar.topItem.title = searchResult;
+        //.self.navigationController!.navigationBar.topItem!.title = searchResult;
         self.title = searchResult;
         doingSearch = 2;
         myTable.hidden = true;

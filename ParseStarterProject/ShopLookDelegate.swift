@@ -36,14 +36,14 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shopLooks.count;
     }
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell!  {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell  {
         let cell = tableView.dequeueReusableCellWithIdentifier("ShopLook", forIndexPath: indexPath) as UITableViewCell;
 
-        cell.textLabel.text = shopLooks[indexPath.row].title;
+        cell.textLabel!.text = shopLooks[indexPath.row].title;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
-        cell.textLabel.textColor = UIColor.whiteColor()
+        cell.textLabel!.textColor = UIColor.whiteColor()
         //cell.textLabel.font = TABLE_CELL_FONT;
-        cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-ThCn", size: 16.0);
+        cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-ThCn", size: 16.0);
 
         //BELOW IS A BUG! >:(
         //cell.separatorInset = UIEdgeInsetsZero;
@@ -77,17 +77,17 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         
         return cell;
     }
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var urlString = shopLooks[indexPath.row].urlLink;
         //NSLog("Opening" + urlString);
-        var urlToOpen = NSURL(string: urlString);
+        var urlToOpen = NSURL(string: urlString)!;
         if (UIApplication.sharedApplication().canOpenURL(urlToOpen)) {
             UIApplication.sharedApplication().openURL(urlToOpen);
         }
         else {
             if (!urlString.hasPrefix("http://")) {
                 urlString = "http://"+urlString;
-                urlToOpen = NSURL(string: urlString);
+                urlToOpen = NSURL(string: urlString)!;
                 if (UIApplication.sharedApplication().canOpenURL(urlToOpen)) {
                     UIApplication.sharedApplication().openURL(urlToOpen);
                 }

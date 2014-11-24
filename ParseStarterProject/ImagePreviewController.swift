@@ -130,7 +130,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             sendBackImages(1);
         }
         if (backImageView.image != nil) {
-            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image, frame: backImageView.frame));
+            backImageView.setImageAndBlur(ServerInteractor.cropImageSoNavigationWorksCorrectly(backImageView.image!, frame: backImageView.frame));
         }
         //if (self.navigationController) {
         //self.navigationController!.setNavigationBarHidden(false, animated: false);
@@ -170,8 +170,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         but2.backgroundColor = UIColor.clearColor();
         but1.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
         but2.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
-        but1.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
-        but2.titleLabel.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 17.0);
+        but1.titleLabel!.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 14.0);
+        but2.titleLabel!.font = UIFont(name: "HelveticaNeueLTPro-LtCn", size: 17.0);
         but1.shopIndex = index;
         but2.shopIndex = index;
         
@@ -372,9 +372,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             return;
         }
         if ((indexPath) != nil) {
-            highlightOrder.removeAtIndex(indexPath.row);
-            receivedImages.removeAtIndex(indexPath.row);
-            sideTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Right);
+            highlightOrder.removeAtIndex(indexPath!.row);
+            receivedImages.removeAtIndex(indexPath!.row);
+            sideTableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Right);
             /*var cell = sideTableView.cellForRowAtIndexPath(indexPath);
             if (cell) {
                 var oldP = cell.frame.origin;

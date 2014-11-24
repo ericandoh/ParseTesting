@@ -43,7 +43,7 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             myTableView.reloadData();
             backImage.setImageAndBlur(backImg!);
         }
-        self.navigationController!.navigationBar.topItem.title = "Liked By"
+        self.navigationController!.navigationBar.topItem!.title = "Liked By"
     }
 
     override func didReceiveMemoryWarning() {

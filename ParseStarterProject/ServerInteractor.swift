@@ -96,7 +96,7 @@ import UIKit
         //user["friends"] = NSArray();
         user["viewHistory"] = NSArray();
         user["likedPosts"] = NSMutableArray();
-        user["userType"] = type.toRaw();
+        user["userType"] = type.rawValue;
         user["numPosts"] = 0;
         user["followings"] = NSMutableArray();
         user["receivePush"] = true;
@@ -314,9 +314,11 @@ import UIKit
         var error: NSError?;
         
         var pattern = "(#.+?\\b)|(.+?(?=#|$))";
-        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.allZeros, error: &error)!;
         
-        var matches = regex.matchesInString(description, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(description))) as [NSTextCheckingResult];
+        var matches = regex.matchesInString(description, options: NSMatchingOptions.allZeros, range: NSRange(location: 0, length: countElements(description)));
+        
+        //var matches = regex.matchesInString(description, options: NSMatchingOptions.init(rawValue: 0)!, range: NSRange(location: 0, length: countElements(description))) //as Array<NSTextCheckingResult>;
         
         var attributedStringPiece: NSAttributedString;
         for match in matches {
@@ -612,7 +614,7 @@ import UIKit
                     }
                     /*var notifObj = PFObject(className:"Notification");
                     //type of notification - in this case, a Image Post (how many #likes i've gotten)
-                    notifObj["type"] = NotificationType.IMAGE_POST.toRaw();
+                    notifObj["type"] = NotificationType.IMAGE_POST.rawValue;
                     notifObj["ImagePost"] = newPost.myObj;
                     
                     ServerInteractor.processNotification(sender, targetObject: notifObj);*/
@@ -667,7 +669,7 @@ import UIKit
     class func sendFirstLike(newPost: ImagePostStructure) {
         var notifObj = PFObject(className:"Notification");
         //type of notification - in this case, a Image Post (how many #likes i've gotten)
-        notifObj["type"] = NotificationType.IMAGE_POST_LIKE.toRaw();
+        notifObj["type"] = NotificationType.IMAGE_POST_LIKE.rawValue;
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " liked your post!";
         
@@ -676,7 +678,7 @@ import UIKit
     class func sendCommentNotif(newPost: ImagePostStructure) {
         var notifObj = PFObject(className:"Notification");
         //type of notification - in this case, a Image Post (how many #likes i've gotten)
-        notifObj["type"] = NotificationType.IMAGE_POST_COMMENT.toRaw();
+        notifObj["type"] = NotificationType.IMAGE_POST_COMMENT.rawValue;
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " commented on your post!";
         
@@ -684,7 +686,7 @@ import UIKit
     }
     class func updateLikeNotif(newPost: ImagePostStructure) {
         var query = PFQuery(className: "Notification");
-        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_LIKE.toRaw());
+        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_LIKE.rawValue);
         query.whereKey("ImagePost", equalTo: newPost.myObj);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
@@ -707,7 +709,7 @@ import UIKit
     }
     class func updateCommentNotif(newPost: ImagePostStructure) {
         var query = PFQuery(className: "Notification");
-        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_COMMENT.toRaw());
+        query.whereKey("type", equalTo: NotificationType.IMAGE_POST_COMMENT.rawValue);
         query.whereKey("ImagePost", equalTo: newPost.myObj);
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
@@ -820,14 +822,14 @@ import UIKit
             query.whereKey("author", containedIn: (PFUser.currentUser()["friends"] as NSArray));
             //query.whereKey("objectId", notContainedIn: excludeList);
             //both friends + everyone marked feed from your friends show up here, as long as your friend posted
-            //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.toRaw()); <--- leave this commented
+            //query.whereKey("exclusive", equalTo: PostExclusivity.FRIENDS_ONLY.rawValue); <--- leave this commented
             if (!isAnonLogged()) {
                 excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
             }
         }
         else {
             //must be an everyone-only post to show in popular feed
-            query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.toRaw());
+            query.whereKey("exclusive", equalTo: PostExclusivity.EVERYONE.rawValue);
             if (!isAnonLogged()) {
                 excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray))
             }
@@ -1194,7 +1196,7 @@ import UIKit
         //posts a custom notification (like friend invite, etc)
         var notifObj = PFObject(className:"Notification");
         //type of notification - in this case, a default text one
-        notifObj["type"] = NotificationType.PLAIN_TEXT.toRaw();
+        notifObj["type"] = NotificationType.PLAIN_TEXT.rawValue;
         notifObj["message"] = txt
         //notifObj.saveInBackground()
         
@@ -1207,7 +1209,7 @@ import UIKit
         }
         
         var notifObj = PFObject(className:"Notification");
-        notifObj["type"] = NotificationType.FOLLOWER_NOTIF.toRaw();
+        notifObj["type"] = NotificationType.FOLLOWER_NOTIF.rawValue;
         ServerInteractor.processNotification(friendName, targetObject: notifObj);
         
     }
@@ -1216,7 +1218,7 @@ import UIKit
     /*class func postFriendAccept(friendName: String)->Array<AnyObject?>? {
         //first, query + find the user
         var notifObj = PFObject(className:"Notification");
-        notifObj["type"] = NotificationType.FRIEND_ACCEPT.toRaw();
+        notifObj["type"] = NotificationType.FRIEND_ACCEPT.rawValue;
         //notifObj.saveInBackground();
         
         ServerInteractor.processNotification(friendName, targetObject: notifObj);
@@ -1879,8 +1881,8 @@ import UIKit
     class func timeNumberer(fromDate: NSDate)->String {
         var currentDate = NSDate();
         
-        var calender = NSCalendar(calendarIdentifier: NSGregorianCalendar);
-        var components = calender.components(NSCalendarUnit.SecondCalendarUnit|NSCalendarUnit.MinuteCalendarUnit|NSCalendarUnit.HourCalendarUnit|NSCalendarUnit.DayCalendarUnit|NSCalendarUnit.MonthCalendarUnit|NSCalendarUnit.YearCalendarUnit, fromDate: fromDate, toDate: currentDate, options: NSCalendarOptions.fromMask(0));
+        var calender = NSCalendar(calendarIdentifier: NSGregorianCalendar)!;
+        var components = calender.components(NSCalendarUnit.SecondCalendarUnit|NSCalendarUnit.MinuteCalendarUnit|NSCalendarUnit.HourCalendarUnit|NSCalendarUnit.DayCalendarUnit|NSCalendarUnit.MonthCalendarUnit|NSCalendarUnit.YearCalendarUnit, fromDate: fromDate, toDate: currentDate, options: NSCalendarOptions.allZeros);
         if (components.year != 0) {
             return "\(components.year)y"
         }

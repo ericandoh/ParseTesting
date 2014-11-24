@@ -87,7 +87,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
-        //self.navigationController!.navigationBar.topItem.title = "User Profile";
+        //.self.navigationController!.navigationBar.topItem!.title = "User Profile";
         //self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         followerTableView.allowsMultipleSelectionDuringEditing = false

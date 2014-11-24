@@ -60,7 +60,7 @@ class ImagePostStructure
         myObj["likers"] = [];
         myObj["passes"] = 0;
         NSLog("Deprecated line here, please remove")
-        myObj["exclusive"] = PostExclusivity.EVERYONE.toRaw();//exclusivity.toRaw();
+        myObj["exclusive"] = PostExclusivity.EVERYONE.rawValue;//exclusivity.rawValue;
         
         myObj["description"] = description;
 
@@ -234,7 +234,7 @@ class ImagePostStructure
                 imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                     if (error == nil) {
                         //get file objects
-                        var fImage = UIImage(data: result);
+                        var fImage = UIImage(data: result)!;
                         self.images.append(fImage);
                     }
                     else {
@@ -308,7 +308,7 @@ class ImagePostStructure
                 imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
                     if (error == nil) {
                         var fImage = UIImage(data: result);
-                        self.images.append(fImage);
+                        self.images.append(fImage!);
                     }
                     else {
                         NSLog("Error fetching rest of images!")
@@ -349,7 +349,7 @@ class ImagePostStructure
                         if (error == nil) {
                             //get file objects
                             var fImage = UIImage(data: result);
-                            self.images.append(fImage);
+                            self.images.append(fImage!);
                             if (index == postIndex - 1) {
                                 finishFunction(fImage, false);
                             }

@@ -20,13 +20,13 @@ import Foundation
 class InAppNotification {
     var messageString: String = "";
     var friendName: String = "";
-    var type: String = NotificationType.PLAIN_TEXT.toRaw();
+    var type: String = NotificationType.PLAIN_TEXT.rawValue;
     var personalObj: PFObject? = nil
     var wasRead: Bool = false;
     init(message: String) {
         //makes a default notification with just a text string
         messageString = message;
-        type = NotificationType.PLAIN_TEXT.toRaw();
+        type = NotificationType.PLAIN_TEXT.rawValue;
     }
     init(dataObject: PFObject, wasRead: Bool) {
         personalObj = dataObject
@@ -48,11 +48,11 @@ class InAppNotification {
         switch self.type {
         case "ImagePost":
             msgToSend = "Your picture has been posted!";
-        case NotificationType.IMAGE_POST_LIKE.toRaw():
+        case NotificationType.IMAGE_POST_LIKE.rawValue:
             msgToSend  = fromWho + " just liked your post!";
-        case NotificationType.IMAGE_POST_COMMENT.toRaw():
+        case NotificationType.IMAGE_POST_COMMENT.rawValue:
             msgToSend  = fromWho + " just commented on your post!";
-        case NotificationType.FOLLOWER_NOTIF.toRaw():
+        case NotificationType.FOLLOWER_NOTIF.rawValue:
             msgToSend  = fromWho + " started following you!";
         default:
             msgToSend = self.personalObj!["message"] as String
@@ -93,7 +93,7 @@ class InAppNotification {
                             NSLog("Error fetching image post for notification?");
                         }
                     });
-                case NotificationType.IMAGE_POST_LIKE.toRaw():
+                case NotificationType.IMAGE_POST_LIKE.rawValue:
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (error == nil) {
@@ -113,7 +113,7 @@ class InAppNotification {
                             NSLog("Error fetching image post for notification?");
                         }
                     });
-                case NotificationType.IMAGE_POST_COMMENT.toRaw():
+                case NotificationType.IMAGE_POST_COMMENT.rawValue:
                     var obj = self.personalObj!["ImagePost"] as PFObject
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (error == nil) {
@@ -133,7 +133,7 @@ class InAppNotification {
                             NSLog("Error fetching image post for notification?");
                         }
                     });
-                case NotificationType.FOLLOWER_NOTIF.toRaw():
+                case NotificationType.FOLLOWER_NOTIF.rawValue:
                     self.friendName = self.personalObj!["sender"] as String
                     self.messageString = "@\(self.friendName) started following you!";
                     listener.tableView.reloadData();
@@ -151,7 +151,7 @@ class InAppNotification {
     }
     
     func getSender()->FriendEncapsulator {
-        //if (type != NotificationType.FOLLOWER_NOTIF.toRaw()) {
+        //if (type != NotificationType.FOLLOWER_NOTIF.rawValue) {
             //Post does not have image associated with it
             //NSLog("Cannot retrieve follower from non-follower post notification")
         //}
@@ -160,7 +160,7 @@ class InAppNotification {
     }
     
     func getImage(receiveAction:(UIImage)->Void) {
-        if (type != NotificationType.IMAGE_POST_LIKE.toRaw() && type != NotificationType.IMAGE_POST_COMMENT.toRaw() && type != "ImagePost") {
+        if (type != NotificationType.IMAGE_POST_LIKE.rawValue && type != NotificationType.IMAGE_POST_COMMENT.rawValue && type != "ImagePost") {
             //Post does not have image associated with it
             NSLog("Cannot retrieve image from non-image post notification")
         }
@@ -182,7 +182,7 @@ class InAppNotification {
                     receiveAction(NULL_IMG);
                     return;
                 }
-                receiveAction(UIImage(data: result));
+                receiveAction(UIImage(data: result)!);
             });
         });
     }

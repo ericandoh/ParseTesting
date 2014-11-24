@@ -178,13 +178,12 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         }
     }
     
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         lastThoughtEnd = imgBuffer.numItems();
         NSLog("Updating table to have \(lastThoughtEnd)")
         return lastThoughtEnd;
     }
-    func collectionView(collectionView: UICollectionView!, cellForItemAtIndexPath indexPath: NSIndexPath!) -> UICollectionViewCell! {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell: SinglePostCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PostCell", forIndexPath: indexPath) as SinglePostCollectionViewCell;
         
         cell.alpha = 0;
@@ -199,11 +198,11 @@ class ImagePostCollectionDelegate: NSObject, UICollectionViewDelegate, UICollect
         
         return cell;
     }
-    func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!) {
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //open home feed here
-        var newHome = owner.storyboard.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+        var newHome = owner.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
         newHome.syncWithImagePostDelegate(self.imgBuffer, selectedAt: indexPath.row);
-        owner.navigationController.pushViewController(newHome, animated: true);
+        owner.navigationController!.pushViewController(newHome, animated: true);
     }
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         if (imgBuffer.didHitEnd()) {

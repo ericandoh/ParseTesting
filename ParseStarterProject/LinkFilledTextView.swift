@@ -108,7 +108,7 @@ class LinkFilledTextView: UITextView {
             
             realText = realText.substringToIndex(range.memory.length);
             //NSLog(realText);
-            var typeOfString = ExternalViewLink.fromRaw(value as String)!;
+            var typeOfString = ExternalViewLink(rawValue: value as String)!;
             if (typeOfString == ExternalViewLink.TAG) {
                 var searchTerm = realText.substringFromIndex(1);
                 if (self.owner!.navigationController != nil) {
@@ -141,7 +141,7 @@ class LinkFilledTextView: UITextView {
         /*
         
         var tapPosition: UITextPosition = textView.closestPositionToPoint(point);
-        var textRange: UITextRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, withGranularity: UITextGranularity.Word, inDirection: UITextDirection.bridgeFromObjectiveC(UITextLayoutDirection.Right.toRaw()));
+        var textRange: UITextRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, withGranularity: UITextGranularity.Word, inDirection: UITextDirection.bridgeFromObjectiveC(UITextLayoutDirection.Right.rawValue));
         var text: String = textView.textInRange(textRange);
         
         NSLog("Text: \(text)");
@@ -212,15 +212,20 @@ class LinkFilledTextView: UITextView {
         //var pattern = "(#.+?\\b)|(@.+?\\b)|(.+?(?=#|@|$))";
         //var pattern = "(#.+?(?=\\b|\\n))|(@.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
         var pattern = "(#(.|@|#)+?(?=\\b|\\n))|(@.+?(?=\\b|\\n))|((.|\\n)+?(?=#|@|$))";
-        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.fromMask(0), error: &error);
+        var regex: NSRegularExpression = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.allZeros, error: &error)!;
         
-        var matches = regex.matchesInString(text, options: NSMatchingOptions.fromRaw(0)!, range: NSRange(location: 0, length: countElements(text))) as [NSTextCheckingResult];
+        var matches = regex.matchesInString(text, options: NSMatchingOptions.allZeros, range: NSRange(location: 0, length: countElements(text))) as [NSTextCheckingResult];
         
         
         for match in matches {
             var attributedStringPiece: NSAttributedString;
             //var piece = aString.substringWithRange();
             var individualString: String = ((text as NSString).substringFromIndex(match.range.location) as NSString).substringToIndex(match.range.length);
+            
+            let kTypeTag = NSString(format:TYPE_TAG);
+            let kNSFontAttributeName = NSString(format:NSFontAttributeName);
+            let kNSForegroundColorAttributeName = NSString(format:NSForegroundColorAttributeName);
+            
             if (canBoldFirst) {
                 canBoldFirst = false;
                 var restString = individualString;
@@ -228,8 +233,8 @@ class LinkFilledTextView: UITextView {
                     var nRange = (individualString as NSString).rangeOfString("\n");
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
-                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
-                    let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0)!;
+                    let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor]
                     attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
@@ -240,8 +245,8 @@ class LinkFilledTextView: UITextView {
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
                     
-                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
-                    let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0)!;
+                    let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor];
                     attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
@@ -252,43 +257,43 @@ class LinkFilledTextView: UITextView {
                     var forwardString = (individualString as NSString).substringToIndex(nRange.location)
                     restString = (individualString as NSString).substringFromIndex(nRange.location);
                     
-                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
-                    let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0)!;
+                    let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor];
                     attributedStringPiece = NSAttributedString(string: forwardString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
                 }
                 else {
-                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0);
-                    let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                    let font = UIFont(name: "HelveticaNeueLTPro-Bd", size:14.0)!;
+                    let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor];
                     attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                     attributedString.appendAttributedString(attributedStringPiece);
                     canRespond = true;
                     self.userInteractionEnabled = true;
                     continue;
                 }
-                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.DEFAULT.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
+                let attrDict = [kTypeTag: ExternalViewLink.DEFAULT.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor];
                 attributedStringPiece = NSAttributedString(string: restString, attributes: attrDict);
             }
             else if (individualString.hasPrefix("#")) {
-                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.TAG.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
+                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
+                let attrDict = [kTypeTag: ExternalViewLink.TAG.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
                 attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else if (individualString.hasPrefix("@")) {
-                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.USER.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
+                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
+                let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
                 attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else {
-                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0);
-                let attrDict = [TYPE_TAG: ExternalViewLink.DEFAULT.toRaw(), NSFontAttributeName: font, NSForegroundColorAttributeName: self.baseTextColor];
+                let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
+                let attrDict = [kTypeTag: ExternalViewLink.DEFAULT.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: self.baseTextColor];
                 attributedStringPiece = NSAttributedString(string: individualString, attributes: attrDict);
             }
             attributedString.appendAttributedString(attributedStringPiece);

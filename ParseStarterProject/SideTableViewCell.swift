@@ -18,8 +18,7 @@ class SideTableViewCell: UITableViewCell {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder);
     }
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String) {
+    override init?(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         // Initialization code
         //var currentFrame: CGRect = self.frame;

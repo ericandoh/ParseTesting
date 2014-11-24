@@ -104,7 +104,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
         }
-        self.navigationController!.navigationBar.topItem.title = "Comments"
+        self.navigationController!.navigationBar.topItem!.title = "Comments"
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

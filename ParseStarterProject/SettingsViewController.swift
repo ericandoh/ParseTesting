@@ -25,7 +25,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
-        self.navigationController!.navigationBar.topItem.title = "Settings";
+        self.navigationController!.navigationBar.topItem!.title = "Settings";
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
         var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
@@ -48,12 +48,12 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell", forIndexPath: indexPath) as UITableViewCell;
         
-        cell.textLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping;
-        cell.textLabel.numberOfLines = 0;
+        cell.textLabel!.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        cell.textLabel!.numberOfLines = 0;
 
         var optionName = SETTINGS_OPTIONS[indexPath.row];
         if (contains(SETTINGS_HEADER_NAMES, optionName)) {
-            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 18);
+            cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 18);
             cell.selectionStyle = UITableViewCellSelectionStyle.None;
         }
         else if (optionName == "Notification settings") {
@@ -63,15 +63,15 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             else {
                 optionName = "Enable push notifications"
             }
-            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
+            cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
             cell.selectionStyle = UITableViewCellSelectionStyle.Gray;
         }
         else {
-            cell.textLabel.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
+            cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Th", size: 12);
             cell.selectionStyle = UITableViewCellSelectionStyle.Gray;
         }
-        cell.textLabel.text = optionName;
-        cell.textLabel.textColor = UIColor.whiteColor();
+        cell.textLabel!.text = optionName;
+        cell.textLabel!.textColor = UIColor.whiteColor();
 
         return cell;
     }
@@ -304,9 +304,9 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         alerter!.makeNoticeWithAction("Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", actionName: "Clear History", buttonAction: {
             () in
             var current = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
-            current.friendObj!["likedPosts"] = [];
-            current.friendObj!["viewHistory"] = [];
-            current.friendObj!.saveEventually();
+            (current.friendObj)!["likedPosts"] = [];
+            (current.friendObj)!["viewHistory"] = [];
+            (current.friendObj)!.saveEventually();
         });
         /*
         var alert = UIAlertController(title: "Clear history?", message: "Clearing history will delete all your likes and your view history. Continue?", preferredStyle: UIAlertControllerStyle.Alert);

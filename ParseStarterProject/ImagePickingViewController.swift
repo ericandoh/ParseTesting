@@ -186,7 +186,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 return;
             }
             if (index == 0) {
-                var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+                var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!;
                 //self.backImageView.image = assetImg;
                 self.backImageView.setImageAndBlur(assetImg);
                 firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
@@ -504,7 +504,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             groupSelected = index.groupNum;
             row = index.index;
             asset = index.asset!; //self.currentAssets[row];
-            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue()));
+            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!);
         }
         //call some function to segue and get ready to pass this list on
         self.performSegueWithIdentifier("ImagePreview", sender: self);
@@ -540,7 +540,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         else {
             NSLog("Destination View Controller mismatch???");
-            NSLog("Id: %@", segue.identifier);
+            NSLog("Id: %@", segue.identifier!);
         }
     }
     

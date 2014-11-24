@@ -20,11 +20,11 @@
     //              clientKey:@"I0VPBQaCngaQFzfpgu0c13OpvbPOZfWxAx4UiVvG"];
     
     // Development credentials
-    // [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
-    //              clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
+     [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
+                  clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
     
-    [Parse setApplicationId:@"1gUsdgWfyYAICL9pQX3ghv97zrMPZOVWf5Hz7GPi"
-                    clientKey:@"otdpUPZinqlZzEJKDOpL3L7RzylgwywCYTpxI39i"];
+    //[Parse setApplicationId:@"1gUsdgWfyYAICL9pQX3ghv97zrMPZOVWf5Hz7GPi"
+    //                clientKey:@"otdpUPZinqlZzEJKDOpL3L7RzylgwywCYTpxI39i"];
     
     //
     // If you are using Facebook, uncomment and add your FacebookAppID to your bundle's plist as

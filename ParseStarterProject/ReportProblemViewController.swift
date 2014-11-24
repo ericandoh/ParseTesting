@@ -26,7 +26,7 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
-        self.navigationController!.navigationBar.topItem.title = "Settings";
+        self.navigationController!.navigationBar.topItem!.title = "Settings";
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         if (iOS_VERSION > 7.0) {
             report.keyboardAppearance = UIKeyboardAppearance.Dark

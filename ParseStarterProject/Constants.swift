@@ -57,62 +57,62 @@ let MAX_IMGS_PER_SUGGEST = 5;
 
 //----------------------------Image Constants---------------------------------
 
-let NULL_IMG: UIImage = UIImage(named: "temporaryloading.png");
+let NULL_IMG: UIImage = UIImage(named: "temporaryloading.png")!;
 
 //Whenever something needs to be loaded, this picture shows up
-let LOADING_IMG: UIImage = UIImage(named: "temporaryloading.png");
+let LOADING_IMG: UIImage = UIImage(named: "temporaryloading.png")!;
 
 //When HomeFeed is done with pictures, this picture is shown
-let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg");
+let ENDING_IMG: UIImage = UIImage(named: "daniel-craig.jpg")!;
 
 //camera icon image in upload flow
-let CAMERA_ICON = UIImage(named: "f_camera_roll.png")
+let CAMERA_ICON = UIImage(named: "f_camera_roll.png")!
 
 //default images
-let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png");
+let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png")!;
 
 //close button image for Shop The Look while uploading
-//let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png");
+//let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png")!;
 
-let NORMAL_HEART = UIImage(named: "heart.png")
+let NORMAL_HEART = UIImage(named: "heart.png")!
 
-let LIKED_HEART = UIImage(named: "hearted.png");
+let LIKED_HEART = UIImage(named: "hearted.png")!;
 
-let GRADIENT_IMG = UIImage(named: "gradient.png")
+let GRADIENT_IMG = UIImage(named: "gradient.png")!
 
 //icon of a person and a plus, indicating that if pressed I can start following this person
-let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png");
+let FOLLOW_ME_ICON: UIImage = UIImage(named: "follow.png")!;
 
 //icon of a person and a check, indicating that I am already following this person. Clicking on this triggers a notification asking if I want to unfollow this person
-let FOLLOWED_ME_ICON: UIImage = UIImage(named: "followed.png");
+let FOLLOWED_ME_ICON: UIImage = UIImage(named: "followed.png")!;
 
 //icon in home that takes you to info page right away
-let INFO_ICON = UIImage(named: "info.png");
+let INFO_ICON = UIImage(named: "info.png")!;
 
 //icon to show back button (for home feed, when seguing from some other screen)
-let BACK_ICON = UIImage(named: "arrow_left.png");
+let BACK_ICON = UIImage(named: "arrow_left.png")!;
 
 //icon to show forward button (referenced in homefeed - shoplook delegate - for shoplook URL forwards)
-let FORWARD_ICON = UIImage(named: "arrow_right.png");
+let FORWARD_ICON = UIImage(named: "arrow_right.png")!;
 
-let SETTINGS_ICON = UIImage(named: "settings.png");
+let SETTINGS_ICON = UIImage(named: "settings.png")!;
 
-let DEFAULT_BUTTON_SOLID_BACKGROUND = UIImage(named: "backcolorsolid.png");
+let DEFAULT_BUTTON_SOLID_BACKGROUND = UIImage(named: "backcolorsolid.png")!;
 
 //side menu images
-let HOME_ICON = UIImage(named: "home.png");
-let EXPLORE_ICON = UIImage(named: "map.png");
-let USER_ICON = UIImage(named: "user.png");
-let NOTIF_ICON = UIImage(named: "flag.png");
-let FIND_ICON = UIImage(named: "magnifyingglass.png");
-let UPLOAD_ICON = UIImage(named: "camera.png");
+let HOME_ICON = UIImage(named: "home.png")!;
+let EXPLORE_ICON = UIImage(named: "map.png")!;
+let USER_ICON = UIImage(named: "user.png")!;
+let NOTIF_ICON = UIImage(named: "flag.png")!;
+let FIND_ICON = UIImage(named: "magnifyingglass.png")!;
+let UPLOAD_ICON = UIImage(named: "camera.png")!;
 
-let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png");
+let CLOSE_SHOP_EDIT_ICON = UIImage(named: "close_button.png")!;
 
-let TUTORIAL_IMAGE_4 = UIImage(named: "Onboarding_4.png");
-let TUTORIAL_IMAGE_5 = UIImage(named: "Onboarding_5S.png");
+let TUTORIAL_IMAGE_4 = UIImage(named: "Onboarding_4.png")!;
+let TUTORIAL_IMAGE_5 = UIImage(named: "Onboarding_5S.png")!;
 
-let NOBODY_HOME_FEED_BACKGROUND = UIImage(named: "FashionStash_Empty.png");
+let NOBODY_HOME_FEED_BACKGROUND = UIImage(named: "FashionStash_Empty.png")!;
 
 let GREEN_HEX = 0x94eed2;
 
@@ -126,16 +126,19 @@ let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_ME
 
 let TITLE_TEXT_COLOR = UIColor.whiteColor();
 
-let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0);
+let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0)!;
 
-let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0);
+let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)!;
 
-let TITLE_TEXT_ATTRIBUTES = [NSForegroundColorAttributeName: TITLE_TEXT_COLOR,
-    NSFontAttributeName: TITLE_TEXT_FONT];
+let nForegroundColor = NSString(format: NSForegroundColorAttributeName);
+let nFontAttributeName = NSString(format: NSFontAttributeName);
 
-let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)
+let TITLE_TEXT_ATTRIBUTES = [nForegroundColor: TITLE_TEXT_COLOR,
+    nFontAttributeName: TITLE_TEXT_FONT];
 
-let FB_PERMISSIONS: [AnyObject]? = ["user_about_me", "user_relationships", "user_friends"];
+let TABLE_CELL_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 15.0)!;
+
+let FB_PERMISSIONS: [String] = ["user_about_me", "user_relationships", "user_friends"];
 
 let SELECTED_COLOR = UIColor(white: 1.0, alpha: 0.9);
 let UNSELECTED_COLOR = UIColor(white: 1.0, alpha: 0.4);
@@ -315,8 +318,8 @@ enum SearchUserType: String {
     case BY_CONTACTS = "contacts"
 }
 
-var RELEVANT_TYPES = [UserType.DEFAULT.toRaw(), UserType.FACEBOOK.toRaw()];
+var RELEVANT_TYPES = [UserType.DEFAULT.rawValue, UserType.FACEBOOK.rawValue];
 
-//enum.toRaw() for raw value
+//enum.rawValue for raw value
 
 //other default images below this line
