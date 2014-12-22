@@ -540,7 +540,7 @@ import UIKit
         var newSize: CGSize;
         var cropRect = CGRectMake(CGFloat(IMGSAVE_FULLSCREEN_WIDTH / 2), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT / 2), CGFloat(IMGSAVE_FULLSCREEN_WIDTH), CGFloat(IMGSAVE_FULLSCREEN_HEIGHT));
         for (index, image: UIImage) in enumerate(images) {
-            NSLog("Current image: W\(image.size.width) H\(image.size.height)")
+            /*NSLog("Current image: W\(image.size.width) H\(image.size.height)")
             individualRatio = Float(image.size.width) / Float(image.size.height);
             var outputImg: UIImage?;
             if (CGFloat(image.size.height) > IMGSAVE_FULLSCREEN_HEIGHT && CGFloat(individualRatio) > WIDTH_HEIGHT_RATIO) {
@@ -559,11 +559,11 @@ import UIKit
                 outputImg = UIGraphicsGetImageFromCurrentImageContext() as UIImage;
                 UIGraphicsEndImageContext();
             }
-            else {
-                newImgList.append(image);
-                continue;
-            }
-            newImgList.append(outputImg!);
+            else {*/
+            newImgList.append(image);
+            continue;
+            //}
+            //newImgList.append(outputImg!);
             /*NSLog("Output image: W\(outputImg!.size.width) H\(outputImg!.size.height)")
             var imageRef = CGImageCreateWithImageInRect(outputImg!.CGImage, cropRect);
             var retImg: UIImage = UIImage(CGImage: imageRef);

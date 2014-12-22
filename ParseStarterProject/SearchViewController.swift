@@ -269,7 +269,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         var index: Int = indexPath.row;
         
         if (index == 0) {
-            cell.textLabel!.text = "Search for \"" + currentTerm + "\"!";
+            cell.textLabel!.text = "Search for \"" + currentTerm + "\"";
             cell.textLabel!.textColor = UIColor.whiteColor();
             cell.textLabel!.font = TABLE_CELL_FONT;
         }

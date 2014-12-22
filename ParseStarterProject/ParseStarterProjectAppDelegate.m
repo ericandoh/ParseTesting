@@ -20,7 +20,7 @@
     //              clientKey:@"I0VPBQaCngaQFzfpgu0c13OpvbPOZfWxAx4UiVvG"];
     
     // Development credentials
-     [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
+    [Parse setApplicationId:@"SbSmr4H1pFMYjgVorqclDu6rYISMJh2hJErywo74"
                   clientKey:@"a2gIP38ECHxdtVknwbEcKWThnAaDELRIfCH3XH9Q"];
     
     //[Parse setApplicationId:@"1gUsdgWfyYAICL9pQX3ghv97zrMPZOVWf5Hz7GPi"
@@ -79,7 +79,7 @@
     /*[application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge|
                                                     UIRemoteNotificationTypeAlert|
                                                     UIRemoteNotificationTypeSound];*/
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     
     //if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_0) {

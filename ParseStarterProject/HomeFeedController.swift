@@ -63,6 +63,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     var swiperNoSwipe: Bool = false;
     var pannerNoPan: Bool = false;
+    var swipingRight: Bool = false;
     
     //which image we are viewing currently in firstSet
     var viewCounter = 0;
@@ -345,6 +346,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
                     self.swiperNoSwipe = false;
+                    self.swipingRight = false;
                 });
         }
         else if (fromDirection == CompassDirection.EAST) {
@@ -359,6 +361,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.backImageView!.alpha = 0;
                     self.backImageView!.hidden = true;
                     self.swiperNoSwipe = false;
+                    self.swipingRight = false;
                 });
         }
         else if (fromDirection == CompassDirection.WEST) {
@@ -808,6 +811,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (viewingComments) {
             return;
         }
+        swipingRight = true;
         postCounter++;
         swipeSideAction(CompassDirection.EAST);
     }
@@ -1071,6 +1075,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             return;
         }
         if (viewingComments) {
+            return;
+        }
+        if (swipingRight) {
             return;
         }
         let isRefreshStart = viewCounter == 0;

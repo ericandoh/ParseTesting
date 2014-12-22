@@ -338,7 +338,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             
         }
         //if (index == 0) {
-            //cell.textLabel.text = "Search for user \"" + currentTerm + "\"!";
+            //cell.textLabel.text = "Search for user \"" + currentTerm + "\"";
         //}
         //else {
         
