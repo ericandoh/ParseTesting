@@ -8,7 +8,7 @@
 
 import UIKit
 
-//test comment
+//test comment again
 
 class ShopLook {
     var title: String;
