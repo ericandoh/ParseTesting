@@ -1891,7 +1891,7 @@ import UIKit
             return "\(components.year)y"
         }
         else if (components.month != 0) {
-            return "\(components.month)m"
+            return "\(components.month)mo"
         }
         else if (components.day != 0 && components.day >= 7) {
             return "\(components.day / 7)w"
