@@ -8,6 +8,8 @@
 
 import UIKit
 
+//test comment
+
 class ShopLook {
     var title: String;
     var urlLink: String;
