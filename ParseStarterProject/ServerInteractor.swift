@@ -19,6 +19,10 @@ import UIKit
             signController.failedSignUp("Usernames cannot begin with _");
             return false;
         }
+        else if (username.rangeOfString(" ") != nil) {
+            signController.failedSignUp("Usernames cannot contain spaces");
+            return false;
+        }
         else if (countElements(username) > 20) {
             signController.failedSignUp("Your username \(username) is too long. Usernames must be between 1-20 characters long.");
             return false;
