@@ -18,6 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var backImage: BlurringDarkView!
     
+    @IBOutlet weak var settingsTableView: UITableView!
     var alerter:CompatibleAlertViews?;
 
     override func viewDidLoad() {
@@ -33,6 +34,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             //self.backImage.image = image;
             self.backImage.setImageAndBlur(image);
         });
+        
+        settingsTableView.tableFooterView = UIView(frame: CGRectZero);
     }
     
     
@@ -73,6 +76,14 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.textLabel!.text = optionName;
         cell.textLabel!.textColor = UIColor.whiteColor();
 
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        
         return cell;
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {

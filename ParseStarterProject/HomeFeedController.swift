@@ -1097,11 +1097,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 bottomPullToRefresh.hidden = true;
                 if (abs(referenceY - currentY) > PULLDOWN_THRESHOLD) {
                     var oldOrig = self.frontImageView.frame.origin;
-                    var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
-                    if (referenceY < currentY) {
-                        newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
-                    }
-                    UIView.animateWithDuration(0.15, animations: {() in
+                    //var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
+                    //if (referenceY < currentY) {
+                        //newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
+                    //}
+                    var newOrig = self.frontImageView.frame.origin;
+                    UIView.animateWithDuration(0.25, animations: {() in
                         self.backImageView!.frame.origin = newOrig;
                         }, completion: {(success: Bool) in
                             self.backImageView!.alpha = 0;

@@ -282,6 +282,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             }
         }
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
         return cell;
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

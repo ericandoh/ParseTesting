@@ -343,6 +343,15 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         //else {
         
         //}
+        
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }

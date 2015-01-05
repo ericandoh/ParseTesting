@@ -180,6 +180,15 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             var x = self.commentTextField.resignFirstResponder();
         };
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        
+        if cell.respondsToSelector("setSeparatorInset:") {
+            cell.separatorInset = UIEdgeInsetsZero
+        }
+        if cell.respondsToSelector("setLayoutMargins:") {
+            cell.preservesSuperviewLayoutMargins = false
+            cell.layoutMargins = UIEdgeInsetsZero
+        }
+        
         return cell;
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -205,6 +214,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         self.commentTextField.resignFirstResponder();
     }
+    
     func isTapped(sender: UITapGestureRecognizer) {
         self.commentTextField.resignFirstResponder();
     }

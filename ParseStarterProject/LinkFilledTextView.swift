@@ -199,6 +199,16 @@ class LinkFilledTextView: UITextView {
     override func canBecomeFirstResponder() -> Bool  {
         return canRespond;
     }
+    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+        switch(action) {
+            case "select:":
+                return true;
+            case "selectAll:":
+                return true;
+            default:
+                return false;
+        }
+    }
     //function that takes in a string of regular text that is embedded with tags/author links
     //and converts to an attributed text.
     func convertToAttributed(boldFirst: Bool, text: String)->NSAttributedString {
