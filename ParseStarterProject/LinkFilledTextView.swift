@@ -201,11 +201,11 @@ class LinkFilledTextView: UITextView {
     }
     override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
         switch(action) {
-            case "select:":
+/*            case "select:":
                 return true;
             case "selectAll:":
                 return true;
-            default:
+*/            default:
                 return false;
         }
     }
