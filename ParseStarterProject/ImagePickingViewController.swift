@@ -109,7 +109,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     (group, stop) in
                     //var insideLibrary = self.assetLibrary;
                     if (group != nil) {
-                        group.setAssetsFilter(ALAssetsFilter.allPhotos());
+                        group.setAssetsFilter(ALAssetsFilter.allPhotos()); // import all photos
                         /*
                         group.posterImage -> small image for icon
                         */
@@ -160,7 +160,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         NSLog("\(groupSelected) and \(assetGroups.count)")
         var numAssets = assetGroups[groupSelected].numberOfAssets();
         
-        currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1));
+        currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1)); // get all photos in current album
         //currentAssets = [];
         self.myCollectionView.reloadData();
         imageRenderDirection = 0;
@@ -170,7 +170,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 currentAssets[check.index].highlighted = loc;
             }
         }*/
-        for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
+        for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
             if (check.groupNum == self.groupSelected) {
                 self.currentAssets[check.index].highlighted = loc;
                 //self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
