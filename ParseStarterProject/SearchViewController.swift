@@ -204,7 +204,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 //add animations here;
                 self.navigationController!.navigationBar.topItem!.title = "Popular";
             }
-            NSLog("A");
             searchBar.resignFirstResponder();
             let delay  = 0.1 * Double(NSEC_PER_SEC);
             let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
@@ -307,12 +306,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         startSearch(searchResult);
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
     }
-    func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder();
         startSearch(searchBar.text);
     }
-    func searchBarCancelButtonClicked(searchBar: UISearchBar!) {
-        NSLog("....adfajfosa")
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        NSLog("Cancel Clicked")
     }
     func startSearch(searchResult: String) {
         //starts a search with a term
