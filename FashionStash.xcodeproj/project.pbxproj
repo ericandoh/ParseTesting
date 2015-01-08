@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		07CF20BD1A5F271800354ABE /* UITextFieldWithInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CF20BC1A5F271800354ABE /* UITextFieldWithInsets.swift */; };
 		09144A7313C2997E00388B00 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09144A7213C2997E00388B00 /* Entitlements.plist */; };
 		092354B513A1D7F000DA740F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B413A1D7F000DA740F /* SystemConfiguration.framework */; };
 		092354B713A1D83C00DA740F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092354B613A1D83C00DA740F /* MobileCoreServices.framework */; };
@@ -169,6 +170,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		07CF20BC1A5F271800354ABE /* UITextFieldWithInsets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldWithInsets.swift; sourceTree = "<group>"; };
 		09144A7213C2997E00388B00 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		092354B213A1D7EB00DA740F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		092354B413A1D7F000DA740F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -499,6 +501,7 @@
 				D92D8A9C1999960100A41D96 /* SideMenuTableViewCell.swift */,
 				D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */,
 				D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */,
+				07CF20BC1A5F271800354ABE /* UITextFieldWithInsets.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -856,6 +859,7 @@
 				D923909C19929107001B5CBE /* SuggestedHeaderView.swift in Sources */,
 				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
+				07CF20BD1A5F271800354ABE /* UITextFieldWithInsets.swift in Sources */,
 				D956BAFC198FE2C1009CE92E /* CommentViewController.swift in Sources */,
 				D914F7FD19883CD000A59314 /* ImagePostCollectionDelegate.swift in Sources */,
 				D95E662B19AA8444007ED067 /* LikedUsersViewController.swift in Sources */,

@@ -799,7 +799,7 @@
                                                 <constraint firstAttribute="width" constant="40" id="Tke-Am-tZj"/>
                                             </constraints>
                                         </imageView>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Test Text" translatesAutoresizingMaskIntoConstraints="NO" id="8LH-sn-HLL" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                             <rect key="frame" x="55" y="5" width="210" height="40"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
@@ -1276,14 +1276,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M1W-Hd-U9k" id="ndu-hP-mSs">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PBi-mx-kd5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PBi-mx-kd5">
                                                     <rect key="frame" x="10" y="5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="CP1-rm-yN6"/>
                                                         <constraint firstAttribute="height" constant="40" id="JI0-Xk-fTw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DCX-5b-TkF" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1346,7 +1346,7 @@
                                     <action selector="addComment:" destination="qDB-cd-cme" eventType="touchUpInside" id="rtK-G1-xUe"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder=" Type your comment here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9n-mt-4aE">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder=" Type your comment here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S9n-mt-4aE" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="10" y="523" width="260" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1437,14 +1437,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WpV-Nt-JvN" id="uxc-7z-U9h">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0se-Pl-rtT">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0se-Pl-rtT">
                                                     <rect key="frame" x="10" y="5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="PFd-mI-zVU"/>
                                                         <constraint firstAttribute="width" constant="40" id="Rx2-l4-2fE"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGq-zS-iHn" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KGq-zS-iHn" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1550,7 +1550,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="thP-YL-RPA">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-xv-DUq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="ATn-xv-DUq" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="40" y="175" width="240" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1672,7 +1672,7 @@
                                                                 <constraint firstAttribute="width" constant="1" id="o4U-GR-Kls"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4E-zQ-KJK">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4E-zQ-KJK">
                                                             <rect key="frame" x="10" y="64" width="1" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -1954,7 +1954,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="PzA-Z7-D8o"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIk-ky-EjX" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rIk-ky-EjX" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                                     <rect key="frame" x="55" y="5" width="210" height="40"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2339,10 +2339,10 @@
                             <scrollView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="top" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uk-HZ-4aK">
                                 <rect key="frame" x="0.0" y="65" width="320" height="503"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8i-6h-3i3">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v8i-6h-3i3">
                                         <rect key="frame" x="0.0" y="5" width="320" height="625"/>
                                         <subviews>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJj-Ib-5Pe">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJj-Ib-5Pe">
                                                 <rect key="frame" x="20" y="176" width="280" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="DnI-iE-c41"/>
@@ -2351,7 +2351,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="." translatesAutoresizingMaskIntoConstraints="NO" id="6vL-4S-BXh">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="." translatesAutoresizingMaskIntoConstraints="NO" id="6vL-4S-BXh">
                                                 <rect key="frame" x="20" y="205" width="280" height="118"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2363,7 +2363,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Add Tags" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-Rw-cYU">
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add Tags" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ajq-Rw-cYU">
                                                 <rect key="frame" x="20" y="351" width="280" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="280" id="D9o-PP-urd"/>
@@ -2373,7 +2373,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="FashionStash" customModuleProvider="target">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" placeholderIntrinsicWidth="150" placeholderIntrinsicHeight="285" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="JvP-R4-WaX" customClass="SideTableView" customModule="FashionStash" customModuleProvider="target">
                                                 <rect key="frame" x="85" y="-62" width="150" height="285"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
@@ -2395,10 +2395,10 @@
                                                     <outlet property="delegate" destination="gqO-OJ-AGi" id="kaS-x3-Kls"/>
                                                 </connections>
                                             </tableView>
-                                            <view autoresizesSubviews="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="Lbc-TH-R0A">
+                                            <view autoresizesSubviews="NO" contentMode="scaleToFill" misplaced="YES" placeholderIntrinsicWidth="300" placeholderIntrinsicHeight="150" translatesAutoresizingMaskIntoConstraints="NO" id="Lbc-TH-R0A">
                                                 <rect key="frame" x="20" y="440" width="280" height="155"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgF-7S-xwR">
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgF-7S-xwR">
                                                         <rect key="frame" x="250" y="5" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="7d1-t2-s4y"/>
@@ -2413,7 +2413,7 @@
                                                             <action selector="whatIsShopTheLook:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="Pd8-Xv-IqY"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
                                                         <rect key="frame" x="30" y="110" width="220" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="C2H-wN-xoF"/>
@@ -2428,7 +2428,7 @@
                                                             <action selector="reject:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="L8r-WC-7up"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
                                                         <rect key="frame" x="30" y="60" width="220" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Yyf-El-YL2"/>
@@ -2443,14 +2443,14 @@
                                                             <action selector="acceptImage:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="SV3-n3-mC4"/>
                                                         </connections>
                                                     </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iW4-pr-vE5">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iW4-pr-vE5">
                                                         <rect key="frame" x="0.0" y="30" width="280" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="2" id="oy9-bf-Xed"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCC-YK-ZB7">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OCC-YK-ZB7">
                                                         <rect key="frame" x="0.0" y="5" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="Iyb-kp-fZN"/>
@@ -2463,7 +2463,7 @@
                                                             <action selector="addShopTheLook:" destination="gqO-OJ-AGi" eventType="touchUpInside" id="sYK-Va-kco"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMw-4I-Q8A">
+                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMw-4I-Q8A">
                                                         <rect key="frame" x="20" y="5" width="220" height="20"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
@@ -2500,7 +2500,7 @@
                                                     <constraint firstItem="0U5-gw-bxJ" firstAttribute="leading" secondItem="Lbc-TH-R0A" secondAttribute="leading" constant="30" id="yZE-qa-faJ"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="#brand #cute #style" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="#brand #cute #style" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-YK-rqw" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                                 <rect key="frame" x="20" y="380" width="280" height="30"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2520,7 +2520,7 @@
                                                     <action selector="textFieldReturn:" destination="gqO-OJ-AGi" eventType="editingDidEndOnExit" id="ICZ-xr-ffq"/>
                                                 </connections>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ImW-EL-Que">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ImW-EL-Que">
                                                 <rect key="frame" x="20" y="438" width="280" height="2"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -2695,7 +2695,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="fashtitlescreen.png" translatesAutoresizingMaskIntoConstraints="NO" id="zFu-Mu-Kri">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vzG-b3-d22">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vzG-b3-d22" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="20" y="192" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2710,7 +2710,7 @@
                                     <action selector="textFieldReturn:" destination="qU9-dM-KP1" eventType="editingDidEndOnExit" id="ufy-XO-LH5"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vhg-vT-XKH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vhg-vT-XKH" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="20" y="237" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2792,7 +2792,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IjE-rg-ihq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IjE-rg-ihq" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="20" y="160" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2807,7 +2807,7 @@
                                     <action selector="textFieldReturn:" destination="vp5-wb-cPq" eventType="editingDidEndOnExit" id="LyN-DS-J21"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aaT-tM-w4u">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aaT-tM-w4u" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="20" y="200" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2822,7 +2822,7 @@
                                     <action selector="textFieldReturn:" destination="vp5-wb-cPq" eventType="editingDidEndOnExit" id="on5-1m-WpA"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4NY-eO-D54">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder=" Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4NY-eO-D54" customClass="UITextFieldWithInsets" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="20" y="240" width="280" height="30"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2943,6 +2943,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="WNi-wr-ubi"/>
-        <segue reference="8GE-Sz-0lp"/>
+        <segue reference="jrF-7g-MJv"/>
     </inferredMetricsTieBreakers>
 </document>
