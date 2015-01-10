@@ -16,22 +16,24 @@ let CAMERA_ROLL_NAME = "Camera Roll"
 struct ImageIndex: Equatable {
     var groupNum: Int;
     var index: Int;
-    var asset: ALAsset?;
+    //var asset: ALAsset?;
+    var assetImg: UIImage?;
 }
 func == (lhs: ImageIndex, rhs: ImageIndex)->Bool {
     return lhs.groupNum == rhs.groupNum && lhs.index == rhs.index;
 }
 
 struct AssetItem {
-    var asset: ALAsset?;
+    //var asset: ALAsset?;
     var highlighted: Int;
+    var assetImg: UIImage?;
+    var thumbnail: UIImage?;
 }
 
 class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var optionsView: UIView!
     @IBOutlet var myCollectionView: UICollectionView!
-    //@IBOutlet var myTableView: UITableView!
     
     @IBOutlet weak var myPickerView: UIPickerView!
     @IBOutlet var navigationTitle: UIButton!
@@ -41,6 +43,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     var assetLibrary: ALAssetsLibrary?;
     
     var assetGroups: Array<ALAssetsGroup> = [];
+    
+    var assetLoadedCount: Int = 0;
+    
+    var totalAssetsHere: Int = 0;
+    
+    var loadingAssets: Bool = false;
     
     var currentAssets: Array<AssetItem> = [];
     
@@ -60,7 +68,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     var prevDescrip: String = "";
     var shopLook: Array<ShopLook> = [];
     
-    var imageRenderDirection: Int = 0;
+    //var imageRenderDirection: Int = 0;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,49 +98,36 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.optionsView.insertSubview(toolbar, atIndex: 0);
         optionsView.hidden = true;  //this should be set to this by storyboard by default
         
-        //NSLog("Loading View");
-        // Do any additional setup after loading the view.
-        //assetLibrary = ALAssetsLibrary();
-        //ImagePickingViewController.getDefaultAssetLibrary();
-        //dispatch_async(dispatch_get_main_queue(), {
-            //autoreleasepool {
-                var failure: ALAssetsLibraryAccessFailureBlock = {
-                    (error: NSError!)->Void in
-                    NSLog(error.description)
-                    //assetLibrary!
-                    //NSLog("Add alert view telling I couldn't open my images");
-                };
-                //var groupEnumeration: ALAssetsGroupEnumerationResultsBlock = {
-                    
-                //};
-                var libraryGroupEnumeration: ALAssetsLibraryGroupsEnumerationResultsBlock = {
-                    (group, stop) in
-                    //var insideLibrary = self.assetLibrary;
-                    if (group != nil) {
-                        group.setAssetsFilter(ALAssetsFilter.allPhotos()); // import all photos
-                        /*
-                        group.posterImage -> small image for icon
-                        */
-                        self.assetGroups.append(group);
-                        //if (self.assetGroups.count == 1) {
-                        if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME || self.getGalleryTimeForIndex(self.assetGroups.count - 1) == CAMERA_ROLL_NAME) {
-                            //first asset I've loaded
-                            //NSLog("First asset group, adding + loading")
-                            var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
-                            self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
-                            self.savedPhotoIndex = self.assetGroups.count - 1;
-                            self.groupSelected = self.savedPhotoIndex;
-                            self.loadImagesForCurrent();
-                        }
-                    }
-                    else {
-                    }
-                };
-                self.assetLibrary = ALAssetsLibrary();
-                //ALAssetsGroupType(ALAssetsGroupAll)
-                self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
-           // }
-        //});
+        
+        //AssetItem(asset: nil, highlighted: -1)
+        currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
+        
+        var failure: ALAssetsLibraryAccessFailureBlock = {
+            (error: NSError!)->Void in
+            NSLog(error.description)
+        };
+        var libraryGroupEnumeration: ALAssetsLibraryGroupsEnumerationResultsBlock = {
+            (group, stop) in
+            if (group != nil) {
+                group.setAssetsFilter(ALAssetsFilter.allPhotos()); // import all photos
+                /*
+                group.posterImage -> small image for icon
+                */
+                self.assetGroups.append(group);
+                if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME || self.getGalleryTimeForIndex(self.assetGroups.count - 1) == CAMERA_ROLL_NAME) {
+                    //first asset I've loaded
+                    var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
+                    self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
+                    self.savedPhotoIndex = self.assetGroups.count - 1;
+                    self.groupSelected = self.savedPhotoIndex;
+                    self.loadImagesForCurrent();
+                }
+            }
+            else {
+            }
+        };
+        self.assetLibrary = ALAssetsLibrary();
+        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -155,43 +150,138 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         return name;
     }
     
-    func loadImagesForCurrent() {
-        //fills up collection view
-        NSLog("\(groupSelected) and \(assetGroups.count)")
-        var numAssets = assetGroups[groupSelected].numberOfAssets();
-        
-        currentAssets = Array(count: numAssets, repeatedValue: AssetItem(asset: nil, highlighted: -1)); // get all photos in current album
-        //currentAssets = [];
-        self.myCollectionView.reloadData();
-        imageRenderDirection = 0;
-        var firstDate = NSDate();
-        /*for (loc, check: ImageIndex) in enumerate(highlightOrder) {
-            if (check.groupNum == groupSelected) {
-                currentAssets[check.index].highlighted = loc;
-            }
-        }*/
+    func assetArrayIndexToRealIndex(index: Int) -> Int {
+        let remainder = assetLoadedCount % GALLERY_LOAD_LIMIT;
+        let prev = assetLoadedCount - remainder;
+        if (index < remainder) {
+            return index + prev;
+        }
+        else if (index < GALLERY_LOAD_LIMIT) {
+            return index + prev - GALLERY_LOAD_LIMIT;
+        }
+        else {
+            //invalid
+            return -1;
+        }
+    }
+    func realIndexToAssetArrayIndex(index: Int) -> Int {
+        if (index >= assetLoadedCount) {
+            return -1;
+        }
+        if (index < assetLoadedCount - GALLERY_LOAD_LIMIT) {
+            return -1;
+        }
+        return index % GALLERY_LOAD_LIMIT;
+    }
+    
+    func clearAssetList() {
+        assetLoadedCount = 0;
+        for index in 0..<GALLERY_LOAD_LIMIT {
+            currentAssets[index].assetImg = nil;
+            currentAssets[index].thumbnail = nil;
+            currentAssets[index].highlighted = -1;
+        }
+    }
+    func rehighlightCells() {
         for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
             if (check.groupNum == self.groupSelected) {
-                self.currentAssets[check.index].highlighted = loc;
-                //self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
+                let assetIndex = realIndexToAssetArrayIndex(check.index)
+                if (assetIndex != -1) {
+                    //self.currentAssets[assetIndex].highlighted = loc;
+                    self.highlightOrder[loc].assetImg = self.currentAssets[assetIndex].assetImg
+                }
             }
         }
-        var currentGroup = assetGroups[groupSelected];
+    }
+    
+    // reloads images from start
+    func loadImagesForCurrent() {
+        NSLog("Selecting \(groupSelected) : \(assetGroups.count)")
+        //resets view to be empty for user
+        clearAssetList();
+        self.myCollectionView.reloadData();
+        loadImagesFromGallery(true);
+    }
+    
+    func loadImagesFromGallery(forwards: Bool) {
+        //fills up collection view
+        //var firstDate = NSDate();
+        //imageRenderDirection = 0;
+        
+        if (loadingAssets) {
+            NSLog("Already loading");
+            return;
+        }
+        loadingAssets = true;
+        NSLog("Loading \(forwards) up");
+        
+        var numAssets = assetGroups[groupSelected].numberOfAssets();
+        totalAssetsHere = numAssets;
+        var numToLoad = GALLERY_LOAD_COUNT;
+        var assetStart: Int = 0;
+        NSLog("\(numAssets) images total");
+        
+        //invalidate array indices
+        if (forwards) {
+            assetStart = assetLoadedCount;
+            assetLoadedCount += GALLERY_LOAD_COUNT;
+            if (assetLoadedCount > numAssets) {
+                numToLoad = GALLERY_LOAD_COUNT - (assetLoadedCount - numAssets);
+            }
+        }
+        else {
+            assetLoadedCount -= GALLERY_LOAD_COUNT;
+            if (assetLoadedCount < 0) {
+                assetLoadedCount = 0;
+            }
+            var assetStart = assetLoadedCount - GALLERY_LOAD_LIMIT;
+            if (assetStart < 0) {
+                assetStart = 0;
+            }
+            if (assetStart + GALLERY_LOAD_COUNT > numAssets) {
+                numToLoad = numAssets - assetStart;
+            }
+        }
+        var rangeLoad: NSRange = NSMakeRange(assetStart, numToLoad);
+        
+        NSLog("Loading from \(rangeLoad.location), \(rangeLoad.length) images total");
+        
+        for arrayAllIndex in 0..<GALLERY_LOAD_LIMIT {
+            self.currentAssets[arrayAllIndex].highlighted = -1;
+        }
+        for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
+            if (check.groupNum == self.groupSelected) {
+                let assetIndex = realIndexToAssetArrayIndex(check.index)
+                if (assetIndex != -1) {
+                    self.currentAssets[assetIndex].highlighted = loc;
+                }
+            }
+        }
+        
+        
         var totalEnumerated: Int = 0;
         var reloadAtIndexPaths: Array<NSIndexPath> = [];
-        currentGroup.enumerateAssetsUsingBlock({
-            (result, index, stop) in
-            //NSLog("Loading asset \(index)")
-            if (result == nil) {
+        //enumerateAssetsAtIndexes:options:usingBlock:
+        var currentGroup = assetGroups[groupSelected];
+        
+        currentGroup.enumerateAssetsAtIndexes(NSIndexSet(indexesInRange: rangeLoad), options: NSEnumerationOptions.Concurrent, usingBlock: {
+            (result: ALAsset!, index: Int, stop) in
+            if ((result) == nil) {
+                NSLog("No result found \(index)");
+                totalEnumerated++;
+                if (totalEnumerated == numToLoad) {
+                    NSLog("Done fetching all!");
+                    self.rehighlightCells()
+                    self.loadingAssets = false;
+                }
                 return;
             }
             if (index == 0) {
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!;
-                //self.backImageView.image = assetImg;
                 self.backImageView.setImageAndBlur(assetImg);
-                firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
+                //firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
             }
-            else if (index == 1) {
+            /*else if (index == 1) {
                 var secondDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
                 if (firstDate.compare(secondDate) == NSComparisonResult.OrderedAscending) {
                     self.imageRenderDirection = -1;
@@ -201,43 +291,42 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     //direction is right
                     self.imageRenderDirection = 1;
                 }
-            }
-            if(index < self.currentAssets.count) {
-                self.currentAssets[index].asset = result;
-                reloadAtIndexPaths.append(NSIndexPath(forRow: index+1, inSection: 0));
-                //self.myCollectionView.reloadItemsAtIndexPaths([NSIndexPath(forRow: index + 1, inSection: 0)]);
-            }
-            else {
-                var currentCount = self.currentAssets.count;
-                self.currentAssets += Array(count: index-currentCount + 1, repeatedValue: AssetItem(asset: nil, highlighted: -1));
-                self.currentAssets[index].asset = result;
-                reloadAtIndexPaths.append(NSIndexPath(forRow: index+1, inSection: 0));
-                //var indexPaths: Array<NSIndexPath> = [];
-                //for i in currentCount..<(index+1) {
-                    //indexPaths.append(NSIndexPath(forRow: i + 1, inSection: 0));
-                //}
-                //self.myCollectionView.insertItemsAtIndexPaths(indexPaths);
-            }
-            //self.currentAssets[index].asset = result;
-            //self.myCollectionView.reloadData();
-            totalEnumerated++;
-            if (totalEnumerated == numAssets) {
-                self.myCollectionView.reloadData();
-                for (loc, check: ImageIndex) in enumerate(self.highlightOrder) {
-                    if (check.groupNum == self.groupSelected) {
-                        //self.currentAssets[check.index].highlighted = loc;
-                        self.highlightOrder[loc].asset = self.currentAssets[check.index].asset
-                    }
+            }*/
+            var arrayIndex = self.realIndexToAssetArrayIndex(index);
+            //NSLog("Getting image \(index) which is at array \(arrayIndex)");
+            if (arrayIndex != -1) {
+                if ((result) != nil) {
+                    self.currentAssets[arrayIndex].assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+                    self.currentAssets[arrayIndex].thumbnail = UIImage(CGImage: result.thumbnail().takeUnretainedValue());
                 }
+                //reloadAtIndexPaths.append(NSIndexPath(forRow: arrayIndex+1, inSection: 0));
             }
-            else if (reloadAtIndexPaths.count > 10) {
+            self.reconfigureCells(index);
+            totalEnumerated++;
+            if (totalEnumerated == numToLoad) {
+                NSLog("Done fetching all!");
+                self.rehighlightCells()
+                self.loadingAssets = false;
+            }
+            /*else if (reloadAtIndexPaths.count > 10) {
                 //reload table every 10
                 self.myCollectionView.reloadItemsAtIndexPaths(reloadAtIndexPaths);
                 reloadAtIndexPaths = [];
-            }
+            }*/
             });
     }
-    
+    func reconfigureCells(realIndex: Int) {
+        for path : AnyObject in myCollectionView.indexPathsForVisibleItems() {
+            let index = (path as NSIndexPath).row;
+            if (index == realIndex) {
+                var cell: PreviewCollectionViewCell = myCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as PreviewCollectionViewCell;
+                if (index > 0) {
+                    //do stuff with cell
+                    configureCell(cell, index: realIndex);
+                }
+            }
+        }
+    }
     
     @IBAction func outsidePickerClicked(sender: UIButton) {
         optionsView.hidden = true;
@@ -274,7 +363,8 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.showingOptions = false;
         if (row >= assetGroups.count) {
             for (index, item) in enumerate(currentAssets) {
-                currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
+                //currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
+                currentAssets[index].highlighted = -1;
             }
             highlightOrder = [];
             optionsView.hidden = true;
@@ -283,6 +373,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         groupSelected = row;
         loadImagesForCurrent();
+        myCollectionView.setContentOffset(CGPointZero, animated: false);
         optionsView.hidden = true;
         var name = getGalleryFullName(row) + " ▾";
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
@@ -292,11 +383,38 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         return 1;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if (assetGroups.count == 0) {
-            return 1;
+        return totalAssetsHere + 1;
+    }
+    func configureCell(cell: PreviewCollectionViewCell, index: Int) {
+        let assetIndex = realIndexToAssetArrayIndex(index);
+        if (assetIndex == -1) {
+            NSLog("This shouldn't happen, like ever");
+            return;
         }
-        //NSLog("We are returning that we have \(self.currentAssets.count) cells")
-        return self.currentAssets.count + 1;
+        if (self.currentAssets[assetIndex].assetImg == nil) {
+            cell.label.text = "";
+            cell.image.image = UIImage();
+            return;
+        }
+        cell.image.image = self.currentAssets[assetIndex].thumbnail;
+        if (self.currentAssets[assetIndex].highlighted != -1) {
+            //cell.backgroundColor = UIColor.yellowColor();
+            cell.darkenImage();
+            var locIndex = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: index, assetImg: self.currentAssets[assetIndex].assetImg));
+            if (locIndex != nil) {
+                cell.label.text = String(locIndex! + 1);   //for those damn nonprogrammer people
+            }
+            else {
+                cell.label.text = "?!?";   //for those damn nonprogrammer people
+            }
+            
+        }
+        else {
+            //cell.backgroundColor = UIColor.redColor();
+            cell.makeVisible();
+            cell.label.text = "";
+        }
+
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
         var cell: PreviewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PreviewCollectionViewCell;
@@ -312,28 +430,33 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
         row--;
         
-        if(imageRenderDirection == -1) {
-            row = self.currentAssets.count - 1 - row;
-        }
+        cell.label.text = "";
         
-        if (self.currentAssets[row].asset == nil) {
-            cell.label.text = "";
+        let assetIndex = realIndexToAssetArrayIndex(row);
+        if (assetIndex == -1) {
+            //not loaded!
+            /*if (row >= assetLoadedCount) {
+                loadImagesFromGallery(true);
+            }
+            else {
+                loadImagesFromGallery(false);
+            }*/
             cell.image.image = UIImage();
+            //cell.makeVisible();
             return cell;
         }
-        cell.image.image = UIImage(CGImage: self.currentAssets[row].asset!.thumbnail().takeUnretainedValue());
-        if (self.currentAssets[row].highlighted != -1) {
-            //cell.backgroundColor = UIColor.yellowColor();
-            cell.darkenImage();
-            cell.label.text = String(find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, asset: nil))! + 1);   //for those damn nonprogrammer people
+        configureCell(cell, index: row);
+        if (assetLoadedCount - row < 7) {
+            //prefetch images
+            loadImagesFromGallery(true);
         }
-        else {
-            //cell.backgroundColor = UIColor.redColor();
-            cell.makeVisible();
-            cell.label.text = "";
+        else if (row - (assetLoadedCount - GALLERY_LOAD_LIMIT) < 7) {
+            loadImagesFromGallery(false);
         }
         return cell;
     }
+    
+    
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!)  {
         var row = indexPath.row;
         
@@ -343,23 +466,31 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             return;
         }
         row--;
-        if(imageRenderDirection == -1) {
+        /*if(imageRenderDirection == -1) {
             row = self.currentAssets.count - 1 - row;
+        }*/
+        
+        let assetIndex = realIndexToAssetArrayIndex(row);
+        if (assetIndex == -1) {
+            //uh this cell doesn't exist
+            NSLog("Selected a cell that shouldn't have been rendered!");
+            return;
         }
-        if (self.currentAssets[row].highlighted == -1) {
+        
+        if (self.currentAssets[assetIndex].highlighted == -1) {
             //needs to be highlighted
-            var assetItem: AssetItem =  self.currentAssets[row];
+            var assetItem: AssetItem =  self.currentAssets[assetIndex];
             assetItem.highlighted = highlightOrder.count;
-            self.currentAssets[row] = assetItem;
-            highlightOrder.append(ImageIndex(groupNum: groupSelected, index: row, asset: self.currentAssets[row].asset));
+            self.currentAssets[assetIndex] = assetItem;
+            highlightOrder.append(ImageIndex(groupNum: groupSelected, index: row, assetImg: self.currentAssets[assetIndex].assetImg));
         }
         else {
             //unhighlight
-            var loc = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, asset: nil));
+            var loc = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: row, assetImg: nil));
             highlightOrder.removeAtIndex(loc!);
-            var assetItem: AssetItem =  self.currentAssets[row];
+            var assetItem: AssetItem =  self.currentAssets[assetIndex];
             assetItem.highlighted = -1;
-            self.currentAssets[row] = assetItem;
+            self.currentAssets[assetIndex] = assetItem;
         }
         collectionView.reloadData();
         //collectionView.reloadItemsAtIndexPaths([indexPath]);
@@ -425,7 +556,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                                     //just added an image, so should shift all currently selected images by one index
                                     for (index, imageIndex) in enumerate(self.highlightOrder) {
                                         if (imageIndex.groupNum == self.savedPhotoIndex && imageIndex.index != -1) {
-                                            self.highlightOrder[index] = ImageIndex(groupNum: self.savedPhotoIndex, index: imageIndex.index + 1, asset: asset);
+                                            self.highlightOrder[index] = ImageIndex(groupNum: self.savedPhotoIndex, index: imageIndex.index + 1, assetImg: UIImage(CGImage: asset!.defaultRepresentation().fullResolutionImage().takeUnretainedValue()));
                                         }
                                     }
                                     NSLog("Should reload here, does it?");
@@ -499,12 +630,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         retList = [];
         var groupSelected: Int;
         var row: Int;
-        var asset: ALAsset;
+        var assetImg: UIImage;
         for index:ImageIndex in highlightOrder {
             groupSelected = index.groupNum;
             row = index.index;
-            asset = index.asset!; //self.currentAssets[row];
-            retList.append(UIImage(CGImage: asset.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!);
+            assetImg = index.assetImg!; //self.currentAssets[row];
+            retList.append(assetImg);
         }
         //call some function to segue and get ready to pass this list on
         self.performSegueWithIdentifier("ImagePreview", sender: self);
@@ -516,14 +647,18 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.shopLook = prevShop;
         highlightOrder = prevOrder;
         for (index, item) in enumerate(currentAssets) {
-            currentAssets[index] = AssetItem(asset: currentAssets[index].asset, highlighted: -1);
+            currentAssets[index].highlighted = -1;
         }
         for (index, item) in enumerate(highlightOrder) {
             if (item.groupNum == groupSelected) {
-                currentAssets[item.index] = AssetItem(asset: currentAssets[item.index].asset, highlighted: index);
+                let assetIndex = realIndexToAssetArrayIndex(item.index);
+                if (assetIndex != -1) {
+                    currentAssets[assetIndex].highlighted = index;
+                }
             }
         }
-        loadImagesForCurrent();
+        //loadImagesForCurrent();
+        myCollectionView.reloadData();
         //myTableView.reloadData();
     }
     

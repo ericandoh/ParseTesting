@@ -46,6 +46,13 @@ let SEARCH_LOAD_COUNT = 20;
 //how many cells I should have before it starts rendering more
 let CELLS_BEFORE_RELOAD = 9;
 
+//how many images I should load at once from gallery every time I load
+let GALLERY_LOAD_COUNT = 40;
+
+//how many images I should have loaded from gallery (max) for viewing
+let GALLERY_LOAD_LIMIT = 150;
+
+
 //number of comments to load at once
 //we will NOT use this constant: usually less than <100 comments at a time, if we had more we would have to load in chunks
 //but for small # of comments we can just load all into one array and be ok with that (plus its text, unlike notifs/image posts)

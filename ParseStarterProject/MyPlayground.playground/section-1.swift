@@ -2,6 +2,56 @@
 
 import UIKit
 
+
+var assetLoadedCount = 160;
+var GALLERY_LOAD_LIMIT = 50;
+
+func assetArrayIndexToRealIndex(index: Int) -> Int {
+    let remainder = assetLoadedCount % GALLERY_LOAD_LIMIT;
+    let prev = assetLoadedCount - remainder;
+    if (index < remainder) {
+        return index + prev;
+    }
+    else if (index < GALLERY_LOAD_LIMIT) {
+        return index + prev - GALLERY_LOAD_LIMIT;
+    }
+    else {
+        //invalid
+        return -1;
+    }
+}
+func realIndexToAssetArrayIndex(index: Int) -> Int {
+    if (index >= assetLoadedCount) {
+        return -1;
+    }
+    if (index < assetLoadedCount - GALLERY_LOAD_LIMIT) {
+        return -1;
+    }
+    return index % GALLERY_LOAD_LIMIT;
+}
+
+assetArrayIndexToRealIndex(0);
+assetArrayIndexToRealIndex(1);
+assetArrayIndexToRealIndex(9);
+assetArrayIndexToRealIndex(10);
+assetArrayIndexToRealIndex(11);
+assetArrayIndexToRealIndex(48);
+assetArrayIndexToRealIndex(49);
+
+
+assetArrayIndexToRealIndex(10);
+realIndexToAssetArrayIndex(110);
+
+var errcount = 0;
+for index in 0..<GALLERY_LOAD_LIMIT {
+    if (realIndexToAssetArrayIndex(assetArrayIndexToRealIndex(index)) != index) {
+        index;
+        errcount++;
+    }
+}
+errcount;
+
+/*
 func timeNumberer(fromDate: NSDate)->String {
     var currentDate = NSDate();
     
@@ -39,7 +89,7 @@ func timeNumberer(fromDate: NSDate)->String {
 }
 
 var oneWeekAgo = NSDate().dateByAddingTimeInterval(-2229810);
-timeNumberer(oneWeekAgo);
+timeNumberer(oneWeekAgo);*/
 
 /*
 func wordNumberer(num: Int)->String {

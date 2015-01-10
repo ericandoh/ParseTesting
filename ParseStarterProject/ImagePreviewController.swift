@@ -294,7 +294,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         self.prevDescrip = prevDescrip;
         var hOrder = Array<ImageIndex>();
         for i in 0..<imageValues.count {
-            hOrder.append(ImageIndex(groupNum: -1, index: i, asset: nil));
+            hOrder.append(ImageIndex(groupNum: -1, index: i, assetImg: nil));
         }
         self.highlightOrder = hOrder;
         self.shopTheLook = prevShop;
