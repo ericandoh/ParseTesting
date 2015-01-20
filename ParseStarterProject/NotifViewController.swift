@@ -86,6 +86,7 @@ class NotifViewController: UITableViewController {
         
         
         //self.tableView.backgroundView.layer.zPosition -= 1;
+        self.tableView.tableFooterView = UIView(frame: CGRectZero);
     }
     
     override func viewDidAppear(animated: Bool) {

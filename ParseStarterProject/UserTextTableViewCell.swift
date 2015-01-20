@@ -63,6 +63,8 @@ class UserTextTableViewCell: UITableViewCell {
             leadingConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
             if (!PFAnonymousUtils.isLinkedWithUser(involvedUser!.friendObj)) {
                 var friendAtTimeOfSnapshot = involvedUser;
+                friend = involvedUser;
+                self.userImage!.image = UIImage();
                 involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
                     if (friendAtTimeOfSnapshot!.username == involvedUser!.username) {
@@ -76,7 +78,6 @@ class UserTextTableViewCell: UITableViewCell {
                         //self.userImage!.clipsToBounds = true;
                     }
                 });
-                friend = involvedUser;
             }
         }
         else {

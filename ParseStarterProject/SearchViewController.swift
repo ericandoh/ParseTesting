@@ -58,6 +58,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         tapRecognizer.cancelsTouchesInView = false;
         self.myTable.addGestureRecognizer(tapRecognizer);
         myTable.hidden = true;
+        myTable.tableFooterView = UIView(frame: CGRectZero);
         
         //self.searchBar.barStyle = UIBarStyle.BlackTranslucent
         
