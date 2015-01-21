@@ -631,6 +631,15 @@ import UIKit
         }
     }
     
+    class func updateProfilePicture(img: UIImage) {
+        
+        let singleData = UIImagePNGRepresentation(img);
+        let singleFile = PFFile(name:"prof.png",data:singleData);
+        
+        PFUser.currentUser()["userIcon"] = singleFile;
+        PFUser.currentUser().saveInBackground();
+    }
+    
     class func removePost(post: ImagePostStructure) {
         if (PFUser.currentUser().username != post.getAuthor()) {
             //cant delete this post silly!

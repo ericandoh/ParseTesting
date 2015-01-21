@@ -10,7 +10,7 @@ import Foundation
 
 import UIKit
 
-class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @IBOutlet var settingsButton: UIButton!
     @IBOutlet var myCollectionView: UICollectionView!
     
@@ -57,7 +57,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     var isLoading: Bool = false;
     */
     
-    var userIcon: UIImageView?
+    var userIcon: UIButton?
     
     var options: Int = 0;
     
@@ -109,51 +109,47 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
         
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
-            
+            //viewing someone else's profile
             var textToPut = mainUser!.username;
             var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
             var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
             var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
-            userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            userIcon = UIButton(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+            //userIcon = UIImageView(frame: ...);
+            userIcon!.addTarget(self, action: "changeProfilePic:", forControlEvents: UIControlEvents.TouchDown);
+            userIcon!.showsTouchWhenHighlighted = true;
             var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
             userLabel.textColor = TITLE_TEXT_COLOR;
             userLabel.text = textToPut;
             userLabel.font = USER_TITLE_TEXT_FONT;
             
+            self.navigationItem.titleView = view;
+            view.addSubview(self.userIcon!);
+            view.addSubview(userLabel);
+            
             mainUser!.fetchImage({(image: UIImage)->Void in
-                //self.userIcon.image = image;
-                //self.backImageView.image = image;
-                self.backImageView.setImageAndBlur(image);
-                var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
-                self.userIcon!.image = newUserIcon
-                self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                self.userIcon!.layer.masksToBounds = true
-                self.userIcon!.layer.borderWidth = 0
-                self.navigationItem.titleView = view;
-                //userLabel.text = self.mainUser!.username
-                view.addSubview(self.userIcon!);
-                view.addSubview(userLabel);
-                NSLog("a");
+                self.setProfilePictureBubble(image);
                 self.numberPosts.text = String(self.mainUser!.getNumPosts())
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 self.getNumFollowers()
                 self.getNumFollowing()
-                //self.settingsButton.hidden = true
                 self.amMyself = false
                 self.configureSettingsButton();
                 self.AnonText.hidden = true
             });
-            //settingsButton.hidden = true;       //we could make this so this points to remove friend or whatnot
         }
         else {
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) {
-                
+                //viewing anonymous user profile (myself)
                 var textToPut = "Anonymous";
                 var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
                 var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
                 var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
-                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                //userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                userIcon = UIButton(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                userIcon!.addTarget(self, action: "changeProfilePic:", forControlEvents: UIControlEvents.TouchDown);
+                userIcon!.showsTouchWhenHighlighted = true;
                 var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
@@ -162,7 +158,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //self.backImageView.image = tempImage;
                 self.backImageView.setImageAndBlur(tempImage);
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(tempImage, scaledToSize: CGSize(width: 40, height: 40))
-                self.userIcon!.image = newUserIcon
+                self.userIcon!.setImage(newUserIcon, forState: UIControlState.Normal);
+                //self.userIcon!.image = newUserIcon
                 self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
                 self.userIcon!.layer.masksToBounds = true
                 self.userIcon!.layer.borderWidth = 0
@@ -177,31 +174,24 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //friendsButton.hidden = true;
             }
             else {
-                // Do any additional setup after loading the view.
-                
+                // viewing my own profile
                 var textToPut = ServerInteractor.getUserName();
                 var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
                 var widthOfLabel = min(labelSize.width + 3, widthOfTitleBar - widthOfUserIconImg - spacing);
                 var extraMargin = (widthOfTitleBar - widthOfUserIconImg - widthOfLabel - spacing) / 2.0;
-                userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                //userIcon = UIImageView(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                userIcon = UIButton(frame: CGRectMake(extraMargin, 0, widthOfUserIconImg, heightOfBar));
+                userIcon!.addTarget(self, action: "changeProfilePic:", forControlEvents: UIControlEvents.TouchDown);
+                userIcon!.showsTouchWhenHighlighted = false;
                 var userLabel: UILabel = UILabel(frame: CGRectMake(spacing + extraMargin + widthOfUserIconImg, 0, widthOfLabel, heightOfBar))
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
                 userLabel.font = USER_TITLE_TEXT_FONT;
-                
-                mainUser!.fetchImage({(fetchedImage: UIImage)->Void in
-                    //self.userIcon.image = fetchedImage;
-                    //self.backImageView.image = fetchedImage;
-                    self.backImageView.setImageAndBlur(fetchedImage);
-                    var newUserIcon = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
-                    self.userIcon!.image = newUserIcon
-                    self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
-                    self.userIcon!.layer.masksToBounds = true
-                    self.userIcon!.layer.borderWidth = 0
-                    self.navigationItem.titleView = view;
-                    view.addSubview(self.userIcon!);
-                    view.addSubview(userLabel);
-                    NSLog("B")
+                self.navigationItem.titleView = view;
+                view.addSubview(self.userIcon!);
+                view.addSubview(userLabel);
+                mainUser!.fetchImage({(image: UIImage)->Void in
+                    self.setProfilePictureBubble(image);
                     self.numberPosts.text = String(self.mainUser!.getNumPosts())
                     self.numberLikes.text = String(self.mainUser!.getNumLiked())
                     self.getNumFollowers()
@@ -264,6 +254,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    func setProfilePictureBubble(image: UIImage) {
+        self.backImageView.setImageAndBlur(image);
+        var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 40, height: 40))
+        self.userIcon!.setImage(newUserIcon, forState: UIControlState.Normal);
+        //self.userIcon!.image = newUserIcon...back when userIcon was still a UIImageView
+        self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
+        self.userIcon!.layer.masksToBounds = true
+        self.userIcon!.layer.borderWidth = 0
+    }
+    
     func unclickEverything() {
         postButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal);
         numberPosts.textColor = UNSELECTED_COLOR;
@@ -288,6 +288,36 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
     }
+    
+    func changeProfilePic(button: UIButton) {
+        if (!amMyself) {
+            //can't change other people's profile pictures!
+            return;
+        }
+        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary)) {
+            var profPicPicker: UIImagePickerController = UIImagePickerController();
+            //profPicPicker.modalPresentationStyle = UIModalPresentationCurrentContext;
+            profPicPicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            profPicPicker.delegate = self;
+            profPicPicker.mediaTypes = [kUTTypeImage];
+            profPicPicker.allowsEditing = false;
+            self.presentViewController(profPicPicker, animated: true, completion: nil);
+        }
+        
+    }
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        NSLog("Setting profile pic");
+        ServerInteractor.updateProfilePicture(image);
+        
+        //reupdate user profile window with picture
+        self.setProfilePictureBubble(image);
+        
+        picker.dismissViewControllerAnimated(true, completion: {()->Void in
+            CompatibleAlertViews.makeNotice("Updated!", message: "Profile Picture Updated", presenter: self);
+        });
+    }
+    
     
     @IBAction func anonSignIn(sender: UIButton) {
         self.performSegueWithIdentifier("LogOffFromUserSegue", sender: self);
