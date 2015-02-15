@@ -462,7 +462,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func getFollowers() {
-        ServerInteractor.findFollowers(mainUser!.username,
+        ServerInteractor.findFollowers(mainUser!,
             retFunction: {
             (retList: Array<FriendEncapsulator?>) in
                 self.friendList = retList
@@ -471,7 +471,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func getFollowing() {
-        ServerInteractor.findFollowing(mainUser!.username,
+        ServerInteractor.findFollowing(mainUser!,
             retFunction: {
                 (retList: Array<FriendEncapsulator?>) in
                 self.friendList = retList
@@ -483,7 +483,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //var numFollowing = ServerInteractor.findNumFollowing(mainUser!.username)
         //println("\(numFollowing) sdkjfnvkjdnvkjsndfljvsdlfjnvsdjfv OHH YEAADFJKVNDKVJN WOOTOWOTOWOWOT")
         //return numFollowing
-        ServerInteractor.findNumFollowing(mainUser!.username,
+        ServerInteractor.findNumFollowing(mainUser!,
             retFunction: {
                 (retInt: Int) in
                 var numFollowing: Int = retInt

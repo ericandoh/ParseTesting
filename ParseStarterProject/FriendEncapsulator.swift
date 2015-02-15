@@ -15,21 +15,27 @@ var friendDictionary: [String: FriendEncapsulator] = [:];
 class FriendEncapsulator {
     var friendObj: PFUser?
     var username: String = "";
+    var userID: String = "";
     var friendImg: UIImage? = nil;
     init(friend: PFUser) {
         //run by settings from main
         friendObj = friend;
-        let friend = friendObj!;
-        if (friend.username != nil) {
-            username = friend.username
+        if (friendObj!.username != nil) {
+            username = friendObj!.username
         } else {
             username = "Anonymous"
         }
-        //username = friend.username;
+        userID = friendObj!.objectId;
     }
     init(friendName: String) {
         //run by everythign else
         username = friendName;
+        friendObj = nil;
+        NSLog("Deprecated method - friendenc by username");
+    }
+    init(friendID: String) {
+        //run by everythign else
+        userID = friendID;
         friendObj = nil;
     }
     
@@ -51,7 +57,22 @@ class FriendEncapsulator {
             return newFriendToMake;
         }
     }
+    
+    class func dequeueFriendEncapsulatorWithID(friendID: String)->FriendEncapsulator {
+        var friendExist: FriendEncapsulator? = friendDictionary[friendID];
+        if (friendExist != nil) {
+            return friendExist!;
+        }
+        else {
+            //query to check that this id does exist - exist???
+            var newFriendToMake = FriendEncapsulator(friendID: friendID);
+            friendDictionary[friendID] = newFriendToMake;
+            return newFriendToMake;
+        }
+    }
+    
     class func dequeueFriendEncapsulator(friendName: String)->FriendEncapsulator {
+        NSLog("Deprecated method - friendenc dequeue by username");
         var friendExist: FriendEncapsulator? = friendDictionary[friendName];
         if (friendExist != nil) {
             return friendExist!;
@@ -61,6 +82,16 @@ class FriendEncapsulator {
             friendDictionary[friendName] = newFriendToMake;
             return newFriendToMake;
         }
+    }
+    class func dequeueFriendEncapsulatorByName(name: String)->FriendEncapsulator {
+        //do query by name for a friend
+        //if its in dictionary return it
+        //else query for it by name, and then save it into dictionary if relevant
+        return FriendEncapsulator(friendName: name);
+    }
+    
+    func getID()->String {
+        return userID;
     }
     
     
@@ -132,12 +163,11 @@ class FriendEncapsulator {
     
     func exists(result: (Bool)->Void) {
         var query = PFUser.query();
-        query.whereKey("username", equalTo: self.username);
+        query.whereKey("objectId", equalTo: userID);
         query.limit = 1;
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil && objects.count > 0)  {
-                self.friendObj = objects[0] as? PFUser;
                 result(true);
             }
             else if (error != nil) {
@@ -175,24 +205,6 @@ class FriendEncapsulator {
             });
         }
         else {
-            var query = PFUser.query();
-            query.whereKey("username", equalTo: self.username);
-            query.limit = 1;
-            query.findObjectsInBackgroundWithBlock {
-                (objects: [AnyObject]!, error: NSError!) -> Void in
-                if (error == nil && objects.count > 0)  {
-                    self.friendObj = objects[0] as? PFUser;
-                    self.fetchImage(receiveAction);
-                }
-                else if (error != nil) {
-                    // Log details of the failure
-                    NSLog("Error: %@ %@", error, error.userInfo!)
-                }
-                else if (objects.count == 0) {
-                    NSLog("Can't find user: \(self.username)")
-                    receiveAction(DEFAULT_USER_ICON);
-                }
-            }
         }
     }
 }

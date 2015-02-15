@@ -1036,19 +1036,19 @@ import UIKit
     }
     
     //------------------Notification related methods---------------------------------------
-    class func processNotification(targetUserName: String, targetObject: PFObject)->Array<AnyObject?>? {
-        return processNotification(targetUserName, targetObject: targetObject, controller: nil);
+    class func processNotification(targetUser: FriendEncapsulator, targetObject: PFObject)->Array<AnyObject?>? {
+        return processNotification(targetUser, targetObject: targetObject, controller: nil);
     }
-    class func processNotification(targetUserName: String, targetObject: PFObject, controller: UIViewController?)->Array<AnyObject?>? {
+    class func processNotification(targetUser: FriendEncapsulator, targetObject: PFObject, controller: UIViewController?)->Array<AnyObject?>? {
         
         var query: PFQuery = PFUser.query();
-        query.whereKey("username", equalTo: targetUserName)
-        var currentUserName: String = "";
+        query.whereKey("objectId", equalTo: targetUser)
+        var currentUserId: String = "";
         if (ServerInteractor.isAnonLogged()) {
-            currentUserName = "Anonymous";
+            currentUserId = "Anonymous";
         }
         else {
-            currentUserName = PFUser.currentUser().username;
+            currentUserId = PFUser.currentUser().objectId;
         }
         query.findObjectsInBackgroundWithBlock({ (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error != nil) {
@@ -1064,8 +1064,8 @@ import UIKit
                 targetObject.ACL.setPublicReadAccess(true);
                 targetObject.ACL.setPublicWriteAccess(true);
                 
-                targetObject["sender"] = currentUserName;  //this is necessary for friends!
-                targetObject["recipient"] = targetUserName;
+                targetObject["senderId"] = currentUserId;  //this is necessary for friends!
+                targetObject["recipientId"] = targetUser.objectId;
                 targetObject["viewed"] = false;
                 
                 //used by notification object to query order
@@ -1074,7 +1074,7 @@ import UIKit
                 targetObject.saveInBackground();
                 
                 //send push notification if applicable
-                if (targetUserName == PFUser.currentUser().username) {
+                if (targetUser.objectId == PFUser.currentUser().objectId) {
                     return;
                 }
                 ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: targetObject, wasRead: false))
@@ -1216,14 +1216,10 @@ import UIKit
         ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
-    class func postFollowerNotif(friendName: String) {
-        if (friendName == "") {
-            return;
-        }
-        
+    class func postFollowerNotif(friend: FriendEncapsulator) {
         var notifObj = PFObject(className:"Notification");
         notifObj["type"] = NotificationType.FOLLOWER_NOTIF.rawValue;
-        ServerInteractor.processNotification(friendName, targetObject: notifObj);
+        ServerInteractor.processNotification(friend, targetObject: notifObj);
         
     }
     //you have just accepted your friend's invite; your friend now gets informed that you are now his friend <3
@@ -1244,41 +1240,41 @@ import UIKit
         PFUser.currentUser().saveEventually();
         return nil;
     }*/
-    
-    //follow a user
-    class func addAsFollower(followerName: String) {
+
+    class func addAsFollower(follower: FriendEncapsulator) {
         if (ServerInteractor.isAnonLogged()) {
             return;
         }
-        else if (contains(PFUser.currentUser()["followings"] as Array<String>, followerName)) {
+        else if (contains(PFUser.currentUser()["followingsIds"] as Array<String>, follower.getID())) {
             return;
         }
-        else if (followerName == PFUser.currentUser().username) {
+        else if (follower.getID() == PFUser.currentUser().objectId) {
             return;
         }
         else {
-            ServerInteractor.postFollowerNotif(followerName);
+            ServerInteractor.postFollowerNotif(follower);
             
             var friendObj: PFObject = PFObject(className: "Friendship")
             friendObj.ACL.setPublicReadAccess(true)
             friendObj.ACL.setPublicWriteAccess(true)
-            friendObj["follower"] = PFUser.currentUser().username
-            friendObj["following"] = followerName
+            friendObj["followerId"] = PFUser.currentUser().objectId
+            friendObj["followingId"] = follower.getID();
             friendObj.saveEventually()
-            var followingsArray: NSMutableArray = PFUser.currentUser()["followings"] as NSMutableArray;
-            followingsArray.insertObject(followerName, atIndex: 0)
-            PFUser.currentUser()["followings"] = followingsArray
+            var followingsArray: NSMutableArray = PFUser.currentUser()["followingIds"] as NSMutableArray;
+            followingsArray.insertObject(follower.getID(), atIndex: 0)
+            PFUser.currentUser()["followingIds"] = followingsArray
             PFUser.currentUser().saveEventually()
         }
     }
-    class func removeAsFollower(followingName: String) {
-        var followingsArray: NSMutableArray = PFUser.currentUser()["followings"] as NSMutableArray
-        followingsArray.removeObject(followingName)
-        PFUser.currentUser()["followings"] = followingsArray
+    class func removeAsFollower(follower: FriendEncapsulator) {
+        var followingID = follower.getID();
+        var followingsArray: NSMutableArray = PFUser.currentUser()["followingIds"] as NSMutableArray
+        followingsArray.removeObject(followingID)
+        PFUser.currentUser()["followingIds"] = followingsArray
         PFUser.currentUser().saveEventually()
         var query = PFQuery(className: "Friendship");
-        query.whereKey("follower", equalTo: PFUser.currentUser().username)
-        query.whereKey("following", equalTo: followingName)
+        query.whereKey("followerId", equalTo: PFUser.currentUser().objectId)
+        query.whereKey("followingId", equalTo: followingID)
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
             if (error == nil) {
@@ -1287,15 +1283,16 @@ import UIKit
                 }
             }
             else {
-                NSLog("Failed to remove follower \(followingName)");
+                NSLog("Failed to remove follower \(followingID)");
             }
         });
 
     }
     
-    class func findFollowers(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+    class func findFollowers(follower: FriendEncapsulator, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+        var followerID = follower.getID();
         var query = PFQuery(className: "Friendship");
-        query.whereKey("following", equalTo: followerName)
+        query.whereKey("followingId", equalTo: followerID)
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
@@ -1306,32 +1303,34 @@ import UIKit
                     return;
                 }
                 for object in objects {
-                    var following = object["follower"] as String
-                    var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
+                    var following = object["followerId"] as String
+                    var friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(following)
                     followerList.append(friend)
                 }
                 retFunction(retList: followerList)
             });
     }
     
-    class func findFollowing(followerName: String, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+    class func findFollowing(follower: FriendEncapsulator, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
+        var followerID = follower.getID()
         var followingList: Array<FriendEncapsulator?> = []
-        for object in PFUser.currentUser()["followings"] as Array<String> {
-            var following = FriendEncapsulator.dequeueFriendEncapsulator(object)
+        for object in PFUser.currentUser()["followingIds"] as Array<String> {
+            var following = FriendEncapsulator.dequeueFriendEncapsulatorWithID(object)
             followingList.append(following)
         }
         retFunction(retList: followingList)
         
     }
     
-    class func findNumFollowing(followerName: String, retFunction: (Int)->Void) {
-        
-        retFunction(PFUser.currentUser()["followings"].count)
+    class func findNumFollowing(follower: FriendEncapsulator, retFunction: (Int)->Void) {
+        NSLog("Uh oh")
+        retFunction(PFUser.currentUser()["followingIds"].count)
     }
 
-    class func findNumFollowers(followerName: String, retFunction: (Int)->Void) {
+    class func findNumFollowers(follower: FriendEncapsulator, retFunction: (Int)->Void) {
+        var followerId = follower.getID()
         var query = PFQuery(className: "Friendship");
-        query.whereKey("following", equalTo: followerName)
+        query.whereKey("followingId", equalTo: followerId)
         var followerList: Array<FriendEncapsulator?> = [];
         query.findObjectsInBackgroundWithBlock({
             (objects: [AnyObject]!, error: NSError!) -> Void in
@@ -1342,8 +1341,8 @@ import UIKit
                 return;
             }
             for object in objects {
-                var following = object["follower"] as String
-                var friend = FriendEncapsulator.dequeueFriendEncapsulator(following)
+                var followingId = object["followerId"] as String
+                var friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(followingId)
                 followerList.append(friend)
             }
             retFunction(followerList.count)
@@ -1353,9 +1352,8 @@ import UIKit
     }
     
     //returns if I am already following user X
-    class func amFollowingUser(followingName: String, retFunction: (Bool)->Void) {
-        
-        if(contains(PFUser.currentUser()["followings"] as Array<String>, followingName)) {
+    class func amFollowingUser(following: FriendEncapsulator, retFunction: (Bool)->Void) {
+        if(contains(PFUser.currentUser()["followingIds"] as Array<String>, following.getID())) {
             retFunction(true)
         } else {
             return retFunction(false)
@@ -1433,11 +1431,11 @@ import UIKit
         NSLog("Getting from suggested users list first")
         var toRet: Array<FriendEncapsulator?> = [];
         
-        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        var alreadyMyFriends = PFUser.currentUser()["followingIds"] as Array<String>;
         
         var query = PFQuery(className: "SuggestedUsers");
-        query.whereKey("username", notContainedIn: alreadyMyFriends);
-        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
+        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
         
         //-----add orderby type (rank by popularity?)-------------WORK NEED
         //query......
@@ -1458,8 +1456,8 @@ import UIKit
                     var scrambleOrder = ServerInteractor.scrambler(0, end: Int(result), need: fetchCount);
                     for i in 0..<fetchCount {
                         var query = PFQuery(className: "SuggestedUsers");
-                        query.whereKey("username", notContainedIn: alreadyMyFriends);
-                        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+                        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
+                        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
                         //make this unique numbers
                         query.skip = scrambleOrder[i];
@@ -1479,7 +1477,7 @@ import UIKit
                             }
                             //for index: Int in 0..<objects.count {
                             var returnedObject = objects[0] as PFObject;
-                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulator(returnedObject["username"] as String));
+                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(returnedObject.objectId));
                             //}
                             nums += 1;
                             if (nums == fetchCount) {
@@ -1510,17 +1508,17 @@ import UIKit
         var toRet: Array<FriendEncapsulator?> = toRetPrev;
         var excludeNamesList: Array<String> = [];
         for i in 0..<toRetPrev.count {
-            excludeNamesList.append(toRetPrev[i]!.username);
+            excludeNamesList.append(toRetPrev[i]!.getID());
         }
         
-        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        var alreadyMyFriends = PFUser.currentUser()["followingIds"] as Array<String>;
         alreadyMyFriends = alreadyMyFriends + excludeNamesList;
         
         var query = PFUser.query();
         query.whereKey("userType", containedIn: RELEVANT_TYPES);
         query.whereKey("numPosts", greaterThanOrEqualTo: 1);
-        query.whereKey("username", notContainedIn: alreadyMyFriends);
-        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
+        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
         
         //-----add orderby type (rank by popularity?)-------------WORK NEED
         //query......
@@ -1542,8 +1540,8 @@ import UIKit
                         var query = PFUser.query();
                         query.whereKey("userType", containedIn: RELEVANT_TYPES);
                         query.whereKey("numPosts", greaterThanOrEqualTo: 1);
-                        query.whereKey("username", notContainedIn: alreadyMyFriends);
-                        query.whereKey("username", notEqualTo: PFUser.currentUser().username);
+                        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
+                        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
                         //make this unique numbers
                         query.skip = scrambleOrder[i];
@@ -1676,7 +1674,7 @@ import UIKit
             endFunc();
         });
     }
-    class func getSearchUsers(term: String, initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+    class func getSearchUsers(term: String, initFunc: (Int)->Void, receiveFunc: (Int, FriendEncapsulator)->Void, endFunc: ()->Void) {
         var twoTermz = term.lowercaseString;
         var query = PFUser.query();
         query.whereKey("username", containsString: twoTermz);
@@ -1691,9 +1689,9 @@ import UIKit
                 return;
             }
             initFunc(objects.count);
-            var content: String;
+            var content: FriendEncapsulator;
             for index: Int in 0..<objects.count {
-                content = (objects[index] as PFObject)["username"] as String;
+                content = FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser);
                 receiveFunc(index, content);
             }
             endFunc();
@@ -1706,7 +1704,7 @@ import UIKit
         }
         return nil
     }
-    class func getSearchContacts(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+    class func getSearchContacts(initFunc: (Int)->Void, receiveFunc: (Int, FriendEncapsulator)->Void, endFunc: ()->Void) {
         var addressBook: ABAddressBookRef?;
         if (ABAddressBookGetAuthorizationStatus() == ABAuthorizationStatus.NotDetermined) {
             NSLog("Requesting authorization")
@@ -1728,13 +1726,13 @@ import UIKit
             ServerInteractor.getContactNames(initFunc, receiveFunc, endFunc);
         }
     }
-    class func getContactNames(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+    class func getContactNames(initFunc: (Int)->Void, receiveFunc: (Int, FriendEncapsulator)->Void, endFunc: ()->Void) {
         var errorRef: Unmanaged<CFError>?
         var addressBook: ABAddressBookRef? = extractABAddressBookRef(ABAddressBookCreateWithOptions(nil, &errorRef))
         var contactList: NSArray = ABAddressBookCopyArrayOfAllPeople(addressBook).takeRetainedValue()
         //println("records in the array \(contactList.count)")
         
-        var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+        var alreadyMyFriends = PFUser.currentUser()["followingIds"] as Array<String>;
         
         var namesList: [String] = [];
         var emailsList: [String] = [];
@@ -1782,7 +1780,7 @@ import UIKit
             }
         }
         var query: PFQuery = PFUser.query();
-        query.whereKey("username", notContainedIn: alreadyMyFriends);
+        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
         query.whereKey("personFullName", containedIn: namesList);
         
         var query2: PFQuery = PFUser.query();
@@ -1801,7 +1799,7 @@ import UIKit
             }
             initFunc(objects.count);
             for index: Int in 0..<objects.count {
-                var content = (objects[index] as PFObject)["username"] as String;
+                var content = FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser);
                 //var friend = FriendEncapsulator(friendName: content);
                 receiveFunc(index, content);
             }
@@ -1815,7 +1813,7 @@ import UIKit
         return true;
     }
     
-    class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, String)->Void, endFunc: ()->Void) {
+    class func getFBFriendUsers(initFunc: (Int)->Void, receiveFunc: (Int, FriendEncapsulator)->Void, endFunc: ()->Void) {
         if (PFUser.currentUser()["fbID"] == nil) {
             NSLog("This account is not linked to fb!");
             initFunc(0);
@@ -1850,10 +1848,10 @@ import UIKit
                 for friendObject in friendObjs {
                     friendIds.addObject(friendObject.objectForKey("id")!);
                 }
-                var alreadyMyFriends = PFUser.currentUser()["followings"] as Array<String>;
+                var alreadyMyFriends = PFUser.currentUser()["followingIds"] as Array<String>;
                 var query: PFQuery = PFUser.query();
                 query.whereKey("fbID", containedIn: friendIds);
-                query.whereKey("username", notContainedIn: alreadyMyFriends);
+                query.whereKey("objectId", notContainedIn: alreadyMyFriends);
                 query.findObjectsInBackgroundWithBlock({
                     (objects: [AnyObject]!, error: NSError!) in
                     if (error != nil) {
@@ -1864,7 +1862,7 @@ import UIKit
                     }
                     initFunc(objects.count);
                     for index: Int in 0..<objects.count {
-                        var content = (objects[index] as PFObject)["username"] as String;
+                        var content = FriendEncapsulator.dequeueFriendEncapsulator(objects[index] as PFUser);
                         //var friend = FriendEncapsulator(friendName: content);
                         receiveFunc(index, content);
                     }

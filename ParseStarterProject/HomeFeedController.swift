@@ -75,7 +75,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     var viewingComments: Bool = false;
     
-
     //var mainUser: FriendEncapsulator = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
 
     var postLoadCount = POST_LOAD_COUNT;
@@ -584,7 +583,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.topRightButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
             }
             else {
-                ServerInteractor.amFollowingUser(currentPost.getAuthor(), retFunction: {(amFollowing: Bool) in
+                ServerInteractor.amFollowingUser(currentPost.getAuthorFriend(), retFunction: {(amFollowing: Bool) in
                     if (amFollowing == true) {
                         self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
                     }
@@ -649,9 +648,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     func goToCurrentPostAuthor(sender: UIButton!) {
-        var friend = FriendEncapsulator.dequeueFriendEncapsulator(sender.titleLabel!.text!);
-        friend.exists({(exist: Bool) in
-            if (exist) {
+        var currentPost = imgBuffer!.getImagePostAt(viewCounter);
+        var friend = currentPost.getAuthorFriend();
+        friend.exists({(result: Bool) in
+            if (result) {
                 if (self.navigationController != nil) {  //to avoid race conditions
                     var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                     (nextBoard as UserProfileViewController).receiveUserInfo(friend);
@@ -835,11 +835,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
         if (postCounter == currentPost.getImagesCount() + 1 && !(ServerInteractor.isAnonLogged())) {
-            var username = currentPost.getAuthor();
+            var username = currentPost.getAuthorFriend();
             ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
                 if (amFollowing == true) {
                     self.alerter = CompatibleAlertViews(presenter: self);
-                    self.alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                    self.alerter!.makeNoticeWithAction("Unfollow?", message: "Unfollow this user?", actionName: "Unfollow", buttonAction: {
                         () in
                         ServerInteractor.removeAsFollower(username);
                         //update button

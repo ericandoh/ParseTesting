@@ -404,6 +404,9 @@ class ImagePostStructure
             }
         });
     }
+    func getAuthorFriend()->FriendEncapsulator {
+        return FriendEncapsulator.dequeueFriendEncapsulatorWithID(myObj["authorId"] as String);
+    }
     func getAuthor()->String {
         return myObj["author"] as String;
     }

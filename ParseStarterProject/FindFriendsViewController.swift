@@ -227,8 +227,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         //here or in endStringQuery?
         //yTable.reloadData();
     }
-    func receiveStringResult(index: Int, classifier: String) {
-        searchTermList[index] = FriendEncapsulator.dequeueFriendEncapsulator(classifier);
+    func receiveStringResult(index: Int, classifier: FriendEncapsulator) {
+        searchTermList[index] = classifier;
     }
     func endStringQuery() {
         delayedSearchType = searchingType;
@@ -412,8 +412,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         //self.performSegueWithIdentifier("SearchSegue", sender: self);
         
         //var friend = FriendEncapsulator(friendName: searchResult);
-        friend.exists({(exist: Bool) in
-            if (exist) {
+        
+        friend.exists({(result: Bool) in
+            if (result) {
                 self.searchBar.text = "";
                 self.isSearching = false;
                 self.searchTermList = [];
@@ -425,16 +426,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             }
             else {
                 CompatibleAlertViews.makeNotice("No user found!", message: "User \(friend.username) does not exist", presenter: self);
-
-                //let alert: UIAlertController = UIAlertController(title: "No user found!", message: "User \(friend.username) does not exist", preferredStyle: UIAlertControllerStyle.Alert);
-                //alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                    //canceled
-                //    }));
-                //self.presentViewController(alert, animated: true, completion: nil)
             }
-
+            
         });
-        
     }
     
     //-------------------collectionview methods-------------------
