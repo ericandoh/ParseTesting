@@ -828,8 +828,8 @@ import UIKit
         var excludeList = convertPostToID(excludes);
         if (!isAnonLogged()) {
             //excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
-            query.whereKey("author", notEqualTo: PFUser.currentUser().username);
-            query.whereKey("author", containedIn: (PFUser.currentUser()["followings"] as NSArray));
+            query.whereKey("authorId", notEqualTo: PFUser.currentUser().objectId);
+            query.whereKey("authorId", containedIn: (PFUser.currentUser()["followingIds"] as NSArray));
         }
         /*
         if (friendsOnly && !isAnonLogged()) {
