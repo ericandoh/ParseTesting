@@ -410,6 +410,9 @@ class ImagePostStructure
     func getAuthor()->String {
         return myObj["author"] as String;
     }
+    func getAuthorID()->String {
+        return myObj["authorId"] as String;
+    }
     func getDescription()->String {
         var mainBody = myObj["description"] as String;
         return mainBody;

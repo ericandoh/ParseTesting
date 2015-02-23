@@ -686,7 +686,7 @@ import UIKit
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " liked your post!";
         
-        ServerInteractor.processNotification(newPost.getAuthor(), targetObject: notifObj);
+        ServerInteractor.processNotification(FriendEncapsulator.dequeueFriendEncapsulatorWithID(newPost.getAuthorID()), targetObject: notifObj);
     }
     class func sendCommentNotif(newPost: ImagePostStructure) {
         var notifObj = PFObject(className:"Notification");
@@ -695,7 +695,7 @@ import UIKit
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " commented on your post!";
         
-        ServerInteractor.processNotification(newPost.getAuthor(), targetObject: notifObj);
+        ServerInteractor.processNotification(FriendEncapsulator.dequeueFriendEncapsulatorWithID(newPost.getAuthorID()), targetObject: notifObj);
     }
     class func updateLikeNotif(newPost: ImagePostStructure) {
         var query = PFQuery(className: "Notification");
@@ -712,6 +712,7 @@ import UIKit
                 notifToUpdate["bumpedAt"] = NSDate();
                 notifToUpdate["viewed"] = false;
                 notifToUpdate["sender"] = PFUser.currentUser().username;
+                notifToUpdate["senderId"] = PFUser.currentUser().objectId;
                 notifToUpdate.saveEventually();
                 ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: notifToUpdate, wasRead: false));
             }
@@ -901,7 +902,7 @@ import UIKit
         
         if (!isAnonLogged()) {
             excludeList.addObjectsFromArray((PFUser.currentUser()["viewHistory"] as NSArray));
-            query.whereKey("author", notEqualTo: PFUser.currentUser().username);
+            query.whereKey("authorId", notEqualTo: PFUser.currentUser().objectId);
         }
         query.whereKey("objectId", notContainedIn: excludeList);
         //query addAscending/DescendingOrder for extra ordering:
@@ -974,7 +975,7 @@ import UIKit
     }
     class func getSubmissionsForSuggest(loadCount: Int, user: FriendEncapsulator, userIndex: Int,  notifyQueryFinish: (Int, Int)->Void, finishFunction: (Int, ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("author", equalTo: user.username);
+        query.whereKey("authorId", equalTo: user.userID);
         query.limit = loadCount;
         query.orderByDescending("createdAt");
         query.findObjectsInBackgroundWithBlock {
@@ -1042,7 +1043,7 @@ import UIKit
     class func processNotification(targetUser: FriendEncapsulator, targetObject: PFObject, controller: UIViewController?)->Array<AnyObject?>? {
         
         var query: PFQuery = PFUser.query();
-        query.whereKey("objectId", equalTo: targetUser)
+        query.whereKey("objectId", equalTo: targetUser.userID);
         var currentUserId: String = "";
         if (ServerInteractor.isAnonLogged()) {
             currentUserId = "Anonymous";
@@ -1094,7 +1095,7 @@ import UIKit
     class func sendPushNotificationForNotif(notif: InAppNotification) {
         //send only to users who have push notifications enabled (default)
         var pushQuery = PFUser.query();
-        pushQuery.whereKey("username", equalTo: notif.getSender().username);
+        pushQuery.whereKey("objectId", equalTo: notif.getSender().userID);
         pushQuery.whereKey("receivePush", equalTo: true);
         
         var pushNotif = PFPush();
@@ -1125,7 +1126,7 @@ import UIKit
             return;
         }
         var query = PFQuery(className:"Notification")
-        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
+        query.whereKey("recipientId", equalTo: PFUser.currentUser().objectId);
         query.whereKey("viewed", equalTo: false);
         query.countObjectsInBackgroundWithBlock({
             (result: Int32, error: NSError!) in
@@ -1143,7 +1144,7 @@ import UIKit
             return;
         }
         var query = PFQuery(className:"Notification")
-        query.whereKey("recipient", equalTo: PFUser.currentUser().username);
+        query.whereKey("recipientId", equalTo: PFUser.currentUser().objectId);
         //want most recent first
         //query.orderByDescending("createdAt");
         query.orderByDescending("bumpedAt");
@@ -1213,7 +1214,7 @@ import UIKit
         notifObj["message"] = txt
         //notifObj.saveInBackground()
         
-        ServerInteractor.processNotification(PFUser.currentUser().username, targetObject: notifObj);
+        ServerInteractor.processNotification(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()), targetObject: notifObj);
     }
     //you have just requested someone as a friend; this sends the friend you are requesting a notification for friendship
     class func postFollowerNotif(friend: FriendEncapsulator) {
