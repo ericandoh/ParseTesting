@@ -495,7 +495,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         //var numFollowers = ServerInteractor.findNumFollowers(mainUser!.username)
         //println(String(numFollowers) + "sdkjfnvkjdnvkjsndfljvsdlfjnvsdjfv OHH YEAADFJKVNDKVJN WOOTOWOTOWOWOT")
         //return numFollowers
-        ServerInteractor.findNumFollowers(mainUser!.username,
+        ServerInteractor.findNumFollowers(mainUser!,
             retFunction: {
                 (retInt: Int) in
                 var numFollowers: Int = retInt
@@ -620,7 +620,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }*/
     
     func configureSettingsButton() {
-        ServerInteractor.amFollowingUser(mainUser!.username, retFunction: {(amFollowing: Bool) in
+        ServerInteractor.amFollowingUser(mainUser!, retFunction: {(amFollowing: Bool) in
             self.friendAction = amFollowing;
             if (amFollowing == true) {
                 self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
@@ -641,7 +641,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             if (!friendAction) {
                 //follow me
                 //ServerInteractor.postFollowerNotif(username, controller: self);
-                ServerInteractor.addAsFollower(username);
+                ServerInteractor.addAsFollower(mainUser!);
                 
                 //update button
                 self.friendAction = true
@@ -653,7 +653,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.alerter = CompatibleAlertViews(presenter: self);
                 alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                     () in
-                    ServerInteractor.removeAsFollower(username);
+                    ServerInteractor.removeAsFollower(self.mainUser!);
                     //update button
                     self.friendAction = false
                     self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
