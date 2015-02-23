@@ -686,7 +686,7 @@ import UIKit
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " liked your post!";
         
-        ServerInteractor.processNotification(FriendEncapsulator.dequeueFriendEncapsulatorWithID(newPost.getAuthorID()), targetObject: notifObj);
+        ServerInteractor.processNotification(newPost.getAuthorFriend(), targetObject: notifObj);
     }
     class func sendCommentNotif(newPost: ImagePostStructure) {
         var notifObj = PFObject(className:"Notification");
@@ -695,7 +695,7 @@ import UIKit
         notifObj["ImagePost"] = newPost.myObj;
         notifObj["message"] = " commented on your post!";
         
-        ServerInteractor.processNotification(FriendEncapsulator.dequeueFriendEncapsulatorWithID(newPost.getAuthorID()), targetObject: notifObj);
+        ServerInteractor.processNotification(newPost.getAuthorFriend(), targetObject: notifObj);
     }
     class func updateLikeNotif(newPost: ImagePostStructure) {
         var query = PFQuery(className: "Notification");
