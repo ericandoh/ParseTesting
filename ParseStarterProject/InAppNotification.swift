@@ -155,8 +155,8 @@ class InAppNotification {
             //Post does not have image associated with it
             //NSLog("Cannot retrieve follower from non-follower post notification")
         //}
-        var obj: String = self.personalObj!["sender"] as String
-        return FriendEncapsulator.dequeueFriendEncapsulator(obj);
+        var obj: String = self.personalObj!["senderId"] as String
+        return FriendEncapsulator.dequeueFriendEncapsulatorWithID(obj);
     }
     
     func getImage(receiveAction:(UIImage)->Void) {
@@ -189,10 +189,25 @@ class InAppNotification {
     
     func getComments(receiveAction:(Array<String>)->Void)->Void {
         NSLog("This looks deprecated; alert me if you see this NSLog -Eric")
-        var obj = self.personalObj!["ImagePost"] as PFObject
-        obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
-            var commenting: Array<String> = object["comments"] as Array<String>
-            receiveAction(commenting);
+        var imgPost = self.personalObj!["ImagePost"] as PFObject
+       
+        var query = PFQuery(className: "PostComment");
+        query.whereKey("postId", equalTo: imgPost.objectId);
+        query.findObjectsInBackgroundWithBlock({
+            (objects: [AnyObject]!, error: NSError!) -> Void in
+            if (error != nil) {
+                NSLog("Error grabbing post comments!");
+                return;
+            }
+            
+            if (objects.count > 0) {
+                var commenting: Array<String> = [];
+                for obj in objects {
+                    var pfObj = obj as PFObject;
+                    commenting.append(pfObj["content"] as String);
+                }
+                receiveAction(commenting);
+            }
         });
     }
     
