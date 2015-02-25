@@ -165,7 +165,20 @@ class ImagePostStructure
         return myObj["passes"] as Int
     }
     func getImagesCount()->Int {
-        return (myObj["imageFiles"] as Array<PFFile>).count;
+        var imgCount : Int = 0;
+        var query = PFQuery(className:"GameScore")
+        query.whereKey("playerName", equalTo:"Sean Plott")
+        query.countObjectsInBackgroundWithBlock {
+            (count: Int32, error: NSError!) -> Void in
+            if error == nil {
+                imgCount = Int(count)
+            } else {
+                NSLog("Fail to fetch image file number!")
+                imgCount = 0
+            }
+        }
+
+        return imgCount;
     }
     func getCommentsCount()->Int {
         return (myObj["comments"] as Array<String>).count;
