@@ -298,6 +298,11 @@ import UIKit
         //need to add check checking if I am anon
         return PFUser.currentUser().username;
     }
+    
+    class func getUserID()->String {
+        return PFUser.currentUser().objectId;
+    }
+    
     //used in friend display panels to handle my user screen vs other user screens
     class func getCurrentUser()->FriendEncapsulator {
         return FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser());
