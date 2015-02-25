@@ -166,8 +166,8 @@ class ImagePostStructure
     }
     func getImagesCount()->Int {
         var imgCount : Int = 0;
-        var query = PFQuery(className:"GameScore")
-        query.whereKey("playerName", equalTo:"Sean Plott")
+        var query = PFQuery(className:"PostImageFile")
+        query.whereKey("postId", equalTo:myObj.objectId)
         query.countObjectsInBackgroundWithBlock {
             (count: Int32, error: NSError!) -> Void in
             if error == nil {
@@ -181,7 +181,20 @@ class ImagePostStructure
         return imgCount;
     }
     func getCommentsCount()->Int {
-        return (myObj["comments"] as Array<String>).count;
+        var cmtCount : Int = 0;
+        var query = PFQuery(className:"PostComment")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.countObjectsInBackgroundWithBlock {
+            (count: Int32, error: NSError!) -> Void in
+            if error == nil {
+                cmtCount = Int(count)
+            } else {
+                NSLog("Fail to fetch comment number!")
+                cmtCount = 0
+            }
+        }
+        
+        return cmtCount;
     }
     func getLabels()->String {
         var labelArr = myObj["labels"] as Array<String>;
