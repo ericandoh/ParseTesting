@@ -94,7 +94,7 @@ class UserTextTableViewCell: UITableViewCell {
                 }
                 else {
                     sideConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
-                    ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
+                    ServerInteractor.amFollowingUser(involvedUser!, retFunction: {(amFollowing: Bool) in
                         self.friendAction = amFollowing;
                         self.nextAction.hidden = false;
                         if (amFollowing == true) {
@@ -179,7 +179,7 @@ class UserTextTableViewCell: UITableViewCell {
         if (friendAction == false) {
             //follow me
             //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
-            ServerInteractor.addAsFollower(username);
+            ServerInteractor.addAsFollower(friend!);
             
             //update button
             self.friendAction = true
@@ -191,7 +191,7 @@ class UserTextTableViewCell: UITableViewCell {
             alerter = CompatibleAlertViews(presenter: self.owner!);
             alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                 () in
-                ServerInteractor.removeAsFollower(username);
+                ServerInteractor.removeAsFollower(self.friend!);
                 //update button
                 self.friendAction = false
                 self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
