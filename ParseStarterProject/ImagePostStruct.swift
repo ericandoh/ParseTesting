@@ -211,7 +211,7 @@ class ImagePostStructure
         if (ServerInteractor.isAnonLogged()) {
             return false;
         }
-        return (myObj["author"] as String) == PFUser.currentUser().username;
+        return (myObj["authorId"] as String) == PFUser.currentUser().objectId;
     }
     func getAgeAsString()->String {
         var date = myObj.createdAt;
