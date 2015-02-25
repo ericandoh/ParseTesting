@@ -56,8 +56,10 @@ class ImagePostStructure
         myObj["imageFiles"] = imgArray; //other images that may be in this file
         NSLog("Size of my image array: \(imgArray)");
         myObj["author"] = PFUser.currentUser().username;
+        myObj["authorId"] = PFUser.currentUser().objectId;
         myObj["likes"] = 0;
         myObj["likers"] = [];
+        myObj["likerIds"] = [];
         myObj["passes"] = 0;
         NSLog("Deprecated line here, please remove")
         myObj["exclusive"] = PostExclusivity.EVERYONE.rawValue;//exclusivity.rawValue;
@@ -66,6 +68,7 @@ class ImagePostStructure
 
         myObj["comments"] = [];
         myObj["commentAuthor"] = [];
+        myObj["commentAuthorId"] = [];
         
         var descriptionLabels: Array<String> = ServerInteractor.extractStrings(description);
         var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
@@ -112,11 +115,12 @@ class ImagePostStructure
         }
         if (isLikedByUser()) {
             myObj.removeObject(ServerInteractor.getUserName(), forKey: "likers");
+            myObj.removeObject(ServerInteractor.getUserID(), forKey: "likerIds");
             myObj.incrementKey("likes", byAmount: -1);
             ServerInteractor.removeFromLikedPosts(myObj.objectId);
         }
         else {
-            if (PFUser.currentUser().username == getAuthor()) {
+            if (PFUser.currentUser().objectId == getAuthorID()) {
                 //do NOT send a notification
             }
             else {
@@ -124,6 +128,7 @@ class ImagePostStructure
                 ServerInteractor.updateLikeNotif(self);
             }
             myObj.addUniqueObject(ServerInteractor.getUserName(), forKey: "likers");
+            myObj.addUniqueObject(ServerInteractor.getUserID(), forKey: "likerIds")
             myObj.incrementKey("likes")
             
             ServerInteractor.appendToLikedPosts(myObj.objectId)
