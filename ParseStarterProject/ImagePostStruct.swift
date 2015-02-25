@@ -112,6 +112,7 @@ class ImagePostStructure
         //var likers = PFUser.currentUser()["likers"] as NSMutableArray
         if (myObj["likers"] == nil) {
             myObj["likers"] = [];
+            myObj["likerIds"] = [];
         }
         if (isLikedByUser()) {
             myObj.removeObject(ServerInteractor.getUserName(), forKey: "likers");
@@ -147,10 +148,18 @@ class ImagePostStructure
     func getLikers()->Array<String> {
         if (myObj["likers"] == nil) {
             myObj["likers"] = [];
+            myObj["likerIds"] = [];
             myObj.saveInBackground();
             return [];
         }
-        return (myObj["likers"]) as Array<String>;
+        
+        var likerIds : [String] = (myObj["likers"]) as Array<String>;
+        var likers : [String] = [];
+        for likerId in likerIds {
+            let friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(likerId);
+            likers.append(friend.username);
+        }
+        return likers;
     }
     func getPasses()->Int {
         return myObj["passes"] as Int
