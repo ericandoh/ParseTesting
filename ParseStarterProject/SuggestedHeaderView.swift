@@ -43,7 +43,7 @@ class SuggestedHeaderView: UICollectionReusableView {
                 //self.userImage!.clipsToBounds = true;
             });
             friend = involvedUser;
-            ServerInteractor.amFollowingUser(involvedUser!.username, retFunction: {(amFollowing: Bool) in
+            ServerInteractor.amFollowingUser(involvedUser!, retFunction: {(amFollowing: Bool) in
                 self.friendAction = amFollowing;
                 self.friendButton.hidden = false;
                 if (amFollowing == true) {
@@ -79,7 +79,7 @@ class SuggestedHeaderView: UICollectionReusableView {
         if (friendAction == false) {
             //follow me
             //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
-            ServerInteractor.addAsFollower(username);
+            ServerInteractor.addAsFollower(friend!);
             
             //update button
             self.friendAction = true
@@ -91,7 +91,7 @@ class SuggestedHeaderView: UICollectionReusableView {
             alerter = CompatibleAlertViews(presenter: self.owner!);
             alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
                 () in
-                ServerInteractor.removeAsFollower(username);
+                ServerInteractor.removeAsFollower(self.friend!);
                 //update button
                 self.friendAction = false
                 self.friendButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
