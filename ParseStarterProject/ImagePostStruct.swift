@@ -420,29 +420,26 @@ class ImagePostStructure
         }
     }
     func fetchComments(finishFunction: (authorInput: NSArray, input: NSArray)->Void) {
-        
         //refresh comments by refetching object from server
-        myObj.fetchInBackgroundWithBlock({
-            (object: PFObject!, error: NSError!) in
-            if (error == nil) {
-                self.myObj = object;
-                var commentAuthorArray = NSArray();
-                if ((self.myObj["commentAuthor"]) != nil) {
-                    commentAuthorArray = self.myObj["commentAuthor"] as NSArray
-                }
-                var commentArray = self.myObj["comments"] as NSArray;
-                if (commentArray.count > commentAuthorArray.count) {
-                    var myArray = commentAuthorArray as Array<String>;
-                    myArray += Array<String>(count: commentArray.count - commentAuthorArray.count, repeatedValue: "");
-                    commentAuthorArray = myArray as NSArray;
+        var query = PFQuery(className:"PostComment")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.findObjectsInBackgroundWithBlock {
+            (comments: [AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                var commentArray : Array<String> = [];
+                var commentAuthorArray : Array<String> = [];
+                for comment in comments as Array<PFObject> {
+                    commentArray.append(comment["content"] as String);
+                    let commentAuthorId = comment["commentAuthorId"] as String;
+                    let commentAuthor = FriendEncapsulator.dequeueFriendEncapsulatorWithID(commentAuthorId);
+                    commentAuthorArray.append(commentAuthor.userID);
                 }
                 finishFunction(authorInput: commentAuthorArray, input: commentArray);
-            }
-            else {
+            } else {
                 NSLog("Error refetching object for comments");
                 finishFunction(authorInput:[], input: []);
             }
-        });
+        }
     }
     func getAuthorFriend()->FriendEncapsulator {
         return FriendEncapsulator.dequeueFriendEncapsulatorWithID(myObj["authorId"] as String);
