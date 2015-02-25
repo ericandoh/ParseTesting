@@ -741,6 +741,7 @@ import UIKit
                 notifToUpdate["bumpedAt"] = NSDate();
                 notifToUpdate["viewed"] = false;
                 notifToUpdate["sender"] = PFUser.currentUser().username;
+                notifToUpdate["senderId"] = PFUser.currentUser().objectId;
                 notifToUpdate.saveEventually();
                 ServerInteractor.sendPushNotificationForNotif(InAppNotification(dataObject: notifToUpdate, wasRead: false));
             }

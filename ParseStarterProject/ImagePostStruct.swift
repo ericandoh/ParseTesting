@@ -505,7 +505,7 @@ class ImagePostStructure
             commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
             commentArray = myObj["comments"] as NSMutableArray;
         }
-        if (PFUser.currentUser().username == getAuthor()) {
+        if (PFUser.currentUser().objectId == getAuthorID()) {
             //do NOT send a notification
         }
         else {
@@ -524,6 +524,12 @@ class ImagePostStructure
         //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
         
+        var cmt = PFObject(className: "PostComment");
+        cmt["content"] = comment
+        cmt["authorId"] = PFUser.currentUser().objectId;
+        cmt["postId"] = myObj.objectId;
+        cmt["postAuthorId"] = myObj["authorId"];
+        cmt.saveInBackground();
         
         return PostComment(author: author, content: comment);
     }
