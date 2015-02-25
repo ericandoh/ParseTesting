@@ -465,18 +465,36 @@ class ImagePostStructure
         return mainBody;
     }
     func getShopLooks()->Array<ShopLook> {
-        var lookArray = myObj["shopLooks"] as NSArray;
         var retList: Array<ShopLook> = [];
-        for object in lookArray {
-            retList.append(ShopLook.fromDictionary(object));
+        var query = PFQuery(className:"PostShopLook")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.findObjectsInBackgroundWithBlock {
+            (shopLooks: [AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                for shopLook in shopLooks as Array<PFObject> {
+                    let sl = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
+                    retList.append(sl);
+                }
+            } else {
+                NSLog("Error refetching object for comments");
+            }
         }
         return retList;
     }
     func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
-        var lookArray = myObj["shopLooks"] as NSArray;
         var retList: Array<ShopLook> = [];
-        for object in lookArray {
-            retList.append(ShopLook.fromDictionary(object));
+        var query = PFQuery(className:"PostShopLook")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.findObjectsInBackgroundWithBlock {
+            (shopLooks: [AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                for shopLook in shopLooks as Array<PFObject> {
+                    let sl = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
+                    retList.append(sl);
+                }
+            } else {
+                NSLog("Error refetching object for comments");
+            }
         }
         finishFunction(input: retList);
     }
