@@ -183,16 +183,26 @@ class InAppNotification {
             }
             var imgFile: PFFile = object["imageFile"] as PFFile;
             //getDataINBackgroundWithBlock is used to get big chunks of data - such as PFFiles
-            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                //get file objects
-                if (error != nil) {
-                    NSLog("Error fetching notification object image");
-                    receiveAction(NULL_IMG);
-                    return;
+            var query = PFQuery(className: "PostImageFile")
+            query.whereKey("postId", equalTo: obj.objectId)
+            query.orderByAscending("createdAt")
+            query.getFirstObjectInBackgroundWithBlock{(postImageFile: PFObject!, error: NSError!) -> Void in
+                if error == nil {
+                    imgFile = postImageFile["data"] as PFFile
+                } else {
+                    NSLog("Fail to fetch post image file object from PostImageFile table")
                 }
-                receiveAction(UIImage(data: result)!);
-            });
-        });
+                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                    //get file objects
+                    if (error != nil) {
+                        NSLog("Error fetching notification object image");
+                        receiveAction(NULL_IMG);
+                        return;
+                    }
+                    receiveAction(UIImage(data: result)!);
+                })
+            }
+        })
     }
     
     func getComments(receiveAction:(Array<String>)->Void)->Void {
