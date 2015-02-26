@@ -628,6 +628,25 @@ import UIKit
                     
                     ServerInteractor.processNotification(sender, targetObject: notifObj);*/
                     //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
+                    
+                    // create post image file objects in table PostImageFile
+                    for image: UIImage in images {
+                        let data = UIImagePNGRepresentation(image);
+                        let file = PFFile(name:"posted.png",data:data);
+                        
+                        var pifObj : PFObject = PFObject(className: "PostImageFile")
+                        pifObj["name"] = "posted.png";
+                        pifObj["url"] = "";
+                        pifObj["data"] = file;
+                        pifObj["postId"] = newPost.myObj.objectId;
+                    }
+                    // create post shop look objects in table PostShopLook
+                    for look in looks {
+                        var slObj : PFObject = PFObject(className: "PostShopLook")
+                        slObj["title"] = look.title;
+                        slObj["urlLink"] = look.urlLink;
+                        slObj["postId"] = newPost.myObj.objectId;
+                    }
                 }
                 else {
                     NSLog("Soem error of some sort");
