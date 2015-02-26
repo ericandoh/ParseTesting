@@ -1637,8 +1637,8 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oBM-Ln-eoU">
-                                <rect key="frame" x="0.0" y="0.0" width="225" height="568"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBM-Ln-eoU">
+                                <rect key="frame" x="95" y="0.0" width="225" height="568"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Nvf-EI-YCe">
                                         <rect key="frame" x="10" y="10" width="50" height="50"/>
@@ -1673,7 +1673,7 @@
                                                             </constraints>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d4E-zQ-KJK">
-                                                            <rect key="frame" x="10" y="64" width="1" height="20"/>
+                                                            <rect key="frame" x="10" y="64" width="1" height="19"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="1" id="vJi-WJ-m7p"/>
@@ -1757,6 +1757,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="oBM-Ln-eoU" secondAttribute="trailing" id="2DX-yx-9Ql"/>
                             <constraint firstAttribute="trailing" secondItem="c2u-Cc-WbD" secondAttribute="trailing" id="8di-eW-DCa"/>
                             <constraint firstItem="c2u-Cc-WbD" firstAttribute="top" secondItem="ACU-14-sjx" secondAttribute="top" id="Bci-2X-YtW"/>
                             <constraint firstItem="Y6y-Mh-PYK" firstAttribute="leading" secondItem="ACU-14-sjx" secondAttribute="leading" id="DeB-dB-1YP"/>
@@ -1776,6 +1777,7 @@
                     <connections>
                         <outlet property="contentArea" destination="Y6y-Mh-PYK" id="YSs-8W-OuE"/>
                         <outlet property="outOfMenuButton" destination="c2u-Cc-WbD" id="KVy-52-zfT"/>
+                        <outlet property="sideMenuRightConstraint" destination="2DX-yx-9Ql" id="eji-Mu-xTJ"/>
                         <outlet property="sideTableView" destination="p1A-64-2tQ" id="Wkf-8i-uNV"/>
                         <outlet property="sideView" destination="oBM-Ln-eoU" id="yNa-cb-r8k"/>
                     </connections>

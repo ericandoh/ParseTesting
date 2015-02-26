@@ -15,9 +15,11 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet var sideView: UIView!
     @IBOutlet var sideTableView: UITableView!
     @IBOutlet var outOfMenuButton: UIButton!
+    @IBOutlet var sideMenuRightConstraint: NSLayoutConstraint!
     var viewControllerDictionary: Dictionary<String, UIViewController> = [:];
     var currentlyShowing: String = "";
     var menuOpen: Bool = true;
+    var hasLaidOut: Bool = false;
     
     var suppressMenu: Bool = false;
     
@@ -27,10 +29,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         super.viewDidLoad();
         // Do any additional setup after loading the view.
         menuOpen = false;
-        var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
+        var x = CGFloat(200);//self.sideView.center.x - CGFloat(BAR_WIDTH);
         var y = self.sideView.center.y;
         var point = CGPoint(x: x, y: y);
-        sideView.center = point;
+//        sideView.center = point;
         outOfMenuButton.hidden = true;
         outOfMenuButton.alpha = 0;
         displayContentController(SIDE_MENU_ITEMS[0]);
@@ -62,15 +64,23 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         if (sideView.center.x > 0) {
-            var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
-            var y = self.sideView.center.y;
-            var point = CGPoint(x: x, y: y);
-            sideView.center = point;
+//            var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
+//            var y = self.sideView.center.y;
+//            var point = CGPoint(x: x, y: y);
+////            sideView.center = point;
             var toolbar = UIToolbar(frame: sideView.frame);
             toolbar.barStyle = UIBarStyle.Black;
             toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
             self.sideView.insertSubview(toolbar, atIndex: 0);
             
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews();
+        if (!self.hasLaidOut) {
+            self.hasLaidOut = true;
+            self.hideSideBar();
         }
     }
     /*@IBAction func buttonOne(sender: AnyObject) {
@@ -79,7 +89,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     
     @IBAction func swiped(sender: UISwipeGestureRecognizer) {
         var location: CGPoint = sender.locationInView(self.view);
-        if (location.x <= CGFloat(TRIGGER_BAR_WIDTH)) {
+        if (location.x <= self.sideView.frame.size.width - CGFloat(TRIGGER_BAR_WIDTH)) {
             self.openMenu();
         }
     }
@@ -129,17 +139,19 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         /*
         viewControllerDictionary[currentlyShowing] => current view controller, if you want to manipulate it
         */
-        var x = self.sideView.center.x + CGFloat(BAR_WIDTH);
-        var y = self.sideView.center.y;
-        var point = CGPoint(x: x, y: y);
+//        var x = self.sideView.center.x + CGFloat(BAR_WIDTH);
+//        var y = self.sideView.center.y;
+//        var point = CGPoint(x: x, y: y);
         self.sideView.hidden = false;
         self.view.bringSubviewToFront(self.outOfMenuButton);
         self.view.bringSubviewToFront(self.sideView);
         self.sideTableView.userInteractionEnabled = true;
         self.sideTableView.reloadData();
+        self.sideMenuRightConstraint.constant = 0;
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             ()->Void in
-            self.sideView.center = point;
+//            self.sideView.center = point;
+            self.view .layoutIfNeeded();
             self.outOfMenuButton.alpha = SIDE_MENU_DIM;
             }, completion: {
                 (success: Bool)->Void in
@@ -151,13 +163,15 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     func hideSideBar(completions: (Bool)->Void) {
         if (menuOpen) {
-            var x = self.sideView.center.x - BAR_WIDTH;
-            var y = self.sideView.center.y;
-            var point = CGPoint(x: x, y: y);
+//            var x = self.sideView.center.x - BAR_WIDTH;
+//            var y = self.sideView.center.y;
+//            var point = CGPoint(x: x, y: y);
             self.sideTableView.userInteractionEnabled = false;
+            self.sideMenuRightConstraint.constant = -self.sideView.frame.size.width;
             UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 ()->Void in
-                self.sideView.center = point;
+                self.view .layoutIfNeeded();
+//                self.sideView.center = point;
                 self.outOfMenuButton.alpha = 0;
                 }, completion: {(success: Bool)->Void in
                     self.menuOpen = false;
