@@ -43,8 +43,7 @@ class InAppNotification {
         self.type = self.personalObj!["type"] as String;
         
         var msgToSend: String = "Message";
-        var senderId : String = self.personalObj!["sender"] as String
-        var fromWho: String = FriendEncapsulator.dequeueFriendEncapsulatorWithID(senderId).username
+        var fromWho: String = self.getSender().username
         
         switch self.type {
         case "ImagePost":
@@ -119,7 +118,7 @@ class InAppNotification {
                     obj.fetchIfNeededInBackgroundWithBlock({(object:PFObject!, error: NSError!)->Void in
                         if (error == nil) {
                             var suffix = self.personalObj!["message"] as String
-                            var numComments: Int = (object["comments"] as Array<String>).count
+                            var numComments: Int = (object["comments"] as Array<String>).count // TODO: remove after test and confirmation
                             var query = PFQuery(className: "PostComment")
                             query.whereKey("postId", equalTo: obj.objectId)
                             query.countObjectsInBackgroundWithBlock{
