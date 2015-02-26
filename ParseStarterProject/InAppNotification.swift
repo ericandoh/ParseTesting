@@ -100,7 +100,7 @@ class InAppNotification {
                             var suffix = self.personalObj!["message"] as String
                             var numLikes: Int = object["likes"] as Int
                             if (numLikes <= 1) {
-                                var sender = self.personalObj!["sender"] as String;
+                                var sender = self.getSender().username
                                 self.messageString = "@" + sender + suffix;
                             }
                             else {
@@ -119,8 +119,16 @@ class InAppNotification {
                         if (error == nil) {
                             var suffix = self.personalObj!["message"] as String
                             var numComments: Int = (object["comments"] as Array<String>).count
+                            var query = PFQuery(className: "PostComment")
+                            query.whereKey("postId", equalTo: obj.objectId)
+                            query.countObjectsInBackgroundWithBlock{
+                                (count: Int32, error: NSError!) -> Void in
+                                if error == nil {
+                                    numComments = Int(count)
+                                }
+                            }
                             if (numComments <= 1) {
-                                var sender = self.personalObj!["sender"] as String;
+                                var sender = self.getSender().username
                                 self.messageString = "@" + sender + suffix;
                             }
                             else {
@@ -134,7 +142,7 @@ class InAppNotification {
                         }
                     });
                 case NotificationType.FOLLOWER_NOTIF.rawValue:
-                    self.friendName = self.personalObj!["sender"] as String
+                    self.friendName = self.getSender().username
                     self.messageString = "@\(self.friendName) started following you!";
                     listener.tableView.reloadData();
                     
