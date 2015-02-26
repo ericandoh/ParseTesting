@@ -43,7 +43,8 @@ class InAppNotification {
         self.type = self.personalObj!["type"] as String;
         
         var msgToSend: String = "Message";
-        var fromWho: String = self.personalObj!["sender"] as String
+        var senderId : String = self.personalObj!["sender"] as String
+        var fromWho: String = FriendEncapsulator.dequeueFriendEncapsulatorWithID(senderId).username
         
         switch self.type {
         case "ImagePost":
