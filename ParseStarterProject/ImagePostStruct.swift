@@ -230,16 +230,37 @@ class ImagePostStructure
     func loadImage(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
         if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
-            imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                if (error == nil) {
-                    //get file objects
-                    self.image = UIImage(data: result);
-                    finishFunction(imgStruct: self, index: index);
+            
+            var query = PFQuery(className: "PostImageFile")
+            query.whereKey("postId", equalTo: myObj.objectId)
+            query.orderByAscending("createdAt")
+            query.getFirstObjectInBackgroundWithBlock{(postImageFile: PFObject!, error: NSError!) -> Void in
+                if error == nil {
+                    let img = postImageFile["data"] as PFFile
+                    img.getDataInBackgroundWithBlock({ (result: NSData!, error: NSError!) in
+                        if (error == nil) {
+                            //get file objects
+                            self.image = UIImage(data: result);
+                            finishFunction(imgStruct: self, index: index);
+                        }
+                        else {
+                            NSLog("Error fetching image \(index)");
+                        }
+                    })
+                } else {
+                    NSLog("Fail to grab the first post image file")
+                    imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                        if (error == nil) {
+                            //get file objects
+                            self.image = UIImage(data: result);
+                            finishFunction(imgStruct: self, index: index);
+                        }
+                        else {
+                            NSLog("Error fetching image \(index)");
+                        }
+                    });
                 }
-                else {
-                    NSLog("Error fetching image \(index)");
-                }
-            });
+            }
         }
         else {
             finishFunction(imgStruct: self, index: index);
@@ -261,32 +282,39 @@ class ImagePostStructure
         else {
             NSLog("Starting load of images")
             isLoadingImages = true;
-            var imgFiles: Array<PFFile> = myObj["imageFiles"] as Array<PFFile>;
-            if (imgFiles.count == 0) {
-                NSLog("No results")
-                self.imagesLoaded = true;
-                isLoadingImages = false;
-                callBack(snapShotViewCounter);
-                return;
-            }
-            NSLog("We have \(imgFiles.count) files to fetch, lets get on it!");
-            for (index, imgFile: PFFile) in enumerate(imgFiles) {
-                imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                    if (error == nil) {
-                        //get file objects
-                        var fImage = UIImage(data: result)!;
-                        self.images.append(fImage);
-                    }
-                    else {
-                        NSLog("Error fetching rest of images!")
-                    }
-                    if (self.images.count == imgFiles.count) {
-                        NSLog("Finished fetching for \(snapShotViewCounter)")
-                        self.imagesLoaded = true;
-                        self.isLoadingImages = false;
-                        callBack(snapShotViewCounter);
-                    }
-                });
+            
+            var query = PFQuery(className: "PostImageFile")
+            query.whereKey("postId", equalTo: myObj.objectId)
+            query.orderByAscending("createdAt")
+            query.skip = 1
+            query.findObjectsInBackgroundWithBlock { (postImgFiles: [AnyObject]!, error: NSError!) in
+                if (postImgFiles.count == 0) {
+                    NSLog("No results")
+                    self.imagesLoaded = true;
+                    self.isLoadingImages = false;
+                    callBack(snapShotViewCounter);
+                    return;
+                }
+                NSLog("We have \(postImgFiles.count) files to fetch, lets get on it!");
+                for (index, postImgFile: PFObject) in enumerate(postImgFiles as [PFObject]!) {
+                    var imgFile : PFFile = postImgFile["data"] as PFFile
+                    imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
+                        if (error == nil) {
+                            //get file objects
+                            var fImage = UIImage(data: result)!;
+                            self.images.append(fImage);
+                        }
+                        else {
+                            NSLog("Error fetching rest of images!")
+                        }
+                        if (self.images.count == postImgFiles.count) {
+                            NSLog("Finished fetching for \(snapShotViewCounter)")
+                            self.imagesLoaded = true;
+                            self.isLoadingImages = false;
+                            callBack(snapShotViewCounter);
+                        }
+                    });
+                }
             }
         }
     }
