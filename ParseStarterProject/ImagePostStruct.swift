@@ -536,9 +536,16 @@ class ImagePostStructure
     func updatePost(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
+        deletePostImageFile()
         image = images[0];
         let singleData = UIImagePNGRepresentation(images[0]);
         let singleFile = PFFile(name:"posted.png",data:singleData);
+        var pif = PFObject(className: "PostImageFile");
+        pif["name"] = "posted.png"
+        pif["url"] = ""
+        pif["data"] = singleFile
+        pif["postId"] = myObj.objectId
+        pif.saveInBackground()
         
         self.images = images;
         self.images.removeAtIndex(0);
@@ -549,6 +556,14 @@ class ImagePostStructure
             let data = UIImagePNGRepresentation(image);
             let file = PFFile(name:"posted.png",data:data);
             imgArray.append(file);
+        
+            // add image files in PostImageFile
+            var pif = PFObject(className: "PostImageFile");
+            pif["name"] = "posted.png"
+            pif["url"] = ""
+            pif["data"] = file
+            pif["postId"] = myObj.objectId
+            pif.saveInBackground()
         }
         myObj["imageFile"] = singleFile;     //separating this for sake of faster loading (since most ppl only see first img then move on)
         myObj["imageFiles"] = imgArray; //other images that may be in this file
@@ -557,11 +572,44 @@ class ImagePostStructure
         var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
         myObj["labels"] = labelArr;
         
+        deletePostShopLook()
         var looksArray = NSMutableArray();
         for look: ShopLook in looks {
-            looksArray.addObject(look.toDictionary());
+            looksArray.addObject(look.toDictionary())
+            // add shopLooks in PostShopLooks
+            var sl = PFObject(className: "PostShopLook")
+            sl["tile"] = look.title
+            sl["urlLink"] = look.urlLink
+            sl["postId"] = myObj.objectId
+            sl.saveInBackground()
         }
         myObj["shopLooks"] = looksArray;
         myObj.saveInBackground();
+    }
+    
+    func deletePostImageFile() {
+        var query = PFQuery(className: "PostImageFile")
+        query.whereKey("postId", equalTo: myObj.objectId)
+        query.findObjectsInBackgroundWithBlock{
+            (imageFiles: [AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                PFObject.deleteAllInBackground(imageFiles as [PFObject]!)
+            } else {
+                NSLog("Error deleting imageFiles for post")
+            }
+        }
+    }
+    
+    func deletePostShopLook() {
+        var query = PFQuery(className:"PostShopLook")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.findObjectsInBackgroundWithBlock {
+            (shopLooks: [AnyObject]!, error: NSError!) -> Void in
+            if error == nil {
+                PFObject.deleteAllInBackground(shopLooks as [PFObject]!)
+            } else {
+                NSLog("Error deleting shopLooks for post")
+            }
+        }
     }
 }
