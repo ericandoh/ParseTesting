@@ -487,7 +487,7 @@ class ImagePostStructure
                 var commentAuthorArray : Array<String> = [];
                 for comment in comments as Array<PFObject> {
                     commentArray.append(comment["content"] as String);
-                    let commentAuthorId = comment["commentAuthorId"] as String;
+                    let commentAuthorId = comment["authorId"] as String;
                     let commentAuthor = FriendEncapsulator.dequeueFriendEncapsulatorWithID(commentAuthorId);
                     commentAuthorArray.append(commentAuthor.userID);
                 }
