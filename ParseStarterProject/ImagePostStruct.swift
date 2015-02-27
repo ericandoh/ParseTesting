@@ -276,22 +276,16 @@ class ImagePostStructure
                 NSLog("We have \(postImgFiles.count) files to fetch, lets get on it!");
                 for (index, postImgFile: PFObject) in enumerate(postImgFiles as [PFObject]!) {
                     var imgFile : PFFile = postImgFile["data"] as PFFile
-                    imgFile.getDataInBackgroundWithBlock( { (result: NSData!, error: NSError!) in
-                        if (error == nil) {
-                            //get file objects
-                            var fImage = UIImage(data: result)!;
-                            self.images.append(fImage);
-                        }
-                        else {
-                            NSLog("Error fetching rest of images!")
-                        }
-                        if (self.images.count == postImgFiles.count) {
-                            NSLog("Finished fetching for \(snapShotViewCounter)")
-                            self.imagesLoaded = true;
-                            self.isLoadingImages = false;
-                            callBack(snapShotViewCounter);
-                        }
-                    });
+                    var result = imgFile.getData()
+                    var fImage = UIImage(data: result)!;
+                    self.images.append(fImage);
+                    
+                    if (self.images.count == postImgFiles.count) {
+                        NSLog("Finished fetching for \(snapShotViewCounter)")
+                        self.imagesLoaded = true;
+                        self.isLoadingImages = false;
+                        callBack(snapShotViewCounter);
+                    }
                 }
             }
         }
