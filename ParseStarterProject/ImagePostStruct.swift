@@ -181,20 +181,9 @@ class ImagePostStructure
         return imgCount;
     }
     func getCommentsCount()->Int {
-        var cmtCount : Int = 0;
         var query = PFQuery(className:"PostComment")
         query.whereKey("postId", equalTo:myObj.objectId)
-        query.countObjectsInBackgroundWithBlock {
-            (count: Int32, error: NSError!) -> Void in
-            if error == nil {
-                cmtCount = Int(count)
-            } else {
-                NSLog("Fail to fetch comment number!")
-                cmtCount = 0
-            }
-        }
-        
-        return cmtCount;
+        return query.countObjects()
     }
     func getLabels()->String {
         var labelArr = myObj["labels"] as Array<String>;
