@@ -453,7 +453,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (!currentPost.isRestLoaded()) {
             //if postCounter = 0, and I'm looking at it for first time I should start preloading next set of images as well!
             currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
-        }
+        }; NSLog("current psot image num: %d", currentPost.images.count)
         
         if (postCounter == 0) {
             //handled ok, post should be loaded on arrival of this page anyhows
