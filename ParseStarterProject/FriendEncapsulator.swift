@@ -38,8 +38,12 @@ class FriendEncapsulator {
         userID = friendID;
         var qry = PFUser.query()
         qry.whereKey("objectId", equalTo: friendID)
-        self.friendObj = qry.getObjectWithId(friendID) as PFUser?
-        self.username = self.friendObj!.username
+        qry.getObjectInBackgroundWithId(friendID, block: {(user: PFObject!, error: NSError!) in
+            self.friendObj = user as PFUser?
+            self.username = self.friendObj!.username
+        })
+//        self.friendObj = qry.getObjectWithId(friendID) as PFUser?
+//        self.username = self.friendObj!.username
     }
     class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
         if (PFAnonymousUtils.isLinkedWithUser(friend)) {
