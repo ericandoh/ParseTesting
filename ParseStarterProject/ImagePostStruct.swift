@@ -167,7 +167,7 @@ class ImagePostStructure
     func getImagesCount()->Int {
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
-        return query.countObjects()
+        return (query.countObjects() - 1) // imgFile(cover) and imgFiles are seperated in original db  
     }
     func getCommentsCount()->Int {
         var query = PFQuery(className:"PostComment")
@@ -461,7 +461,7 @@ class ImagePostStructure
                     commentArray.append(comment["content"] as String);
                     let commentAuthorId = comment["authorId"] as String;
                     let commentAuthor = FriendEncapsulator.dequeueFriendEncapsulatorWithID(commentAuthorId);
-                    commentAuthorArray.append(commentAuthor.userID);
+                    commentAuthorArray.append(commentAuthor.username); NSLog("comment author: %@", commentAuthor.username)
                 }
                 finishFunction(authorInput: commentAuthorArray, input: commentArray);
             } else {
