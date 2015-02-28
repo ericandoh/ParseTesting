@@ -167,7 +167,7 @@ class ImagePostStructure
     func getImagesCount()->Int {
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
-        return (query.countObjects() - 1) // imgFile(cover) and imgFiles are seperated in original db  
+        return (query.countObjects() - 1) // imgFile(cover) and imgFiles are seperated in original db
     }
     func getCommentsCount()->Int {
         var query = PFQuery(className:"PostComment")
