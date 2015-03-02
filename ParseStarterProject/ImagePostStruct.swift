@@ -145,7 +145,7 @@ class ImagePostStructure
     func getLikes()->Int {
         return myObj["likes"] as Int
     }
-    func getLikers()->Array<String> {
+    func getLikerIds()->Array<String> {
         if (myObj["likers"] == nil) {
             myObj["likers"] = [];
             myObj["likerIds"] = [];
@@ -153,13 +153,8 @@ class ImagePostStructure
             return [];
         }
         
-        var likerIds : [String] = (myObj["likers"]) as Array<String>;
-        var likers : [String] = [];
-        for likerId in likerIds {
-            let friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(likerId);
-            likers.append(friend.username);
-        }
-        return likers;
+        var likerIds : [String] = (myObj["likerIds"]) as Array<String>;
+        return likerIds;
     }
     func getPasses()->Int {
         return myObj["passes"] as Int
