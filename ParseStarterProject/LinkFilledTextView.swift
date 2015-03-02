@@ -125,15 +125,17 @@ class LinkFilledTextView: UITextView {
                 //var friend = FriendEncapsulator.dequeueFriendEncapsulator(friendName);
                 
                 var friend = FriendEncapsulator.dequeueFriendEncapsulatorByName(friendName);
-                friend.exists({(result: Bool) in
+                if (friend != nil) {
+                friend!.exists({(result: Bool) in
                     if (result) {
                         if (self.owner!.navigationController != nil) {  //to avoid race conditions
                         var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-                        (nextBoard as UserProfileViewController).receiveUserInfo(friend);
+                        (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
                         self.owner!.navigationController!.pushViewController(nextBoard, animated: true);
                         }
                     }
                 });
+                }
             }
             else {
                 otherAction();
