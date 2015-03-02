@@ -33,28 +33,18 @@ class FriendEncapsulator {
         friendObj = nil;
         NSLog("Deprecated method - friendenc by username");
     }
-    init(friendID: String, completionHandler: (String, NSError?)->Void) {
+    init(friendID: String) {
         //run by everythign else
-        userID = friendID;
+        userID = friendID
         var qry = PFUser.query()
         qry.whereKey("objectId", equalTo: friendID)
-        qry.getObjectInBackgroundWithId(friendID, block: {(user: PFObject!, error: NSError!) in
-            if error == nil {
-                self.friendObj = user as PFUser?
-                self.username = self.friendObj!.username; NSLog("self user name: %@", self.username)
-                completionHandler(self.username, nil)
-            } else {
-                completionHandler("", error)
-            }
-        })
-/*
         self.friendObj = qry.getObjectWithId(friendID) as PFUser?
-        if friendObj == nil {
-            self.username = ""
+        if ((self.friendObj) != nil) {
+            self.username = self.friendObj!.username
         } else {
-            self.username = self.friendObj!.username   
+            self.username = "Anonymous" // TODO: empty or anonymous user?
         }
-*/  }
+    }
     class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
         if (PFAnonymousUtils.isLinkedWithUser(friend)) {
             var newFriendToMake = FriendEncapsulator(friend: friend);
@@ -81,15 +71,7 @@ class FriendEncapsulator {
         }
         else {
             //query to check that this id does exist - exist???
-            var newUserName = ""
-            var newFriendToMake = FriendEncapsulator(friendID: friendID) { name, error in
-                if error == nil {
-                    newUserName = name; NSLog("use name: %@", name)
-                } else {
-                    NSLog("Create a new use with error: %@", error!)
-                }
-            };
-            newFriendToMake.username = newUserName; NSLog("new use name: %@", newUserName)
+            var newFriendToMake = FriendEncapsulator(friendID: friendID);
             friendDictionary[friendID] = newFriendToMake;
             return newFriendToMake;
         }
