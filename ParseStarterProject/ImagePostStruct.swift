@@ -448,7 +448,7 @@ class ImagePostStructure
             }
         }
     }
-    func fetchComments(finishFunction: (authorInput: NSArray, input: NSArray)->Void) {
+    func fetchComments(finishFunction: (authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void) {
         //refresh comments by refetching object from server
         var query = PFQuery(className:"PostComment")
         query.whereKey("postId", equalTo:myObj.objectId)
@@ -457,16 +457,18 @@ class ImagePostStructure
             if error == nil {
                 var commentArray : Array<String> = [];
                 var commentAuthorArray : Array<String> = [];
+                var commentAuthorIdArray : Array<String> = [];
                 for comment in comments as Array<PFObject> {
                     commentArray.append(comment["content"] as String);
                     let commentAuthorId = comment["authorId"] as String;
                     let commentAuthor = FriendEncapsulator.dequeueFriendEncapsulatorWithID(commentAuthorId);
-                    commentAuthorArray.append(commentAuthor.username); NSLog("comment author: %@", commentAuthor.username)
+                    commentAuthorArray.append(commentAuthor.username)
+                    commentAuthorIdArray.append(commentAuthorId)
                 }
-                finishFunction(authorInput: commentAuthorArray, input: commentArray);
+                finishFunction(authorInput: commentAuthorArray, authorIdInput: commentAuthorIdArray, input: commentArray);
             } else {
                 NSLog("Error refetching object for comments");
-                finishFunction(authorInput:[], input: []);
+                finishFunction(authorInput:[], authorIdInput:[], input: []);
             }
         }
     }
@@ -560,7 +562,7 @@ class ImagePostStructure
         cmt["postAuthorId"] = myObj["authorId"];
         cmt.saveInBackground();
         
-        return PostComment(author: author, content: comment);
+        return PostComment(author: author, authorId: PFUser.currentUser().objectId, content: comment);
     }
     func updatePost(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post

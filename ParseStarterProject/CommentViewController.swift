@@ -91,9 +91,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidAppear(animated);
         if (currentPost != nil) {
             self.commentList = Array<PostComment>();
-            currentPost!.fetchComments({(authorInput: NSArray, input: NSArray)->Void in
+            currentPost!.fetchComments({(authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void in
                 for index in 0..<input.count {
-                    self.commentList.append(PostComment(author: (authorInput[index] as String), content: (input[index] as String)));
+                    self.commentList.append(PostComment(author: (authorInput[index] as String), authorId: (authorIdInput[index] as String), content: (input[index] as String)));
                 }
                 self.commentTableView.reloadData();
                 var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
@@ -172,9 +172,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         // Configure the cell...
         var index: Int = indexPath.row;
         var author = commentList[index].author;
+        var authorId = commentList[index].authorId;
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
-        cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false, sender: self);
+        cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false, sender: self);
         cell.descriptionBox.otherAction = {
             () in
             var x = self.commentTextField.resignFirstResponder();
@@ -194,9 +195,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
         var author = commentList[index].author;
+        var authorId = commentList[index].authorId;
         var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
         
-        var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulator(author), message: text, enableFriending: false);
+        var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false);
         
         return recHeight;
     }
