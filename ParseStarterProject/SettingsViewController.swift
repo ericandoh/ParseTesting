@@ -29,7 +29,7 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController!.navigationBar.topItem!.title = "Settings";
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
-        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
         mainUser.fetchImage({(image: UIImage)->Void in
             //self.backImage.image = image;
             self.backImage.setImageAndBlur(image);
