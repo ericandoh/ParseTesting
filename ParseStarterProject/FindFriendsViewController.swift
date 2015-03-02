@@ -87,7 +87,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         var searchBackImg = ServerInteractor.imageWithColorForSearch(UIColor.clearColor(), andHeight: 32);
         self.searchBar.setSearchFieldBackgroundImage(searchBackImg, forState: UIControlState.Normal);
         
-        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
         /*mainUser.fetchImage({(image: UIImage)->Void in
             self.backImage.image = image;
         });*/
@@ -103,7 +103,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         resetAndFetchSuggested();
         
         if (self.backImage.image == nil) {
-            var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+            var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
             mainUser.fetchImage({(image: UIImage)->Void in
                 //self.backImage.image = image;
                 self.backImage.setImageAndBlur(image);
@@ -390,7 +390,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.pressedTableAt(indexPath);
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
-        pressedTableAt(FriendEncapsulator.dequeueFriendEncapsulator(searchBar.text.lowercaseString));
+        pressedTableAt(FriendEncapsulator.dequeueFriendEncapsulatorByName(searchBar.text.lowercaseString)!);
     }
     func pressedTableAt(indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
