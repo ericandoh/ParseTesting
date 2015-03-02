@@ -31,7 +31,7 @@ class ReportProblemViewController: UIViewController, UITextViewDelegate {
         if (iOS_VERSION > 7.0) {
             report.keyboardAppearance = UIKeyboardAppearance.Dark
         }
-        var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
         mainUser.fetchImage({(image: UIImage)->Void in
             //self.backImage.image = image;
             self.backImage.setImageAndBlur(image);
