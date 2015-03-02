@@ -61,7 +61,7 @@ class NotifViewController: UITableViewController {
             custView.insertSubview(imageView, atIndex: 0)
         }
         else {
-            var mainUser = FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser().username)
+            var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
             mainUser.fetchImage({(image: UIImage)->Void in
                 var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
                 imageView.setImageAndBlur(image);
