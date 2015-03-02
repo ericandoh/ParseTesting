@@ -50,7 +50,7 @@ class FriendEncapsulator {
             var newFriendToMake = FriendEncapsulator(friend: friend);
             return newFriendToMake;
         }
-        var friendExist: FriendEncapsulator? = friendDictionary[friend.username];
+        var friendExist: FriendEncapsulator? = friendDictionary[friend.objectId];
         if (friendExist != nil) {
             if (friendExist!.friendObj == nil) {
                 friendExist!.friendObj = friend;
@@ -59,7 +59,7 @@ class FriendEncapsulator {
         }
         else {
             var newFriendToMake = FriendEncapsulator(friend: friend);
-            friendDictionary[friend.username] = newFriendToMake;
+            friendDictionary[friend.objectId] = newFriendToMake;
             return newFriendToMake;
         }
     }
