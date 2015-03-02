@@ -89,11 +89,20 @@ class FriendEncapsulator {
             return newFriendToMake;
         }
     }
-    class func dequeueFriendEncapsulatorByName(name: String)->FriendEncapsulator {
+    
+    class func dequeueFriendEncapsulatorByName(name: String)->FriendEncapsulator? {
         //do query by name for a friend
         //if its in dictionary return it
         //else query for it by name, and then save it into dictionary if relevant
-        return FriendEncapsulator(friendName: name);
+        
+        var qry = PFUser.query()
+        qry.whereKey("username", equalTo: name)
+        let frdObj = qry.getFirstObject() as PFUser?
+        if (frdObj != nil) {
+            return dequeueFriendEncapsulatorWithID(frdObj!.objectId)
+        } else {
+            return nil
+        }
     }
     
     func getID()->String {
