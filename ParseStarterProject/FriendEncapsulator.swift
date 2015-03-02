@@ -33,18 +33,28 @@ class FriendEncapsulator {
         friendObj = nil;
         NSLog("Deprecated method - friendenc by username");
     }
-    init(friendID: String) {
+    init(friendID: String, completionHandler: (String, NSError?)->Void) {
         //run by everythign else
         userID = friendID;
         var qry = PFUser.query()
-/*        qry.whereKey("objectId", equalTo: friendID)
+        qry.whereKey("objectId", equalTo: friendID)
         qry.getObjectInBackgroundWithId(friendID, block: {(user: PFObject!, error: NSError!) in
-            self.friendObj = user as PFUser?
-            self.username = self.friendObj!.username
+            if error == nil {
+                self.friendObj = user as PFUser?
+                self.username = self.friendObj!.username; NSLog("self user name: %@", self.username)
+                completionHandler(self.username, nil)
+            } else {
+                completionHandler("", error)
+            }
         })
-*/        self.friendObj = qry.getObjectWithId(friendID) as PFUser?
-        self.username = self.friendObj!.username
-    }
+/*
+        self.friendObj = qry.getObjectWithId(friendID) as PFUser?
+        if friendObj == nil {
+            self.username = ""
+        } else {
+            self.username = self.friendObj!.username   
+        }
+*/  }
     class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
         if (PFAnonymousUtils.isLinkedWithUser(friend)) {
             var newFriendToMake = FriendEncapsulator(friend: friend);
@@ -71,7 +81,15 @@ class FriendEncapsulator {
         }
         else {
             //query to check that this id does exist - exist???
-            var newFriendToMake = FriendEncapsulator(friendID: friendID);
+            var newUserName = ""
+            var newFriendToMake = FriendEncapsulator(friendID: friendID) { name, error in
+                if error == nil {
+                    newUserName = name; NSLog("use name: %@", name)
+                } else {
+                    NSLog("Create a new use with error: %@", error!)
+                }
+            };
+            newFriendToMake.username = newUserName; NSLog("new use name: %@", newUserName)
             friendDictionary[friendID] = newFriendToMake;
             return newFriendToMake;
         }
