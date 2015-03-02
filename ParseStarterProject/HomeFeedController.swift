@@ -621,7 +621,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             userLabel.addTarget(self, action: "goToCurrentPostAuthor:", forControlEvents: UIControlEvents.TouchDown);
             
-            var user = FriendEncapsulator.dequeueFriendEncapsulator(currentPost.getAuthor());
+            var user = FriendEncapsulator.dequeueFriendEncapsulatorWithID(currentPost.getAuthorID());
             user.fetchImage({(image: UIImage)->Void in
                 //self.userIcon.image = image;
                 var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: widthOfUserIconImg, height: heightOfBar))
