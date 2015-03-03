@@ -1460,8 +1460,8 @@ import UIKit
         var alreadyMyFriends = PFUser.currentUser()["followingIds"] as Array<String>;
         
         var query = PFQuery(className: "SuggestedUsers");
-        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
-        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
+        query.whereKey("userId", notContainedIn: alreadyMyFriends);
+        query.whereKey("userId", notEqualTo: PFUser.currentUser().objectId);
         
         //-----add orderby type (rank by popularity?)-------------WORK NEED
         //query......
@@ -1482,8 +1482,8 @@ import UIKit
                     var scrambleOrder = ServerInteractor.scrambler(0, end: Int(result), need: fetchCount);
                     for i in 0..<fetchCount {
                         var query = PFQuery(className: "SuggestedUsers");
-                        query.whereKey("objectId", notContainedIn: alreadyMyFriends);
-                        query.whereKey("objectId", notEqualTo: PFUser.currentUser().objectId);
+                        query.whereKey("userId", notContainedIn: alreadyMyFriends);
+                        query.whereKey("userId", notEqualTo: PFUser.currentUser().objectId);
                         //change random to be hierarched (i.e. biased toward top) as to weigh results toward more popular users
                         //make this unique numbers
                         query.skip = scrambleOrder[i];
@@ -1503,7 +1503,7 @@ import UIKit
                             }
                             //for index: Int in 0..<objects.count {
                             var returnedObject = objects[0] as PFObject;
-                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(returnedObject.objectId));
+                            toRet.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(returnedObject["userId"] as String))
                             //}
                             nums += 1;
                             if (nums == fetchCount) {
