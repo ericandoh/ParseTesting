@@ -99,7 +99,7 @@ class SuggestedHeaderView: UICollectionReusableView {
             
             /*let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                ServerInteractor.removeAsFollower(username);
+                ServerInteractor.removeAsFollower(self.friend!);
                 //update button
                 self.friendAction = false
                 self.friendButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
