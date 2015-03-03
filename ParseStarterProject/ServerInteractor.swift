@@ -1271,7 +1271,7 @@ import UIKit
         if (ServerInteractor.isAnonLogged()) {
             return;
         }
-        else if (contains(PFUser.currentUser()["followingsIds"] as Array<String>, follower.getID())) {
+        else if (contains(PFUser.currentUser()["followingIds"] as Array<String>, follower.getID())) {
             return;
         }
         else if (follower.getID() == PFUser.currentUser().objectId) {
