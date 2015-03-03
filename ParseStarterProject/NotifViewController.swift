@@ -239,7 +239,7 @@ class NotifViewController: UITableViewController {
         else if (member.type == NotificationType.FOLLOWER_NOTIF.rawValue) {
             //self.performSegueWithIdentifier("FriendRequestSegue", sender: self);
             if (self.navigationController != nil) {
-                var friend = FriendEncapsulator.dequeueFriendEncapsulator(member.friendName);
+                var friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(member.friendId);
                 var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend);
                 self.navigationController!.pushViewController(nextBoard, animated: true);
