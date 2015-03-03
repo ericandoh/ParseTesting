@@ -129,13 +129,19 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             
             mainUser!.fetchImage({(image: UIImage)->Void in
                 self.setProfilePictureBubble(image);
-                self.numberPosts.text = String(self.mainUser!.getNumPosts())
-                self.numberLikes.text = String(self.mainUser!.getNumLiked())
-                self.getNumFollowers()
-                self.getNumFollowing()
-                self.amMyself = false
-                self.configureSettingsButton();
-                self.AnonText.hidden = true
+                self.mainUser!.getNumPosts(){numPosts, error in
+                    if error == nil {
+                        self.numberPosts.text = String(numPosts!)
+                    } else {
+                        self.numberPosts.text = "0"
+                    }
+                    self.numberLikes.text = String(self.mainUser!.getNumLiked())
+                    self.getNumFollowers()
+                    self.getNumFollowing()
+                    self.amMyself = false
+                    self.configureSettingsButton();
+                    self.AnonText.hidden = true
+                }
             });
         }
         else {
@@ -192,12 +198,18 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 view.addSubview(userLabel);
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setProfilePictureBubble(image);
-                    self.numberPosts.text = String(self.mainUser!.getNumPosts())
-                    self.numberLikes.text = String(self.mainUser!.getNumLiked())
-                    self.getNumFollowers()
-                    self.getNumFollowing()
-                    self.AnonText.hidden = true
-                    self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
+                    self.mainUser!.getNumPosts(){numPosts, error in
+                        if error == nil {
+                            self.numberPosts.text = String(numPosts!)
+                        } else {
+                            self.numberPosts.text = "0"
+                        }
+                        self.numberLikes.text = String(self.mainUser!.getNumLiked())
+                        self.getNumFollowers()
+                        self.getNumFollowing()
+                        self.AnonText.hidden = true
+                        self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
+                    }
                 });
             }
         }
@@ -340,16 +352,22 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 options = 1
             } else {
-                self.numberPosts.text = String(self.mainUser!.getNumPosts())
+                self.mainUser!.getNumPosts(){numPosts, error in
+                    if error == nil {
+                        self.numberPosts.text = String(numPosts!)
+                    } else {
+                        self.numberPosts.text = "0"
+                    }
 //                collectionDelegatePosts!.resetData();
 //                collectionDelegateLikes!.resetData()
-                resetDatums(options)
-                options = 1
-                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
-                collectionDelegatePosts!.initialSetup();
-                //collectionDelegate!.loadSet()
-                myCollectionView.hidden = false
-                followerTableView.hidden = true
+                    self.resetDatums(self.options)
+                    self.options = 1
+                    self.collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: self.mainUser);
+                    self.collectionDelegatePosts!.initialSetup();
+                    //collectionDelegate!.loadSet()
+                    self.myCollectionView.hidden = false
+                    self.followerTableView.hidden = true
+                }
             }
         } else {
             if (ServerInteractor.isAnonLogged()) {
@@ -363,10 +381,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 haveFollowersText.hidden = true
                 return
             } else {
-                self.numberPosts.text = String(self.mainUser!.getNumPosts())
-                collectionDelegatePosts!.resetData();
-                collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: mainUser);
-                collectionDelegatePosts!.initialSetup();
+                self.mainUser!.getNumPosts(){numPosts, error in
+                    if error == nil {
+                        self.numberPosts.text = String(numPosts!)
+                    } else {
+                        self.numberPosts.text = "0"
+                    }
+                    self.collectionDelegatePosts!.resetData();
+                    self.collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: self.myCollectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: self.mainUser);
+                    self.collectionDelegatePosts!.initialSetup();
+                }
                 //collectionDelegatePosts!.loadSet()
             }
         }
