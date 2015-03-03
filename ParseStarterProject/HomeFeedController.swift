@@ -835,20 +835,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
         if (postCounter == currentPost.getImagesCount() + 1 && !(ServerInteractor.isAnonLogged())) {
-            var username = currentPost.getAuthorFriend();
-            ServerInteractor.amFollowingUser(username, retFunction: {(amFollowing: Bool) in
+            var userFrdEnc = currentPost.getAuthorFriend();
+            ServerInteractor.amFollowingUser(userFrdEnc, retFunction: {(amFollowing: Bool) in
                 if (amFollowing == true) {
                     self.alerter = CompatibleAlertViews(presenter: self);
                     self.alerter!.makeNoticeWithAction("Unfollow?", message: "Unfollow this user?", actionName: "Unfollow", buttonAction: {
                         () in
-                        ServerInteractor.removeAsFollower(username);
+                        ServerInteractor.removeAsFollower(userFrdEnc);
                         //update button
                         self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
                     });
                     
-                    /*let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
+                    /*let alert: UIAlertController = UIAlertController(title: "Unfollow "+userFrdEnc.username, message: "Unfollow "+userFrdEnc.username+"?", preferredStyle: UIAlertControllerStyle.Alert);
                     alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                        ServerInteractor.removeAsFollower(username);
+                        ServerInteractor.removeAsFollower(userFrdEnc);
                         //update button
                         self.topRightButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal);
                     }));
@@ -858,8 +858,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.presentViewController(alert, animated: true, completion: nil)*/
                 }
                 else if (amFollowing == false) {
-                    //ServerInteractor.postFollowerNotif(username, controller: self);
-                    ServerInteractor.addAsFollower(username);
+                    //ServerInteractor.postFollowerNotif(userFrdEnc.username, controller: self);
+                    ServerInteractor.addAsFollower(userFrdEnc);
                     self.topRightButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
                 }
                 else {
