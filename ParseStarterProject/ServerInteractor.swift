@@ -1349,7 +1349,6 @@ import UIKit
     }
     
     class func findNumFollowing(follower: FriendEncapsulator, retFunction: (Int)->Void) {
-        NSLog("Uh oh")
         retFunction(PFUser.currentUser()["followingIds"].count)
     }
 
