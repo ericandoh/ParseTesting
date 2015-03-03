@@ -36,9 +36,9 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewDidAppear(animated);
         likingUsers = [];
         if (currentPost != nil) {
-            var likingNames = currentPost!.getLikers();
-            for likeName in likingNames {
-                likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulator(likeName));
+            var likingIds = currentPost!.getLikerIds();
+            for likeId in likingIds {
+                likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(likeId));
             }
             myTableView.reloadData();
             backImage.setImageAndBlur(backImg!);
