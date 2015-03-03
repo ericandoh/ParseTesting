@@ -171,8 +171,9 @@ class FriendEncapsulator {
     }
     
     func getNumPosts() -> Int {
-        var numPosts: Int = friendObj!["numPosts"]! as Int
-        return numPosts
+        var query = PFQuery(className: "ImagePost")
+        query.whereKey("authorId", equalTo: friendObj!.objectId)
+        return query.countObjects()
     }
     
     
