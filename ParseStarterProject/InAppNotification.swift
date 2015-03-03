@@ -20,6 +20,7 @@ import Foundation
 class InAppNotification {
     var messageString: String = "";
     var friendName: String = "";
+    var friendId: String = ""
     var type: String = NotificationType.PLAIN_TEXT.rawValue;
     var personalObj: PFObject? = nil
     var wasRead: Bool = false;
@@ -143,6 +144,7 @@ class InAppNotification {
                     });
                 case NotificationType.FOLLOWER_NOTIF.rawValue:
                     self.friendName = self.getSender().username
+                    self.friendId = self.getSender().userID
                     self.messageString = "@\(self.friendName) started following you!";
                     listener.tableView.reloadData();
                     
