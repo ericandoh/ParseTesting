@@ -1340,8 +1340,8 @@ import UIKit
     class func findFollowing(follower: FriendEncapsulator, retFunction: (retList: Array<FriendEncapsulator?>)->Void) {
         var followerID = follower.getID()
         var followingList: Array<FriendEncapsulator?> = []
-        for object in PFUser.currentUser()["followingIds"] as Array<String> {
-            var following = FriendEncapsulator.dequeueFriendEncapsulatorWithID(object)
+        for objectId in PFUser.currentUser()["followingIds"] as Array<String> {
+            var following = FriendEncapsulator.dequeueFriendEncapsulatorWithID(objectId)
             followingList.append(following)
         }
         retFunction(retList: followingList)
