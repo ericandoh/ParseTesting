@@ -83,6 +83,11 @@ class UserTextTableViewCell: UITableViewCell {
         else {
             leadingConstraint.constant = CONTRACTED_TEXT_CELL_VALUE;
             //self.userImage!.image = nil;
+            // TODO: uncomment following lines if need to show user icon in post like and comment row
+//            leadingConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
+//            self.userImage!.image = DEFAULT_USER_ICON
+//            self.userImage!.layer.cornerRadius = (40.0) / 2
+//            self.userImage!.layer.masksToBounds = true
         }
         nextAction.hidden = true;
         //nextAction.setTitle("", forState: UIControlState.Normal);
@@ -200,7 +205,7 @@ class UserTextTableViewCell: UITableViewCell {
             /*
             let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                ServerInteractor.removeAsFollower(username);
+                ServerInteractor.removeAsFollower(self.friend!);
                 //update button
                 self.friendAction = false
                 self.nextAction.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
