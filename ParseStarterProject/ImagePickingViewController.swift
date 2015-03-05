@@ -97,7 +97,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
         self.optionsView.insertSubview(toolbar, atIndex: 0);
         optionsView.hidden = true;  //this should be set to this by storyboard by default
-        
+
         
         //AssetItem(asset: nil, highlighted: -1)
         currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
@@ -249,21 +249,22 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         for arrayAllIndex in 0..<GALLERY_LOAD_LIMIT {
             self.currentAssets[arrayAllIndex].highlighted = -1;
         }
+        NSLog("pass highlighting initialization")
         for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
             if (check.groupNum == self.groupSelected) {
                 let assetIndex = realIndexToAssetArrayIndex(check.index)
-                if (assetIndex != -1) {
+                if (assetIndex != -1) { NSLog("loc: %d", loc)
                     self.currentAssets[assetIndex].highlighted = loc;
                 }
             }
         }
-        
+        NSLog("pass highlight order assignment with asset loaded num: \(assetLoadedCount)")
         
         var totalEnumerated: Int = 0;
         var reloadAtIndexPaths: Array<NSIndexPath> = [];
         //enumerateAssetsAtIndexes:options:usingBlock:
         var currentGroup = assetGroups[groupSelected];
-        
+        NSLog("pass current group assignment")
         currentGroup.enumerateAssetsAtIndexes(NSIndexSet(indexesInRange: rangeLoad), options: NSEnumerationOptions.Concurrent, usingBlock: {
             (result: ALAsset!, index: Int, stop) in
             if ((result) == nil) {
@@ -276,7 +277,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 }
                 return;
             }
-            if (index == 0) {
+            if (index == 0) { NSLog("index is 0")
                 var assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue())!;
                 self.backImageView.setImageAndBlur(assetImg);
                 //firstDate = result.valueForProperty(ALAssetPropertyDate) as NSDate;
@@ -292,12 +293,12 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                     self.imageRenderDirection = 1;
                 }
             }*/
-            var arrayIndex = self.realIndexToAssetArrayIndex(index);
+            var arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("index at \(index)")
             //NSLog("Getting image \(index) which is at array \(arrayIndex)");
             if (arrayIndex != -1) {
                 if ((result) != nil) {
                     self.currentAssets[arrayIndex].assetImg = UIImage(CGImage: result.defaultRepresentation().fullResolutionImage().takeUnretainedValue());
-                    self.currentAssets[arrayIndex].thumbnail = UIImage(CGImage: result.thumbnail().takeUnretainedValue());
+                    self.currentAssets[arrayIndex].thumbnail = UIImage(CGImage: result.thumbnail().takeUnretainedValue()); NSLog("set image and thumbnail at array index \(arrayIndex)")
                 }
                 //reloadAtIndexPaths.append(NSIndexPath(forRow: arrayIndex+1, inSection: 0));
             }
@@ -307,7 +308,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 NSLog("Done fetching all!");
                 self.rehighlightCells()
                 self.loadingAssets = false;
-            }
+            }; NSLog("pass loading photos")
             /*else if (reloadAtIndexPaths.count > 10) {
                 //reload table every 10
                 self.myCollectionView.reloadItemsAtIndexPaths(reloadAtIndexPaths);
@@ -397,7 +398,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             return;
         }
         cell.image.image = self.currentAssets[assetIndex].thumbnail;
-        if (self.currentAssets[assetIndex].highlighted != -1) {
+        if (self.currentAssets[assetIndex].highlighted != -1) { // selected photo
             //cell.backgroundColor = UIColor.yellowColor();
             cell.darkenImage();
             var locIndex = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: index, assetImg: self.currentAssets[assetIndex].assetImg));
@@ -409,7 +410,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }
             
         }
-        else {
+        else { // unselected photo
             //cell.backgroundColor = UIColor.redColor();
             cell.makeVisible();
             cell.label.text = "";
