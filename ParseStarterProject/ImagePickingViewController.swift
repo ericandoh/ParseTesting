@@ -223,9 +223,9 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         NSLog("\(numAssets) images total");
         
         //invalidate array indices
-        if (forwards) {
+        if (forwards) { NSLog("forwards \(assetLoadedCount)")
             assetStart = assetLoadedCount;
-            assetLoadedCount += GALLERY_LOAD_COUNT;
+            assetLoadedCount += GALLERY_LOAD_COUNT; NSLog("assetLoadedCount \(assetLoadedCount)")
             if (assetLoadedCount > numAssets) {
                 numToLoad = GALLERY_LOAD_COUNT - (assetLoadedCount - numAssets);
             }
@@ -242,6 +242,10 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             if (assetStart + GALLERY_LOAD_COUNT > numAssets) {
                 numToLoad = numAssets - assetStart;
             }
+        }
+        NSLog("start num: \(assetStart), numToLoad: \(numToLoad)!")
+        if (numToLoad > 15) {
+            numToLoad = 15
         }
         var rangeLoad: NSRange = NSMakeRange(assetStart, numToLoad);
         
