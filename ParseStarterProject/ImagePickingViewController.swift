@@ -69,6 +69,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     var shopLook: Array<ShopLook> = [];
     
     //var imageRenderDirection: Int = 0;
+    let photosPerPage = 15
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +99,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.optionsView.insertSubview(toolbar, atIndex: 0);
         optionsView.hidden = true;  //this should be set to this by storyboard by default
 
-        
+        myCollectionView.pagingEnabled = true
         //AssetItem(asset: nil, highlighted: -1)
         currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
         
@@ -381,10 +382,10 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     }
     //--------collectionview methods------------
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  {
-        return 1;
+        return (totalAssetsHere + 1) / photosPerPage // 1;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return totalAssetsHere + 1;
+        return photosPerPage // totalAssetsHere + 1;
     }
     func configureCell(cell: PreviewCollectionViewCell, index: Int) {
         let assetIndex = realIndexToAssetArrayIndex(index);
