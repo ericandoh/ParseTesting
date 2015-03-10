@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="cfa-MP-8Gc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4Di-lr-QLk">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -2666,6 +2666,79 @@
             </objects>
             <point key="canvasLocation" x="2380" y="1660"/>
         </scene>
+        <!--PickFromPhotos-->
+        <scene sceneID="IqB-s4-UCx">
+            <objects>
+                <tableViewController title="PickFromPhotos" id="nCX-Jw-WA3" customClass="PhotoPickerViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" id="brs-Jv-cZ2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="EtX-A3-kRD" detailTextLabel="H9Z-D5-gHd" style="IBUITableViewCellStyleSubtitle" id="ouk-CL-7Wg">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ouk-CL-7Wg" id="q6W-jX-PwH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EtX-A3-kRD">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H9Z-D5-gHd">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="nCX-Jw-WA3" id="nSw-DV-zeF"/>
+                            <outlet property="delegate" destination="nCX-Jw-WA3" id="BZh-Da-mhJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="PhotoPicker" id="uFx-Gd-6O1">
+                        <barButtonItem key="leftBarButtonItem" title="Pick" style="plain" id="K6a-kO-ZUf">
+                            <connections>
+                                <action selector="pickPhotos:" destination="nCX-Jw-WA3" id="wPf-3Y-s0i"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Next" style="plain" id="E0O-gJ-SRn">
+                            <connections>
+                                <action selector="goToNextPage:" destination="nCX-Jw-WA3" id="QBi-yQ-oQd"/>
+                                <segue destination="Rfu-F6-5hC" kind="push" identifier="OrderPhotos" id="Pj2-7J-ySv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nextBtn" destination="E0O-gJ-SRn" id="l9x-uA-wDX"/>
+                        <outlet property="pickBtn" destination="K6a-kO-ZUf" id="Zg8-ZD-Dtc"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eYQ-NW-9HE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2304" y="3814"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ipm-dw-NcV">
+            <objects>
+                <navigationController id="4Di-lr-QLk" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oHX-wT-5oL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="nCX-Jw-WA3" kind="relationship" relationship="rootViewController" id="WdV-Zz-Bhm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9W-W1-LBo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1725" y="3814"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2In-E1-wos">
             <objects>
@@ -2945,6 +3018,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="AAy-sI-hyg"/>
-        <segue reference="jrF-7g-MJv"/>
+        <segue reference="8GE-Sz-0lp"/>
+        <segue reference="Pj2-7J-ySv"/>
     </inferredMetricsTieBreakers>
 </document>
