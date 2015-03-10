@@ -15,3 +15,5 @@
 #import <AddressBook/AddressBook.h>
 
 #import "UIImage+ImageEffects.h"
+
+#import "CTAssetsPickerController.h"
