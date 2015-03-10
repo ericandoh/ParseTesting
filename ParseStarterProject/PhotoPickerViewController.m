@@ -10,7 +10,6 @@
 #import "CTAssetsPageViewController.h"
 #import "PhotoPickerViewController.h"
 
-
 @interface PhotoPickerViewController ()
 <CTAssetsPickerControllerDelegate, UIPopoverControllerDelegate>
 
@@ -19,8 +18,6 @@
 @property (nonatomic, strong) UIPopoverController *popover;
 
 @end
-
-
 
 @implementation PhotoPickerViewController
 
@@ -112,10 +109,13 @@
 }
 
 - (IBAction)goToNextPage:(id)sender {
-    if (self.assets) {
+/*    if (self.assets) {
         self.assets = nil;
         [self.tableView reloadData];
     }
+*/
+    
+    [self performSegueWithIdentifier:@"OrderPhotos" sender:nil];
 }
 
 #pragma mark - Table View
