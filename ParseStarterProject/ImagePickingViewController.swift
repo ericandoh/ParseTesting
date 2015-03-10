@@ -6,7 +6,7 @@
 //
 //
 
-
+import Foundation
 import UIKit
 import AssetsLibrary
 
@@ -30,7 +30,11 @@ struct AssetItem {
     var thumbnail: UIImage?;
 }
 
-class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate {
+@objc class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTAssetsPickerControllerDelegate {
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     @IBOutlet var optionsView: UIView!
     @IBOutlet var myCollectionView: UICollectionView!
@@ -39,6 +43,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet var navigationTitle: UIButton!
     @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
+    var popover : UIPopoverController!
     
     var assetLibrary: ALAssetsLibrary?;
     
@@ -68,9 +73,11 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     var prevDescrip: String = "";
     var shopLook: Array<ShopLook> = [];
     
+    var photos : Array<ALAsset> = []
+    
     //var imageRenderDirection: Int = 0;
-    let photosPerPage = 15
-
+    let photosPerPage = 6//10//20
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,7 +121,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
                 /*
                 group.posterImage -> small image for icon
                 */
-                self.assetGroups.append(group);
+                self.assetGroups.append(group); NSLog("Group name: \(self.getGalleryTimeForIndex(self.assetGroups.count - 1))")
                 if (self.getGalleryTimeForIndex(self.assetGroups.count - 1) == SAVED_PHOTOS_NAME || self.getGalleryTimeForIndex(self.assetGroups.count - 1) == CAMERA_ROLL_NAME) {
                     //first asset I've loaded
                     var name: String = self.getGalleryFullName(self.assetGroups.count - 1) + " ▾";
@@ -195,6 +202,31 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         }
     }
     
+    func loadPhotos() {
+        var picker : CTAssetsPickerController = CTAssetsPickerController()
+        picker.assetsFilter = ALAssetsFilter.allPhotos()
+        picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
+        picker.delegate = self
+        picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        if (self.popover != nil) {
+            self.popover.dismissPopoverAnimated(true)
+        } else {
+            picker.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        self.photos = assets as [ALAsset]!
+        var arrayIndex = 0
+        for index in 0..<assets.count {
+            arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("new method index at \(index)")
+            self.currentAssets[arrayIndex].assetImg = UIImage(CGImage: photos[arrayIndex].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+            self.currentAssets[arrayIndex].thumbnail = UIImage(CGImage: photos[arrayIndex].thumbnail().takeUnretainedValue());
+        }
+        self.myCollectionView.reloadData();
+    }
+    
     // reloads images from start
     func loadImagesForCurrent() {
         NSLog("Selecting \(groupSelected) : \(assetGroups.count)")
@@ -244,14 +276,14 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
             }
         }
         NSLog("start num: \(assetStart), numToLoad: \(numToLoad)!")
-        if (numToLoad > 15) {
-            numToLoad = 15
+        if (numToLoad > photosPerPage) {
+            numToLoad = photosPerPage
         }
         var rangeLoad: NSRange = NSMakeRange(assetStart, numToLoad);
         
         NSLog("Loading from \(rangeLoad.location), \(rangeLoad.length) images total");
         
-        for arrayAllIndex in 0..<GALLERY_LOAD_LIMIT {
+        for arrayAllIndex in 0..<photosPerPage { //GALLERY_LOAD_LIMIT {
             self.currentAssets[arrayAllIndex].highlighted = -1;
         }
         NSLog("pass highlighting initialization")
@@ -385,7 +417,7 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
     }
     //--------collectionview methods------------
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  { NSLog("section num: \(totalAssetsHere+1)")
         return (totalAssetsHere + 1) / photosPerPage // 1;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -611,8 +643,9 @@ class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UI
     
     
     @IBAction func clickedNavTitle(sender: AnyObject) {
-        optionsView.hidden = false;
-        self.showingOptions = true;
+//        optionsView.hidden = false;
+//        self.showingOptions = true;
+        self.loadPhotos()
         myPickerView.reloadAllComponents();
     }
     
