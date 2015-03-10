@@ -32,9 +32,9 @@ struct AssetItem {
 
 @objc class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTAssetsPickerControllerDelegate {
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    required init(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     @IBOutlet var optionsView: UIView!
     @IBOutlet var myCollectionView: UICollectionView!
@@ -202,15 +202,16 @@ struct AssetItem {
         }
     }
     
-    func loadPhotos() {
+    func loadPhotos() { NSLog("begin loading photos")
         var picker : CTAssetsPickerController = CTAssetsPickerController()
         picker.assetsFilter = ALAssetsFilter.allPhotos()
         picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
         picker.delegate = self
         picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
+        self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) { NSLog("finish picking photos")
         if (self.popover != nil) {
             self.popover.dismissPopoverAnimated(true)
         } else {
