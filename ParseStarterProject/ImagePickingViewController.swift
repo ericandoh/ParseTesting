@@ -135,7 +135,8 @@ struct AssetItem {
             }
         };
         self.assetLibrary = ALAssetsLibrary();
-        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
+//        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
+        self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal);
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -202,7 +203,7 @@ struct AssetItem {
         }
     }
     
-    func loadPhotos() { NSLog("begin loading photos")
+    func loadPhotos() {
         var picker : CTAssetsPickerController = CTAssetsPickerController()
         picker.assetsFilter = ALAssetsFilter.allPhotos()
         picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
@@ -211,19 +212,19 @@ struct AssetItem {
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
-    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) { NSLog("finish picking photos")
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         if (self.popover != nil) {
             self.popover.dismissPopoverAnimated(true)
         } else {
             picker.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         }
         
-        self.photos = assets as [ALAsset]!
+        self.photos = assets as [ALAsset]!; NSLog("photo num: \(assets.count)")
         var arrayIndex = 0
         for index in 0..<assets.count {
             arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("new method index at \(index)")
-            self.currentAssets[arrayIndex].assetImg = UIImage(CGImage: photos[arrayIndex].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
-            self.currentAssets[arrayIndex].thumbnail = UIImage(CGImage: photos[arrayIndex].thumbnail().takeUnretainedValue());
+            self.currentAssets[index].assetImg = UIImage(CGImage: photos[index].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+            self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
         }
         self.myCollectionView.reloadData();
     }
@@ -419,13 +420,13 @@ struct AssetItem {
     }
     //--------collectionview methods------------
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  { NSLog("section num: \(totalAssetsHere+1)")
-        return (totalAssetsHere + 1) / photosPerPage // 1;
+        return  1 // (totalAssetsHere + 1) / photosPerPage;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photosPerPage // totalAssetsHere + 1;
+        return totalAssetsHere + 1 // photosPerPage;
     }
     func configureCell(cell: PreviewCollectionViewCell, index: Int) {
-        let assetIndex = realIndexToAssetArrayIndex(index);
+        let assetIndex = realIndexToAssetArrayIndex(index); NSLog("config cell::asset index: \(assetIndex)")
         if (assetIndex == -1) {
             NSLog("This shouldn't happen, like ever");
             return;
@@ -457,8 +458,8 @@ struct AssetItem {
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
         var cell: PreviewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PreviewCollectionViewCell;
-        var row = indexPath.row;
-        
+        var row = indexPath.row; NSLog("current row: \(row)")
+ /*
         if (row == 0) {
             //render a camera icon
             //cell.backgroundColor = UIColor.redColor();
@@ -467,11 +468,11 @@ struct AssetItem {
             cell.image.image = CAMERA_ICON;
             return cell;
         }
-        row--;
-        
+ */       row--;
+
         cell.label.text = "";
         
-        let assetIndex = realIndexToAssetArrayIndex(row);
+        let assetIndex = realIndexToAssetArrayIndex(row); NSLog("popout cell::asset index: \(assetIndex)")
         if (assetIndex == -1) {
             //not loaded!
             /*if (row >= assetLoadedCount) {
@@ -485,14 +486,14 @@ struct AssetItem {
             return cell;
         }
         configureCell(cell, index: row);
-        if (assetLoadedCount - row < 7) {
+/*        if (assetLoadedCount - row < 7) {
             //prefetch images
             loadImagesFromGallery(true);
         }
         else if (row - (assetLoadedCount - GALLERY_LOAD_LIMIT) < 7) {
             loadImagesFromGallery(false);
         }
-        return cell;
+*/        return cell;
     }
     
     
