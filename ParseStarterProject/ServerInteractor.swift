@@ -103,6 +103,7 @@ import UIKit
         user["userType"] = type.rawValue;
         user["numPosts"] = 0;
         user["followings"] = NSMutableArray();
+        user["followingIds"] = NSMutableArray();
         user["receivePush"] = true;
     }
     
