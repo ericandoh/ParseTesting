@@ -151,6 +151,11 @@ struct AssetItem {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.rehighlightCells2()
+    }
+    
     func getGalleryTimeForIndex(groupIndex: Int)->String {
         return assetGroups[groupIndex].valueForProperty(ALAssetsGroupPropertyName as String) as String
         
