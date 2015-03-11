@@ -31,10 +31,6 @@ struct AssetItem {
 }
 
 @objc class ImagePickingViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIGestureRecognizerDelegate, CTAssetsPickerControllerDelegate {
-
-//    required init(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
     
     @IBOutlet var optionsView: UIView!
     @IBOutlet var myCollectionView: UICollectionView!
@@ -136,6 +132,8 @@ struct AssetItem {
         };
         self.assetLibrary = ALAssetsLibrary();
 //        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
+        
+        // pick multiple photos after tapping nav title, uncomment the above lines if restore to pick from albums in circular buffer way
         self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal)
         self.groupSelected = 0
     }
@@ -227,6 +225,7 @@ struct AssetItem {
             arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("new method index at \(index)")
             self.currentAssets[index].assetImg = UIImage(CGImage: photos[index].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
             self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
+            self.reconfigCells(index)
         }
         self.myCollectionView.reloadData();
     }
@@ -357,7 +356,7 @@ struct AssetItem {
             }*/
             });
     }
-    func reconfigureCells(realIndex: Int) {
+    func reconfigureCells(realIndex: Int) { // used when load photos from albums directly in circular buffer way
         for path : AnyObject in myCollectionView.indexPathsForVisibleItems() {
             let index = (path as NSIndexPath).row;
             if (index == realIndex) {
@@ -421,13 +420,13 @@ struct AssetItem {
         self.navigationTitle.setTitle(name, forState: UIControlState.Normal);
     }
     //--------collectionview methods------------
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  { NSLog("section num: \(totalAssetsHere+1)")
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int  {
         return  1 // (totalAssetsHere + 1) / photosPerPage;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return totalAssetsHere // totalAssetsHere + 1 // photosPerPage;
     }
-    func configureCell(cell: PreviewCollectionViewCell, index: Int) {
+    func configureCell(cell: PreviewCollectionViewCell, index: Int) { // used when load photos from albums directly in circular buffer way
         let assetIndex = realIndexToAssetArrayIndex(index); NSLog("config cell::asset index: \(assetIndex)")
         if (assetIndex == -1) {
             NSLog("This shouldn't happen, like ever");
@@ -470,7 +469,7 @@ struct AssetItem {
             cell.image.image = CAMERA_ICON;
             return cell;
         }
- */       row--;
+       row--;
 
         cell.label.text = "";
         
@@ -488,14 +487,18 @@ struct AssetItem {
             return cell;
         }
         configureCell(cell, index: row);
-/*        if (assetLoadedCount - row < 7) {
+        if (assetLoadedCount - row < 7) {
             //prefetch images
             loadImagesFromGallery(true);
         }
         else if (row - (assetLoadedCount - GALLERY_LOAD_LIMIT) < 7) {
             loadImagesFromGallery(false);
         }
-*/        return cell;
+*/
+        
+        // pick multiple photos, uncomment the above lines if restore to pick from albums in circular buffer way
+        configCell(cell, index: row)
+        return cell;
     }
     
     
@@ -649,6 +652,8 @@ struct AssetItem {
     @IBAction func clickedNavTitle(sender: AnyObject) {
 //        optionsView.hidden = false;
 //        self.showingOptions = true;
+        
+        // pick multiple photos, uncomment the above lines if restore to pick from albums in circular buffer way
         self.loadPhotos()
         myPickerView.reloadAllComponents();
     }
@@ -722,5 +727,47 @@ struct AssetItem {
         }
     }
     
+    func configCell(cell: PreviewCollectionViewCell, index: Int) { // used when picking certain number photos from an album
+        NSLog("config cell::index: \(index)")
+        if (index == -1) {
+            NSLog("This shouldn't happen, like ever");
+            return;
+        }
+        if (self.currentAssets[index].assetImg == nil) {
+            cell.label.text = "";
+            cell.image.image = UIImage();
+            return;
+        }
+        cell.image.image = self.currentAssets[index].thumbnail;
+        if (self.currentAssets[index].highlighted != -1) { // selected photo
+            //cell.backgroundColor = UIColor.yellowColor();
+            cell.darkenImage();
+            var locIndex = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: index, assetImg: self.currentAssets[index].assetImg));
+            if (locIndex != nil) {
+                cell.label.text = String(locIndex! + 1);   //for those damn nonprogrammer people
+            }
+            else {
+                cell.label.text = "?!?";   //for those damn nonprogrammer people
+            }
+            
+        }
+        else { // unselected photo
+            //cell.backgroundColor = UIColor.redColor();
+            cell.makeVisible();
+            cell.label.text = "";
+        }
+        
+    }
+    
+    func reconfigCells(realIndex: Int) { // used when picking certain number photos from an album
+        for path : AnyObject in myCollectionView.indexPathsForVisibleItems() {
+            let index = (path as NSIndexPath).row;
+            if (index == realIndex) {
+                var cell: PreviewCollectionViewCell = myCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as PreviewCollectionViewCell;
+                //do stuff with cell
+                configCell(cell, index: realIndex);
+            }
+        }
+    }
 }
 
