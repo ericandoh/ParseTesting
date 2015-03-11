@@ -72,7 +72,7 @@ struct AssetItem {
     var photos : Array<ALAsset> = []
     
     //var imageRenderDirection: Int = 0;
-    let photosPerPage = 15//10//20
+    let photosPerPage = 10//15//20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -744,10 +744,10 @@ struct AssetItem {
     }
     
     func assetsPickerController(picker: CTAssetsPickerController!, shouldSelectAsset asset: ALAsset!) -> Bool {
-        if (picker.selectedAssets.count >= 10) {
+        if (picker.selectedAssets.count >= photosPerPage) {
             var alertView : UIAlertView = UIAlertView()
             alertView.title = "Attention"
-            alertView.message = "Please select not more than 10 assets"
+            alertView.message = "Please select not more than \(photosPerPage) assets"
             alertView.delegate = nil
             alertView.addButtonWithTitle("OK")
             alertView.show()
@@ -762,7 +762,7 @@ struct AssetItem {
             alertView.show()
         }
         
-        return (picker.selectedAssets.count < 10 && asset.defaultRepresentation() != nil);
+        return (picker.selectedAssets.count < photosPerPage && asset.defaultRepresentation() != nil);
     }
     
     func configCell(cell: PreviewCollectionViewCell, index: Int) { // used when picking certain number photos from an album
