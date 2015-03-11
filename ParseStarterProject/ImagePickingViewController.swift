@@ -72,7 +72,7 @@ struct AssetItem {
     var photos : Array<ALAsset> = []
     
     //var imageRenderDirection: Int = 0;
-    let photosPerPage = 6//10//20
+    let photosPerPage = 15//10//20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +136,9 @@ struct AssetItem {
         // pick multiple photos after tapping nav title, uncomment the above lines if restore to pick from albums in circular buffer way
         self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal)
         self.groupSelected = 0
+        for arrayAllIndex in 0..<photosPerPage {
+            self.currentAssets[arrayAllIndex].highlighted = -1;
+        }
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -190,7 +193,7 @@ struct AssetItem {
             currentAssets[index].highlighted = -1;
         }
     }
-    func rehighlightCells() {
+    func rehighlightCells() { // used when load photos from albums directly in circular buffer way
         for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
             if (check.groupNum == self.groupSelected) {
                 let assetIndex = realIndexToAssetArrayIndex(check.index)
@@ -227,6 +230,7 @@ struct AssetItem {
             self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
             self.reconfigCells(index)
         }
+        self.rehighlightCells2()
         self.myCollectionView.reloadData();
     }
     
@@ -504,7 +508,7 @@ struct AssetItem {
     
     func collectionView(collectionView: UICollectionView!, didSelectItemAtIndexPath indexPath: NSIndexPath!)  {
         var row = indexPath.row;
-        
+/*
         if (row == 0) {
             //open camera
             cameraAction();
@@ -516,6 +520,8 @@ struct AssetItem {
         }*/
         
         let assetIndex = realIndexToAssetArrayIndex(row);
+*/
+        let assetIndex = row
         if (assetIndex == -1) {
             //uh this cell doesn't exist
             NSLog("Selected a cell that shouldn't have been rendered!");
@@ -728,7 +734,6 @@ struct AssetItem {
     }
     
     func configCell(cell: PreviewCollectionViewCell, index: Int) { // used when picking certain number photos from an album
-        NSLog("config cell::index: \(index)")
         if (index == -1) {
             NSLog("This shouldn't happen, like ever");
             return;
@@ -766,6 +771,16 @@ struct AssetItem {
                 var cell: PreviewCollectionViewCell = myCollectionView.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as PreviewCollectionViewCell;
                 //do stuff with cell
                 configCell(cell, index: realIndex);
+            }
+        }
+    }
+    
+    func rehighlightCells2() { // used when picking certain number photos from an album
+        for (loc, check: ImageIndex) in enumerate(self.highlightOrder) { // assign highlight order
+            if (check.groupNum == self.groupSelected) {
+                let assetIndex = check.index
+                self.currentAssets[assetIndex].highlighted = loc
+                self.highlightOrder[loc].assetImg = self.currentAssets[assetIndex].assetImg
             }
         }
     }
