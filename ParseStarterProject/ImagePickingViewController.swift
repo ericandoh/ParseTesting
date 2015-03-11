@@ -205,35 +205,6 @@ struct AssetItem {
         }
     }
     
-    func loadPhotos() {
-        var picker : CTAssetsPickerController = CTAssetsPickerController()
-        picker.assetsFilter = ALAssetsFilter.allPhotos()
-        picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
-        picker.delegate = self
-        picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
-        self.presentViewController(picker, animated: true, completion: nil)
-    }
-    
-    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
-        if (self.popover != nil) {
-            self.popover.dismissPopoverAnimated(true)
-        } else {
-            picker.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-        self.photos = assets as [ALAsset]!; NSLog("photo num: \(assets.count)")
-        self.totalAssetsHere = assets.count
-        var arrayIndex = 0
-        for index in 0..<assets.count {
-            arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("new method index at \(index)")
-            self.currentAssets[index].assetImg = UIImage(CGImage: photos[index].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
-            self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
-            self.reconfigCells(index)
-        }
-        self.rehighlightCells2()
-        self.myCollectionView.reloadData();
-    }
-    
     // reloads images from start
     func loadImagesForCurrent() {
         NSLog("Selecting \(groupSelected) : \(assetGroups.count)")
@@ -463,7 +434,7 @@ struct AssetItem {
     }
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell  {
         var cell: PreviewCollectionViewCell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as PreviewCollectionViewCell;
-        var row = indexPath.row; NSLog("current row: \(row)")
+        var row = indexPath.row
  /*
         if (row == 0) {
             //render a camera icon
@@ -733,6 +704,62 @@ struct AssetItem {
         }
     }
     
+    // used when picking certain number photos from an album
+    func loadPhotos() {
+        var picker : CTAssetsPickerController = CTAssetsPickerController()
+        picker.assetsFilter = ALAssetsFilter.allPhotos()
+        picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
+        picker.delegate = self
+        picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
+        self.presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        if (self.popover != nil) {
+            self.popover.dismissPopoverAnimated(true)
+        } else {
+            picker.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        self.photos = assets as [ALAsset]!
+        self.totalAssetsHere = assets.count
+        var arrayIndex = 0
+        for index in 0..<assets.count {
+            arrayIndex = self.realIndexToAssetArrayIndex(index)
+            self.currentAssets[index].assetImg = UIImage(CGImage: photos[index].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+            self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
+            self.reconfigCells(index)
+        }
+        self.rehighlightCells2()
+        self.myCollectionView.reloadData();
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, shouldShowAssetsGroup group: ALAssetsGroup!) -> Bool {
+        return group.numberOfAssets() > 0
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, shouldSelectAsset asset: ALAsset!) -> Bool {
+        if (picker.selectedAssets.count >= 10) {
+            var alertView : UIAlertView = UIAlertView()
+            alertView.title = "Attention"
+            alertView.message = "Please select not more than 10 assets"
+            alertView.delegate = nil
+            alertView.addButtonWithTitle("OK")
+            alertView.show()
+        }
+        
+        if (asset.defaultRepresentation() == nil) {
+            var alertView : UIAlertView = UIAlertView()
+            alertView.title = "Attention"
+            alertView.message = "Your asset has not yet been downloaded to your device"
+            alertView.delegate = nil
+            alertView.addButtonWithTitle("OK")
+            alertView.show()
+        }
+        
+        return (picker.selectedAssets.count < 10 && asset.defaultRepresentation() != nil);
+    }
+    
     func configCell(cell: PreviewCollectionViewCell, index: Int) { // used when picking certain number photos from an album
         if (index == -1) {
             NSLog("This shouldn't happen, like ever");
@@ -745,7 +772,6 @@ struct AssetItem {
         }
         cell.image.image = self.currentAssets[index].thumbnail;
         if (self.currentAssets[index].highlighted != -1) { // selected photo
-            //cell.backgroundColor = UIColor.yellowColor();
             cell.darkenImage();
             var locIndex = find(highlightOrder, ImageIndex(groupNum: groupSelected, index: index, assetImg: self.currentAssets[index].assetImg));
             if (locIndex != nil) {
@@ -755,9 +781,7 @@ struct AssetItem {
                 cell.label.text = "?!?";   //for those damn nonprogrammer people
             }
             
-        }
-        else { // unselected photo
-            //cell.backgroundColor = UIColor.redColor();
+        } else { // unselected photo
             cell.makeVisible();
             cell.label.text = "";
         }
