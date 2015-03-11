@@ -136,7 +136,8 @@ struct AssetItem {
         };
         self.assetLibrary = ALAssetsLibrary();
 //        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
-        self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal);
+        self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal)
+        self.groupSelected = 0
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -220,6 +221,7 @@ struct AssetItem {
         }
         
         self.photos = assets as [ALAsset]!; NSLog("photo num: \(assets.count)")
+        self.totalAssetsHere = assets.count
         var arrayIndex = 0
         for index in 0..<assets.count {
             arrayIndex = self.realIndexToAssetArrayIndex(index);NSLog("new method index at \(index)")
@@ -423,7 +425,7 @@ struct AssetItem {
         return  1 // (totalAssetsHere + 1) / photosPerPage;
     }
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return totalAssetsHere + 1 // photosPerPage;
+        return totalAssetsHere // totalAssetsHere + 1 // photosPerPage;
     }
     func configureCell(cell: PreviewCollectionViewCell, index: Int) {
         let assetIndex = realIndexToAssetArrayIndex(index); NSLog("config cell::asset index: \(assetIndex)")
