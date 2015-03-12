@@ -215,7 +215,7 @@ import UIKit
                 //var request = FBRequest.requestForMe();
                // var request = PF_FBRequest.requestForMe();
                 //PFFacebookUtils.session();
-                
+                NSLog("create a new FB user")
             } else {
                 FBRequestConnection.startForMeWithCompletionHandler({(connection: FBRequestConnection!, result: AnyObject!, error: NSError!) in
                     if (error == nil) {
@@ -229,7 +229,7 @@ import UIKit
                 //logController.failedLogin("User logged in through Facebook!")
                 //ServerInteractor.initialUserChecks();
                 //ImagePostStructure.unreadAllPosts();
-                ServerInteractor.runOnAllInitialUser();
+                ServerInteractor.runOnAllInitialUser(); NSLog("success to log in \(user.objectId)")
                 logController.successfulLogin();
             }
         });
@@ -630,16 +630,18 @@ import UIKit
                     ServerInteractor.processNotification(sender, targetObject: notifObj);*/
                     //ServerInteractor.saveNotification(PFUser.currentUser(), targetObject: notifObj)
                     
+                    var compressRatio = 1.0
                     // create post image file objects in table PostImageFile
                     for image: UIImage in images {
-                        let data = UIImagePNGRepresentation(image);
-                        let file = PFFile(name:"posted.png",data:data);
+                        let data = UIImageJPEGRepresentation(image, CGFloat(compressRatio));
+                        let file = PFFile(name:"posted.jpeg",data:data);
                         
                         var pifObj : PFObject = PFObject(className: "PostImageFile")
-                        pifObj["name"] = "posted.png";
+                        pifObj["name"] = "posted.jpeg";
                         pifObj["url"] = "";
                         pifObj["data"] = file;
                         pifObj["postId"] = newPost.myObj.objectId;
+                        pifObj.saveInBackground()
                     }
                     // create post shop look objects in table PostShopLook
                     for look in looks {
@@ -647,6 +649,7 @@ import UIKit
                         slObj["title"] = look.title;
                         slObj["urlLink"] = look.urlLink;
                         slObj["postId"] = newPost.myObj.objectId;
+                        slObj.saveInBackground()
                     }
                 }
                 else {
@@ -657,9 +660,9 @@ import UIKit
     }
     
     class func updateProfilePicture(img: UIImage) {
-        
-        let singleData = UIImagePNGRepresentation(img);
-        let singleFile = PFFile(name:"prof.png",data:singleData);
+        var compressRatio = 1.0
+        let singleData = UIImageJPEGRepresentation(img, CGFloat(compressRatio));
+        let singleFile = PFFile(name:"prof.jpeg",data:singleData);
         
         PFUser.currentUser()["userIcon"] = singleFile;
         PFUser.currentUser().saveInBackground();
