@@ -43,12 +43,20 @@ class ImagePostStructure
         NSLog("\(self.images.count)");
         imagesLoaded = true;
         
+        var imgId : Int = 0
+        var curScale : Float = 0.0
         var imgArray: Array<PFFile> = [];
         for image: UIImage in self.images {
             NSLog("Making PF")
-            let data = UIImagePNGRepresentation(image);
+            var data = UIImagePNGRepresentation(image); NSLog("image size: \(data.length)")
+            while (data.length < PARSE_PFFILE_LIMIT) {
+                data = ImagePostStructure.resizeImage(image, size: CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(CGFloat(curScale), CGFloat(curScale)))) // TODO: specify size, let size = CGSize(width: 20, height: 40)
+                curScale -= 0.1
+            }
             let file = PFFile(name:"posted.png",data:data);
             imgArray.append(file);
+             NSLog("add image: \(imgId) with size: \(data.length)")
+            imgId += 1
         }
         //upload - relational data is saved as well
         myObj = PFObject(className:"ImagePost");
@@ -104,6 +112,32 @@ class ImagePostStructure
             post.read = false;
         }
     }
+    
+    class func resizeImage(image:UIImage, size:CGSize) -> NSData {
+        var newSize:CGSize = size
+        let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.drawInRect(rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return UIImageJPEGRepresentation(newImage, 0.8)
+    }
+/*
+    class func resizeImage(image:UIImage, size:CGSize, completionHandler:(resizedImage:UIImage, data:NSData)->()) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), { () -> Void in
+            var newSize:CGSize = size
+            let rect = CGRectMake(0, 0, newSize.width, newSize.height)
+            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+            image.drawInRect(rect)
+            let newImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            let imageData = UIImageJPEGRepresentation(newImage, 0.5)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                completionHandler(resizedImage: newImage, data:imageData)
+            })
+        })
+    }
+*/
     func save() {
         myObj.saveInBackground()
     }
