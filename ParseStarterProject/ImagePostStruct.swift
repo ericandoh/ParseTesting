@@ -33,9 +33,10 @@ class ImagePostStructure
     init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
+        var compressRatio = 1.0
         image = images[0];
-        let singleData = UIImagePNGRepresentation(images[0]);
-        let singleFile = PFFile(name:"posted.png",data:singleData);
+        let singleData = UIImageJPEGRepresentation(images[0], CGFloat(compressRatio));
+        let singleFile = PFFile(name:"posted.jpeg",data:singleData);
         
         self.images = images;
         NSLog("\(self.images.count)");
@@ -48,14 +49,14 @@ class ImagePostStructure
         var imgArray: Array<PFFile> = [];
         for image: UIImage in self.images {
             NSLog("Making PF")
-            var data = UIImagePNGRepresentation(image); NSLog("image size: \(data.length)")
-            while (data.length < PARSE_PFFILE_LIMIT) {
+            var data = UIImageJPEGRepresentation(image, CGFloat(compressRatio)); NSLog("image size: \(data.length)")
+            while (data.length >= PARSE_PFFILE_LIMIT) {
                 data = ImagePostStructure.resizeImage(image, size: CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(CGFloat(curScale), CGFloat(curScale)))) // TODO: specify size, let size = CGSize(width: 20, height: 40)
                 curScale -= 0.1
             }
-            let file = PFFile(name:"posted.png",data:data);
+            let file = PFFile(name:"posted.jpeg",data:data);
             imgArray.append(file);
-             NSLog("add image: \(imgId) with size: \(data.length)")
+             NSLog("add image: \(imgId) with size: \(data.length) and scale: \(curScale)")
             imgId += 1
         }
         //upload - relational data is saved as well
@@ -597,11 +598,12 @@ class ImagePostStructure
         //called when making a new post
         //myObj must be saved by caller
         deletePostImageFile()
+        var compressRatio = 1.0
         image = images[0];
-        let singleData = UIImagePNGRepresentation(images[0]);
-        let singleFile = PFFile(name:"posted.png",data:singleData);
+        let singleData = UIImageJPEGRepresentation(images[0], CGFloat(compressRatio));
+        let singleFile = PFFile(name:"posted.jpeg",data:singleData);
         var pif = PFObject(className: "PostImageFile");
-        pif["name"] = "posted.png"
+        pif["name"] = "posted.jpeg"
         pif["url"] = ""
         pif["data"] = singleFile
         pif["postId"] = myObj.objectId
@@ -613,13 +615,13 @@ class ImagePostStructure
         
         var imgArray: Array<PFFile> = [];
         for image: UIImage in self.images {
-            let data = UIImagePNGRepresentation(image);
-            let file = PFFile(name:"posted.png",data:data);
+            let data = UIImageJPEGRepresentation(image, CGFloat(compressRatio));
+            let file = PFFile(name:"posted.jpeg",data:data);
             imgArray.append(file);
         
             // add image files in PostImageFile
             var pif = PFObject(className: "PostImageFile");
-            pif["name"] = "posted.png"
+            pif["name"] = "posted.jpeg"
             pif["url"] = ""
             pif["data"] = file
             pif["postId"] = myObj.objectId
