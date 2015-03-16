@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CTAssetsPickerControllerDelegate {
 
     
     @IBOutlet var contentArea: UIView!
@@ -24,6 +24,9 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     var suppressMenu: Bool = false;
     
     var needRemove: Array<UIViewController> = [];
+    
+    var photos : Array<ALAsset> = []
+    var popover : UIPopoverController!
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -241,6 +244,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             //setContentConstraints(content);
             self.viewControllerDictionary[contentString] = content;
         }
+        
+        // define a new way to upload photos
+        if (contentString == "Upload") {
+            content = loadPhotos()
+        }
+        
         content.view.alpha = 0;
         hideSideBar({
             (success: Bool)->Void in
@@ -426,4 +435,44 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     */
     
+    // prepare for upload tab
+    func loadPhotos() -> UIViewController {
+        var picker : CTAssetsPickerController = CTAssetsPickerController()
+        picker.assetsFilter = ALAssetsFilter.allPhotos()
+        picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
+        picker.delegate = self
+        picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
+        self.presentViewController(picker, animated: true, completion: nil)
+        
+        let controllerName = "Upload" // "Test"
+        let content = self.storyboard!.instantiateViewControllerWithIdentifier(controllerName) as UIViewController;
+        //        self.addChildViewController(content);
+        //        self.contentArea.addSubview(content.view);    //new
+        //        self.setContentConstraints(content);
+        //        //self.view.addSubview(content.view);
+        //        content.didMoveToParentViewController(self);
+        //        UIView.animateWithDuration(0.3, animations: {()->Void in
+        //            content.view.alpha = 1;
+        //        });
+        
+//        if (content is UINavigationController) { NSLog("move in")
+//            (content as UINavigationController).popToRootViewControllerAnimated(false)
+//        }
+        return content
+    }
+    
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        if (self.popover != nil) {
+            self.popover.dismissPopoverAnimated(true)
+        } else {
+            picker.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        self.photos = assets as [ALAsset]! // TODO: remove variable phtots after test
+        var nextController = ImagePickingViewController()
+        
+        nextController.currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
+        
+        nextController.receiveImage(assets)
+    }
 }

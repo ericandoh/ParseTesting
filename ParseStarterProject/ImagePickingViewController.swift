@@ -138,7 +138,12 @@ struct AssetItem {
         self.groupSelected = 0
         for arrayAllIndex in 0..<photosPerPage {
             self.currentAssets[arrayAllIndex].highlighted = -1;
+            if (self.currentAssets[arrayAllIndex].thumbnail != nil) {
+                NSLog("-----passed successfully with id: \(arrayAllIndex)------")
+            }
         }
+        NSLog("enter image picking")
+        self.myCollectionView.reloadData();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -811,6 +816,15 @@ struct AssetItem {
                 self.currentAssets[assetIndex].highlighted = loc
                 self.highlightOrder[loc].assetImg = self.currentAssets[assetIndex].assetImg
             }
+        }
+    }
+    
+    func receiveImage(assets: [AnyObject]!) {
+        self.photos = assets as [ALAsset]!
+        self.totalAssetsHere = assets.count
+        for index in 0..<assets.count {
+            self.currentAssets[index].assetImg = UIImage(CGImage: photos[index].defaultRepresentation().fullResolutionImage().takeUnretainedValue());
+            self.currentAssets[index].thumbnail = UIImage(CGImage: photos[index].thumbnail().takeUnretainedValue());
         }
     }
 }
