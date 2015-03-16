@@ -33,7 +33,7 @@ class ImagePostStructure
     init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
-        var compressRatio = 1.0
+        var compressRatio = 0.8
         image = images[0];
         let singleData = UIImageJPEGRepresentation(images[0], CGFloat(compressRatio));
         let singleFile = PFFile(name:"posted.jpeg",data:singleData);
@@ -45,7 +45,7 @@ class ImagePostStructure
         imagesLoaded = true;
         
         var imgId : Int = 0
-        var curScale : Float = 0.0
+        var curScale : Float = 0.9
         var imgArray: Array<PFFile> = [];
         for image: UIImage in self.images {
             NSLog("Making PF")
