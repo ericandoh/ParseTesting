@@ -106,6 +106,9 @@ struct AssetItem {
         //AssetItem(asset: nil, highlighted: -1)
         currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
         
+        // load saved photos when click upload tab in side menu
+        self.loadPhotos()
+        
         var failure: ALAssetsLibraryAccessFailureBlock = {
             (error: NSError!)->Void in
             NSLog(error.description)
@@ -142,8 +145,6 @@ struct AssetItem {
                 NSLog("-----passed successfully with id: \(arrayAllIndex)------")
             }
         }
-        NSLog("enter image picking")
-        self.myCollectionView.reloadData();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
