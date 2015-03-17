@@ -221,7 +221,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        backImageView!.removeFromSuperview();
+        if (backImageView != nil) {
+            backImageView!.removeFromSuperview();
+        }
         backImageView = nil;
         if (frontImageView.image != nil) {
             frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
