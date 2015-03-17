@@ -244,12 +244,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             //setContentConstraints(content);
             self.viewControllerDictionary[contentString] = content;
         }
-        
+/*
         // define a new way to upload photos
         if (contentString == "Upload") {
             content = loadPhotos()
         }
-        
+*/        
         content.view.alpha = 0;
         hideSideBar({
             (success: Bool)->Void in
@@ -258,7 +258,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             self.view.addSubview(content.view);
             content.didMoveToParentViewController(self);*/
             
-            if (self.viewControllerDictionary[previouslyShowing] == nil) {
+            if (self.viewControllerDictionary[previouslyShowing] == nil) { NSLog("no prev")
                 self.addChildViewController(content);
                 //content.view.frame = self.contentArea.frame;
                 self.contentArea.addSubview(content.view);    //new
@@ -269,7 +269,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
                     content.view.alpha = 1;
                     });
             }
-            else {
+            else { NSLog("----pev-----")
                 if (old == nil) {
                     old = self.viewControllerDictionary[previouslyShowing]!;
                 }
@@ -461,7 +461,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         return content
     }
     
-    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+    func assetsPickerController(picker: CTAssetsPickerController!, didFinishPickingAssets assets: [AnyObject]!) {         NSLog("enter image picking")
         if (self.popover != nil) {
             self.popover.dismissPopoverAnimated(true)
         } else {
@@ -474,5 +474,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         nextController.currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
         
         nextController.receiveImage(assets)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 90, height: 120)
+        nextController.myCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        nextController.myCollectionView.reloadData(); NSLog("pass image picking")
     }
 }
