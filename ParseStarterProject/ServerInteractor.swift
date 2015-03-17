@@ -978,7 +978,7 @@ import UIKit
     //return reference to PFFile as well - use to load files later on
     class func getSubmissions(skip: Int, loadCount: Int, user: FriendEncapsulator, notifyQueryFinish: (Int)->Void, finishFunction: (ImagePostStructure, Int)->Void)  {
         var query = PFQuery(className:"ImagePost")
-        query.whereKey("author", equalTo: user.getName({}));
+        query.whereKey("authorId", equalTo: user.getID());
         query.limit = loadCount;
         query.skip = skip;
         query.orderByDescending("createdAt");
