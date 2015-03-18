@@ -125,22 +125,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
     
-    func openLatestPost(sender: UIViewController) {
-        //open the uploaded post here
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 90, height: 90)
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        let collectionDelegatePosts = ImagePostCollectionDelegate(disableOnAnon: true, collectionView: collectionView, serverFunction: ServerInteractor.getSubmissions, sender: self, user: FriendEncapsulator(friend: PFUser.currentUser()));
-        collectionDelegatePosts.initialSetup()
-        
-        // initialize a new CustomImageBuffer with uploaded photos in memory
-        
-        var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
-        newHome.syncWithImagePostDelegate(collectionDelegatePosts.imgBuffer, selectedAt: 0);
-        sender.navigationController!.pushViewController(newHome, animated: true);
-    }
-    
     func setSuppressed(suppressed: Bool) {
         suppressMenu = suppressed;
     }
