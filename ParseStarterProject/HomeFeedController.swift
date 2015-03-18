@@ -174,7 +174,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 setLoadingImage();
             }
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
-            topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            
+            // objectId is nil when current post is just uploaded and in memory instead of parse db
+            // we don't want to go back to upload page in that case, so keep logo menu
+            if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
+                topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+            }
         }
         /*
         var defaults = NSUserDefaults();
@@ -827,8 +832,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
             }
             else {
-                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController!.popViewControllerAnimated(true);
+                if (topLeftButton.currentBackgroundImage != BACK_ICON) {
+                    (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+                } else {
+                    self.navigationController!.popViewControllerAnimated(true);
+                }
             }
         }
     }
