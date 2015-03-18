@@ -234,15 +234,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                     var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
                     overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
 //                    overlord.openHome();
-//                    overlord.openLatestPost(self)
                     
                     // initialize a new CustomImageBuffer with uploaded photos in memory
                     let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: FriendEncapsulator(friend: PFUser.currentUser()), owner: "COLLECTION")
                     imgBuffer.loadedPosts.append(ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook))
-//                    let idx = 0
-//                    for idx in 0..<receivedImages.count {
-//                        imgBuffer.loadedPosts[idx] = ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook)
-//                    }
+                    
+                    // direct to the latest uploaded photo post
                     var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                     newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
                     self.navigationController!.pushViewController(newHome, animated: true);
