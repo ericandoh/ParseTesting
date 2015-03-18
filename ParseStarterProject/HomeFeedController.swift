@@ -153,7 +153,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 configureCurrent(viewCounter);
             }
             if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+                if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
                 imgBuffer!.loadSet();
+                }
             }
         }
         
