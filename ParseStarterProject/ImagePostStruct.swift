@@ -13,13 +13,15 @@
 
 var imagePostDictionary: [String: ImagePostStructure] = [:];
 
-class ImagePostStructure
-{
+class ImagePostStructure {
     var image: UIImage?
     var images: Array<UIImage>
     var myObj: PFObject
     var imagesLoaded: Bool = false;
     var isLoadingImages: Bool = false;
+    var myLabels : String
+    var myDescription: String
+    var myShopLooks : Array<ShopLook>
     
     //for search, set this to true to not mark as read any more posts than necessary
     var read: Bool = false;
@@ -29,6 +31,9 @@ class ImagePostStructure
         //called when retrieving object (for viewing, etc)
         myObj = inputObj;
         images = [];
+        myLabels = ""
+        myDescription = ""
+        myShopLooks = []
     }
     init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
@@ -43,6 +48,10 @@ class ImagePostStructure
         self.images.removeAtIndex(0);
         NSLog("\(self.images.count)");
         imagesLoaded = true;
+        
+        self.myDescription = description
+        self.myLabels = labels
+        self.myShopLooks = looks
         
         var imgId : Int = 0
         var curScale : Float = 0.9
@@ -178,9 +187,16 @@ class ImagePostStructure
         myObj.saveInBackground()
     }
     func getLikes()->Int {
+        if (myObj.objectId == nil) {
+            return 0
+        }
         return myObj["likes"] as Int
     }
     func getLikerIds()->Array<String> {
+        if (myObj.objectId == nil) {
+            return []
+        }
+        
         if (myObj["likers"] == nil) {
             myObj["likers"] = [];
             myObj["likerIds"] = [];
@@ -192,19 +208,35 @@ class ImagePostStructure
         return likerIds;
     }
     func getPasses()->Int {
+        if (myObj.objectId == nil) {
+            return 0
+        }
+        
         return myObj["passes"] as Int
     }
     func getImagesCount()->Int {
+        if (myObj.objectId == nil) {
+            return self.images.count
+        }
+        
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
         return (query.countObjects() - 1) // imgFile(cover) and imgFiles are seperated in original db
     }
     func getCommentsCount()->Int {
+        if (myObj.objectId == nil) {
+            return 0
+        }
+        
         var query = PFQuery(className:"PostComment")
         query.whereKey("postId", equalTo:myObj.objectId)
         return query.countObjects()
     }
     func getLabels()->String {
+        if (myObj.objectId == nil) {
+            return self.myLabels
+        }
+        
         var labelArr = myObj["labels"] as Array<String>;
         var ret = "";
         for label in labelArr {
@@ -213,16 +245,24 @@ class ImagePostStructure
         return ret;
     }
     func isLikedByUser()->Bool {
+        if (myObj.objectId == nil) {
+            return false
+        }
+        
         return ServerInteractor.likedBefore(myObj.objectId);
     }
     func isOwnedByMe()->Bool {
+        if (myObj.objectId == nil) {
+            return true
+        }
+        
         if (ServerInteractor.isAnonLogged()) {
             return false;
         }
         return (myObj["authorId"] as String) == PFUser.currentUser().objectId;
     }
     func getAgeAsString()->String {
-        var date = myObj.createdAt;
+        var date = (myObj.objectId != nil) ? myObj.createdAt : NSDate() ;
         return ServerInteractor.timeNumberer(date);
     }
     func loadImage() {
@@ -236,6 +276,9 @@ class ImagePostStructure
         }
     }
     func loadImage(finishFunction: (imgStruct: ImagePostStructure, index: Int)->Void, index: Int) {
+        if (myObj.objectId == nil) {
+            finishFunction(imgStruct: self, index: index)
+        }
         if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             
@@ -291,6 +334,7 @@ class ImagePostStructure
             NSLog("Starting load of images")
             isLoadingImages = true;
             
+            if (myObj.objectId != nil) {
             var query = PFQuery(className: "PostImageFile")
             query.whereKey("postId", equalTo: myObj.objectId)
             query.orderByAscending("createdAt")
@@ -317,6 +361,11 @@ class ImagePostStructure
                         callBack(snapShotViewCounter);
                     }
                 }
+            }
+            } else { // current image post is in memory, not in db yet
+                self.imagesLoaded = true;
+                self.isLoadingImages = false;
+                callBack(snapShotViewCounter);
             }
         }
     }
@@ -346,6 +395,9 @@ class ImagePostStructure
     }
     
     func loadAllImages(finishFunction: (Array<UIImage>)->Void) {
+        if (myObj.objectId == nil) {
+            loadAllImagesPart3(finishFunction)
+        }
         if (image == nil) {
             var imgFile: PFFile = myObj["imageFile"] as PFFile;
             
@@ -479,6 +531,9 @@ class ImagePostStructure
         }
     }
     func fetchComments(finishFunction: (authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void) {
+        if (myObj.objectId == nil) {
+            finishFunction(authorInput: [], authorIdInput: [], input: [])
+        }
         //refresh comments by refetching object from server
         var query = PFQuery(className:"PostComment")
         query.whereKey("postId", equalTo:myObj.objectId)
@@ -503,19 +558,40 @@ class ImagePostStructure
         }
     }
     func getAuthorFriend()->FriendEncapsulator {
-        return FriendEncapsulator.dequeueFriendEncapsulatorWithID(myObj["authorId"] as String);
+        var id : String
+        if (myObj.objectId == nil) {
+            id = PFUser.currentUser().objectId
+        } else {
+            id = myObj["authorId"] as String
+        }
+        return FriendEncapsulator.dequeueFriendEncapsulatorWithID(id);
     }
     func getAuthor()->String {
+        if (myObj.objectId == nil) {
+            return PFUser.currentUser().username
+        }
+        
         return myObj["author"] as String;
     }
     func getAuthorID()->String {
+        if (myObj.objectId == nil) {
+            return PFUser.currentUser().objectId
+        }
+        
         return myObj["authorId"] as String;
     }
     func getDescription()->String {
+        if (myObj.objectId == nil) {
+            return myDescription
+        }
         var mainBody = myObj["description"] as String;
         return mainBody;
     }
     func getDescriptionWithTag()->String {
+        if (myObj.objectId == nil) {
+            return myDescription + " #" + myLabels
+        }
+        
         var mainBody = myObj["description"] as String;
         var tags = myObj["labels"] as Array<String>;
         for tag in tags {
@@ -526,6 +602,9 @@ class ImagePostStructure
         return mainBody;
     }
     func getShopLooks()->Array<ShopLook> {
+        if (myObj.objectId == nil) {
+            return self.myShopLooks
+        }
         var retList: Array<ShopLook> = [];
         var query = PFQuery(className:"PostShopLook")
         query.whereKey("postId", equalTo:myObj.objectId)
@@ -543,6 +622,9 @@ class ImagePostStructure
         return retList;
     }
     func fetchShopLooks(finishFunction: (input: Array<ShopLook>)->Void) {
+        if (myObj.objectId == nil) {
+            finishFunction(input: self.myShopLooks)
+        } else {
         var retList: Array<ShopLook> = [];
         var query = PFQuery(className:"PostShopLook")
         query.whereKey("postId", equalTo:myObj.objectId)
@@ -558,6 +640,7 @@ class ImagePostStructure
             }
         }
         finishFunction(input: retList);
+        }
     }
     func addComment(comment: String)->PostComment {
         var commentAuthorArray: NSMutableArray = [];
