@@ -159,6 +159,9 @@ struct AssetItem {
     }
     
     override func viewWillAppear(animated: Bool) {
+        // load saved photos when click upload tab in side menu
+        self.loadPhotos()
+        
         self.rehighlightCells2()
     }
     
