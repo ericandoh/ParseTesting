@@ -232,8 +232,20 @@ class ImagePostStructure {
         query.whereKey("postId", equalTo:myObj.objectId)
         return query.countObjects()
     }
-    func getShopLooksCount() -> Int {
-        return self.myShopLooks.count
+    func getShopLooksCount(finishFunction: (Int?, NSError?)->Void) {
+        if (myObj.objectId == nil) {
+            finishFunction(self.myShopLooks.count, nil)
+        }
+        var query = PFQuery(className:"PostShopLook")
+        query.whereKey("postId", equalTo:myObj.objectId)
+        query.countObjectsInBackgroundWithBlock{(count: Int32, error: NSError!) -> Void in
+            if error == nil {
+                finishFunction(Int(count), nil)
+            } else {
+                NSLog("Errror when getting shopLook num: \(error.description)")
+                finishFunction(nil, error)
+            }
+        }
     }
     func getLabels()->String {
         if (myObj.objectId == nil) {

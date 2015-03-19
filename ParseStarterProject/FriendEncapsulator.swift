@@ -173,7 +173,7 @@ class FriendEncapsulator {
     func getNumPosts(completionHandler: (Int?, NSError?) -> Void) {
         var query = PFQuery(className: "ImagePost")
         query.whereKey("authorId", equalTo: friendObj!.objectId)
-        return query.countObjectsInBackgroundWithBlock{(count: Int32, error: NSError!)->Void in
+        query.countObjectsInBackgroundWithBlock{(count: Int32, error: NSError!)->Void in
             if error == nil {
                 completionHandler(Int(count), nil)
             } else {
