@@ -116,9 +116,54 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
-        self.navigationController!.navigationBar.translucent = true;
-        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.navigationBar.translucent = false;
+        self.navigationController!.view.backgroundColor = UIColor.blackColor();
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+       
+        // add user name, icon, post upload time and image page
+        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+        let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
+        let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
+        let titlePage : UILabel = UILabel(frame: CGRectMake(110, 20, 15, 10))
+        
+        title.text = "Wendyslookbook"; currentPost.getAuthor()
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+        title.backgroundColor = UIColor.clearColor()
+        
+        titleTime.text = "3m ago • "; currentPost.getAgeAsString()
+        titleTime.textColor = UIColor.whiteColor()
+        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titleTime.backgroundColor = UIColor.clearColor()
+        
+        titlePage.text = "2/5" //  String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2)
+        titlePage.textColor = UIColor.whiteColor()
+        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titlePage.backgroundColor = UIColor.clearColor()
+        
+        let image : UIImage = UIImage(named: "user.png")!
+        let imageView : UIImageView = UIImageView(image: image)
+        
+        imageView.frame = CGRectMake(20, 0, 30, 30)
+        imageView.layer.cornerRadius = 5.0
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        imageView.layer.borderWidth = 0.1
+        
+        myView.addSubview(title)
+        myView.addSubview(titleTime)
+        myView.addSubview(titlePage)
+        myView.backgroundColor = UIColor.blackColor()
+        myView.addSubview(imageView)
+        
+        self.navigationItem.titleView = myView //imageView;
+        
+//        let image : UIImage = UIImage(named: "user.png")!
+//        let imageView : UIImageView = UIImageView(image: image)
+//        self.navigationItem.titleView = imageView;
         
         //self.navigationController!.navigationBar.barStyle = UIBarStyle.Default
         
