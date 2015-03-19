@@ -18,13 +18,25 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
     override func viewDidLoad() {
         super.viewDidLoad()
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let title : UILabel = UILabel(frame: CGRectMake(40, 0, 300, 30))
+        let title : UILabel = UILabel(frame: CGRectMake(40, 0, 300, 20))
+        let titleTime : UILabel = UILabel(frame: CGRectMake(40, 20, 50, 10))
+        let titlePage : UILabel = UILabel(frame: CGRectMake(90, 20, 15, 10))
         
         title.text = "Wendyslookbook"
         title.textColor = UIColor.whiteColor()
-        title.font = UIFont.boldSystemFontOfSize(CGFloat(20.0))
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         title.backgroundColor = UIColor.clearColor()
-        
+
+        titleTime.text = "3m ago• "
+        titleTime.textColor = UIColor.whiteColor()
+        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titleTime.backgroundColor = UIColor.clearColor()
+
+        titlePage.text = "2/5"
+        titlePage.textColor = UIColor.whiteColor()
+        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titlePage.backgroundColor = UIColor.clearColor()
+
         let image : UIImage = UIImage(named: "user.png")!
         let imageView : UIImageView = UIImageView(image: image)
         
@@ -35,6 +47,8 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
         imageView.layer.borderWidth = 0.1
         
         myView.addSubview(title)
+        myView.addSubview(titleTime)
+        myView.addSubview(titlePage)
         myView.backgroundColor = UIColor.clearColor()
         myView.addSubview(imageView)
         
