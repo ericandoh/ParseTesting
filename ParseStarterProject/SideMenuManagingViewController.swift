@@ -66,6 +66,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
+/*
         if (sideView.center.x > 0) {
 //            var x = self.sideView.center.x - CGFloat(BAR_WIDTH);
 //            var y = self.sideView.center.y;
@@ -77,6 +78,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             self.sideView.insertSubview(toolbar, atIndex: 0);
             
         }
+*/
     }
     
     override func viewDidLayoutSubviews() {
