@@ -434,7 +434,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         let pageInfo = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         pageCounter.text = pageInfo
         
-        // add user name, icon, post upload time and image page
+        // config post authro name, icon, upload creationh time and image page in nav bar
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
         let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
         let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
@@ -460,7 +460,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             let imageView : UIImageView = UIImageView(image: image)
             
             imageView.frame = CGRectMake(20, 0, 30, 30)
-            imageView.layer.cornerRadius = imageView.frame.size.width / 2; NSLog("post author: \(imageView.layer.cornerRadius)")
+            imageView.layer.cornerRadius = imageView.frame.size.width / 2
             imageView.layer.masksToBounds = true
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageView.layer.borderWidth = 0
@@ -474,6 +474,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             self.navigationItem.titleView = myView
         })
 
+        // config shopLook, like, comment, share info in bottom tool bar
         var numLikes = currentPost.getLikes();
         var numComments = currentPost.getCommentsCount();
         var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
