@@ -853,6 +853,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             return;
         }
 */
+        if postCounter == 0 {
+            return
+        }
         postCounter--;
         if (viewingComments) {
             viewingComments = false;
