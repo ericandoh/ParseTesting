@@ -27,7 +27,7 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
         title.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         title.backgroundColor = UIColor.clearColor()
 
-        titleTime.text = "3m ago• "
+        titleTime.text = "3m ago • "
         titleTime.textColor = UIColor.whiteColor()
         titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
         titleTime.backgroundColor = UIColor.clearColor()
@@ -49,10 +49,11 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
         myView.addSubview(title)
         myView.addSubview(titleTime)
         myView.addSubview(titlePage)
-        myView.backgroundColor = UIColor.clearColor()
+        myView.backgroundColor = UIColor.blackColor()
         myView.addSubview(imageView)
         
         self.navigationItem.titleView = myView //imageView;
+        self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
     }
     
     override func didReceiveMemoryWarning() {
