@@ -438,7 +438,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
         let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
         let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
-        let titlePage : UILabel = UILabel(frame: CGRectMake(110, 20, 15, 10))
+        let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
         
         title.text = currentPost.getAuthor()
         title.textColor = UIColor.whiteColor()
