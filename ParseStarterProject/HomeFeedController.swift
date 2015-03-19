@@ -225,6 +225,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             backImageView!.alpha = 0;
             //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
             backImageView!.contentMode = UIViewContentMode.Center;
+//            backImageView!.contentMode = UIViewContentMode.ScaleToFill
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         //self.imgBuffer!.loadSet();
@@ -479,8 +480,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         // config shopLook, like, comment, share info in bottom tool bar
         var numLikes = currentPost.getLikes();
         var numComments = currentPost.getCommentsCount();
+        var numShopLooks = currentPost.getShopLooksCount()
         var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
         var shortenedNumCommentString = ServerInteractor.wordNumberer(numComments);
+        var shortenedNumShopLookString = ServerInteractor.wordNumberer(numShopLooks)
         likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
         if (currentPost.isLikedByUser()) {
             //likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
@@ -490,6 +493,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
         }
         commentsButton.setTitle(shortenedNumCommentString, forState: UIControlState.Normal);
+        shopLookButton.setTitle(shortenedNumShopLookString, forState: UIControlState.Normal)
+        NSLog("shop look num: \(numShopLooks) and shortend: \(shortenedNumShopLookString)")
  /*
         if (currentPost.isOwnedByMe()) {
             editPostButton.hidden = false;

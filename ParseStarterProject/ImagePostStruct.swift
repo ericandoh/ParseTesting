@@ -232,6 +232,9 @@ class ImagePostStructure {
         query.whereKey("postId", equalTo:myObj.objectId)
         return query.countObjects()
     }
+    func getShopLooksCount() -> Int {
+        return self.myShopLooks.count
+    }
     func getLabels()->String {
         if (myObj.objectId == nil) {
             return self.myLabels
