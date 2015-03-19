@@ -36,6 +36,10 @@
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
+		8AA6C5B31AB77C3B0043D9B8 /* bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA6C5B21AB77C3B0043D9B8 /* bag.png */; };
+		8ABA85FC1AB3649C00B6EC4A /* shoppingBag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */; };
+		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
+		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
 		8AC8ADAB1AAF63B00051232C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF551613CC42002132AF /* Social.framework */; };
 		8AC8ADAC1AAF63BF0051232C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF521613CC3C002132AF /* Accounts.framework */; };
@@ -217,6 +221,10 @@
 		6372FF551613CC42002132AF /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6372FF571613CC47002132AF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		743D7B6C157DA60100084B67 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8AA6C5B21AB77C3B0043D9B8 /* bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bag.png; path = ../../../../Downloads/bag.png; sourceTree = "<group>"; };
+		8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shoppingBag.png; path = ../../../../Downloads/shoppingBag.png; sourceTree = "<group>"; };
+		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
+		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
 		8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
 		97E18B1E1624CB5700B17A67 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -494,6 +502,7 @@
 			children = (
 				D9DEE64D199F1FD800F08CC5 /* fashtitlescreen.png */,
 				24A4812719944DA5001BE688 /* gradient.png */,
+				8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */,
 			);
 			name = backgrounds;
 			sourceTree = "<group>";
@@ -528,6 +537,7 @@
 		D93CD46C19954107001F0253 /* homeicons */ = {
 			isa = PBXGroup;
 			children = (
+				8AA6C5B21AB77C3B0043D9B8 /* bag.png */,
 				D9F9200819A272C900E63FE8 /* hearted.png */,
 				07CF20BE1A5F356400354ABE /* comment.png */,
 				07CF20C61A5F39DE00354ABE /* edit@2x.png */,
@@ -538,6 +548,7 @@
 				07CF20C01A5F356400354ABE /* heart.png */,
 				07CF20C11A5F356400354ABE /* share.png */,
 				D93CD47A1995414E001F0253 /* info.png */,
+				8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */,
 			);
 			name = homeicons;
 			sourceTree = "<group>";
@@ -590,6 +601,7 @@
 				D95E662A19AA8444007ED067 /* LikedUsersViewController.swift */,
 				8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */,
 				8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */,
+				8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -792,6 +804,7 @@
 				D9BB597A199A844100367408 /* HelveticaNeueLTPro-LtCnO.otf in Resources */,
 				D9DEE64E199F1FD800F08CC5 /* fashtitlescreen.png in Resources */,
 				D9BB597C199A844100367408 /* HelveticaNeueLTPro-LtExO.otf in Resources */,
+				8ABA85FC1AB3649C00B6EC4A /* shoppingBag.png in Resources */,
 				07CF20CD1A5F39DE00354ABE /* heart@2x.png in Resources */,
 				D95938C4199C351100F18689 /* temporaryloading.png in Resources */,
 				09ABC07C13A1D52D009C3FCF /* InfoPlist.strings in Resources */,
@@ -815,6 +828,7 @@
 				D9BB5988199A844100367408 /* HelveticaNeueLTPro-ThEx.otf in Resources */,
 				D9F9200F19A2A60000E63FE8 /* FashionStash_Empty.png in Resources */,
 				D93CD47B1995414E001F0253 /* info.png in Resources */,
+				8AA6C5B31AB77C3B0043D9B8 /* bag.png in Resources */,
 				D9BB5990199A844100367408 /* HelveticaNeueLTPro-UltLtIt.otf in Resources */,
 				D9DEE64C199F1E4800F08CC5 /* unknown_user.png in Resources */,
 				D93CD47D19954157001F0253 /* logo.png in Resources */,
@@ -836,6 +850,7 @@
 				07CF20C21A5F356400354ABE /* comment.png in Resources */,
 				24A4812819944DA5001BE688 /* gradient.png in Resources */,
 				D91E5EA1199BBDA50041CB3F /* logo_menu.png in Resources */,
+				8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */,
 				D9BB598F199A844100367408 /* HelveticaNeueLTPro-UltLtExO.otf in Resources */,
 				D9BB595F199A844100367408 /* Didot.ttc in Resources */,
 				D9BB5963199A844100367408 /* HelveticaNeueLTPro-BdEx.otf in Resources */,
@@ -946,6 +961,7 @@
 				D923E4CD1989B3E900C12429 /* ShopLookDelegate.swift in Sources */,
 				09ABC07F13A1D52D009C3FCF /* main.m in Sources */,
 				D97E36E61977003700380A12 /* SearchViewController.swift in Sources */,
+				8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */,
 				D92566651964A59F00189250 /* FriendEncapsulator.swift in Sources */,
 				09ABC08213A1D52D009C3FCF /* ParseStarterProjectAppDelegate.m in Sources */,
 				24F51C6C199B05AA004E9C7C /* ReportProblemViewController.swift in Sources */,
