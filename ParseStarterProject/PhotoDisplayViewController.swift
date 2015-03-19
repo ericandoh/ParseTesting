@@ -17,9 +17,28 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
     @IBOutlet var contentArea: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let image : UIImage = UIImage(named: "Icon29@2x.png")!
+        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+        let title : UILabel = UILabel(frame: CGRectMake(40, 0, 300, 30))
+        
+        title.text = "Wendyslookbook"
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(20.0))
+        title.backgroundColor = UIColor.clearColor()
+        
+        let image : UIImage = UIImage(named: "user.png")!
         let imageView : UIImageView = UIImageView(image: image)
-        self.navigationItem.titleView = imageView;
+        
+        imageView.frame = CGRectMake(0, 0, 30, 30)
+        imageView.layer.cornerRadius = 5.0
+        imageView.layer.masksToBounds = true
+        imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        imageView.layer.borderWidth = 0.1
+        
+        myView.addSubview(title)
+        myView.backgroundColor = UIColor.clearColor()
+        myView.addSubview(imageView)
+        
+        self.navigationItem.titleView = myView //imageView;
     }
     
     override func didReceiveMemoryWarning() {
