@@ -143,7 +143,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         var frame: CGRect = frontImageView.frame;
         //backImageView = UIImageView(frame: frame);
-        backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+        backImageView = UIImageView(frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124))
         backImageView!.hidden = true;
         backImageView!.alpha = 0;
         //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
@@ -337,7 +337,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         if (backImageView == nil) {
             //var frame: CGRect = frontImageView.frame;
-            var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
+            var frame: CGRect = CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124);
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
@@ -1204,7 +1204,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         else {
             if (backImageView == nil) {
                 //var frame: CGRect = frontImageView.frame;
-                var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
+                var frame: CGRect = CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124);
                 backImageView = UIImageView(frame: frame);
                 backImageView!.hidden = true;
                 backImageView!.alpha = 0;

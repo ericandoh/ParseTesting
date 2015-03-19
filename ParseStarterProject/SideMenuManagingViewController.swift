@@ -109,7 +109,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             hideSideBar();
         }
     }
-    
+/*
     @IBAction func topPartTouched(sender: UIButton) {
         if (!menuOpen) {
             //this button should be hidden
@@ -120,7 +120,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             hideSideBar();
         }
     }
-    
+*/    
     func openHome() {
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
