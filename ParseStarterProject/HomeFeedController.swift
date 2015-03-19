@@ -23,7 +23,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBOutlet weak var descriptionBackImage: UIImageView!
     
     //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
-//    @IBOutlet var pageCounter: UILabel!
     
     @IBOutlet weak var descripLikeCounter: UIButton!
     
@@ -434,8 +433,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-        let pageInfo = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
-//        pageCounter.text = pageInfo
         
         // config post authro name, icon, upload creationh time and image page in nav bar
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
@@ -453,7 +450,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titleTime.backgroundColor = UIColor.clearColor()
         
-        titlePage.text = pageInfo
+        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
         titlePage.textColor = UIColor.whiteColor()
         titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titlePage.backgroundColor = UIColor.clearColor()
@@ -547,7 +544,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         else if (postCounter >= currentPost.getImagesCount() + 1) {
             postCounter = currentPost.getImagesCount() + 1;
-//            pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
             self.viewingComments = true;
             //self.frontImageView!.image = oldImg;
             self.startViewingComments(currentPost);
@@ -845,6 +841,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
+        // left swipe in the 1st post image and go to side menu
+/*
         if (postCounter == 0) {
             if ((self.navigationController) != nil) {
                 (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
@@ -854,6 +852,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
             return;
         }
+*/
         postCounter--;
         if (viewingComments) {
             viewingComments = false;
