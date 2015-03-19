@@ -442,36 +442,38 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         title.text = currentPost.getAuthor()
         title.textColor = UIColor.whiteColor()
-        title.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
         title.backgroundColor = UIColor.clearColor()
         
         titleTime.text = currentPost.getAgeAsString() + " ago • "
         titleTime.textColor = UIColor.whiteColor()
-        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titleTime.backgroundColor = UIColor.clearColor()
         
         titlePage.text = pageInfo
         titlePage.textColor = UIColor.whiteColor()
-        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titlePage.backgroundColor = UIColor.clearColor()
         
-        let image : UIImage = UIImage(named: "user.png")!
-        let imageView : UIImageView = UIImageView(image: image)
-        
-        imageView.frame = CGRectMake(20, 0, 30, 30)
-        imageView.layer.cornerRadius = 5.0
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
-        imageView.layer.borderWidth = 0.1
-        
-        myView.addSubview(title)
-        myView.addSubview(titleTime)
-        myView.addSubview(titlePage)
-        myView.backgroundColor = UIColor.blackColor()
-        myView.addSubview(imageView)
-        
-        self.navigationItem.titleView = myView
-        
+        let postAuthor = currentPost.getAuthorFriend()
+        postAuthor.fetchImage({(image: UIImage)->Void in
+            let imageView : UIImageView = UIImageView(image: image)
+            
+            imageView.frame = CGRectMake(20, 0, 30, 30)
+            imageView.layer.cornerRadius = 5.0
+            imageView.layer.masksToBounds = true
+            imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+            imageView.layer.borderWidth = 0.1
+            
+            myView.addSubview(title)
+            myView.addSubview(titleTime)
+            myView.addSubview(titlePage)
+            myView.backgroundColor = UIColor.blackColor()
+            myView.addSubview(imageView)
+            
+            self.navigationItem.titleView = myView
+        })
+
         var numLikes = currentPost.getLikes();
         var numComments = currentPost.getCommentsCount();
         var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
