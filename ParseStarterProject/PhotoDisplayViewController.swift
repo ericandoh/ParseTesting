@@ -18,9 +18,9 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
     override func viewDidLoad() {
         super.viewDidLoad()
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let title : UILabel = UILabel(frame: CGRectMake(40, 0, 300, 20))
-        let titleTime : UILabel = UILabel(frame: CGRectMake(40, 20, 50, 10))
-        let titlePage : UILabel = UILabel(frame: CGRectMake(90, 20, 15, 10))
+        let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
+        let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
+        let titlePage : UILabel = UILabel(frame: CGRectMake(110, 20, 15, 10))
         
         title.text = "Wendyslookbook"
         title.textColor = UIColor.whiteColor()
@@ -40,7 +40,7 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
         let image : UIImage = UIImage(named: "user.png")!
         let imageView : UIImageView = UIImageView(image: image)
         
-        imageView.frame = CGRectMake(0, 0, 30, 30)
+        imageView.frame = CGRectMake(20, 0, 30, 30)
         imageView.layer.cornerRadius = 5.0
         imageView.layer.masksToBounds = true
         imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
