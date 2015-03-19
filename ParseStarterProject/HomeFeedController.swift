@@ -23,7 +23,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBOutlet weak var descriptionBackImage: UIImageView!
     
     //@IBOutlet var commentTableView: UITableView     //use this for specific table manipulations
-    @IBOutlet var pageCounter: UILabel!
+//    @IBOutlet var pageCounter: UILabel!
     
     @IBOutlet weak var descripLikeCounter: UIButton!
     
@@ -44,7 +44,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBOutlet var commentsButton: UIButton!
     
-    @IBOutlet weak var editPostButton: UIButton!
+//    @IBOutlet weak var editPostButton: UIButton!
+    
+    @IBOutlet var shopLookButton: UIButton!
     
     @IBOutlet weak var descripTextViewConstraint: NSLayoutConstraint!
     
@@ -112,7 +114,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         frontImageView.contentMode = UIViewContentMode.Center;
         
-        editPostButton.hidden = true;
+//        editPostButton.hidden = true;
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
@@ -432,7 +434,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         let pageInfo = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
-        pageCounter.text = pageInfo
+//        pageCounter.text = pageInfo
         
         // config post authro name, icon, upload creationh time and image page in nav bar
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
@@ -488,14 +490,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
         }
         commentsButton.setTitle(shortenedNumCommentString, forState: UIControlState.Normal);
-        
+ /*
         if (currentPost.isOwnedByMe()) {
             editPostButton.hidden = false;
         }
         else {
             editPostButton.hidden = true;
         }
-        
+ */
         //this loads the images
         //2. images are being loaded already (prior call is active)
         //  a. do nothing (callback will get called when needed)
@@ -535,7 +537,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         else if (postCounter >= currentPost.getImagesCount() + 1) {
             postCounter = currentPost.getImagesCount() + 1;
-            pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+//            pageCounter.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
             self.viewingComments = true;
             //self.frontImageView!.image = oldImg;
             self.startViewingComments(currentPost);
@@ -786,7 +788,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 refreshNeeded = true;
                 switchImage(ENDING_IMG, fromDirection: CompassDirection.SOUTH);
                 //frontImageView!.image = ENDING_IMG;
-                pageCounter.text = "0/0";
+//                pageCounter.text = "0/0";
             }
         }
         else if (viewCounter < 0) {
@@ -1004,7 +1006,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         });
         
     }
-    
+/*
     @IBAction func editPostAction(sender: UIButton) {
         if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
             return;
@@ -1013,6 +1015,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //actionSheet.tag = 1;
         actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
         //self.presentViewController(actionSheet, animated: true, completion: {() in });
+    }
+*/
+    
+    
+    @IBAction func shopLooks(sender: AnyObject) {
+        NSLog("Go to shop look page")
     }
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
