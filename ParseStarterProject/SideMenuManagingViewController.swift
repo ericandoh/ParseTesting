@@ -109,18 +109,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             hideSideBar();
         }
     }
-/*
-    @IBAction func topPartTouched(sender: UIButton) {
-        if (!menuOpen) {
-            //this button should be hidden
-            outOfMenuButton.hidden = true;
-            outOfMenuButton.alpha = 0;
-        }
-        else {
-            hideSideBar();
-        }
-    }
-*/    
+
     func openHome() {
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
