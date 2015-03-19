@@ -460,10 +460,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             let imageView : UIImageView = UIImageView(image: image)
             
             imageView.frame = CGRectMake(20, 0, 30, 30)
-            imageView.layer.cornerRadius = 5.0
+            imageView.layer.cornerRadius = imageView.frame.size.width / 2; NSLog("post author: \(imageView.layer.cornerRadius)")
             imageView.layer.masksToBounds = true
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
-            imageView.layer.borderWidth = 0.1
+            imageView.layer.borderWidth = 0
             
             myView.addSubview(title)
             myView.addSubview(titleTime)
