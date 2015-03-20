@@ -36,7 +36,6 @@
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
-		8ABA85FC1AB3649C00B6EC4A /* shoppingBag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */; };
 		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
@@ -222,7 +221,6 @@
 		6372FF551613CC42002132AF /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6372FF571613CC47002132AF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		743D7B6C157DA60100084B67 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shoppingBag.png; path = ../../../../Downloads/shoppingBag.png; sourceTree = "<group>"; };
 		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
@@ -551,7 +549,6 @@
 				07CF20C01A5F356400354ABE /* heart.png */,
 				07CF20C11A5F356400354ABE /* share.png */,
 				D93CD47A1995414E001F0253 /* info.png */,
-				8ABA85FB1AB3649C00B6EC4A /* shoppingBag.png */,
 			);
 			name = homeicons;
 			sourceTree = "<group>";
@@ -807,7 +804,6 @@
 				D9BB597A199A844100367408 /* HelveticaNeueLTPro-LtCnO.otf in Resources */,
 				D9DEE64E199F1FD800F08CC5 /* fashtitlescreen.png in Resources */,
 				D9BB597C199A844100367408 /* HelveticaNeueLTPro-LtExO.otf in Resources */,
-				8ABA85FC1AB3649C00B6EC4A /* shoppingBag.png in Resources */,
 				07CF20CD1A5F39DE00354ABE /* heart@2x.png in Resources */,
 				D95938C4199C351100F18689 /* temporaryloading.png in Resources */,
 				09ABC07C13A1D52D009C3FCF /* InfoPlist.strings in Resources */,
