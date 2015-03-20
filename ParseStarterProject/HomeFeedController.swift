@@ -149,6 +149,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
         backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+        NSLog("---[viewDidLoad]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+        NSLog("----[viewDidLoad]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
         
         if ((imgBuffer) != nil) {
             if (imgBuffer!.isLoadedAt(viewCounter)) {
@@ -206,7 +208,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.view.addGestureRecognizer(panGestureRecognizer);
         
     }
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) { NSLog("View did appear")
         //check if page needs a refresh
         super.viewDidAppear(animated);
         if (self.navigationController != nil) {
@@ -223,19 +225,23 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
             //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-            backImageView!.contentMode = UIViewContentMode.Center;
-//            backImageView!.contentMode = UIViewContentMode.ScaleToFill
+//            backImageView!.contentMode = UIViewContentMode.Center;
+            backImageView!.contentMode = UIViewContentMode.ScaleToFill
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
+            NSLog("---[viewDidAppear]---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+             NSLog("----[viewDidAppear]---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
         }
+        NSLog("---[viewDidAppear]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+        NSLog("----[viewDidAppear]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        if (backImageView != nil) {
+        if (backImageView != nil) { NSLog("---[viewWillDisappear]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
             backImageView!.removeFromSuperview();
         }
         backImageView = nil;
-        if (frontImageView.image != nil) {
+        if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]---\(frontImageView.description)----frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
             frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
         }
         //if (self.navigationController) {
@@ -326,7 +332,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         loadingSpinner!.startAnimating();
         self.view.bringSubviewToFront(loadingSpinner!);
     }
-    func switchImage(toImage: UIImage, fromDirection: CompassDirection) {
+    func switchImage(toImage: UIImage, fromDirection: CompassDirection) { NSLog("-----switching image-----")
         
         var toImage = ServerInteractor.cropImageSoWidthIs(toImage, targetWidth: FULLSCREEN_WIDTH);
         
@@ -418,6 +424,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swiperNoSwipe = false;
                 });
         }
+        NSLog("---[switchImage]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+        NSLog("----[switchImage]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
     }
     
     //to load another set, if possible
@@ -568,7 +576,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
         }
     }
-    func configureRest(indexAtTimeOfRequest: Int) {
+    func configureRest(indexAtTimeOfRequest: Int) { NSLog("configuring rest")
         //if(!needLoadOnCurrent) {
             //return;
         //}
@@ -770,7 +778,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
         }
         if (refreshNeeded) {
-            if (motion) {
+            if (motion) { NSLog("-----refreshing-----")
                 refresh();
                 return;
             }
@@ -782,7 +790,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         if (viewCounter >= imgBuffer!.numItems()) {
             //show end of file screen, refresh if needed
-            if ((self.navigationController) != nil) {
+            if ((self.navigationController) != nil) { NSLog("--------no nav controller now-----")
                 viewCounter = imgBuffer!.numItems() - 1;
                 /*if (imgBuffer!.isLoadedAt(viewCounter)) {
                     var currentPost = imgBuffer!.getImagePostAt(viewCounter);
@@ -1249,6 +1257,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.backImageView!.frame.origin = newOrig;
                 }
             }
+            NSLog("---[motionPanned]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+            NSLog("----[motionPanned]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
         }
     }
     

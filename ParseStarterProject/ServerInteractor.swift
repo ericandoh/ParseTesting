@@ -488,7 +488,7 @@ import UIKit
         
         if (widthHeightImgRatio > CROP_WIDTH_HEIGHT_LIMIT_RATIO) {
             
-            var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))
+            var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124))
             /*
             var ciContext = CIContext(options: nil);
             
@@ -538,7 +538,7 @@ import UIKit
         }
         else {
             //i need to scale image to fit the screen dimensions!
-            return cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            return cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124));
         }
     }
     
