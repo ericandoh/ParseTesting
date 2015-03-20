@@ -150,8 +150,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
         backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        NSLog("---[viewDidLoad]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
-        NSLog("----[viewDidLoad]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
+        NSLog("---[viewDidLoad]---backImageView---\(backImageView!.description)")
+        NSLog("----[viewDidLoad]---frontImageView---\(frontImageView.description)")
         
         if ((imgBuffer) != nil) {
             if (imgBuffer!.isLoadedAt(viewCounter)) {
@@ -236,20 +236,18 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
 //            backImageView!.contentMode = UIViewContentMode.Center;
             backImageView!.contentMode = UIViewContentMode.ScaleToFill
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-            NSLog("---[viewDidAppear]---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
-             NSLog("----[viewDidAppear]---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
         }
-        NSLog("---[viewDidAppear]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
-        NSLog("----[viewDidAppear]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
+        NSLog("---[viewDidAppear]---backImageView---\(backImageView!.description)")
+        NSLog("----[viewDidAppear]---frontImageView---\(frontImageView.description)")
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        if (backImageView != nil) { NSLog("---[viewWillDisappear]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
+        if (backImageView != nil) { NSLog("---[viewWillDisappear]---backImageView---\(backImageView!.description)")
             backImageView!.removeFromSuperview();
         }
         backImageView = nil;
-        if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]---\(frontImageView.description)----frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
+        if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]----frontImageView---\(frontImageView.description)")
             frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
         }
         //if (self.navigationController) {
@@ -437,8 +435,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swiperNoSwipe = false;
                 });
         }
-        NSLog("---[switchImage]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
-        NSLog("----[switchImage]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
+        NSLog("---[switchImage]----backImageView---\(backImageView!.description)")
+        NSLog("----[switchImage]----frontImageView---\(frontImageView.description)")
     }
     
     //to load another set, if possible
@@ -1280,8 +1278,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.backImageView!.frame.origin = newOrig;
                 }
             }
-            NSLog("---[motionPanned]---\(backImageView!.description)---backImageView size: \(backImageView!.frame.width), \(backImageView!.frame.height)----")
-            NSLog("----[motionPanned]---\(frontImageView.description)---frontImageView size: \(frontImageView.frame.width), \(frontImageView.frame.height)----")
+            NSLog("---[motionPanned]----backImageView---\(backImageView!.description)")
+            NSLog("----[motionPanned]----frontImageView---\(frontImageView.description)")
         }
     }
     
