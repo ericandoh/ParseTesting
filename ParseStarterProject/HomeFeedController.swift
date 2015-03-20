@@ -187,6 +187,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
         }
         
+        self.tutorialOverlay.hidden = true
         let defaults = NSUserDefaults();
         if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)){
             if (loadingSpinner!.hidden == false) {
@@ -196,6 +197,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
             
             //set up tutorial
+/*
             var tutorialOverlay = UIButton(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT));
             if (UIScreen.mainScreen().bounds.height == CGFloat(568.0)) {
                 tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE_5, forState: UIControlState.Normal);
@@ -204,7 +206,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
             tutorialOverlay.addTarget(self, action: "closeTutorial:", forControlEvents: UIControlEvents.TouchDown)
             self.view.addSubview(tutorialOverlay);
-            self.view.bringSubviewToFront(tutorialOverlay);
+*/
+            self.tutorialOverlay.hidden = false
+            self.view.bringSubviewToFront(self.tutorialOverlay);
         }
         
         var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "motionPanned:");
@@ -1159,6 +1163,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setBool(false, forKey: SHOW_INSTRUCTION_OR_NOT)
     }
+/*
     func closeTutorial(button: UIButton) {
         UIView.animateWithDuration(0.6, animations: {() in
             button.alpha = 0;
@@ -1169,6 +1174,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 defaults.setBool(false, forKey: SHOW_INSTRUCTION_OR_NOT)
         });
     }
+*/
     func motionPanned(sender: UIPanGestureRecognizer) {
         if (swiperNoSwipe) {
             //turn this on as well if I'm redrawing stuff
