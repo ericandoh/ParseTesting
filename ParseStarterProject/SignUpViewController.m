@@ -67,6 +67,14 @@
 */
 
 - (IBAction)signUpPressed:(id)sender {
+    // show gesture insturction after sign up
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"showInstruction"];
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) { // lesst than iOS 8.0
+        [defaults synchronize];
+    }
+    
+    // Store the data
     NSString* username = self.userTextField.text;
     NSString* email = self.emailTextField.text;
     NSString* password = self.passwordTextField.text;

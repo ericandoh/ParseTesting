@@ -65,6 +65,9 @@ let MAX_IMGS_PER_SUGGEST = 5;
 // PARSE.COM PFFile maximum size to upload and store, 10M
 let PARSE_PFFILE_LIMIT = 10485760
 
+// show gesture instruction after sign up
+let SHOW_INSTRUCTION_OR_NOT = "showInstruction"
+
 //----------------------------Image Constants---------------------------------
 
 let NULL_IMG: UIImage = UIImage(named: "temporaryloading.png")!;
@@ -186,10 +189,10 @@ let MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT = TRUE_FULLSCREEN_HEIGHT - 115.0 - 45
 //you can change hue in storyboard
 let SIDE_MENU_DIM = CGFloat(0.05);
 
-let SIDE_MENU_HEADER_HEIGHT = CGFloat(64); // 64 = statusbar (20) + navbar (44), orig is 70
-let TOOLBAR_ICON_HEIGHT = CGFloat(60) // 60 = icon (40) + gap (10 x 2)
+let HOME_FEED_HEADER_HEIGHT = CGFloat(64); // 64 = statusbar (20) + navbar (44), orig is 70
+let HOME_FEED_TOOLBAR_HEIGHT = CGFloat(60) // 60 = icon (40) + gap (10 x 2)
 
-let SIDE_MENU_TABLE_HEIGHT = TRUE_FULLSCREEN_HEIGHT - SIDE_MENU_HEADER_HEIGHT - TOOLBAR_ICON_HEIGHT;
+let SIDE_MENU_TABLE_HEIGHT = TRUE_FULLSCREEN_HEIGHT - HOME_FEED_HEADER_HEIGHT - HOME_FEED_TOOLBAR_HEIGHT;
 
 //ratio of width to height
 let WIDTH_HEIGHT_RATIO = CGFloat(IMGSAVE_FULLSCREEN_WIDTH) / CGFloat(IMGSAVE_FULLSCREEN_HEIGHT);

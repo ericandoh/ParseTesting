@@ -42,13 +42,13 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         
         self.view.opaque = false;
         self.view.backgroundColor = UIColor.clearColor();
-        
+
         var toolbar = UIToolbar(frame: sideView.frame);
         toolbar.barStyle = UIBarStyle.Black;
         toolbar.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
         toolbar.setTranslatesAutoresizingMaskIntoConstraints(false);
         self.sideView.insertSubview(toolbar, atIndex: 0);
-        
+
         var topConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0);
         var leadingConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0);
         var trailingConstraint = NSLayoutConstraint(item: toolbar, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: self.sideView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0);

@@ -43,6 +43,7 @@
 		8AC8ADAC1AAF63BF0051232C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF521613CC3C002132AF /* Accounts.framework */; };
 		8AF952891ABC824800C9EA76 /* bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952871ABC824800C9EA76 /* bag.png */; };
 		8AF9528A1ABC824800C9EA76 /* bag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952881ABC824800C9EA76 /* bag@2x.png */; };
+		8AF9528C1ABCCC8000C9EA76 /* guide2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8AF9528B1ABCCC8000C9EA76 /* guide2.jpg */; };
 		C6078A67626639E2DF8CB637 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2378D333053FC828FFF28E4 /* libPods.a */; };
 		D907219019A3C6EA00EE53B8 /* CompatibleAlertViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */; };
 		D909F22019E216C400C0AB8C /* icon60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D909F21F19E216C400C0AB8C /* icon60@2x.png */; };
@@ -227,6 +228,7 @@
 		8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
 		8AF952871ABC824800C9EA76 /* bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bag.png; sourceTree = "<group>"; };
 		8AF952881ABC824800C9EA76 /* bag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bag@2x.png"; sourceTree = "<group>"; };
+		8AF9528B1ABCCC8000C9EA76 /* guide2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guide2.jpg; sourceTree = "<group>"; };
 		97E18B1E1624CB5700B17A67 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompatibleAlertViews.swift; sourceTree = "<group>"; };
 		D909F21F19E216C400C0AB8C /* icon60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon60@2x.png"; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 		D99B5FCF196DBB2500662A39 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				8AF9528B1ABCCC8000C9EA76 /* guide2.jpg */,
 				D9DEE637199F0C1100F08CC5 /* tutorial.png */,
 				D93CD47C19954157001F0253 /* logo.png */,
 				D9F9200E19A2A60000E63FE8 /* FashionStash_Empty.png */,
@@ -867,6 +870,7 @@
 				07CF20CA1A5F39DE00354ABE /* edit@2x.png in Resources */,
 				D9BB5961199A844100367408 /* HelveticaNeueLTPro-BdCn.otf in Resources */,
 				D9BB597B199A844100367408 /* HelveticaNeueLTPro-LtEx.otf in Resources */,
+				8AF9528C1ABCCC8000C9EA76 /* guide2.jpg in Resources */,
 				D9F9200919A272C900E63FE8 /* hearted.png in Resources */,
 				D9BB596C199A844100367408 /* HelveticaNeueLTPro-BlkIt.otf in Resources */,
 				07CF20C51A5F356400354ABE /* share.png in Resources */,

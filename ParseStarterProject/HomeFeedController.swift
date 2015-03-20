@@ -55,6 +55,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBOutlet weak var bottomPullToRefresh: UILabel!
     
+    @IBOutlet var tutorialOverlay: UIButton!
     
     var loadingSpinner: UIActivityIndicatorView?;
     
@@ -185,23 +186,26 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
             }
         }
-        /*
-        var defaults = NSUserDefaults();
-        if (defaults.objectForKey("ranTutorial") == nil) {
-            defaults.setObject(NSDate(), forKey: "ranTutorial");
-            defaults.synchronize();
+        
+        let defaults = NSUserDefaults();
+        if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)){
+            if (loadingSpinner!.hidden == false) {
+                self.view.sendSubviewToBack(loadingSpinner!);
+                loadingSpinner!.stopAnimating();
+                loadingSpinner!.hidden = true;
+            }
+            
             //set up tutorial
-            var tutorialOverlay = UIButton(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+            var tutorialOverlay = UIButton(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT));
             if (UIScreen.mainScreen().bounds.height == CGFloat(568.0)) {
                 tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE_5, forState: UIControlState.Normal);
-            }
-            else {
+            } else {
                 tutorialOverlay.setBackgroundImage(TUTORIAL_IMAGE_4, forState: UIControlState.Normal);
             }
             tutorialOverlay.addTarget(self, action: "closeTutorial:", forControlEvents: UIControlEvents.TouchDown)
             self.view.addSubview(tutorialOverlay);
             self.view.bringSubviewToFront(tutorialOverlay);
-        }*/
+        }
         
         var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "motionPanned:");
         panGestureRecognizer.delegate = self;
@@ -297,6 +301,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     func checkForNoImages() {
+        let defaults = NSUserDefaults()
+        if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)) { // TODO: remove this if block after implement force picking friends
+            return
+        }
+        
         if (self.imgBuffer!.numItems() == 0) {
             if (loadingSpinner!.hidden == false) {
                 self.view.sendSubviewToBack(loadingSpinner!);
@@ -1144,12 +1153,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         return false;
     }
+    @IBAction func closeTutorial(sender: AnyObject) {
+        self.tutorialOverlay.hidden = true
+        self.tutorialOverlay.removeFromSuperview()
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(false, forKey: SHOW_INSTRUCTION_OR_NOT)
+    }
     func closeTutorial(button: UIButton) {
         UIView.animateWithDuration(0.6, animations: {() in
             button.alpha = 0;
             }, completion: {(success: Bool) in
                 button.hidden = true;
                 button.removeFromSuperview();
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setBool(false, forKey: SHOW_INSTRUCTION_OR_NOT)
         });
     }
     func motionPanned(sender: UIPanGestureRecognizer) {
