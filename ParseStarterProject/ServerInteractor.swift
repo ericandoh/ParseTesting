@@ -425,7 +425,8 @@ import UIKit
     class func cropImageSoNavigationWorksCorrectly(img: UIImage, frame: CGRect)->UIImage {
         var wRatio = frame.size.width / img.size.width;
         var hRatio = frame.size.height / img.size.height;
-        
+        NSLog("\(img.size.width) - \(img.size.height)")
+        NSLog("\(frame.size.width) - \(frame.size.height)")
         var ratio = max(wRatio, hRatio);
         
         UIGraphicsBeginImageContext(frame.size);
@@ -435,7 +436,7 @@ import UIKit
         var leftMargin = (imgNewWidth - frame.size.width) / 2;
         var topMargin = (imgNewHeight - frame.size.height) / 2;
         img.drawInRect(CGRectMake(-leftMargin, -topMargin, imgNewWidth, imgNewHeight));
-        
+        NSLog("\(imgNewWidth) - \(imgNewHeight)")
         var finalImg = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
@@ -486,7 +487,7 @@ import UIKit
         
         var widthHeightImgRatio = img.size.width / img.size.height;
         
-        if (widthHeightImgRatio > CROP_WIDTH_HEIGHT_LIMIT_RATIO) {
+        if (widthHeightImgRatio > CROP_WIDTH_HEIGHT_LIMIT_RATIO) { NSLog("widthHeightImgRatio: \(widthHeightImgRatio)")
             
             var croppedPicture = cropImageSoNavigationWorksCorrectly(img, frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124))
             /*
@@ -519,7 +520,9 @@ import UIKit
             var wRatio = targetWidth / img.size.width;
             //var hRatio = frame.size.height / img.size.height;
             var targetHeight = wRatio * img.size.height;
-            //NSLog("\(targetWidth)- \(targetHeight)")
+            NSLog("\(targetWidth)- \(targetHeight)")
+            NSLog("\(img.size.width) - \(img.size.height)")
+            NSLog("\(FULLSCREEN_WIDTH) - \(TRUE_FULLSCREEN_HEIGHT)")
             var rect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT);
             
             UIGraphicsBeginImageContext(CGSizeMake(FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT))

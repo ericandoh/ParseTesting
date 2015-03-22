@@ -176,17 +176,17 @@ class CustomImageBuffer: NSObject {
         //ServerInteractor.getSubmissions()...; with receiveNumQuery, receiveImagePostWithImage
         //broke here
         
-        if (loaderType == 0) {
+        if (loaderType == 0) { NSLog("laoderType is 0")
             serverFunction!(skip: loadedPostCount, loadCount: postLoadCount, user: user!, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
-        else if (loaderType == 1) {
+        else if (loaderType == 1) { NSLog("laoderType is 1")
             var otherExcludes: Array<ImagePostStructure?> = loadedPosts;
             serverFunction2!(loadCount: postLoadCount, excludes: otherExcludes, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
-        else if (loaderType == 2) {
+        else if (loaderType == 2) { NSLog("laoderType is 2")
             serverFunction3!(skip: loadedPostCount, loadCount: postLoadCount, term: searchTerm, notifyQueryFinish: receiveNumQuery, finishFunction: receiveImagePostWithImage);
         }
-        else if (loaderType == 3) {
+        else if (loaderType == 3) { NSLog("laoderType is 3")
             //everything (should) already be loaded
             hitEnd = true;
             isLoading = 0;

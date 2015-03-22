@@ -112,7 +112,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        frontImageView.contentMode = UIViewContentMode.Center;
+//        frontImageView.contentMode = UIViewContentMode.Center;
+        frontImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
 //        editPostButton.hidden = true;
         
@@ -144,20 +145,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         var frame: CGRect = frontImageView.frame;
         //backImageView = UIImageView(frame: frame);
-        backImageView = UIImageView(frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124))
+        backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT))
         backImageView!.hidden = true;
         backImageView!.alpha = 0;
-        //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-        backImageView!.contentMode = UIViewContentMode.Center;
+        backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+//        backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         NSLog("---[viewDidLoad]---backImageView---\(backImageView!.description)")
         NSLog("----[viewDidLoad]---frontImageView---\(frontImageView.description)")
         
-        if ((imgBuffer) != nil) {
-            if (imgBuffer!.isLoadedAt(viewCounter)) {
+        if ((imgBuffer) != nil) { NSLog("imgBuffer is not nil")
+            if (imgBuffer!.isLoadedAt(viewCounter)) { NSLog("imgBuffer load at \(viewCounter)")
                 configureCurrent(viewCounter);
             }
-            if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+            if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) { NSLog("imgBuffer did not hit the end")
                 if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
                     imgBuffer!.loadSet();
                 }
@@ -171,11 +172,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         //self.view.bringSubviewToFront(frontImageView);
         //commentView.hidden = true; //this should be set in storyboard but just in case
-        if (imgBuffer == nil) {
+        if (imgBuffer == nil) { NSLog("imgBuffer is nil")
             refresh();
         }
         else {
-            if (backImageView == nil || backImageView!.image == nil) {
+            if (backImageView == nil || backImageView!.image == nil) { NSLog("setLoadingImage")
                 setLoadingImage();
             }
             //topLeftButton.setTitle("Back", forState: UIControlState.Normal);
@@ -227,7 +228,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //self.navigationController!.navigationBar.hidden = true;
             //self.navigationController!.navigationBar.translucent = true;
         //}
-        if (backImageView == nil) {
+        if (backImageView == nil) { NSLog("[viewDidAppear]---backImageView is nil")
             var frame: CGRect = frontImageView.frame;
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
@@ -284,7 +285,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         refreshNeeded = false;
         viewingComments = false;
         setLoadingImage();
-        if (imgBuffer != nil) {
+        if (imgBuffer != nil) { NSLog("[refresh]---imgBuffer is not nil")
             imgBuffer!.resetData();
             imgBuffer!.loadSet();
             if ((imgBuffer) != nil) {
@@ -296,7 +297,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
             //self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: nil, configureCellFunction: configureCurrent);
         }
-        else {
+        else { NSLog("[refresh]---imgBuffer is nil")
             self.imgBuffer = CustomImageBuffer(disableOnAnon: false, user: nil, owner: HOME_OWNER);
             self.imgBuffer!.initialSetup2(ServerInteractor.getPost, refreshFunction: checkForNoImages, configureCellFunction: configureCurrent);
         }
@@ -305,6 +306,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     func checkForNoImages() {
         let defaults = NSUserDefaults()
         if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)) { // TODO: remove this if block after implement force picking friends
+            NSLog("do not display find friends tutorial now")
             return
         }
         
@@ -352,21 +354,21 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
         }
-        if (backImageView == nil) {
+        if (backImageView == nil) {NSLog("[switchImage]---backImageView is nil")
             //var frame: CGRect = frontImageView.frame;
-            var frame: CGRect = CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124);
+            var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT);
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
             backImageView!.alpha = 0;
-            //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-            backImageView!.contentMode = UIViewContentMode.Center;
+            backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+//            backImageView!.contentMode = UIViewContentMode.Center;
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;
         self.backImageView!.hidden = false;
         self.swiperNoSwipe = true;
-        if (fromDirection == CompassDirection.STAY) {
+        if (fromDirection == CompassDirection.STAY) { NSLog("[switchImage]---direction is STAY")
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.alpha = 1;
                 }, completion: {(success: Bool) in
@@ -377,7 +379,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swipingRight = false;
                 });
         }
-        else if (fromDirection == CompassDirection.EAST) {
+        else if (fromDirection == CompassDirection.EAST) { NSLog( "[switchImage]---direction is EAST")
             var oldOrig = self.backImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x + CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
@@ -392,7 +394,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swipingRight = false;
                 });
         }
-        else if (fromDirection == CompassDirection.WEST) {
+        else if (fromDirection == CompassDirection.WEST) { NSLog("[switchImage]---direction is WEST")
             var oldOrig = self.backImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x - CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
@@ -406,7 +408,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swiperNoSwipe = false;
                 });
         }
-        else if (fromDirection == CompassDirection.NORTH) {
+        else if (fromDirection == CompassDirection.NORTH) { NSLog("[switchImage]---direction is NORTH")
             var oldOrig = self.backImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
@@ -420,7 +422,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swiperNoSwipe = false;
                 });
         }
-        else if (fromDirection == CompassDirection.SOUTH) {
+        else if (fromDirection == CompassDirection.SOUTH) { NSLog("[switchImage]---direction is SOUTH")
             var oldOrig = self.backImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
@@ -535,9 +537,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
         }
         
-        if (postCounter == 0) {
+        if (postCounter == 0) { NSLog("postCounter: 0")
             //handled ok, post should be loaded on arrival of this page anyhows
-            if (currentPost.image != nil) {
+            if (currentPost.image != nil) { NSLog("currentPost image is not nil")
                 //most of time should go here
                 //our image exists!
                 needLoadOnCurrent = false;
@@ -561,13 +563,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //frontImageView!.image = currentPost.image;
             //stupid nonprogrammers and their 1-based counting system
         }
-        else if (postCounter >= currentPost.getImagesCount() + 1) {
+        else if (postCounter >= currentPost.getImagesCount() + 1) { NSLog("[configureCurrent]---startViewingComments and postCounter: \(postCounter)")
             postCounter = currentPost.getImagesCount() + 1;
             self.viewingComments = true;
             //self.frontImageView!.image = oldImg;
             self.startViewingComments(currentPost);
         }
-        else {
+        else { NSLog("[configureCurrent]---postCounter: \(postCounter)")
             if (currentPost.isRestLoaded()) {
                 //needLoadOnCurrent = false;
                 if (currentPost.isViewingComments(postCounter)) {
@@ -576,11 +578,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     //self.frontImageView!.image = oldImg;
                     self.startViewingComments(currentPost);
                 }
-                else {
+                else { NSLog("[configureCurrent]---switchImage and postCounter: \(postCounter)")
                     self.switchImage(currentPost.getImageAt(postCounter), fromDirection: fromDirection);
                 }
             }
-            else {
+            else { NSLog("[configureCurrent]---switchImageToLoading and postCounter: \(postCounter)")
                 //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
                 //trying to configure at comments, but its not loaded yet!
                 self.switchImageToLoading(fromDirection);
@@ -594,7 +596,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (indexAtTimeOfRequest == viewCounter) {
             //im still on the same image post, phew!
             var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-            if (postCounter != 0) {
+            if (postCounter != 0) { NSLog("[configureRest]---switchImage")
                 //needLoadOnCurrent = false;
                 //crash - currentpost doesn't actually have image here!
                 self.switchImage(currentPost.getImageAt(postCounter), fromDirection: CompassDirection.STAY);
@@ -1233,12 +1235,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         else {
             if (backImageView == nil) {
                 //var frame: CGRect = frontImageView.frame;
-                var frame: CGRect = CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-124);
+                var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT);
                 backImageView = UIImageView(frame: frame);
                 backImageView!.hidden = true;
                 backImageView!.alpha = 0;
-                //backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
-                backImageView!.contentMode = UIViewContentMode.Center;
+                backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+//                backImageView!.contentMode = UIViewContentMode.Center;
                 self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
             }
             if (isRefreshStart || isRefreshEnd) {
@@ -1355,7 +1357,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }));
             self.presentViewController(alert, animated: true, completion: nil)
         }
-        else {
+        else {/Users/liyao/projects/FashionStash/ParseTesting/ParseStarterProject/RealLoginViewController.swift
             //clicked on other comment - if implement comment upvoting, do it here
         }
     }
