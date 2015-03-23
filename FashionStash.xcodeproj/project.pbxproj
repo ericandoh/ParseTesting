@@ -44,6 +44,7 @@
 		8AF952891ABC824800C9EA76 /* bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952871ABC824800C9EA76 /* bag.png */; };
 		8AF9528A1ABC824800C9EA76 /* bag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952881ABC824800C9EA76 /* bag@2x.png */; };
 		8AF9528E1ABCD3C300C9EA76 /* swipeGuide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF9528D1ABCD3C300C9EA76 /* swipeGuide.png */; };
+		8AF952901AC0B7F500C9EA76 /* FollowUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF9528F1AC0B7F500C9EA76 /* FollowUserViewController.swift */; };
 		C6078A67626639E2DF8CB637 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2378D333053FC828FFF28E4 /* libPods.a */; };
 		D907219019A3C6EA00EE53B8 /* CompatibleAlertViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */; };
 		D909F22019E216C400C0AB8C /* icon60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D909F21F19E216C400C0AB8C /* icon60@2x.png */; };
@@ -229,6 +230,7 @@
 		8AF952871ABC824800C9EA76 /* bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bag.png; sourceTree = "<group>"; };
 		8AF952881ABC824800C9EA76 /* bag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bag@2x.png"; sourceTree = "<group>"; };
 		8AF9528D1ABCD3C300C9EA76 /* swipeGuide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipeGuide.png; sourceTree = "<group>"; };
+		8AF9528F1AC0B7F500C9EA76 /* FollowUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowUserViewController.swift; sourceTree = "<group>"; };
 		97E18B1E1624CB5700B17A67 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompatibleAlertViews.swift; sourceTree = "<group>"; };
 		D909F21F19E216C400C0AB8C /* icon60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon60@2x.png"; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */,
 				8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */,
 				8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */,
+				8AF9528F1AC0B7F500C9EA76 /* FollowUserViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -948,6 +951,7 @@
 				D9A1E5AE196B4EDB00935062 /* PostComment.swift in Sources */,
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D923909C19929107001B5CBE /* SuggestedHeaderView.swift in Sources */,
+				8AF952901AC0B7F500C9EA76 /* FollowUserViewController.swift in Sources */,
 				8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */,
 				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,

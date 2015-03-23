@@ -305,7 +305,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func checkForNoImages() {
         let defaults = NSUserDefaults()
-        if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)) { // TODO: remove this if block after implement force picking friends
+        if (defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT)) {
             NSLog("do not display find friends tutorial now")
             return
         }
