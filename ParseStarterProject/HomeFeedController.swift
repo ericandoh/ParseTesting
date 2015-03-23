@@ -119,7 +119,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
-        self.navigationController!.navigationBar.translucent = false;
+        self.navigationController!.navigationBar.translucent = true;
         self.navigationController!.view.backgroundColor = UIColor.blackColor();
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
@@ -384,7 +384,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.alpha = 1;
                 }, completion: {(success: Bool) in
-                    NSLog("set frontImageView: \(self.frontImageView!.image!.size)")
+//                    NSLog("set frontImageView: \(self.frontImageView!.image!.size)")
                     self.frontImageView!.image = toImage;NSLog("later set frontImageView: \(self.frontImageView!.image!.size)")
 //                    self.frontImageView!.hidden = true
                     self.backImageView!.alpha = 0;

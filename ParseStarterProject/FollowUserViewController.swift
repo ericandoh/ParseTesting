@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
-let SUGGEST_OWNER = "SUGGEST"
-
+/*
 class FollowUserViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     @IBOutlet var suggestedCollectionView: UICollectionView!
     
@@ -42,3 +40,4 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         var reusableView
     }
 }
+*/
