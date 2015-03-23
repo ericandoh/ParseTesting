@@ -151,8 +151,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
 //        backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        NSLog("---[viewDidLoad]---backImageView---\(backImageView!.description)")
-        NSLog("----[viewDidLoad]---frontImageView---\(frontImageView.description)")
+        NSLog("---[viewDidLoad]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
+        NSLog("----[viewDidLoad]---frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
         
         if ((imgBuffer) != nil) { NSLog("imgBuffer is not nil")
             if (imgBuffer!.isLoadedAt(viewCounter)) { NSLog("imgBuffer load at \(viewCounter)")
@@ -238,17 +238,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             backImageView!.contentMode = UIViewContentMode.ScaleToFill
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         }
-        NSLog("---[viewDidAppear]---backImageView---\(backImageView!.description)")
-        NSLog("----[viewDidAppear]---frontImageView---\(frontImageView.description)")
+        NSLog("---[viewDidAppear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
+        NSLog("----[viewDidAppear]---frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        if (backImageView != nil) { NSLog("---[viewWillDisappear]---backImageView---\(backImageView!.description)")
+        if (backImageView != nil) { NSLog("---[viewWillDisappear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
             backImageView!.removeFromSuperview();
         }
         backImageView = nil;
-        if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]----frontImageView---\(frontImageView.description)")
+        if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]----frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
             frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
         }
         //if (self.navigationController) {
@@ -372,11 +372,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             UIView.animateWithDuration(0.3, animations: {() in
                 self.backImageView!.alpha = 1;
                 }, completion: {(success: Bool) in
-                    self.frontImageView!.image = toImage;
+                    NSLog("set frontImageView: \(self.frontImageView!.image!.size)")
+                    self.frontImageView!.image = toImage;NSLog("later set frontImageView: \(self.frontImageView!.image!.size)")
+//                    self.frontImageView!.hidden = true
                     self.backImageView!.alpha = 0;
-                    self.backImageView!.hidden = true;
+                    self.backImageView!.hidden = false;
                     self.swiperNoSwipe = false;
-                    self.swipingRight = false;
+                    self.swipingRight = false; NSLog("hide backImageView")
                 });
         }
         else if (fromDirection == CompassDirection.EAST) { NSLog( "[switchImage]---direction is EAST")
@@ -437,8 +439,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.swiperNoSwipe = false;
                 });
         }
-        NSLog("---[switchImage]----backImageView---\(backImageView!.description)")
-        NSLog("----[switchImage]----frontImageView---\(frontImageView.description)")
+        NSLog("---[switchImage]----backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
+        NSLog("----[switchImage]----frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
     }
     
     //to load another set, if possible
@@ -782,9 +784,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     //called after viewCounter is changed appropriately
     //motion is true when motion == down
-    func swipeAction(motion: Bool) {
+    func swipeAction(motion: Bool) {NSLog("swipeAction")
         postCounter = 0;
-        if (viewingComments) {
+        if (viewingComments) { NSLog("viewing comments")
             viewingComments = false;
             if (!descriptionPage.hidden) {
                 hideDescriptionPage();
@@ -795,7 +797,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 refresh();
                 return;
             }
-            else {
+            else { NSLog("no motion")
                 refreshNeeded = false;
             }
         }
@@ -811,7 +813,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 }*/
                 return;
             }
-            else {
+            else { NSLog("refresh needed")
                 refreshNeeded = true;
                 switchImage(ENDING_IMG, fromDirection: CompassDirection.SOUTH);
                 //frontImageView!.image = ENDING_IMG;
@@ -824,7 +826,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         else if (imgBuffer!.isLoadedAt(viewCounter)) {
             //might also need to see if image itself is loaded (depending on changes for deallocing)
-            if (motion) {
+            if (motion) { NSLog("[swipeAction]---imgBuffer load at \(viewCounter)---with motion")
                 configureCurrent(viewCounter, fromDirection: CompassDirection.SOUTH);
             }
             else {
@@ -837,7 +839,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         
         //load more if necessary
-        if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) {
+        if ((!imgBuffer!.didHitEnd()) && imgBuffer!.numItems() - viewCounter < POST_LOAD_LIMIT) { NSLog("[swipeAction]---loadSet")
             imgBuffer!.loadSet();
         }
         /*else if () {
@@ -1280,8 +1282,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     self.backImageView!.frame.origin = newOrig;
                 }
             }
-            NSLog("---[motionPanned]----backImageView---\(backImageView!.description)")
-            NSLog("----[motionPanned]----frontImageView---\(frontImageView.description)")
+            NSLog("---[motionPanned]----backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
+            NSLog("----[motionPanned]----frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
         }
     }
     
