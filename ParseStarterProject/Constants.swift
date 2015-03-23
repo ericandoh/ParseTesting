@@ -60,7 +60,7 @@ let GALLERY_LOAD_LIMIT = 150;
 
 //for suggest friends page, how many users to suggest + how many images per each user to preview
 let NUM_TO_SUGGEST = 25;
-let MAX_IMGS_PER_SUGGEST = 5;
+let MAX_IMGS_PER_SUGGEST = 3// 5;
 
 // PARSE.COM PFFile maximum size to upload and store, 10M
 let PARSE_PFFILE_LIMIT = 10485760
