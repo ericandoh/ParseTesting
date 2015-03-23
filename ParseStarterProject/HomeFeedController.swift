@@ -769,7 +769,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         swipingRight = true;
         postCounter++;
-        swipeSideAction(CompassDirection.EAST);
+        swipeSideAction(CompassDirection.SOUTH);
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
@@ -800,7 +800,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             swipeSideAction(CompassDirection.STAY);
             return;
         }
-        swipeSideAction(CompassDirection.WEST);
+        swipeSideAction(CompassDirection.NORTH);
     }
     
     //actions for swipe Up/Down
@@ -862,10 +862,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         else if (imgBuffer!.isLoadedAt(viewCounter)) {
             //might also need to see if image itself is loaded (depending on changes for deallocing)
             if (motion) { NSLog("[swipeAction]---imgBuffer load at \(viewCounter)---with motion")
-                configureCurrent(viewCounter, fromDirection: CompassDirection.SOUTH);
+                configureCurrent(viewCounter, fromDirection: CompassDirection.EAST);
             }
             else {
-                configureCurrent(viewCounter, fromDirection: CompassDirection.NORTH);
+                configureCurrent(viewCounter, fromDirection: CompassDirection.WEST);
             }
         }
         else {
