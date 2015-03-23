@@ -764,20 +764,43 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
-        viewCounter++;
-        swipeAction(true);
+        if (viewingComments) {
+            return;
+        }
+        swipingRight = true;
+        postCounter++;
+        swipeSideAction(CompassDirection.EAST);
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
-        viewCounter--;
-        if (viewCounter < 0) {
-            viewCounter = 0;
+        // left swipe in the 1st post image and go to side menu
+/*
+        if (postCounter == 0) {
+            if ((self.navigationController) != nil) {
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+            }
+            else {
+                (self.parentViewController as SideMenuManagingViewController).openMenu();
+            }
             return;
         }
-        swipeAction(false);
+*/
+        if postCounter == 0 {
+            return
+        }
+        postCounter--;
+        if (viewingComments) {
+            viewingComments = false;
+            if (!descriptionPage.hidden) {
+                hideDescriptionPage();
+            }
+            swipeSideAction(CompassDirection.STAY);
+            return;
+        }
+        swipeSideAction(CompassDirection.WEST);
     }
     
     //actions for swipe Up/Down
@@ -876,32 +899,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
-        // left swipe in the 1st post image and go to side menu
-/*
-        if (postCounter == 0) {
-            if ((self.navigationController) != nil) {
-                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
-            }
-            else {
-                (self.parentViewController as SideMenuManagingViewController).openMenu();
-            }
+        viewCounter--;
+        if (viewCounter < 0) {
+            viewCounter = 0;
             return;
         }
-*/
-        if postCounter == 0 {
-            return
-        }
-        postCounter--;
-        if (viewingComments) {
-            viewingComments = false;
-            if (!descriptionPage.hidden) {
-                hideDescriptionPage();
-            }
-            swipeSideAction(CompassDirection.STAY);
-            return;
-        }
-        swipeSideAction(CompassDirection.WEST);
-        
+        swipeAction(false);
     }
     
     //is actually swipe left, but the new image moves in from the right
@@ -909,12 +912,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
-        if (viewingComments) {
-            return;
-        }
-        swipingRight = true;
-        postCounter++;
-        swipeSideAction(CompassDirection.EAST);
+        viewCounter++;
+        swipeAction(true);
     }
     
     @IBAction func sideMenu(sender: UIButton) {
