@@ -143,12 +143,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //UIView.setAnimationTransition(UIViewAnimationTransition.None, forView: self.navigationController!.view, cache: true);
         //}
         
+        frontImageView.contentMode = UIViewContentMode.ScaleAspectFill;
+        frontImageView.clipsToBounds = true;
+        
         var frame: CGRect = frontImageView.frame;
-        //backImageView = UIImageView(frame: frame);
-        backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT))
+        var backFrame: CGRect = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+        backImageView = UIImageView(frame: backFrame);
+        //backImageView = UIImageView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT))
         backImageView!.hidden = true;
         backImageView!.alpha = 0;
         backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
+        backImageView!.clipsToBounds = true;
 //        backImageView!.contentMode = UIViewContentMode.Center;
         self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
         NSLog("---[viewDidLoad]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
@@ -228,7 +233,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //self.navigationController!.navigationBar.hidden = true;
             //self.navigationController!.navigationBar.translucent = true;
         //}
-        if (backImageView == nil) { NSLog("[viewDidAppear]---backImageView is nil")
+        /*if (backImageView == nil) { NSLog("[viewDidAppear]---backImageView is nil")
             var frame: CGRect = frontImageView.frame;
             backImageView = UIImageView(frame: frame);
             backImageView!.hidden = true;
@@ -237,17 +242,18 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
 //            backImageView!.contentMode = UIViewContentMode.Center;
             backImageView!.contentMode = UIViewContentMode.ScaleToFill
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        }
+        }*/
         NSLog("---[viewDidAppear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
         NSLog("----[viewDidAppear]---frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
         //self.imgBuffer!.loadSet();
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
-        if (backImageView != nil) { NSLog("---[viewWillDisappear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
-            backImageView!.removeFromSuperview();
-        }
-        backImageView = nil;
+        backImageView!.image = nil;
+        /*if (backImageView != nil) { NSLog("---[viewWillDisappear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
+            //backImageView!.removeFromSuperview();
+        }*/
+        //backImageView = nil;
         if (frontImageView.image != nil) { NSLog("-[viewWillDisappear]----frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
             frontImageView.image = ServerInteractor.cropImageSoNavigationWorksCorrectly(frontImageView.image!, frame: frontImageView.frame);
         }
@@ -354,7 +360,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             loadingSpinner!.stopAnimating();
             loadingSpinner!.hidden = true;
         }
-        if (backImageView == nil) {NSLog("[switchImage]---backImageView is nil")
+        /*if (backImageView == nil) {NSLog("[switchImage]---backImageView is nil")
             //var frame: CGRect = frontImageView.frame;
             var frame: CGRect = CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-HOME_FEED_HEADER_HEIGHT-HOME_FEED_TOOLBAR_HEIGHT);
             backImageView = UIImageView(frame: frame);
@@ -363,10 +369,16 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             backImageView!.contentMode = UIViewContentMode.ScaleAspectFill;
 //            backImageView!.contentMode = UIViewContentMode.Center;
             self.view.insertSubview(backImageView!, aboveSubview: frontImageView);
-        }
+        }*/
         self.backImageView!.image = toImage;
         self.backImageView!.alpha = 0;
         self.backImageView!.hidden = false;
+        
+        self.backImageView!.frame.origin.x = self.frontImageView!.frame.origin.x;
+        self.backImageView!.frame.origin.y = self.frontImageView!.frame.origin.y;
+        self.backImageView!.frame.size.width = self.frontImageView!.frame.size.width;
+        self.backImageView!.frame.size.height = self.frontImageView!.frame.size.height;
+        
         self.swiperNoSwipe = true;
         if (fromDirection == CompassDirection.STAY) { NSLog("[switchImage]---direction is STAY")
             UIView.animateWithDuration(0.3, animations: {() in
@@ -382,11 +394,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 });
         }
         else if (fromDirection == CompassDirection.EAST) { NSLog( "[switchImage]---direction is EAST")
-            var oldOrig = self.backImageView!.frame.origin;
+            var oldOrig = self.frontImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x + CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
-                self.backImageView!.frame.origin = oldOrig;
+                self.backImageView!.frame.origin = oldOrig; //move back to center
                 self.backImageView!.alpha = 1;
                 }, completion: {(success: Bool) in
                     self.frontImageView!.image = toImage;
@@ -397,7 +409,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 });
         }
         else if (fromDirection == CompassDirection.WEST) { NSLog("[switchImage]---direction is WEST")
-            var oldOrig = self.backImageView!.frame.origin;
+            var oldOrig = self.frontImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x - CGFloat(FULLSCREEN_WIDTH), y: oldOrig.y);
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
@@ -411,7 +423,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 });
         }
         else if (fromDirection == CompassDirection.NORTH) { NSLog("[switchImage]---direction is NORTH")
-            var oldOrig = self.backImageView!.frame.origin;
+            var oldOrig = self.frontImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y - CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
             UIView.animateWithDuration(0.3, animations: {() in
@@ -425,7 +437,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 });
         }
         else if (fromDirection == CompassDirection.SOUTH) { NSLog("[switchImage]---direction is SOUTH")
-            var oldOrig = self.backImageView!.frame.origin;
+            var oldOrig = self.frontImageView!.frame.origin;
             var newOrig = CGPoint(x: oldOrig.x, y: oldOrig.y + CGFloat(TRUE_FULLSCREEN_HEIGHT));
             self.backImageView!.frame.origin = newOrig;
             //self.backImageView!.alpha = 1;
