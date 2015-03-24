@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FollowUserViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class FollowUserViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SuggestedHeaderViewDelegate {
     @IBOutlet var suggestedCollectionView: UICollectionView!
     var suggestedUsers : Array<FriendEncapsulator?> = []
     var suggestedUserImgs: [String: Array<ImagePostStructure>] = [:]
@@ -17,6 +17,9 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     var isLoadingSuggestedFriends: Bool = false;
     
     var friendsToLoad: Int = 0
+    
+    var friendsFollowed : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.translucent = false
@@ -94,24 +97,24 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
-    func hideAndDisableRightNavigationItem() {
+    func hideAndDisableRightNavigationItem() { // hide top right next page button
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
         self.navigationItem.rightBarButtonItem?.enabled = false
     }
     
-    func showAndEnableRightNavigationItem() {
+    func showAndEnableRightNavigationItem() { // show top right next page button
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
         self.navigationItem.rightBarButtonItem?.enabled = true
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { NSLog("suggested user num: \(suggestedUsers.count)")
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { 
         return suggestedUsers.count
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var user = suggestedUsers[section];
         var userString: String = user!.username;
-        if (suggestedUserImgs[userString] != nil) { NSLog("use image num: \((suggestedUserImgs[userString]!).count)")
+        if (suggestedUserImgs[userString] != nil) {
             return (suggestedUserImgs[userString]!).count;
         }
         return 0
@@ -135,13 +138,23 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if (kind == UICollectionElementKindSectionHeader) {
-        var reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", forIndexPath: indexPath) as SuggestedHeaderView
-        let section = indexPath.section
-        reusableView.extraConfigurations(suggestedUsers[section]!, sender: self)
-        return reusableView
+            var reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "Header", forIndexPath: indexPath) as SuggestedHeaderView
+            let section = indexPath.section
+            reusableView.extraConfigurations(suggestedUsers[section]!, sender: self)
+            reusableView.delegate = self
+            return reusableView
         } else {
             let emptyReusableView = UICollectionReusableView()
             return emptyReusableView
+        }
+    }
+    
+    func followUnfollowUser(controller: SuggestedHeaderView, counter: Int) {
+        friendsFollowed += counter
+        if (friendsFollowed == 5) {
+            showAndEnableRightNavigationItem()
+        } else if (friendsFollowed < 5) {
+            hideAndDisableRightNavigationItem()
         }
     }
 }

@@ -3210,6 +3210,9 @@
                                             <state key="normal" title="Button">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="friendMe:" destination="60e-G7-Ft0" eventType="touchUpInside" id="vIB-QN-DyU"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

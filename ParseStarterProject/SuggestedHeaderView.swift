@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SuggestedHeaderViewDelegate{
+    func followUnfollowUser(controller:SuggestedHeaderView, counter:Int)
+}
+
 class SuggestedHeaderView: UICollectionReusableView {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
@@ -23,6 +27,7 @@ class SuggestedHeaderView: UICollectionReusableView {
 
     var alerter:CompatibleAlertViews?;
     
+    var delegate : SuggestedHeaderViewDelegate? = nil
     
     func extraConfigurations(involvedUser: FriendEncapsulator?, sender: UIViewController) {
         //clicking on the image segues to that user's profile page
@@ -75,7 +80,7 @@ class SuggestedHeaderView: UICollectionReusableView {
     }
     
     @IBAction func friendMe(sender: UIButton) {
-        var username = friend!.username;
+        var username = friend!.username; NSLog("current user: \(username)")
         if (friendAction == false) {
             //follow me
             //ServerInteractor.postFollowerNotif(username, controller: self.owner!);
@@ -84,6 +89,7 @@ class SuggestedHeaderView: UICollectionReusableView {
             //update button
             self.friendAction = true
             self.friendButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+            delegate?.followUnfollowUser(self, counter: 1)
         }
         else if (friendAction == true) {
             //unfollow me (if u wish!)
@@ -96,7 +102,7 @@ class SuggestedHeaderView: UICollectionReusableView {
                 self.friendAction = false
                 self.friendButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             });
-            
+            delegate?.followUnfollowUser(self, counter: -1)
             /*let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
                 ServerInteractor.removeAsFollower(self.friend!);
