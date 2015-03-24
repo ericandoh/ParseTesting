@@ -20,17 +20,16 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.translucent = false
-//        self.navigationController?.title = "Follow your favorite fashionistas!"
         self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
-//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-        
+
         var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
         navTitleLabel.text = "Follow your favorite fashionistas!"
         navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
         navTitleLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView=navTitleLabel
+
         self.navigationController?.navigationItem.hidesBackButton = true
+        hideAndDisableRightNavigationItem()
         
         PFUser.logInWithUsername("123", password: "123")
         
@@ -93,6 +92,16 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
                 isLoadingSuggestedFriends = false;
             }
         }
+    }
+    
+    func hideAndDisableRightNavigationItem() {
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
+        self.navigationItem.rightBarButtonItem?.enabled = false
+    }
+    
+    func showAndEnableRightNavigationItem() {
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+        self.navigationItem.rightBarButtonItem?.enabled = true
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { NSLog("suggested user num: \(suggestedUsers.count)")

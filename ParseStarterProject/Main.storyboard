@@ -3238,12 +3238,12 @@
                                 </connections>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose at least 5 to continue" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYp-Am-leP">
-                                <rect key="frame" x="30" y="528" width="230" height="30"/>
+                                <rect key="frame" x="50" y="528" width="220" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="n0a-lm-jUQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -3251,8 +3251,8 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Jky-20-AI5" firstAttribute="top" secondItem="kI7-FG-bW9" secondAttribute="bottom" id="3Id-WK-xAS"/>
-                            <constraint firstAttribute="trailing" secondItem="zYp-Am-leP" secondAttribute="trailing" constant="60" id="8sJ-rB-ENL"/>
-                            <constraint firstItem="zYp-Am-leP" firstAttribute="leading" secondItem="0rb-6l-qpP" secondAttribute="leading" constant="30" id="9hZ-9n-5Bb"/>
+                            <constraint firstAttribute="trailing" secondItem="zYp-Am-leP" secondAttribute="trailing" constant="50" id="8sJ-rB-ENL"/>
+                            <constraint firstItem="zYp-Am-leP" firstAttribute="leading" secondItem="0rb-6l-qpP" secondAttribute="leading" constant="50" id="9hZ-9n-5Bb"/>
                             <constraint firstItem="Jky-20-AI5" firstAttribute="leading" secondItem="0rb-6l-qpP" secondAttribute="leading" id="PiW-qw-7z4"/>
                             <constraint firstItem="zYp-Am-leP" firstAttribute="top" secondItem="Jky-20-AI5" secondAttribute="bottom" id="aSt-QE-ePM"/>
                             <constraint firstItem="1WT-k3-qbx" firstAttribute="top" secondItem="zYp-Am-leP" secondAttribute="bottom" constant="10" id="hc5-qb-d2T"/>
