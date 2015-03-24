@@ -168,4 +168,8 @@ class PhotoDisplayViewController: UIViewController, UIActionSheetDelegate, CTAss
         self.contentArea.addConstraint(bottomConstraint);
         controller.view.addConstraints(myConstraints);
     }
+    
+    @IBAction func tapComment(sender: AnyObject) {
+        self.performSegueWithIdentifier("followUsers", sender: self)
+    }
 }

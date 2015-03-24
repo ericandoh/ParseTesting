@@ -19,12 +19,27 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     var friendsToLoad: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.translucent = false
+//        self.navigationController?.title = "Follow your favorite fashionistas!"
+        self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
+//        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        
+        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
+        navTitleLabel.text = "Follow your favorite fashionistas!"
+        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
+        navTitleLabel.textColor = UIColor.whiteColor()
+        self.navigationItem.titleView=navTitleLabel
+        self.navigationController?.navigationItem.hidesBackButton = true
+        
+        PFUser.logInWithUsername("123", password: "123")
+        
+        resetAndFetchSuggested();
     }
     
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
-
-        resetAndFetchSuggested();
+        self.suggestedCollectionView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,7 +59,7 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func fetchSuggestedUsers() {
-        self.suggestedCollectionView.reloadData();
+        self.suggestedCollectionView.reloadData(); NSLog("current user: \(PFUser.currentUser().objectId) and \(PFUser.currentUser().username)")
         ServerInteractor.getSuggestedFollowers(NUM_TO_SUGGEST,
             retFunction: {
                 (retList: Array<FriendEncapsulator?>) in
@@ -80,14 +95,14 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         }
     }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { NSLog("suggested user num: \(suggestedUsers.count)")
         return suggestedUsers.count
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var user = suggestedUsers[section];
         var userString: String = user!.username;
-        if (suggestedUserImgs[userString] != nil) {
+        if (suggestedUserImgs[userString] != nil) { NSLog("use image num: \((suggestedUserImgs[userString]!).count)")
             return (suggestedUserImgs[userString]!).count;
         }
         return 0
