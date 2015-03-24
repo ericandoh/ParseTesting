@@ -80,7 +80,7 @@ class SuggestedHeaderView: UICollectionReusableView {
     }
     
     @IBAction func friendMe(sender: UIButton) {
-        var username = friend!.username; NSLog("current user: \(username)")
+        var username = friend!.username;
         if (friendAction == false) {
             //follow me
             //ServerInteractor.postFollowerNotif(username, controller: self.owner!);

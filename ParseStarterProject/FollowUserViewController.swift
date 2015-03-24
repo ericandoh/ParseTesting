@@ -150,7 +150,7 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func followUnfollowUser(controller: SuggestedHeaderView, counter: Int) {
-        friendsFollowed += counter
+        friendsFollowed += counter; NSLog("followed friends num :\(friendsFollowed)")
         if (friendsFollowed == 5) {
             showAndEnableRightNavigationItem()
         } else if (friendsFollowed < 5) {
