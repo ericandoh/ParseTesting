@@ -46,7 +46,7 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
 
 //        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
 
-        PFUser.logInWithUsername("123", password: "123")
+        PFUser.logInWithUsernameInBackground("123", password: "123")
         
         resetAndFetchSuggested();
     }
