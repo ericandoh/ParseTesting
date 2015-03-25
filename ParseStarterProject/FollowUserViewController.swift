@@ -29,10 +29,32 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         navTitleLabel.text = "Follow your favorite fashionistas!"
         navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
         navTitleLabel.textColor = UIColor.whiteColor()
-        self.navigationItem.titleView=navTitleLabel
-
+        self.navigationItem.titleView = navTitleLabel
+/*
+        // config post authro name, icon, upload creationh time and image page in nav bar
+        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+        let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
+        let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
+        let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
+        
+        title.text = currentPost.getAuthor()
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
+        title.backgroundColor = UIColor.clearColor()
+        
+        titleTime.text = currentPost.getAgeAsString() + " ago • "
+        titleTime.textColor = UIColor.whiteColor()
+        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+        titleTime.backgroundColor = UIColor.clearColor()
+        
+        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+        titlePage.textColor = UIColor.whiteColor()
+        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+        titlePage.backgroundColor = UIColor.clearColor()
+*/
         self.navigationController?.navigationItem.hidesBackButton = true
-        hideAndDisableRightNavigationItem()
+//        hideAndDisableRightNavigationItem()
+        showAndEnableRightNavigationItem()
         
         PFUser.logInWithUsername("123", password: "123")
         
@@ -98,13 +120,30 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func hideAndDisableRightNavigationItem() { // hide top right next page button
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
-        self.navigationItem.rightBarButtonItem?.enabled = false
+//        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
+//        self.navigationItem.rightBarButtonItem?.enabled = false
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.navigationItem.setRightBarButtonItem(nil, animated: true)
+        self.navigationController?.navigationItem.title = "foo"
+        self.navigationItem.title = "Foo"
+//        self.navigationItem.setRightBarButtonItem(nil, animated: true)
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.navigationBar.setNeedsDisplay();
+        NSLog("hide next page button")
     }
     
     func showAndEnableRightNavigationItem() { // show top right next page button
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.clearColor()
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        let nextPageButton : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow_right.png"), style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+        self.navigationItem.setRightBarButtonItem(nextPageButton, animated: true)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem?.enabled = true
+        self.navigationController?.navigationItem.setRightBarButtonItem(nextPageButton, animated: true)
+        self.navigationController?.navigationItem.title = "bar"
+        self.navigationItem.title = "Bar"
+//        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        self.navigationController?.navigationBar.setNeedsDisplay(); 
+        NSLog("show next page button")
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { 
@@ -153,7 +192,7 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         friendsFollowed += counter; NSLog("followed friends num :\(friendsFollowed)")
         if (friendsFollowed == 5) {
             showAndEnableRightNavigationItem()
-        } else if (friendsFollowed < 5) {
+        } else if (friendsFollowed == 4) {
             hideAndDisableRightNavigationItem()
         }
     }
