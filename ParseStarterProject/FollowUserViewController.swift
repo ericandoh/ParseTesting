@@ -40,9 +40,10 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         if (iOS8) {
             self.navigationItem.rightBarButtonItem?.enabled = false
             configNavBarTitle("Choose 5 more")
-        } else {
+        } else { // iOS 7 and earlier
             configNavBarTitle("Choose at least 5")
         }
+
 //        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
 
         PFUser.logInWithUsername("123", password: "123")
@@ -207,14 +208,12 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
                 }
             }
         }
-        
     }
     @IBAction func goToNextPage(sender: AnyObject) {
         if (iOS7) {
-            let userNum = usersNeedToFollow()
-            if (userNum > 0) { // remind if follow less than 5 users
-                NSLog("[goToNextPage]followed friends num :\(self.friendsFollowed)---\(userNum)")
-                CompatibleAlertViews.makeNotice("Follow Users", message: "Choose \(userNum) more to continue", presenter: self)
+            let followingNum : Int = PFUser.currentUser().objectForKey("followingIds").count
+            if (followingNum < 5) { NSLog("[goToNextPage]followed friends num :\(followingNum)")
+                CompatibleAlertViews.makeNotice("Follow Users", message: "Choose \(5 - followingNum) more to continue", presenter: self)
                 return
             }
         }
@@ -240,9 +239,5 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         myView.addSubview(title)
         myView.addSubview(titleFollowNumber)
         self.navigationItem.titleView = myView
-    }
-    
-    func usersNeedToFollow() -> Int {NSLog("[usersNeedToFollow]followed friends num :\(self.friendsFollowed)")
-        return 5 - self.friendsFollowed
     }
 }
