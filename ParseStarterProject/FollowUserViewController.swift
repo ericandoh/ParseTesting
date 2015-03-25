@@ -10,10 +10,12 @@ import UIKit
 
 class FollowUserViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, SuggestedHeaderViewDelegate {
     @IBOutlet var suggestedCollectionView: UICollectionView!
+    @IBOutlet var nextPageButton: UIButton!
     var suggestedUsers : Array<FriendEncapsulator?> = []
     var suggestedUserImgs: [String: Array<ImagePostStructure>] = [:]
     var suggestedUserCounts: [String: Int] = [:]
     
+    @IBOutlet var nextPageButtonItem: UIBarButtonItem!
     var isLoadingSuggestedFriends: Bool = false;
     
     var friendsToLoad: Int = 0
@@ -24,38 +26,41 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         super.viewDidLoad()
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
-
+/*
         var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
         navTitleLabel.text = "Follow your favorite fashionistas!"
         navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
         navTitleLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = navTitleLabel
-/*
-        // config post authro name, icon, upload creationh time and image page in nav bar
+*/
+        // config title in nav bar
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
-        let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
-        let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
+        let title : UILabel = UILabel(frame: CGRectMake(0, 0, 250, 20))
+        let titleFollowNumber : UILabel = UILabel(frame: CGRectMake(0, 20, 250, 10))
         
-        title.text = currentPost.getAuthor()
+        title.text = "Follow your favorite fashionistas!"
         title.textColor = UIColor.whiteColor()
-        title.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(13.0))
         title.backgroundColor = UIColor.clearColor()
         
-        titleTime.text = currentPost.getAgeAsString() + " ago • "
-        titleTime.textColor = UIColor.whiteColor()
-        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
-        titleTime.backgroundColor = UIColor.clearColor()
+        titleFollowNumber.text = "Choose 5 more to continue"
+        titleFollowNumber.textColor = UIColor.whiteColor()
+        titleFollowNumber.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titleFollowNumber.backgroundColor = UIColor.clearColor()
         
-        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
-        titlePage.textColor = UIColor.whiteColor()
-        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
-        titlePage.backgroundColor = UIColor.clearColor()
-*/
+        myView.addSubview(title)
+        myView.addSubview(titleFollowNumber)
+        self.navigationItem.titleView = myView
+
         self.navigationController?.navigationItem.hidesBackButton = true
 //        hideAndDisableRightNavigationItem()
-        showAndEnableRightNavigationItem()
-        
+//        showAndEnableRightNavigationItem()
+        self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
+        if (iOS8) {
+            self.navigationItem.rightBarButtonItem?.enabled = false
+        }
+//        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
+
         PFUser.logInWithUsername("123", password: "123")
         
         resetAndFetchSuggested();
@@ -120,30 +125,45 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func hideAndDisableRightNavigationItem() { // hide top right next page button
-//        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
-//        self.navigationItem.rightBarButtonItem?.enabled = false
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
+        self.navigationItem.rightBarButtonItem?.enabled = false
+        
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationItem.setRightBarButtonItem(nil, animated: true)
-        self.navigationController?.navigationItem.title = "foo"
-        self.navigationItem.title = "Foo"
-//        self.navigationItem.setRightBarButtonItem(nil, animated: true)
+//        self.navigationController?.navigationItem.title = "foo"
+//        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
+//        navTitleLabel.text = "Foo"
+//        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
+//        navTitleLabel.textColor = UIColor.whiteColor()
+//        self.navigationItem.titleView = navTitleLabel//        self.navigationItem.setRightBarButtonItem(nil, animated: true)
 //        self.navigationController?.setNavigationBarHidden(false, animated: true)
+//        nextPageButton.hidden = true
+//        nextPageButton.enabled = false
 //        self.navigationController?.navigationBar.setNeedsDisplay();
         NSLog("hide next page button")
+        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
     }
     
     func showAndEnableRightNavigationItem() { // show top right next page button
-//        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        let nextPageButton : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow_right.png"), style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
-        self.navigationItem.setRightBarButtonItem(nextPageButton, animated: true)
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+//        let nextPageBtn : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow_right.png"), style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+//        self.navigationItem.setRightBarButtonItem(nextPageBtn, animated: true)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem?.enabled = true
-        self.navigationController?.navigationItem.setRightBarButtonItem(nextPageButton, animated: true)
-        self.navigationController?.navigationItem.title = "bar"
-        self.navigationItem.title = "Bar"
+        self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
+//        self.navigationController?.navigationItem.setRightBarButtonItem(nextPageBtn, animated: true)
+//        self.navigationController?.navigationItem.title = "bar"
+//        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
+//        navTitleLabel.text = "Bar"
+//        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
+//        navTitleLabel.textColor = UIColor.whiteColor()
+//        self.navigationItem.titleView = navTitleLabel
 //        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        self.navigationController?.navigationBar.setNeedsDisplay(); 
+//        nextPageButton.hidden = false
+//        nextPageButton.enabled = true
+//        self.navigationController?.navigationBar.setNeedsDisplay();
         NSLog("show next page button")
+        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { 
@@ -195,5 +215,34 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         } else if (friendsFollowed == 4) {
             hideAndDisableRightNavigationItem()
         }
+        
+        if (friendsFollowed <= 5) {
+            // config title in nav bar
+            let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+            let title : UILabel = UILabel(frame: CGRectMake(0, 0, 250, 20))
+            let titleFollowNumber : UILabel = UILabel(frame: CGRectMake(0, 20, 250, 10))
+            
+            title.text = "Follow your favorite fashionistas!"
+            title.textColor = UIColor.whiteColor()
+            title.font = UIFont.boldSystemFontOfSize(CGFloat(13.0))
+            title.backgroundColor = UIColor.clearColor()
+            
+            if (friendsFollowed < 5) {
+                titleFollowNumber.text = "Choose \(5-friendsFollowed) or more to continue"
+            } else if (friendsFollowed == 5) {
+                titleFollowNumber.text = "Choose 0 or more to continue"
+            }
+            titleFollowNumber.textColor = UIColor.whiteColor()
+            titleFollowNumber.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+            titleFollowNumber.backgroundColor = UIColor.clearColor()
+            
+            myView.addSubview(title)
+            myView.addSubview(titleFollowNumber)
+            self.navigationItem.titleView = myView
+        }
+        
+    }
+    @IBAction func goToNextPage(sender: AnyObject) {
+        NSLog("Go to next page")
     }
 }
