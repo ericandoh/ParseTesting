@@ -33,31 +33,15 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         navTitleLabel.textColor = UIColor.whiteColor()
         self.navigationItem.titleView = navTitleLabel
 */
-        // config title in nav bar
-        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let title : UILabel = UILabel(frame: CGRectMake(0, 0, 250, 20))
-        let titleFollowNumber : UILabel = UILabel(frame: CGRectMake(0, 20, 250, 10))
-        
-        title.text = "Follow your favorite fashionistas!"
-        title.textColor = UIColor.whiteColor()
-        title.font = UIFont.boldSystemFontOfSize(CGFloat(13.0))
-        title.backgroundColor = UIColor.clearColor()
-        
-        titleFollowNumber.text = "Choose 5 more to continue"
-        titleFollowNumber.textColor = UIColor.whiteColor()
-        titleFollowNumber.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
-        titleFollowNumber.backgroundColor = UIColor.clearColor()
-        
-        myView.addSubview(title)
-        myView.addSubview(titleFollowNumber)
-        self.navigationItem.titleView = myView
-
         self.navigationController?.navigationItem.hidesBackButton = true
 //        hideAndDisableRightNavigationItem()
 //        showAndEnableRightNavigationItem()
         self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
         if (iOS8) {
             self.navigationItem.rightBarButtonItem?.enabled = false
+            configNavBarTitle("Choose 5 more")
+        } else {
+            configNavBarTitle("Choose at least 5")
         }
 //        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
 
@@ -209,40 +193,56 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func followUnfollowUser(controller: SuggestedHeaderView, counter: Int) {
-        friendsFollowed += counter; NSLog("followed friends num :\(friendsFollowed)")
-        if (friendsFollowed == 5) {
-            showAndEnableRightNavigationItem()
-        } else if (friendsFollowed == 4) {
-            hideAndDisableRightNavigationItem()
-        }
-        
-        if (friendsFollowed <= 5) {
-            // config title in nav bar
-            let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-            let title : UILabel = UILabel(frame: CGRectMake(0, 0, 250, 20))
-            let titleFollowNumber : UILabel = UILabel(frame: CGRectMake(0, 20, 250, 10))
-            
-            title.text = "Follow your favorite fashionistas!"
-            title.textColor = UIColor.whiteColor()
-            title.font = UIFont.boldSystemFontOfSize(CGFloat(13.0))
-            title.backgroundColor = UIColor.clearColor()
-            
-            if (friendsFollowed < 5) {
-                titleFollowNumber.text = "Choose \(5-friendsFollowed) or more to continue"
-            } else if (friendsFollowed == 5) {
-                titleFollowNumber.text = "Choose 0 or more to continue"
+        friendsFollowed += counter; NSLog("[followUnfollowUser]followed friends num :\(friendsFollowed)")
+        if (iOS8) {
+            if (friendsFollowed <= 5) {
+                if (friendsFollowed == 5) {
+                    configNavBarTitle("Choose 0 more")
+                    showAndEnableRightNavigationItem()
+                } else {
+                    configNavBarTitle("Choose \(5-friendsFollowed) more")
+                    if (friendsFollowed == 4) {
+                        hideAndDisableRightNavigationItem()
+                    }
+                }
             }
-            titleFollowNumber.textColor = UIColor.whiteColor()
-            titleFollowNumber.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
-            titleFollowNumber.backgroundColor = UIColor.clearColor()
-            
-            myView.addSubview(title)
-            myView.addSubview(titleFollowNumber)
-            self.navigationItem.titleView = myView
         }
         
     }
     @IBAction func goToNextPage(sender: AnyObject) {
+        if (iOS7) {
+            let userNum = usersNeedToFollow()
+            if (userNum > 0) { // remind if follow less than 5 users
+                NSLog("[goToNextPage]followed friends num :\(self.friendsFollowed)---\(userNum)")
+                CompatibleAlertViews.makeNotice("Follow Users", message: "Choose \(userNum) more to continue", presenter: self)
+                return
+            }
+        }
         NSLog("Go to next page")
+    }
+    
+    func configNavBarTitle(subTitle : String) {
+        // config title in nav bar
+        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+        let title : UILabel = UILabel(frame: CGRectMake(0, 0, 250, 20))
+        let titleFollowNumber : UILabel = UILabel(frame: CGRectMake(0, 20, 250, 10))
+        
+        title.text = "Follow your favorite fashionistas!"
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
+        title.backgroundColor = UIColor.clearColor()
+        
+        titleFollowNumber.text = subTitle
+        titleFollowNumber.textColor = UIColor.whiteColor()
+        titleFollowNumber.font = UIFont.boldSystemFontOfSize(CGFloat(8.0))
+        titleFollowNumber.backgroundColor = UIColor.clearColor()
+        
+        myView.addSubview(title)
+        myView.addSubview(titleFollowNumber)
+        self.navigationItem.titleView = myView
+    }
+    
+    func usersNeedToFollow() -> Int {NSLog("[usersNeedToFollow]followed friends num :\(self.friendsFollowed)")
+        return 5 - self.friendsFollowed
     }
 }
