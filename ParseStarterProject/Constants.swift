@@ -139,7 +139,7 @@ let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_ME
 
 let TITLE_TEXT_COLOR = UIColor.whiteColor();
 
-let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 16.0)!;
+let USER_TITLE_TEXT_FONT = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 20.0)!;
 
 let TITLE_TEXT_FONT = UIFont(name: "HelveticaNeueLTPro-Lt", size: 20.0)!;
 
