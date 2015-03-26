@@ -39,9 +39,9 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
         if (iOS8) {
             self.navigationItem.rightBarButtonItem?.enabled = false
-            configNavBarTitle("Choose 5 more")
+            configNavBarTitle("Choose \(MIN_NUM_USER_TO_FOLLOW) more")
         } else { // iOS 7 and earlier
-            configNavBarTitle("Choose at least 5")
+            configNavBarTitle("Choose at least \(MIN_NUM_USER_TO_FOLLOW)")
         }
 
 //        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
@@ -196,13 +196,13 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     func followUnfollowUser(controller: SuggestedHeaderView, counter: Int) {
         friendsFollowed += counter; NSLog("[followUnfollowUser]followed friends num :\(friendsFollowed)")
         if (iOS8) {
-            if (friendsFollowed <= 5) {
-                if (friendsFollowed == 5) {
+            if (friendsFollowed <= MIN_NUM_USER_TO_FOLLOW) {
+                if (friendsFollowed == MIN_NUM_USER_TO_FOLLOW) {
                     configNavBarTitle("Choose 0 more")
                     showAndEnableRightNavigationItem()
                 } else {
-                    configNavBarTitle("Choose \(5-friendsFollowed) more")
-                    if (friendsFollowed == 4) {
+                    configNavBarTitle("Choose \(MIN_NUM_USER_TO_FOLLOW-friendsFollowed) more")
+                    if (friendsFollowed == MIN_NUM_USER_TO_FOLLOW-1) {
                         hideAndDisableRightNavigationItem()
                     }
                 }
@@ -212,12 +212,11 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     @IBAction func goToNextPage(sender: AnyObject) {
         if (iOS7) {
             let followingNum : Int = PFUser.currentUser().objectForKey("followingIds").count
-            if (followingNum < 5) { NSLog("[goToNextPage]followed friends num :\(followingNum)")
-                CompatibleAlertViews.makeNotice("Follow Users", message: "Choose \(5 - followingNum) more to continue", presenter: self)
+            if (followingNum < MIN_NUM_USER_TO_FOLLOW) {
+                CompatibleAlertViews.makeNotice("Follow Users", message: "Choose \(MIN_NUM_USER_TO_FOLLOW - followingNum) more to continue", presenter: self)
                 return
             }
         }
-        NSLog("Go to next page")
         self.performSegueWithIdentifier("JumpIn", sender: self)
     }
     

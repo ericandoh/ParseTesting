@@ -65,6 +65,9 @@ let MAX_IMGS_PER_SUGGEST = 3// 5;
 // PARSE.COM PFFile maximum size to upload and store, 10M
 let PARSE_PFFILE_LIMIT = 10485760
 
+// minimum followed user number to continue to home page from follow page
+let MIN_NUM_USER_TO_FOLLOW = 5
+
 // show gesture instruction after sign up
 let SHOW_INSTRUCTION_OR_NOT = "showInstruction"
 
