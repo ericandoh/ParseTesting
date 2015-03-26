@@ -123,11 +123,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             self.navigationItem.titleView = view
             view.addSubview(userLabel);
             
-            // TODO: get mainUser web url
-            userWebURL.text = "wendyslookbook.com"
-            if (userWebURL != nil) {
-                NSLog("user info subtitle: \(userWebURL.text)")
-            }
+            mainUser!.getWebURL({(webURL: String?) -> Void in
+                if webURL == nil {
+                    self.userWebURL.text = ""
+                } else {
+                    self.userWebURL.text = webURL
+                }
+            })
             
             mainUser!.fetchImage({(image: UIImage)->Void in
                 self.setUserIconBubble(image)
@@ -157,7 +159,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.font = USER_TITLE_TEXT_FONT;
                 userLabel.textAlignment = NSTextAlignment.Center
 
-                userWebURL.text = "wendyslookbook.com"
+                self.userWebURL.text = ""
                 
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 //self.backImageView.image = tempImage;
@@ -185,10 +187,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.navigationItem.titleView = view;
                 view.addSubview(userLabel);
                 
-                userWebURL.text = "wendyslookbook.com"
-                if (userWebURL != nil) {
-                    NSLog("my info subtitle: \(userWebURL.text)")
-                }
+                mainUser!.getWebURL({(webURL: String?) -> Void in
+                    if webURL == nil {
+                        self.userWebURL.text = ""
+                    } else {
+                        self.userWebURL.text = webURL
+                    }
+                })
                 
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setUserIconBubble(image)
@@ -269,7 +274,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal)
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
         self.userIconButton.layer.masksToBounds = true
-        self.userIconButton.layer.borderWidth = CGFloat(0.8)
+        self.userIconButton.layer.borderWidth = CGFloat(1.8)
         self.userIconButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.userInfoBottomBar.alpha = CGFloat(0.6)
     }

@@ -230,4 +230,18 @@ class FriendEncapsulator {
         else {
         }
     }
+    
+    func getWebURL(completionHandler: (String?) -> Void) {
+        var query = PFUser.query()
+        query.whereKey("objectId", equalTo: userID)
+        query.getFirstObjectInBackgroundWithBlock{(user: AnyObject!, error: NSError!)->Void in
+            if error == nil {
+                let userObj = user as PFUser
+                completionHandler(userObj["webURL"] as? String)
+            } else {
+                NSLog("Error when getting user web url %@", error.description)
+                completionHandler(nil)
+            }
+        }
+    }
 }
