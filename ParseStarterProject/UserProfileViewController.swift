@@ -116,7 +116,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
         
-        if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
+        if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) { // friend profile page
             //viewing someone else's profile
             var textToPut = mainUser!.username;
             var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
@@ -159,9 +159,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             });
         }
-        else {
+        else { // self profile page
             mainUser = ServerInteractor.getCurrentUser();
-            if (ServerInteractor.isAnonLogged()) {
+            if (ServerInteractor.isAnonLogged()) { // annoymous user
                 //viewing anonymous user profile (myself)
                 var textToPut = "Anonymous";
                 var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
@@ -199,11 +199,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.settingButton.setTitle("Log In", forState: UIControlState.Normal);
                 self.settingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
                 self.setUserIconBubble(tempImage)
+                self.userIconButton.addTarget(self, action: "changeProfilePic", forControlEvents: UIControlEvents.TouchDown)
                 
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
-            else {
+            else { // logged in user
                 // viewing my own profile
                 var textToPut = ServerInteractor.getUserName();
                 var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
@@ -229,6 +230,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setProfilePictureBubble(image);
                     self.setUserIconBubble(image)
+                    self.userIconButton.addTarget(self, action: "changeProfilePic", forControlEvents: UIControlEvents.TouchDown)
                     self.mainUser!.getNumPosts(){numPosts, error in
                         if error == nil {
                             self.numberPosts.text = String(numPosts!)
