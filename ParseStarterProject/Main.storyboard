@@ -104,20 +104,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-Db-M3C">
-                                <rect key="frame" x="0.0" y="64" width="320" height="141"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="161"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s2B-jd-g2B" customClass="BlurringDarkView" customModule="FashionStash" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="141"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="161"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBox.png" translatesAutoresizingMaskIntoConstraints="NO" id="QAd-th-6GE">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFC-iS-o6z">
-                                        <rect key="frame" x="120" y="3" width="80" height="80"/>
+                                        <rect key="frame" x="115" y="3" width="90" height="90"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="80" id="GbR-F7-WDf"/>
-                                            <constraint firstAttribute="height" constant="80" id="dTv-qf-bif"/>
+                                            <constraint firstAttribute="width" constant="90" id="GbR-F7-WDf"/>
+                                            <constraint firstAttribute="height" constant="90" id="dTv-qf-bif"/>
                                         </constraints>
                                         <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,7 +127,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C1U-Vd-HTI">
-                                        <rect key="frame" x="80" y="80" width="160" height="20"/>
+                                        <rect key="frame" x="80" y="85" width="160" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="160" id="MnC-RY-NuF"/>
                                         </constraints>
@@ -149,16 +149,16 @@
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoBar.png" translatesAutoresizingMaskIntoConstraints="NO" id="bzR-OI-RGP">
-                                        <rect key="frame" x="0.0" y="100" width="320" height="40"/>
+                                        <rect key="frame" x="0.0" y="120" width="320" height="41"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="bzR-OI-RGP" firstAttribute="top" secondItem="QAd-th-6GE" secondAttribute="bottom" id="1R3-HH-uPO"/>
                                     <constraint firstItem="6HT-1I-ezp" firstAttribute="top" secondItem="0Lt-Db-M3C" secondAttribute="top" constant="5" id="1lE-Eg-XnW"/>
-                                    <constraint firstItem="C1U-Vd-HTI" firstAttribute="top" secondItem="0Lt-Db-M3C" secondAttribute="top" constant="80" id="4LM-cx-uxp"/>
+                                    <constraint firstItem="C1U-Vd-HTI" firstAttribute="top" secondItem="0Lt-Db-M3C" secondAttribute="top" constant="85" id="4LM-cx-uxp"/>
                                     <constraint firstAttribute="trailing" secondItem="QAd-th-6GE" secondAttribute="trailing" id="72N-gf-JUb"/>
-                                    <constraint firstAttribute="bottom" secondItem="vFC-iS-o6z" secondAttribute="bottom" constant="58" id="7CP-ym-LCG"/>
+                                    <constraint firstAttribute="bottom" secondItem="vFC-iS-o6z" secondAttribute="bottom" constant="68" id="7CP-ym-LCG"/>
                                     <constraint firstAttribute="centerX" secondItem="vFC-iS-o6z" secondAttribute="centerX" id="9hg-Yi-XAX"/>
                                     <constraint firstItem="bzR-OI-RGP" firstAttribute="top" secondItem="C1U-Vd-HTI" secondAttribute="bottom" id="Bfm-Df-SRh"/>
                                     <constraint firstAttribute="trailing" secondItem="6HT-1I-ezp" secondAttribute="trailing" constant="10" id="CcU-8L-ycP"/>
@@ -172,32 +172,32 @@
                                     <constraint firstAttribute="trailing" secondItem="bzR-OI-RGP" secondAttribute="trailing" id="eRp-ee-0s6"/>
                                     <constraint firstAttribute="bottom" secondItem="C1U-Vd-HTI" secondAttribute="bottom" constant="41" id="heR-fu-eC7"/>
                                     <constraint firstAttribute="width" constant="320" id="iJ2-C7-ZcO"/>
-                                    <constraint firstAttribute="bottom" secondItem="bzR-OI-RGP" secondAttribute="bottom" constant="1" id="mI3-ux-SWA"/>
-                                    <constraint firstAttribute="height" constant="141" id="ne8-Nh-1xj"/>
+                                    <constraint firstAttribute="bottom" secondItem="bzR-OI-RGP" secondAttribute="bottom" id="mI3-ux-SWA"/>
+                                    <constraint firstAttribute="height" constant="161" id="ne8-Nh-1xj"/>
                                     <constraint firstItem="QAd-th-6GE" firstAttribute="top" secondItem="0Lt-Db-M3C" secondAttribute="top" id="p63-AB-o8A"/>
                                     <constraint firstAttribute="trailing" secondItem="s2B-jd-g2B" secondAttribute="trailing" id="wTQ-bZ-DWg"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEW-iB-HzR">
-                                <rect key="frame" x="0.0" y="165" width="80" height="25"/>
+                                <rect key="frame" x="0.0" y="185" width="80" height="25"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owb-PJ-Vgj">
-                                <rect key="frame" x="160" y="165" width="80" height="25"/>
+                                <rect key="frame" x="160" y="185" width="80" height="25"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4Q-Ke-Wnj">
-                                <rect key="frame" x="240" y="165" width="80" height="25"/>
+                                <rect key="frame" x="240" y="185" width="80" height="25"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFl-y1-MRd">
-                                <rect key="frame" x="80" y="165" width="80" height="25"/>
+                                <rect key="frame" x="80" y="185" width="80" height="25"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -218,7 +218,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yc1-Dg-9Fm">
-                                <rect key="frame" x="80" y="175" width="80" height="30"/>
+                                <rect key="frame" x="80" y="195" width="80" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
                                 <state key="normal" title="Likes">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -229,7 +229,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-2s-oeW">
-                                <rect key="frame" x="0.0" y="175" width="80" height="30"/>
+                                <rect key="frame" x="0.0" y="195" width="80" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
                                 <state key="normal" title="Posts">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -240,7 +240,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wve-Yj-gpT">
-                                <rect key="frame" x="168" y="175" width="72" height="30"/>
+                                <rect key="frame" x="168" y="195" width="72" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
                                 <state key="normal" title="Following">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -251,7 +251,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="88N-x2-sgK">
-                                <rect key="frame" x="240" y="175" width="80" height="30"/>
+                                <rect key="frame" x="240" y="195" width="80" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
                                 <state key="normal" title="Followers">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
