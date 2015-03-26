@@ -136,6 +136,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             
             // TODO: get mainUser web url
             userWebURL.text = "wendyslookbook.com"
+            if (userWebURL != nil) {
+                NSLog("user info subtitle: \(userWebURL.text)")
+            }
             
             mainUser!.fetchImage({(image: UIImage)->Void in
                 self.setProfilePictureBubble(image);
@@ -170,6 +173,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
                 userLabel.font = USER_TITLE_TEXT_FONT;
+
+                userWebURL.text = "wendyslookbook.com"
+                
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 //self.backImageView.image = tempImage;
                 self.backImageView.setImageAndBlur(tempImage);
@@ -210,8 +216,15 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.navigationItem.titleView = view;
                 view.addSubview(self.userIcon!);
                 view.addSubview(userLabel);
+                
+                userWebURL.text = "wendyslookbook.com"
+                if (userWebURL != nil) {
+                    NSLog("my info subtitle: \(userWebURL.text)")
+                }
+                
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setProfilePictureBubble(image);
+                    self.setUserIconBubble(image)
                     self.mainUser!.getNumPosts(){numPosts, error in
                         if error == nil {
                             self.numberPosts.text = String(numPosts!)
@@ -295,7 +308,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     func setUserIconBubble(image: UIImage) {
         self.userInfoBackImageView.setImageAndBlur(image);
         var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 80, height: 80))
-        self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal);
+        self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal); if (self.userIconButton != nil) { NSLog("userIconButton existing") }
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
         self.userIconButton.layer.masksToBounds = true
         self.userIconButton.layer.borderWidth = 0
