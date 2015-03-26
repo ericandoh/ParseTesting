@@ -231,7 +231,7 @@ class FriendEncapsulator {
         }
     }
     
-    func getWebURL(completionHandler: (String?) -> Void) {
+    func getWebURL(completionHandler: String? -> Void) {
         var query = PFUser.query()
         query.whereKey("objectId", equalTo: userID)
         query.getFirstObjectInBackgroundWithBlock{(user: AnyObject!, error: NSError!)->Void in
@@ -240,6 +240,20 @@ class FriendEncapsulator {
                 completionHandler(userObj["webURL"] as? String)
             } else {
                 NSLog("Error when getting user web url %@", error.description)
+                completionHandler(nil)
+            }
+        }
+    }
+    
+    func isFanPageUser(completionHandler: Bool? -> Void) {
+        var query = PFUser.query()
+        query.whereKey("objectId", equalTo: userID)
+        query.getFirstObjectInBackgroundWithBlock{(user: AnyObject!, error: NSError!)->Void in
+            if error == nil {
+                let userObj = user as PFUser
+                completionHandler(userObj["fanPageUser"] as? Bool)
+            } else {
+                NSLog("Error when getting fan page user %@", error.description)
                 completionHandler(nil)
             }
         }

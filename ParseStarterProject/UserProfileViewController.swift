@@ -108,26 +108,29 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         var widthOfTitleBar = TITLE_BAR_WIDTH
         var heightOfBar = TITLE_BAR_HEIGHT        
         
-        var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar));    //0 0 160 40
+        var view: UIView = UIView(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar + 14));    //0 0 220 44
         
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             //viewing someone else's profile (friend profile page)
-            var textToPut = mainUser!.username;
-            var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT]);
-            var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar))
-            userLabel.textColor = TITLE_TEXT_COLOR;
-            userLabel.text = textToPut;
-            userLabel.font = USER_TITLE_TEXT_FONT;
-            userLabel.textAlignment = NSTextAlignment.Center
-            
-            self.navigationItem.titleView = view
-            view.addSubview(userLabel);
-            
-            mainUser!.getWebURL({(webURL: String?) -> Void in
-                if webURL == nil {
-                    self.userWebURL.text = ""
-                } else {
-                    self.userWebURL.text = webURL
+            mainUser!.isFanPageUser({(fpUser: Bool?) -> Void in
+                if fpUser == nil { // average user
+                    self.setNavBarTitle(self.mainUser!.username)
+                } else { // fan page user
+                    var textToPut = self.mainUser!.username;
+                    var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar-6))
+                    userLabel.textColor = TITLE_TEXT_COLOR;
+                    userLabel.text = textToPut;
+                    userLabel.font = USER_TITLE_TEXT_FONT;
+                    userLabel.textAlignment = NSTextAlignment.Center
+                    
+                    var fpUserLabel: UILabel = UILabel(frame: CGRectMake(0, heightOfBar-6, widthOfTitleBar, 20))
+                    fpUserLabel.textColor = TITLE_TEXT_COLOR;
+                    fpUserLabel.text = "Fanpage"
+                    fpUserLabel.font = UIFont(name: "Didot-HTF-B24-Bold-Ital", size: 13.0)!;
+                    fpUserLabel.textAlignment = NSTextAlignment.Center
+                    view.addSubview(fpUserLabel)
+                    view.addSubview(userLabel)
+                    self.navigationItem.titleView = view
                 }
             })
             
@@ -147,25 +150,25 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     self.AnonText.hidden = true
                 }
             });
+            
+            mainUser!.getWebURL({(webURL: String?) -> Void in
+                if webURL == nil {
+                    self.userWebURL.text = ""
+                } else {
+                    self.userWebURL.text = webURL
+                }
+            })
         }
         else { // self profile page
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) { //viewing anonymous user profile (myself)
-                var textToPut = "Anonymous";
-                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT])
-                var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar))
-                userLabel.textColor = TITLE_TEXT_COLOR;
-                userLabel.text = textToPut;
-                userLabel.font = USER_TITLE_TEXT_FONT;
-                userLabel.textAlignment = NSTextAlignment.Center
+                setNavBarTitle("Anonymous")
 
                 self.userWebURL.text = ""
                 
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 //self.backImageView.image = tempImage;
                 self.backImageView.setImageAndBlur(tempImage);
-                self.navigationItem.titleView = view;
-                view.addSubview(userLabel);
                 AnonText.hidden = true  //<---cringe (damit bala)
                 
                 self.settingButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
@@ -177,23 +180,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //friendsButton.hidden = true;
             }
             else { // viewing my own profile (logged in user)
-                var textToPut = ServerInteractor.getUserName();
-                var labelSize = (textToPut as NSString).sizeWithAttributes([NSFontAttributeName: USER_TITLE_TEXT_FONT])
-                var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar))
-                userLabel.textColor = TITLE_TEXT_COLOR;
-                userLabel.text = textToPut;
-                userLabel.font = USER_TITLE_TEXT_FONT;
-                userLabel.textAlignment = NSTextAlignment.Center
-                self.navigationItem.titleView = view;
-                view.addSubview(userLabel);
-                
-                mainUser!.getWebURL({(webURL: String?) -> Void in
-                    if webURL == nil {
-                        self.userWebURL.text = ""
-                    } else {
-                        self.userWebURL.text = webURL
-                    }
-                })
+                setNavBarTitle(ServerInteractor.getUserName())
                 
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setUserIconBubble(image)
@@ -211,6 +198,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                         self.settingButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
                     }
                 });
+                
+                mainUser!.getWebURL({(webURL: String?) -> Void in
+                    if webURL == nil {
+                        self.userWebURL.text = ""
+                    } else {
+                        self.userWebURL.text = webURL
+                    }
+                })
             }
         }
         
@@ -277,6 +272,16 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIconButton.layer.borderWidth = CGFloat(1.8)
         self.userIconButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.userInfoBottomBar.alpha = CGFloat(0.6)
+    }
+    
+    func setNavBarTitle(navBarTitle : String) {
+        var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, TITLE_BAR_WIDTH, TITLE_BAR_HEIGHT+14)) // 14 for fan page user label (not displayed)
+        userLabel.textColor = TITLE_TEXT_COLOR;
+        userLabel.text = navBarTitle
+        userLabel.font = USER_TITLE_TEXT_FONT;
+        userLabel.textAlignment = NSTextAlignment.Center
+        view.addSubview(userLabel);
+        self.navigationItem.titleView = view;
     }
     
     func unclickEverything() {
