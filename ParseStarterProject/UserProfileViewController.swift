@@ -112,7 +112,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         
         if (mainUser != nil && mainUser!.username != ServerInteractor.getUserName()) {
             //viewing someone else's profile (friend profile page)
-            mainUser!.isFanPageUser({(fpUser: Bool?) -> Void in
+            mainUser!.isFanPageUser({(fpUser: String?) -> Void in
                 if fpUser == nil { // average user
                     var textToPut = self.mainUser!.username
                     var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
@@ -123,7 +123,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     view.addSubview(userLabel)
                     self.navigationItem.titleView = view;
                 } else { // fan page user
-                    var textToPut = self.mainUser!.username;
+                    var textToPut = self.mainUser!.username
                     var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar-6))
                     userLabel.textColor = TITLE_TEXT_COLOR;
                     userLabel.text = textToPut;

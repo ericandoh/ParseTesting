@@ -245,13 +245,13 @@ class FriendEncapsulator {
         }
     }
     
-    func isFanPageUser(completionHandler: Bool? -> Void) {
+    func isFanPageUser(completionHandler: String? -> Void) {
         var query = PFUser.query()
         query.whereKey("objectId", equalTo: userID)
         query.getFirstObjectInBackgroundWithBlock{(user: AnyObject!, error: NSError!)->Void in
             if error == nil {
                 let userObj = user as PFUser
-                completionHandler(userObj["fanPageUser"] as? Bool)
+                completionHandler(userObj["fanPageUser"] as? String)
             } else {
                 NSLog("Error when getting fan page user %@", error.description)
                 completionHandler(nil)
