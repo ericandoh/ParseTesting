@@ -36,6 +36,10 @@
 		2FCDD6B014A573F500295AAC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FCDD6AF14A573F500295AAC /* QuartzCore.framework */; };
 		4998650515BF305000803E05 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4998650415BF305000803E05 /* StoreKit.framework */; };
 		743D7B6D157DA60100084B67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 743D7B6C157DA60100084B67 /* CoreGraphics.framework */; };
+		8A052D301AC46E670039D074 /* infoBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2C1AC46E670039D074 /* infoBar.png */; };
+		8A052D311AC46E670039D074 /* infoBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2D1AC46E670039D074 /* infoBar@2x.png */; };
+		8A052D321AC46E670039D074 /* topBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2E1AC46E670039D074 /* topBox.png */; };
+		8A052D331AC46E670039D074 /* topBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2F1AC46E670039D074 /* topBox@2x.png */; };
 		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
@@ -223,6 +227,10 @@
 		6372FF551613CC42002132AF /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		6372FF571613CC47002132AF /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		743D7B6C157DA60100084B67 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		8A052D2C1AC46E670039D074 /* infoBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoBar.png; sourceTree = "<group>"; };
+		8A052D2D1AC46E670039D074 /* infoBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoBar@2x.png"; sourceTree = "<group>"; };
+		8A052D2E1AC46E670039D074 /* topBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topBox.png; sourceTree = "<group>"; };
+		8A052D2F1AC46E670039D074 /* topBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBox@2x.png"; sourceTree = "<group>"; };
 		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
@@ -507,6 +515,10 @@
 				D9DEE64D199F1FD800F08CC5 /* fashtitlescreen.png */,
 				24A4812719944DA5001BE688 /* gradient.png */,
 				8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */,
+				8A052D2C1AC46E670039D074 /* infoBar.png */,
+				8A052D2D1AC46E670039D074 /* infoBar@2x.png */,
+				8A052D2E1AC46E670039D074 /* topBox.png */,
+				8A052D2F1AC46E670039D074 /* topBox@2x.png */,
 			);
 			name = backgrounds;
 			sourceTree = "<group>";
@@ -816,8 +828,10 @@
 				D9BB597F199A844100367408 /* HelveticaNeueLTPro-MdCn.otf in Resources */,
 				D93CD469199540E4001F0253 /* arrow_right.png in Resources */,
 				D9BB598C199A844100367408 /* HelveticaNeueLTPro-UltLtCn.otf in Resources */,
+				8A052D331AC46E670039D074 /* topBox@2x.png in Resources */,
 				D9BB5962199A844100367408 /* HelveticaNeueLTPro-BdCnO.otf in Resources */,
 				D9BB596E199A844100367408 /* HelveticaNeueLTPro-CnO.otf in Resources */,
+				8A052D311AC46E670039D074 /* infoBar@2x.png in Resources */,
 				D96402531953589600C48191 /* Images.xcassets in Resources */,
 				D9DEE632199EB4A900F08CC5 /* delete_swipe_info_bar.png in Resources */,
 				D9201C01199A7B79004018A1 /* map.png in Resources */,
@@ -830,6 +844,7 @@
 				D9BB596B199A844100367408 /* HelveticaNeueLTPro-BlkExO.otf in Resources */,
 				D9BB5982199A844100367408 /* HelveticaNeueLTPro-MdExO.otf in Resources */,
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,
+				8A052D321AC46E670039D074 /* topBox.png in Resources */,
 				D9BB5988199A844100367408 /* HelveticaNeueLTPro-ThEx.otf in Resources */,
 				D9F9200F19A2A60000E63FE8 /* FashionStash_Empty.png in Resources */,
 				D93CD47B1995414E001F0253 /* info.png in Resources */,
@@ -881,6 +896,7 @@
 				D9201BFF199A7B68004018A1 /* magnifyingglass.png in Resources */,
 				D9BB5973199A844100367408 /* HelveticaNeueLTPro-HvCnO.otf in Resources */,
 				D9BB595E199A844100367408 /* didot-htf-b24-bold-ital.otf in Resources */,
+				8A052D301AC46E670039D074 /* infoBar.png in Resources */,
 				D909F22219E2172200C0AB8C /* icon40@2x.png in Resources */,
 				D9BB5968199A844100367408 /* HelveticaNeueLTPro-BlkCn.otf in Resources */,
 				D93CD468199540E4001F0253 /* arrow_left.png in Resources */,

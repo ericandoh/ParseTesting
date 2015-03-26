@@ -141,7 +141,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
             mainUser!.fetchImage({(image: UIImage)->Void in
-                self.setProfilePictureBubble(image);
+                self.setProfilePictureBubble(image); // TODO: remove 
+                self.setUserIconBubble(image)
                 self.mainUser!.getNumPosts(){numPosts, error in
                     if error == nil {
                         self.numberPosts.text = String(numPosts!)
@@ -196,6 +197,8 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.settingButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
                 self.settingButton.setTitle("Log In", forState: UIControlState.Normal);
                 self.settingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+                self.setUserIconBubble(tempImage)
+                
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
