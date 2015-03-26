@@ -41,6 +41,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet var userWebURL: UILabel!
     @IBOutlet var settingButton: UIButton!
     @IBOutlet var userIconButton: UIButton!
+    @IBOutlet var userInfoBottomBar: UIImageView!
     
     
     var mainUser: FriendEncapsulator?;
@@ -141,7 +142,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             }
             
             mainUser!.fetchImage({(image: UIImage)->Void in
-                self.setProfilePictureBubble(image); // TODO: remove 
+                self.setProfilePictureBubble(image); // TODO: remove
                 self.setUserIconBubble(image)
                 self.mainUser!.getNumPosts(){numPosts, error in
                     if error == nil {
@@ -315,6 +316,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
         self.userIconButton.layer.masksToBounds = true
         self.userIconButton.layer.borderWidth = 0
+        self.userInfoBottomBar.alpha = CGFloat(0.6)
     }
     
     func unclickEverything() {
