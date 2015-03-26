@@ -93,7 +93,7 @@
 
 
 - (void) successfulSignUp {
-    [self performSegueWithIdentifier:@"JumpIn" sender:self];
+    [self performSegueWithIdentifier:@"FollowUsers" sender:self];
 }
 - (void) failedSignUp: (NSString*) msg {
     [[[UIAlertView alloc] initWithTitle:@"Signup Failed" message:msg delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil] show];
