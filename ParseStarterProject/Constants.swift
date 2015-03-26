@@ -178,8 +178,8 @@ let IMGSAVE_FULLSCREEN_HEIGHT: CGFloat = CGFloat(1136);
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
 // icon size in user profile page
-let USER_ICON_BUTTON_WIDTH = 100
-let USER_ICON_BUTTON_HEIGHT = 100
+let USER_ICON_BUTTON_WIDTH = 115
+let USER_ICON_BUTTON_HEIGHT = 115
 
 //----consts for constraints in home description-----
 let MIN_SHOPLOOK_CONSTRAINT = CGFloat(10.0);
