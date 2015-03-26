@@ -177,6 +177,10 @@ let IMGSAVE_FULLSCREEN_HEIGHT: CGFloat = CGFloat(1136);
 //when clicking on edit posts, point of contact must be this much below picture to trigger swipe delete
 let UPLOAD_TABLE_DELETE_LIMIT = CGFloat(100.0);
 
+// icon size in user profile page
+let USER_ICON_BUTTON_WIDTH = 100
+let USER_ICON_BUTTON_HEIGHT = 100
+
 //----consts for constraints in home description-----
 let MIN_SHOPLOOK_CONSTRAINT = CGFloat(10.0);
 let MIN_DESCRIP_TOTAL_SPACE = TRUE_FULLSCREEN_HEIGHT - 115.0 - 45.0 - 40.0 - 5.0 - 60.0;
