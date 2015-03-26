@@ -52,7 +52,6 @@
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
             <string>HelveticaNeueLTPro-Lt</string>
-            <string>HelveticaNeueLTPro-Lt</string>
         </mutableArray>
         <mutableArray key="HelveticaNeueLTPro-LtCn.otf">
             <string>HelveticaNeueLTPro-LtCn</string>
@@ -407,7 +406,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xge-l0-Guf">
                                 <rect key="frame" x="16" y="7" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="logo_menu.png">
+                                <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -416,15 +415,14 @@
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" id="Su4-M6-yrE">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
-                                <rect key="frame" x="264" y="7" width="40" height="40"/>
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fIu-Ms-9co">
+                                <rect key="frame" x="264" y="-21" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="13"/>
-                                <state key="normal">
+                                <state key="normal" image="logo_menu.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="settings:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="lWx-qf-nrT"/>
+                                    <action selector="sideMenuButtonPressed:" destination="Ism-7q-CMJ" eventType="touchUpInside" id="l7g-Fp-c2F"/>
                                 </connections>
                             </button>
                         </barButtonItem>
@@ -447,7 +445,6 @@
                         <outlet property="numberPosts" destination="KEW-iB-HzR" id="vAQ-n9-j0W"/>
                         <outlet property="postButton" destination="PcV-2s-oeW" id="vd4-bW-AI4"/>
                         <outlet property="settingButton" destination="6HT-1I-ezp" id="PAH-V0-jFv"/>
-                        <outlet property="settingsButton" destination="fIu-Ms-9co" id="kNB-tG-uhk"/>
                         <outlet property="userIconButton" destination="vFC-iS-o6z" id="haZ-JM-bbm"/>
                         <outlet property="userInfoBackImageView" destination="s2B-jd-g2B" id="Nb5-fL-dL2"/>
                         <outlet property="userInfoBottomBar" destination="bzR-OI-RGP" id="6vd-OQ-5VH"/>

@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 
 class UserProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    @IBOutlet var settingsButton: UIButton!
     @IBOutlet var myCollectionView: UICollectionView!
     
     @IBOutlet var numberPosts: UILabel!
@@ -142,7 +141,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     self.getNumFollowers()
                     self.getNumFollowing()
                     self.amMyself = false
-                    self.configureSettingsButton();
+                    self.configureSettingButton();
                     self.AnonText.hidden = true
                 }
             });
@@ -166,9 +165,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 self.navigationItem.titleView = view;
                 view.addSubview(userLabel);
                 AnonText.hidden = true  //<---cringe (damit bala)
-                self.settingsButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
-                self.settingsButton.setTitle("Log In", forState: UIControlState.Normal);
-                self.settingsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal); // TODO: remove
                 
                 self.settingButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
                 self.settingButton.setTitle("Log In", forState: UIControlState.Normal);
@@ -206,7 +202,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                         self.getNumFollowers()
                         self.getNumFollowing()
                         self.AnonText.hidden = true
-                        self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal); // TODO: remove
                         
                         self.settingButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
                     }
@@ -287,15 +282,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         numberFollowers.textColor = UNSELECTED_COLOR;
     }
     
+    @IBAction func sideMenuButtonPressed(sender: AnyObject) {
+        (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
+    }
     
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController!.viewControllers.count == 1) {
-                //this is the only vc on the stack - move to menu
-                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
-            }
-            else {
-                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+            if (self.navigationController!.viewControllers.count > 1) {
                 self.navigationController!.popViewControllerAnimated(true);
             }
         }
@@ -642,17 +635,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         return "Unfollow"
     }*/
     
-    func configureSettingsButton() {
+    func configureSettingButton() {
         ServerInteractor.amFollowingUser(mainUser!, retFunction: {(amFollowing: Bool) in
             self.friendAction = amFollowing;
             if (amFollowing == true) {
-                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal); // TODO: remove
-                
                 self.settingButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal)
             }
             else if (amFollowing == false) {
-                self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal) // TODO: remove
-                
                 self.settingButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             }
             else {
@@ -660,57 +649,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 NSLog("Failure? \(amFollowing)")
             }
         });
-    }
-    
-    @IBAction func settings(sender: AnyObject) {
-        if (!amMyself) {
-            var username = mainUser!.username;
-            if (!friendAction) {
-                //follow me
-                //ServerInteractor.postFollowerNotif(username, controller: self);
-                ServerInteractor.addAsFollower(mainUser!);
-                
-                //update button
-                self.friendAction = true
-                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
-            }
-            else if (friendAction == true) {
-                //unfollow me (if u wish!)
-                
-                self.alerter = CompatibleAlertViews(presenter: self);
-                alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
-                    () in
-                    ServerInteractor.removeAsFollower(self.mainUser!);
-                    //update button
-                    self.friendAction = false
-                    self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
-                });
-                
-                /*
-                let alert: UIAlertController = UIAlertController(title: "Unfollow "+username, message: "Unfollow "+username+"?", preferredStyle: UIAlertControllerStyle.Alert);
-                alert.addAction(UIAlertAction(title: "Unfollow", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
-                    ServerInteractor.removeAsFollower(self.mainUser!);
-                    //update button
-                    self.friendAction = false
-                    self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
-                }));
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(action: UIAlertAction!) -> Void in
-                    //canceled
-                }));
-                self.presentViewController(alert, animated: true, completion: nil)*/
-            }
-            else {
-                //no action
-            }
-        } else {
-            if (ServerInteractor.isAnonLogged()) {
-                //segue to go to home screen
-                self.performSegueWithIdentifier("LogOffFromUserSegue", sender: self);
-            }
-            else {
-                self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
-            }
-        }
     }
     
     @IBAction func settingButtonPressed(sender: AnyObject) {
