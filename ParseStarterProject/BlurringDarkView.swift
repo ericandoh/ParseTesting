@@ -28,6 +28,11 @@ class BlurringDarkView: UIImageView {
         self.image = newImg;
     }
     
+    func setImageAndLightBlur(img: UIImage) {
+        var newImg = img.applyLightEffect();
+        self.image = newImg;
+    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
