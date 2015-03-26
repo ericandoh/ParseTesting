@@ -36,6 +36,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
     
+    @IBOutlet var userInfoView: UIView!
+    @IBOutlet var userInfoBackImageView: BlurringDarkView!
+    @IBOutlet var userIconImageView: UIImageView!
+    @IBOutlet var userWebURL: UILabel!
+    @IBOutlet var settingButton: UIButton!
+    @IBOutlet var userIconButton: UIButton!
+    
+    
     var mainUser: FriendEncapsulator?;
     var amMyself: Bool = true
     var friendAction: Bool = false;
@@ -127,6 +135,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             view.addSubview(self.userIcon!);
             view.addSubview(userLabel);
             
+            // TODO: get mainUser web url
+            userWebURL.text = "wendyslookbook.com"
+            
             mainUser!.fetchImage({(image: UIImage)->Void in
                 self.setProfilePictureBubble(image);
                 self.mainUser!.getNumPosts(){numPosts, error in
@@ -175,7 +186,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 AnonText.hidden = true  //<---cringe (damit bala)
                 self.settingsButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
                 self.settingsButton.setTitle("Log In", forState: UIControlState.Normal);
-                self.settingsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
+                self.settingsButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal); // TODO: remove
+                
+                self.settingButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
+                self.settingButton.setTitle("Log In", forState: UIControlState.Normal);
+                self.settingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal);
                 self.numberLikes.text = String(self.mainUser!.getNumLiked())
                 //friendsButton.hidden = true;
             }
@@ -208,7 +223,9 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                         self.getNumFollowers()
                         self.getNumFollowing()
                         self.AnonText.hidden = true
-                        self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
+                        self.settingsButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal); // TODO: remove
+                        
+                        self.settingButton.setBackgroundImage(SETTINGS_ICON, forState: UIControlState.Normal);
                     }
                 });
             }
@@ -274,6 +291,15 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIcon!.layer.cornerRadius = (self.userIcon!.frame.size.width) / 2
         self.userIcon!.layer.masksToBounds = true
         self.userIcon!.layer.borderWidth = 0
+    }
+    
+    func setUserIconBubble(image: UIImage) {
+        self.userInfoBackImageView.setImageAndBlur(image);
+        var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: 80, height: 80))
+        self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal);
+        self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
+        self.userIconButton.layer.masksToBounds = true
+        self.userIconButton.layer.borderWidth = 0
     }
     
     func unclickEverything() {
@@ -647,10 +673,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         ServerInteractor.amFollowingUser(mainUser!, retFunction: {(amFollowing: Bool) in
             self.friendAction = amFollowing;
             if (amFollowing == true) {
-                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal);
+                self.settingsButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal); // TODO: remove
+                
+                self.settingButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal)
             }
             else if (amFollowing == false) {
-                self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                self.settingsButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal) // TODO: remove
+                
+                self.settingButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
             }
             else {
                 //do nothing, server failed to fetch!
@@ -710,6 +740,40 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    @IBAction func settingButtonPressed(sender: AnyObject) {
+        if (!amMyself) {
+            var username = mainUser!.username;
+            if (!friendAction) {
+                //follow me
+                //ServerInteractor.postFollowerNotif(username, controller: self);
+                ServerInteractor.addAsFollower(mainUser!);
+                
+                //update button
+                self.friendAction = true
+                self.settingButton.setBackgroundImage(FOLLOWED_ME_ICON, forState: UIControlState.Normal)
+            }
+            else if (friendAction == true) {
+                //unfollow me (if u wish!)
+                
+                self.alerter = CompatibleAlertViews(presenter: self);
+                alerter!.makeNoticeWithAction("Unfollow "+username, message: "Unfollow "+username+"?", actionName: "Unfollow", buttonAction: {
+                    () in
+                    ServerInteractor.removeAsFollower(self.mainUser!);
+                    //update button
+                    self.friendAction = false
+                    self.settingButton.setBackgroundImage(FOLLOW_ME_ICON, forState: UIControlState.Normal)
+                });
+            }
+        } else {
+            if (ServerInteractor.isAnonLogged()) {
+                //segue to go to home screen
+                self.performSegueWithIdentifier("LogOffFromUserSegue", sender: self);
+            }
+            else {
+                self.performSegueWithIdentifier("GotoSettingsSegue", sender: self);
+            }
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
