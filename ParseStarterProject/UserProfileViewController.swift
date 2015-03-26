@@ -38,7 +38,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet var userInfoView: UIView!
     @IBOutlet var userInfoBackImageView: BlurringDarkView!
-    @IBOutlet var userIconImageView: UIImageView!
     @IBOutlet var userWebURL: UILabel!
     @IBOutlet var settingButton: UIButton!
     @IBOutlet var userIconButton: UIButton!
