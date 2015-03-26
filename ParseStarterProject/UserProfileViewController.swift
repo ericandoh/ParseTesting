@@ -114,7 +114,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             //viewing someone else's profile (friend profile page)
             mainUser!.isFanPageUser({(fpUser: Bool?) -> Void in
                 if fpUser == nil { // average user
-                    self.setNavBarTitle(self.mainUser!.username)
+                    var textToPut = self.mainUser!.username
+                    var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
+                    userLabel.textColor = TITLE_TEXT_COLOR;
+                    userLabel.text = textToPut;
+                    userLabel.font = USER_TITLE_TEXT_FONT;
+                    userLabel.textAlignment = NSTextAlignment.Center
+                    view.addSubview(userLabel)
+                    self.navigationItem.titleView = view;
                 } else { // fan page user
                     var textToPut = self.mainUser!.username;
                     var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar-6))
@@ -162,7 +169,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         else { // self profile page
             mainUser = ServerInteractor.getCurrentUser();
             if (ServerInteractor.isAnonLogged()) { //viewing anonymous user profile (myself)
-                setNavBarTitle("Anonymous")
+                var textToPut = "Anonymous"
+                var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
+                userLabel.textAlignment = NSTextAlignment.Center
 
                 self.userWebURL.text = ""
                 
@@ -180,7 +192,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 //friendsButton.hidden = true;
             }
             else { // viewing my own profile (logged in user)
-                setNavBarTitle(ServerInteractor.getUserName())
+                var textToPut = ServerInteractor.getUserName()
+                var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
+                userLabel.textColor = TITLE_TEXT_COLOR;
+                userLabel.text = textToPut;
+                userLabel.font = USER_TITLE_TEXT_FONT;
+                userLabel.textAlignment = NSTextAlignment.Center
+                self.navigationItem.titleView = view;
+                view.addSubview(userLabel);
                 
                 mainUser!.fetchImage({(image: UIImage)->Void in
                     self.setUserIconBubble(image)
@@ -272,16 +291,6 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIconButton.layer.borderWidth = CGFloat(1.8)
         self.userIconButton.layer.borderColor = UIColor.whiteColor().CGColor
         self.userInfoBottomBar.alpha = CGFloat(0.6)
-    }
-    
-    func setNavBarTitle(navBarTitle : String) {
-        var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, TITLE_BAR_WIDTH, TITLE_BAR_HEIGHT+14)) // 14 for fan page user label (not displayed)
-        userLabel.textColor = TITLE_TEXT_COLOR;
-        userLabel.text = navBarTitle
-        userLabel.font = USER_TITLE_TEXT_FONT;
-        userLabel.textAlignment = NSTextAlignment.Center
-        view.addSubview(userLabel);
-        self.navigationItem.titleView = view;
     }
     
     func unclickEverything() {
