@@ -180,6 +180,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController!.popViewControllerAnimated(true);
     }
     
+    @IBAction func openMenu(sender: AnyObject) {
+        (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
+    }
+    
     func commentButtonPress(sender: UIButton!) {
         if pageOption == 1 {
             NSLog("comments")
@@ -265,7 +269,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         if pageOption == 0 {
             var author = commentList[index].author;
             var authorId = commentList[index].authorId;
-            var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+            var text = "@" + author + ": " + commentList[index].commentString;
             
             cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false, sender: self);
             cell.descriptionBox.otherAction = {
