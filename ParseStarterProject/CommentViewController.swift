@@ -24,6 +24,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     var currentPost: ImagePostStructure?;
     var backImg: UIImage?;
     
+    var navBarView: UIView = UIView(frame: CGRectMake(0, 0, 210, 44))
+    var pageOption : Int = 0 // 0 for comment, 1 for likes
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,7 +111,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 105, 44))
         commentButton.setTitle("Comments", forState: UIControlState.Normal)
-        commentButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        commentButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal)
         commentButton.addTarget(self, action: "commentButtonPress:", forControlEvents: UIControlEvents.TouchDown)
         
         var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(105, 0, 5, 44))
@@ -116,13 +119,12 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         verticalBarLabel.text = "|"
         verticalBarLabel.textAlignment = NSTextAlignment.Right
         
-        var likeButton : UIButton = UIButton(frame: CGRectMake(110, 0, 100, 44))
+        var likeButton : UIButton = UIButton(frame: CGRectMake(108, 0, 102, 44))
         likeButton.setTitle("Likes", forState: UIControlState.Normal)
-        likeButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal)
         likeButton.titleLabel?.textAlignment = NSTextAlignment.Left
         likeButton.addTarget(self, action: "likeButtonPress:", forControlEvents: UIControlEvents.TouchDown)
 
-        var navBarView: UIView = UIView(frame: CGRectMake(0, 0, 210, 44))
         navBarView.addSubview(commentButton)
         navBarView.addSubview(verticalBarLabel)
         navBarView.addSubview(likeButton)
@@ -171,11 +173,33 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func commentButtonPress(sender: UIButton!) {
-        NSLog("comments")
+        if pageOption == 1 {
+            NSLog("comments")
+            pageOption = 0
+            flipNavTitleColor()
+        }
     }
 
     func likeButtonPress(sender: UIButton!) {
-        NSLog("likes")
+        if pageOption == 0 {
+            NSLog("likes")
+            pageOption = 1
+            flipNavTitleColor()
+        }
+    }
+    
+    func flipNavTitleColor() {
+        if navBarView.subviews.count > 0 {
+            for v in navBarView.subviews as [UIView] {
+                if let btn = v as? UIButton {
+                    if (btn.titleColorForState(UIControlState.Normal) == SELECTED_COLOR) {
+                        btn.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal)
+                    } else {
+                        btn.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal)
+                    }
+                }
+            }
+        }
     }
     
     /*
