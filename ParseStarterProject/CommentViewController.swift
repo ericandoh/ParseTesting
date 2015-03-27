@@ -129,6 +129,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             backImgView.setImageAndBlur(backImg!);
         }
 //        self.navigationController!.navigationBar.topItem!.title = "Comments"
+        self.commentTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -271,7 +272,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as UserTextTableViewCell;
-        
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
         // Configure the cell...
         var index: Int = indexPath.row;
         if pageOption == 0 {
@@ -339,6 +340,10 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 self.navigationController!.pushViewController(nextBoard, animated: true);
             }
         }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
     }
     
     func isTapped(sender: UITapGestureRecognizer) {
