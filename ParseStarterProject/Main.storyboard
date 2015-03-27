@@ -1865,16 +1865,16 @@
                         <viewControllerLayoutGuide type="bottom" id="ist-gp-Mes"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ACU-14-sjx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6y-Mh-PYK">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBM-Ln-eoU">
-                                <rect key="frame" x="160" y="64" width="160" height="380"/>
+                                <rect key="frame" x="160" y="64" width="160" height="444"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="p1A-64-2tQ">
                                         <rect key="frame" x="0.0" y="0.0" width="225" height="444"/>
@@ -1970,7 +1970,7 @@
                                 </connections>
                             </view>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c2u-Cc-WbD">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3364,7 +3364,7 @@
                         <outlet property="nextPageButton" destination="wum-te-fhw" id="klc-Xw-YLh"/>
                         <outlet property="nextPageButtonItem" destination="BrM-3E-eBf" id="Kl7-38-418"/>
                         <outlet property="suggestedCollectionView" destination="Jky-20-AI5" id="bJh-on-Xre"/>
-                        <segue destination="oQL-hX-F0F" kind="push" identifier="JumpIn" id="rUJ-aV-Juh"/>
+                        <segue destination="oQL-hX-F0F" kind="modal" identifier="JumpIn" id="rUJ-aV-Juh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70C-06-VSx" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3418,9 +3418,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="0c8-mc-cy1"/>
         <segue reference="AAy-sI-hyg"/>
         <segue reference="rUJ-aV-Juh"/>
-        <segue reference="0c8-mc-cy1"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
 </document>
