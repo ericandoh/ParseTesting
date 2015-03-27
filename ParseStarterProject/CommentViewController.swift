@@ -109,39 +109,28 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         }
 //        self.navigationController!.navigationBar.topItem!.title = "Comments"
         
-        var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 105, 44))
+        var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 90, 44))
         commentButton.setTitle("Comments", forState: UIControlState.Normal)
         commentButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal)
+        commentButton.titleLabel?.textAlignment = NSTextAlignment.Left
         commentButton.addTarget(self, action: "commentButtonPress:", forControlEvents: UIControlEvents.TouchDown)
         
-        var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(105, 0, 5, 44))
+        var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(90, 0, 25, 44))
         verticalBarLabel.textColor = UIColor.whiteColor()
         verticalBarLabel.text = "|"
         verticalBarLabel.textAlignment = NSTextAlignment.Right
         
-        var likeButton : UIButton = UIButton(frame: CGRectMake(110, 0, 102, 44))
+        var likeButton : UIButton = UIButton(frame: CGRectMake(115, 0, 100, 44))
         likeButton.setTitle("Likes", forState: UIControlState.Normal)
         likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal)
         likeButton.titleLabel?.textAlignment = NSTextAlignment.Left
         likeButton.addTarget(self, action: "likeButtonPress:", forControlEvents: UIControlEvents.TouchDown)
 
-        commentButton.setTranslatesAutoresizingMaskIntoConstraints(true)
-        verticalBarLabel.setTranslatesAutoresizingMaskIntoConstraints(true)
-        likeButton.setTranslatesAutoresizingMaskIntoConstraints(true)
-        commentButton.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin
-        verticalBarLabel.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin
-        likeButton.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin | UIViewAutoresizing.FlexibleRightMargin | UIViewAutoresizing.FlexibleTopMargin | UIViewAutoresizing.FlexibleBottomMargin
-        
         navBarView.addSubview(commentButton)
         navBarView.addSubview(verticalBarLabel)
         navBarView.addSubview(likeButton)
         self.navigationItem.titleView = navBarView
-/*
-        var topConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0);
-        var leadingConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0);
-        var trailingConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0);
-        var bottomConstraint = NSLayoutConstraint(item: controller.view, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self.contentArea, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0);
-*/
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
