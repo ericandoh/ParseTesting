@@ -104,7 +104,29 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
         }
-        self.navigationController!.navigationBar.topItem!.title = "Comments"
+//        self.navigationController!.navigationBar.topItem!.title = "Comments"
+        
+        var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 105, 44))
+        commentButton.setTitle("Comments", forState: UIControlState.Normal)
+        commentButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        commentButton.addTarget(self, action: "commentButtonPress:", forControlEvents: UIControlEvents.TouchDown)
+        
+        var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(105, 0, 5, 44))
+        verticalBarLabel.textColor = UIColor.whiteColor()
+        verticalBarLabel.text = "|"
+        verticalBarLabel.textAlignment = NSTextAlignment.Right
+        
+        var likeButton : UIButton = UIButton(frame: CGRectMake(110, 0, 100, 44))
+        likeButton.setTitle("Likes", forState: UIControlState.Normal)
+        likeButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        likeButton.titleLabel?.textAlignment = NSTextAlignment.Left
+        likeButton.addTarget(self, action: "likeButtonPress:", forControlEvents: UIControlEvents.TouchDown)
+
+        var navBarView: UIView = UIView(frame: CGRectMake(0, 0, 210, 44))
+        navBarView.addSubview(commentButton)
+        navBarView.addSubview(verticalBarLabel)
+        navBarView.addSubview(likeButton)
+        self.navigationItem.titleView = navBarView
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -146,6 +168,14 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func backPress(sender: UIButton) {
         self.navigationController!.popViewControllerAnimated(true);
+    }
+    
+    func commentButtonPress(sender: UIButton!) {
+        NSLog("comments")
+    }
+
+    func likeButtonPress(sender: UIButton!) {
+        NSLog("likes")
     }
     
     /*
