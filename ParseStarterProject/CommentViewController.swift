@@ -119,30 +119,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidAppear(animated);
         if (currentPost != nil) {
             if pageOption == 0 { // comments page
-/*                self.commentList = Array<PostComment>();
-                currentPost!.fetchComments({(authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void in
-                    for index in 0..<input.count {
-                        self.commentList.append(PostComment(author: (authorInput[index] as String), authorId: (authorIdInput[index] as String), content: (input[index] as String)));
-                    }
-                    self.commentTableView.reloadData();
-                    var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
-                    if (self.commentList.count != 0) {
-                        self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
-                    }
-                });
-*/
                 getComments()
-                
-                self.commentTextField.enabled = true
-                self.commentTextField.hidden = false
-                self.sendButton.enabled = true
-                self.sendButton.hidden = false
+                showCommentBar()
             } else { // likes page
                 getLikedUsers()
-                self.commentTextField.enabled = false
-                self.commentTextField.hidden = true
-                self.sendButton.enabled = false
-                self.sendButton.hidden = true
+                hideCommentBar()
             }
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
