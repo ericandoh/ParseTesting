@@ -18,6 +18,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var commentsTextFieldConstraint: NSLayoutConstraint!
     @IBOutlet var backImgView: BlurringDarkView!
     var commentList: Array<PostComment> = [];
+    var likingUsers: Array<FriendEncapsulator> = [];
     
     var postImageList: Dictionary<String, UIImage> = [:];
     
@@ -37,6 +38,28 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         self.navigationController!.view.backgroundColor = UIColor.clearColor();
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
         
+        
+        var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 90, 44))
+        commentButton.setTitle("Comments", forState: UIControlState.Normal)
+        commentButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal)
+        commentButton.titleLabel?.textAlignment = NSTextAlignment.Left
+        commentButton.addTarget(self, action: "commentButtonPress:", forControlEvents: UIControlEvents.TouchDown)
+        
+        var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(90, 0, 25, 44))
+        verticalBarLabel.textColor = UIColor.whiteColor()
+        verticalBarLabel.text = "|"
+        verticalBarLabel.textAlignment = NSTextAlignment.Right
+        
+        var likeButton : UIButton = UIButton(frame: CGRectMake(115, 0, 100, 44))
+        likeButton.setTitle("Likes", forState: UIControlState.Normal)
+        likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal)
+        likeButton.titleLabel?.textAlignment = NSTextAlignment.Left
+        likeButton.addTarget(self, action: "likeButtonPress:", forControlEvents: UIControlEvents.TouchDown)
+        
+        navBarView.addSubview(commentButton)
+        navBarView.addSubview(verticalBarLabel)
+        navBarView.addSubview(likeButton)
+        self.navigationItem.titleView = navBarView
         
         // Do any additional setup after loading the view.
         //self.commentTableView.rowHeight = UITableViewAutomaticDimension;
@@ -93,44 +116,27 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
         if (currentPost != nil) {
-            self.commentList = Array<PostComment>();
-            currentPost!.fetchComments({(authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void in
-                for index in 0..<input.count {
-                    self.commentList.append(PostComment(author: (authorInput[index] as String), authorId: (authorIdInput[index] as String), content: (input[index] as String)));
-                }
-                self.commentTableView.reloadData();
-                var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
-                if (self.commentList.count != 0) {
-                    self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
-                }
+            if pageOption == 0 { // comments page
+/*                self.commentList = Array<PostComment>();
+                currentPost!.fetchComments({(authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void in
+                    for index in 0..<input.count {
+                        self.commentList.append(PostComment(author: (authorInput[index] as String), authorId: (authorIdInput[index] as String), content: (input[index] as String)));
+                    }
+                    self.commentTableView.reloadData();
+                    var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
+                    if (self.commentList.count != 0) {
+                        self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
+                    }
                 });
+*/
+                getComments()
+            } else { // likes page
+                getLikedUsers()
+            }
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
         }
 //        self.navigationController!.navigationBar.topItem!.title = "Comments"
-        
-        var commentButton : UIButton = UIButton(frame: CGRectMake(0, 0, 90, 44))
-        commentButton.setTitle("Comments", forState: UIControlState.Normal)
-        commentButton.setTitleColor(SELECTED_COLOR, forState: UIControlState.Normal)
-        commentButton.titleLabel?.textAlignment = NSTextAlignment.Left
-        commentButton.addTarget(self, action: "commentButtonPress:", forControlEvents: UIControlEvents.TouchDown)
-        
-        var verticalBarLabel: UILabel = UILabel(frame: CGRectMake(90, 0, 25, 44))
-        verticalBarLabel.textColor = UIColor.whiteColor()
-        verticalBarLabel.text = "|"
-        verticalBarLabel.textAlignment = NSTextAlignment.Right
-        
-        var likeButton : UIButton = UIButton(frame: CGRectMake(115, 0, 100, 44))
-        likeButton.setTitle("Likes", forState: UIControlState.Normal)
-        likeButton.setTitleColor(UNSELECTED_COLOR, forState: UIControlState.Normal)
-        likeButton.titleLabel?.textAlignment = NSTextAlignment.Left
-        likeButton.addTarget(self, action: "likeButtonPress:", forControlEvents: UIControlEvents.TouchDown)
-
-        navBarView.addSubview(commentButton)
-        navBarView.addSubview(verticalBarLabel)
-        navBarView.addSubview(likeButton)
-        self.navigationItem.titleView = navBarView
-
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -179,6 +185,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             NSLog("comments")
             pageOption = 0
             flipNavTitleColor()
+            getComments()
         }
     }
 
@@ -187,6 +194,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             NSLog("likes")
             pageOption = 1
             flipNavTitleColor()
+            getLikedUsers()
         }
     }
     
@@ -204,6 +212,29 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func getComments() {
+        self.commentList = Array<PostComment>();
+        currentPost!.fetchComments({(authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void in
+            for index in 0..<input.count {
+                self.commentList.append(PostComment(author: (authorInput[index] as String), authorId: (authorIdInput[index] as String), content: (input[index] as String)));
+            }
+            self.commentTableView.reloadData();
+            var path = NSIndexPath(forRow: self.commentList.count - 1, inSection: 0);
+            if (self.commentList.count != 0) {
+                self.commentTableView.scrollToRowAtIndexPath(path, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false);
+            }
+        });
+    }
+    
+    func getLikedUsers() {
+        likingUsers = [];
+        var likingIds = currentPost!.getLikerIds();
+        for likeId in likingIds {
+            likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(likeId));
+        }
+        self.commentTableView.reloadData()
+    }
+    
     /*
     // #pragma mark - Navigation
 
@@ -218,7 +249,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         // last cell is always editable
-        return commentList.count;
+        if pageOption == 0 {
+            return commentList.count;
+        } else {
+            return likingUsers.count;
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -227,34 +262,45 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         
         // Configure the cell...
         var index: Int = indexPath.row;
-        var author = commentList[index].author;
-        var authorId = commentList[index].authorId;
-        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
-        
-        cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false, sender: self);
-        cell.descriptionBox.otherAction = {
-            () in
-            var x = self.commentTextField.resignFirstResponder();
-        };
-        cell.selectionStyle = UITableViewCellSelectionStyle.None;
-        
-        if cell.respondsToSelector("setSeparatorInset:") {
-            cell.separatorInset = UIEdgeInsetsZero
+        if pageOption == 0 {
+            var author = commentList[index].author;
+            var authorId = commentList[index].authorId;
+            var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+            
+            cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false, sender: self);
+            cell.descriptionBox.otherAction = {
+                () in
+                var x = self.commentTextField.resignFirstResponder();
+            };
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
+            
+            if cell.respondsToSelector("setSeparatorInset:") {
+                cell.separatorInset = UIEdgeInsetsZero
+            }
+            if cell.respondsToSelector("setLayoutMargins:") {
+                cell.preservesSuperviewLayoutMargins = false
+                cell.layoutMargins = UIEdgeInsetsZero
+            }
+        } else {
+            var text = likingUsers[index].username;
+            cell.extraConfigurations(likingUsers[index], message: text, enableFriending: true, sender: self);
+            cell.selectionStyle = UITableViewCellSelectionStyle.None;
         }
-        if cell.respondsToSelector("setLayoutMargins:") {
-            cell.preservesSuperviewLayoutMargins = false
-            cell.layoutMargins = UIEdgeInsetsZero
-        }
-        
         return cell;
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
-        var author = commentList[index].author;
-        var authorId = commentList[index].authorId;
-        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
-        
-        var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false);
+        var recHeight : CGFloat
+        if pageOption == 0 {
+            var author = commentList[index].author;
+            var authorId = commentList[index].authorId;
+            var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+            
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false);
+        } else {
+            var text = likingUsers[index].username;
+            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(likingUsers[index], message: text, enableFriending: true);
+        }
         
         return recHeight;
     }
@@ -270,7 +316,17 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         return estimatedWidth
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
-        self.commentTextField.resignFirstResponder();
+        if pageOption == 0 {
+            self.commentTextField.resignFirstResponder();
+    
+        } else {
+            if (self.navigationController != nil) {
+                var temp = indexPath.row
+                var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                (nextBoard as UserProfileViewController).receiveUserInfo(likingUsers[temp]);
+                self.navigationController!.pushViewController(nextBoard, animated: true);
+            }
+        }
     }
     
     func isTapped(sender: UITapGestureRecognizer) {
