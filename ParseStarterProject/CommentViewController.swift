@@ -201,6 +201,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             pageOption = 0
             flipNavTitleColor()
             getComments()
+            showCommentBar()
         }
     }
 
@@ -210,6 +211,7 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             pageOption = 1
             flipNavTitleColor()
             getLikedUsers()
+            hideCommentBar()
         }
     }
     
@@ -248,6 +250,20 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
             likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(likeId));
         }
         self.commentTableView.reloadData()
+    }
+    
+    func showCommentBar() { // comment page
+        self.commentTextField.enabled = true
+        self.commentTextField.hidden = false
+        self.sendButton.enabled = true
+        self.sendButton.hidden = false
+    }
+    
+    func hideCommentBar() { // like page
+        self.commentTextField.enabled = false
+        self.commentTextField.hidden = true
+        self.sendButton.enabled = false
+        self.sendButton.hidden = true
     }
     
     /*
