@@ -45,6 +45,8 @@
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
 		8AC8ADAB1AAF63B00051232C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF551613CC42002132AF /* Social.framework */; };
 		8AC8ADAC1AAF63BF0051232C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF521613CC3C002132AF /* Accounts.framework */; };
+		8ACCD77F1AC5FFF10012D4FE /* FashionStash_Emptynew.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */; };
+		8ACCD7801AC5FFF10012D4FE /* swipe.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACCD77E1AC5FFF10012D4FE /* swipe.png */; };
 		8AF952891ABC824800C9EA76 /* bag.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952871ABC824800C9EA76 /* bag.png */; };
 		8AF9528A1ABC824800C9EA76 /* bag@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF952881ABC824800C9EA76 /* bag@2x.png */; };
 		8AF9528E1ABCD3C300C9EA76 /* swipeGuide.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF9528D1ABCD3C300C9EA76 /* swipeGuide.png */; };
@@ -235,6 +237,8 @@
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
 		8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
+		8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FashionStash_Emptynew.png; sourceTree = "<group>"; };
+		8ACCD77E1AC5FFF10012D4FE /* swipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe.png; sourceTree = "<group>"; };
 		8AF952871ABC824800C9EA76 /* bag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bag.png; sourceTree = "<group>"; };
 		8AF952881ABC824800C9EA76 /* bag@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bag@2x.png"; sourceTree = "<group>"; };
 		8AF9528D1ABCD3C300C9EA76 /* swipeGuide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipeGuide.png; sourceTree = "<group>"; };
@@ -637,6 +641,8 @@
 		D99B5FCF196DBB2500662A39 /* Defaults */ = {
 			isa = PBXGroup;
 			children = (
+				8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */,
+				8ACCD77E1AC5FFF10012D4FE /* swipe.png */,
 				8AF9528D1ABCD3C300C9EA76 /* swipeGuide.png */,
 				D9DEE637199F0C1100F08CC5 /* tutorial.png */,
 				D93CD47C19954157001F0253 /* logo.png */,
@@ -833,6 +839,7 @@
 				D9BB596E199A844100367408 /* HelveticaNeueLTPro-CnO.otf in Resources */,
 				8A052D311AC46E670039D074 /* infoBar@2x.png in Resources */,
 				D96402531953589600C48191 /* Images.xcassets in Resources */,
+				8ACCD77F1AC5FFF10012D4FE /* FashionStash_Emptynew.png in Resources */,
 				D9DEE632199EB4A900F08CC5 /* delete_swipe_info_bar.png in Resources */,
 				D9201C01199A7B79004018A1 /* map.png in Resources */,
 				D9201BF7199A7B08004018A1 /* flag.png in Resources */,
@@ -854,6 +861,7 @@
 				D93CD47D19954157001F0253 /* logo.png in Resources */,
 				D9BB5976199A844100367408 /* HelveticaNeueLTPro-HvIt.otf in Resources */,
 				07CF20CC1A5F39DE00354ABE /* comment@2x.png in Resources */,
+				8ACCD7801AC5FFF10012D4FE /* swipe.png in Resources */,
 				D9BB597E199A844100367408 /* HelveticaNeueLTPro-Md.otf in Resources */,
 				D9DEE644199F18FC00F08CC5 /* backcolorsolid.png in Resources */,
 				D9BB5989199A844100367408 /* HelveticaNeueLTPro-ThExO.otf in Resources */,

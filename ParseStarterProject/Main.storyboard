@@ -1020,8 +1020,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gft-ya-HJd">
-                                <rect key="frame" x="40" y="144" width="240" height="264"/>
-                                <state key="normal" backgroundImage="swipeGuide.png">
+                                <rect key="frame" x="40" y="134" width="250" height="274"/>
+                                <state key="normal" backgroundImage="swipe.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1247,7 +1247,7 @@
                             <constraint firstItem="s1V-MZ-bqM" firstAttribute="top" secondItem="hLd-aS-QOj" secondAttribute="bottom" constant="10" id="M8P-p6-w4E"/>
                             <constraint firstItem="mou-va-zpC" firstAttribute="leading" secondItem="s1V-MZ-bqM" secondAttribute="trailing" constant="40" id="NoA-b4-aFC"/>
                             <constraint firstItem="s1V-MZ-bqM" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="20" id="O7C-8d-vOI"/>
-                            <constraint firstItem="gft-ya-HJd" firstAttribute="top" secondItem="3bE-tw-3q8" secondAttribute="bottom" constant="80" id="P1z-YI-p6z"/>
+                            <constraint firstItem="gft-ya-HJd" firstAttribute="top" secondItem="3bE-tw-3q8" secondAttribute="bottom" constant="70" id="P1z-YI-p6z"/>
                             <constraint firstItem="Toc-HP-16L" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="40" id="Tr5-9K-ND5"/>
                             <constraint firstAttribute="trailing" secondItem="zEM-c4-tHz" secondAttribute="trailing" constant="40" id="Wgn-Cb-wbW"/>
                             <constraint firstItem="v8x-6Y-FYl" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="bottom" constant="10" id="XPh-VU-JP3"/>
@@ -1273,7 +1273,7 @@
                             <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="BN6-Yf-BWR" secondAttribute="top" id="rVD-SW-5Rl"/>
                             <constraint firstItem="mou-va-zpC" firstAttribute="top" secondItem="hLd-aS-QOj" secondAttribute="bottom" constant="10" id="sp5-AS-S4F"/>
                             <constraint firstAttribute="trailing" secondItem="RcL-Em-b9e" secondAttribute="trailing" id="th2-As-vdq"/>
-                            <constraint firstAttribute="trailing" secondItem="gft-ya-HJd" secondAttribute="trailing" constant="40" id="uO6-JZ-v5b"/>
+                            <constraint firstAttribute="trailing" secondItem="gft-ya-HJd" secondAttribute="trailing" constant="30" id="uO6-JZ-v5b"/>
                             <constraint firstAttribute="bottom" secondItem="Toc-HP-16L" secondAttribute="bottom" constant="85" id="uXe-RZ-Tkh"/>
                             <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="hLd-aS-QOj" secondAttribute="bottom" constant="10" id="wbi-98-Xjm"/>
                             <constraint firstItem="gft-ya-HJd" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="40" id="xPO-le-FJZ"/>
@@ -3425,7 +3425,7 @@
         <image name="logo_menu.png" width="85" height="85"/>
         <image name="plus.png" width="45" height="45"/>
         <image name="share.png" width="80" height="80"/>
-        <image name="swipeGuide.png" width="523" height="525"/>
+        <image name="swipe.png" width="640" height="1136"/>
         <image name="topBox.png" width="1920" height="780"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
