@@ -17,6 +17,8 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var commentsTextFieldConstraint: NSLayoutConstraint!
     @IBOutlet var backImgView: BlurringDarkView!
+    @IBOutlet var sendButton: UIButton!
+
     var commentList: Array<PostComment> = [];
     var likingUsers: Array<FriendEncapsulator> = [];
     
@@ -130,8 +132,17 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 });
 */
                 getComments()
+                
+                self.commentTextField.enabled = true
+                self.commentTextField.hidden = false
+                self.sendButton.enabled = true
+                self.sendButton.hidden = false
             } else { // likes page
                 getLikedUsers()
+                self.commentTextField.enabled = false
+                self.commentTextField.hidden = true
+                self.sendButton.enabled = false
+                self.sendButton.hidden = true
             }
             //backImgView.image = backImg!;
             backImgView.setImageAndBlur(backImg!);
