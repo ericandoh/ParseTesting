@@ -318,15 +318,17 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         return recHeight;
     }
     func tableView(tableView: UITableView!, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        var index: Int = indexPath.row;
-        var author = commentList[index].author;
-        var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
-        
-        var estimatedLines = CGFloat(countElements(text)) / 34.0;
-        
-        var estimatedWidth = 50.0 + 20.0 * estimatedLines;
-        
-        return estimatedWidth
+        if pageOption == 0 {
+            var index: Int = indexPath.row;
+            var author = commentList[index].author;
+            var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
+            
+            var estimatedLines = CGFloat(countElements(text)) / 34.0;
+            
+            var estimatedWidth = 50.0 + 20.0 * estimatedLines;
+            return estimatedWidth
+        }
+        return CGFloat(50)
     }
     func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
         if pageOption == 0 {
