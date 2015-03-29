@@ -235,6 +235,7 @@ class ImagePostStructure {
     func getShopLooksCount(finishFunction: (Int?, NSError?)->Void) {
         if (myObj.objectId == nil) {
             finishFunction(self.myShopLooks.count, nil)
+            return
         }
         var query = PFQuery(className:"PostShopLook")
         query.whereKey("postId", equalTo:myObj.objectId)
