@@ -632,7 +632,7 @@ class ImagePostStructure {
                     retList.append(sl);
                 }
             } else {
-                NSLog("Error refetching object for comments");
+                NSLog("Error refetching object for shopLooks");
             }
         }
         return retList;
@@ -652,7 +652,7 @@ class ImagePostStructure {
                     retList.append(sl);
                 }
             } else {
-                NSLog("Error refetching object for comments");
+                NSLog("Error refetching object for shopLooks");
             }
         }
         finishFunction(input: retList);

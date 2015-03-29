@@ -1124,6 +1124,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
+        var currentImg = frontImageView.image;
         if (segue.identifier == "ViewCommentsSegue") {
             if (segue.destinationViewController is CommentViewController) {
               //  vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical; // Rises from below
@@ -1134,8 +1136,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 
                 //[self presentViewController:vc animated:YES completion:nil];
               
-                var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
-                var currentImg = frontImageView.image;
+
                 (segue.destinationViewController as CommentViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg!);
                 
                 
@@ -1158,9 +1159,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         else if (segue.identifier == "ViewLikersSegue") {
             if (segue.destinationViewController is LikedUsersViewController) {
-                var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
-                var currentImg = frontImageView.image;
                 (segue.destinationViewController as LikedUsersViewController).receiveFromPrevious(currentPost, backgroundImg: currentImg!);
+            }
+        } else if segue.identifier == "ViewShopLookSegue" {
+            if segue.destinationViewController is ShopLookController {
+                (segue.destinationViewController as ShopLookController).receiveFromPrevious(currentPost, backgroundImg: currentImg!)
             }
         }
     }
