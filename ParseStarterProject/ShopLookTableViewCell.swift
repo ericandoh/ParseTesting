@@ -14,7 +14,6 @@ class ShopLookTableViewCell : UITableViewCell {
         NSLog("go to shop look page: \(shopLookURL)")
         if UIApplication.sharedApplication().openURL(NSURL(string: shopLookURL)!) == false {
             NSLog("fail to open url: \(shopLookURL.debugDescription)")
-            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.apple.com")!)
         }
     }
 }
