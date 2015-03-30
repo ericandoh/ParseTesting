@@ -27,7 +27,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
         
-        editPostButton.hidden = true;
+//        editPostButton.hidden = true;
+        editPostButton.enabled = false
         
         descriptionTextField.owner = self;
         self.descriptionTextField.scrollEnabled = true;
@@ -51,11 +52,25 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
         
         if (currentPost!.isOwnedByMe()) {
-            editPostButton.hidden = false;
+//           editPostButton.hidden = false;
+            editPostButton.titleLabel?.textColor = UIColor.whiteColor()
+            editPostButton.enabled = true
         }
         else {
-            editPostButton.hidden = true;
+//            editPostButton.hidden = true;
+            editPostButton.titleLabel?.textColor = UIColor.grayColor()
+            editPostButton.enabled = false
         }
+        
+        currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
+            if webURL == nil {
+                self.goToWebpageButton.titleLabel?.textColor = UIColor.grayColor()
+                self.goToWebpageButton.enabled = false
+            } else {
+                self.goToWebpageButton.titleLabel?.textColor = UIColor.whiteColor()
+                self.goToWebpageButton.enabled = true
+            }
+        })
     }
     
     @IBAction func backPress(sender: AnyObject) {
