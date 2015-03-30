@@ -105,7 +105,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
-        NSLog("shop look url: \(shopLookList[index].urlLink)")
+        let url = shopLookList[index].urlLink
+        NSLog("shop look url: \(url)")
+        if url == "" || url.isEmpty {
+            return
+        }
+        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
