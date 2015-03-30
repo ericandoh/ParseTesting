@@ -27,6 +27,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
         
+        editPostButton.hidden = true;
+        
         descriptionTextField.owner = self;
         self.descriptionTextField.scrollEnabled = true;
         self.descriptionTextField.userInteractionEnabled = true;
@@ -47,6 +49,13 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         super.viewWillAppear(animated)
         getShopLooks()
         self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
+        
+        if (currentPost!.isOwnedByMe()) {
+            editPostButton.hidden = false;
+        }
+        else {
+            editPostButton.hidden = true;
+        }
     }
     
     @IBAction func backPress(sender: AnyObject) {

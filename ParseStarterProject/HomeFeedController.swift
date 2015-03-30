@@ -43,8 +43,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBOutlet var commentsButton: UIButton!
     
-//    @IBOutlet weak var editPostButton: UIButton!
-    
     @IBOutlet var shopLookButton: UIButton!
     
     @IBOutlet weak var descripTextViewConstraint: NSLayoutConstraint!
@@ -114,8 +112,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
 //        frontImageView.contentMode = UIViewContentMode.Center;
         frontImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        
-//        editPostButton.hidden = true;
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
@@ -532,14 +528,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.shopLookButton.setTitle("0", forState: UIControlState.Normal)
             }
         }
- /*
-        if (currentPost.isOwnedByMe()) {
-            editPostButton.hidden = false;
-        }
-        else {
-            editPostButton.hidden = true;
-        }
- */
+
         //this loads the images
         //2. images are being loaded already (prior call is active)
         //  a. do nothing (callback will get called when needed)
@@ -1052,18 +1041,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         });
         
     }
-/*
-    @IBAction func editPostAction(sender: UIButton) {
-        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
-            return;
-        }
-        var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Edit Post", "Delete Post");
-        //actionSheet.tag = 1;
-        actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
-        //self.presentViewController(actionSheet, animated: true, completion: {() in });
-    }
-*/
-    
     
     @IBAction func shopLooks(sender: AnyObject) {
         NSLog("Go to shop look page")
