@@ -647,30 +647,20 @@ class ImagePostStructure {
             query.findObjectsInBackgroundWithBlock {
                 (shopLooks: [AnyObject]!, error: NSError!) -> Void in
                 if error == nil {
-                    for shopLook in shopLooks as Array<PFObject> {
-                        let sl = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
+                    for i in 0..<shopLooks.count {
+                        let shopLook = shopLooks[i] as PFObject
+                        let sl : ShopLook = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
                         retList.append(sl);
                     }
                 } else {
                     NSLog("Error refetching object for shopLooks");
                 }
-            }
-            if retList.count == 0 {
-                query = PFQuery(className: "ImagePost")
-                query.whereKey("objectId", equalTo: myObj.objectId)
-                query.getFirstObjectInBackgroundWithBlock{(imagePost: AnyObject!, error : NSError!) -> Void in
-                    if error == nil {
-                        let imgPost = imagePost as PFObject
-                        for shopLook in imgPost["shopLooks"] as [ShopLook] {
-                            let sl = ShopLook(title: shopLook.title, urlLink: shopLook.urlLink)
-                            retList.append(sl)
-                        }
-                    } else {
-                        NSLog("Error refetching object for shoplooks")
-                    }
+                
+                if retList.count == 0 {
+                    retList = self.myShopLooks
                 }
+                finishFunction(input: retList);
             }
-            finishFunction(input: retList);
         }
     }
     func addComment(comment: String)->PostComment {

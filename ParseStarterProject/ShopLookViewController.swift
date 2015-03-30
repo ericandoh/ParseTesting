@@ -105,8 +105,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         var index: Int = indexPath.row;
         cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink; NSLog("got shop look: \(cell.textLabel?.text)")
-        cell.textLabel?.textColor = UIColor.blackColor()
+        cell.textLabel?.textColor = UIColor.whiteColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        cell.textLabel?.backgroundColor = UIColor.blackColor()
         return cell;
     }
 
@@ -131,5 +132,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         cell.backgroundColor = UIColor.blackColor()
+        cell.textLabel?.textColor = UIColor.whiteColor()
     }
 }
