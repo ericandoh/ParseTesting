@@ -8,17 +8,21 @@
 
 import UIKit
 
-class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate {
+class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var backImage: UIImageView!
     @IBOutlet var editPostButton: UIButton!
     @IBOutlet var goToWebpageButton: UIButton!
+    @IBOutlet var shopLookTableView: UITableView!
     
     var currentPost : ImagePostStructure?
     var alerter : CompatibleAlertViews?
+    var shopLookList : Array<ShopLook> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.view.backgroundColor = UIColor.blackColor()
+        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        self.navigationController!.navigationBar.translucent = true;
     }
     
     @IBAction func backPress(sender: AnyObject) {
@@ -61,6 +65,52 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
         self.currentPost = post;
-        self.backImage.image = backgroundImg;
+//        if (backgroundImg != nil) {
+//        self.backImage.image = backgroundImg;
+//        }
+    }
+    
+    
+    func getShopLooks() {
+        self.shopLookList = Array<ShopLook>();
+        currentPost!.fetchShopLooks({(slList : Array<ShopLook>) -> Void in
+            for index in 0..<slList.count {
+                self.shopLookList.append(slList[index])
+            }
+        })
+        self.shopLookTableView.reloadData()
+    }
+    
+    //--------------------TableView delegate methods-------------------------
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.shopLookList.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as UITableViewCell
+        
+        var index: Int = indexPath.row;
+        cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink
+        cell.textLabel?.textColor = UIColor.blackColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None;
+        return cell;
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var index: Int = indexPath.row;
+        NSLog("shop look url: \(shopLookList[index].urlLink)")
+    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
+        var cellText: NSString?;
+        cellText = shopLookList[indexPath.row].title
+        
+        var cell: CGRect = tableView.frame;
+        
+        var textCell = UILabel();
+        textCell.text = cellText;
+        textCell.numberOfLines = 10;
+        var maxSize: CGSize = CGSizeMake(cell.width, 9999);
+        var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
+        return expectedSize.height + 20;
     }
 }

@@ -1067,6 +1067,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func shopLooks(sender: AnyObject) {
         NSLog("Go to shop look page")
+        self.performSegueWithIdentifier("ViewShopLookSegue", sender: self);
     }
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
