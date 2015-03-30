@@ -95,10 +95,11 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as UITableViewCell
+        let cell: ShopLookTableViewCell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as ShopLookTableViewCell
         
         var index: Int = indexPath.row;
         cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink; NSLog("got shop look: \(cell.textLabel?.text)")
+        cell.shopLookURL = shopLookList[index].urlLink
         return cell;
     }
 
