@@ -31,12 +31,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
     }
     
-    override func viewDidAppear(animated: Bool) { NSLog("viewDidAppear")
-        super.viewDidAppear(animated)
-        getShopLooks()
-        self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
-    }
-    
     @IBAction func backPress(sender: AnyObject) {
         self.navigationController!.popViewControllerAnimated(true);
     }
@@ -105,9 +99,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         var index: Int = indexPath.row;
         cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink; NSLog("got shop look: \(cell.textLabel?.text)")
-        cell.textLabel?.textColor = UIColor.whiteColor()
-        cell.selectionStyle = UITableViewCellSelectionStyle.None;
-        cell.textLabel?.backgroundColor = UIColor.blackColor()
         return cell;
     }
 
