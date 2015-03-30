@@ -13,6 +13,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBOutlet var editPostButton: UIButton!
     @IBOutlet var goToWebpageButton: UIButton!
     @IBOutlet var shopLookTableView: UITableView!
+    @IBOutlet var descriptionTextField: LinkFilledTextView!
+    
+    @IBOutlet var descTextFieldConstraint: NSLayoutConstraint!
     
     var currentPost : ImagePostStructure?
     var alerter : CompatibleAlertViews?
@@ -23,6 +26,21 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController?.view.backgroundColor = UIColor.blackColor()
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
+        
+        descriptionTextField.owner = self;
+        self.descriptionTextField.scrollEnabled = true;
+        self.descriptionTextField.userInteractionEnabled = true;
+        self.descTextFieldConstraint.constant = MIN_SHOPLOOK_CONSTRAINT;
+        
+        var descripTextToSet = currentPost!.getDescriptionWithTag();
+        if (descripTextToSet == "") {
+            descripTextToSet = "Gallery of images by @"+currentPost!.getAuthor();
+        }
+        descriptionTextField.setTextAfterAttributing(false, text: descripTextToSet);
+        var descripPreferredHeight = descriptionTextField.sizeThatFits(CGSizeMake(descriptionTextField.frame.size.width, CGFloat.max)).height;
+        var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
+        self.descTextFieldConstraint.constant = descripHeightToSet;
+        descriptionTextField.layoutIfNeeded();
     }
     
     override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
@@ -71,7 +89,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
         self.currentPost = post;
-//        if (backgroundImg != nil) {
+//        if (backgroundImg != nil) { TODO: figure it out why nil
 //        self.backImage.image = backgroundImg;
 //        }
     }
