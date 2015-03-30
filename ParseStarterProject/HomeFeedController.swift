@@ -631,7 +631,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
         self.descripTextViewConstraint.constant = descripHeightToSet;
         descriptionTextField.layoutIfNeeded();
-        
+/*
         currentPost.fetchShopLooks({
             (input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
@@ -655,6 +655,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.shopTheLookPrefacer.hidden = false;
             }
             });
+*/
         self.descripLikeCounter.setTitle(String(currentPost.getLikes()) + " likes", forState: UIControlState.Normal)
         self.descripAgeCounter.setTitle(currentPost.getAgeAsString(), forState: UIControlState.Normal);
         if (descriptionPage.hidden) {
