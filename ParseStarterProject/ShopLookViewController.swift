@@ -28,7 +28,10 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.translucent = true;
         
 //        editPostButton.hidden = true;
-        editPostButton.enabled = false
+//        editPostButton.enabled = false
+        editPostButton.titleLabel?.textColor = UIColor.grayColor()
+        editPostButton.layer.borderWidth = CGFloat(1.0)
+        editPostButton.layer.borderColor = UIColor.grayColor().CGColor
         
         descriptionTextField.owner = self;
         self.descriptionTextField.scrollEnabled = true;
@@ -44,6 +47,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
         self.descTextFieldConstraint.constant = descripHeightToSet;
         descriptionTextField.layoutIfNeeded();
+        
+        goToWebpageButton.layer.borderWidth = CGFloat(1.0)
+        goToWebpageButton.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
@@ -51,24 +57,28 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         getShopLooks()
         self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
         
-        if (currentPost!.isOwnedByMe()) {
+        if (currentPost!.isOwnedByMe()) { NSLog("self")
 //           editPostButton.hidden = false;
             editPostButton.titleLabel?.textColor = UIColor.whiteColor()
-            editPostButton.enabled = true
+            editPostButton.layer.borderColor = UIColor.whiteColor().CGColor
+//            editPostButton.enabled = true
         }
-        else {
+        else { NSLog("other")
 //            editPostButton.hidden = true;
             editPostButton.titleLabel?.textColor = UIColor.grayColor()
-            editPostButton.enabled = false
+            editPostButton.layer.borderColor = UIColor.grayColor().CGColor
+//            editPostButton.enabled = false
         }
         
         currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
             if webURL == nil {
                 self.goToWebpageButton.titleLabel?.textColor = UIColor.grayColor()
-                self.goToWebpageButton.enabled = false
+                self.goToWebpageButton.layer.borderColor = UIColor.grayColor().CGColor
+//                self.goToWebpageButton.enabled = false
             } else {
                 self.goToWebpageButton.titleLabel?.textColor = UIColor.whiteColor()
-                self.goToWebpageButton.enabled = true
+                self.goToWebpageButton.layer.borderColor = UIColor.whiteColor().CGColor
+//                self.goToWebpageButton.enabled = true
             }
         })
     }

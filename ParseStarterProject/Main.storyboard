@@ -1696,6 +1696,7 @@
                                     <constraint firstAttribute="width" constant="66" id="Ouk-Nx-Nto"/>
                                     <constraint firstAttribute="height" constant="30" id="g36-di-DKt"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Edit Post">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
