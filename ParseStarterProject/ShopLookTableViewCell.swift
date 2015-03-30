@@ -12,6 +12,9 @@ class ShopLookTableViewCell : UITableViewCell {
     var shopLookURL : String = ""
     @IBAction func goToShopLook(sender: AnyObject) {
         NSLog("go to shop look page: \(shopLookURL)")
-        UIApplication.sharedApplication().openURL(NSURL(string: shopLookURL)!)
+        if UIApplication.sharedApplication().openURL(NSURL(string: shopLookURL)!) == false {
+            NSLog("fail to open url: \(shopLookURL.debugDescription)")
+            UIApplication.sharedApplication().openURL(NSURL(string: "http://www.apple.com")!)
+        }
     }
 }

@@ -88,6 +88,16 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         })
     }
     
+    func checkHTTPHeader(url : String) -> String {
+        var retURL = url
+        let rangeOfHTTP = Range(start: url.startIndex, end: advance(url.startIndex, 4))
+        let rangeOfHTTPS = Range(start: url.startIndex, end: advance(url.startIndex, 5))
+        if url.substringWithRange(rangeOfHTTP) != "http" || url.substringWithRange(rangeOfHTTPS) != "https" {
+            retURL = "http://" + url
+        }
+        return retURL
+    }
+    
     //--------------------TableView delegate methods-------------------------
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,19 +108,24 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         let cell: ShopLookTableViewCell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as ShopLookTableViewCell
         
         var index: Int = indexPath.row;
-        cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink; NSLog("got shop look: \(cell.textLabel?.text)")
-        cell.shopLookURL = shopLookList[index].urlLink
+        cell.textLabel?.text = shopLookList[index].title; NSLog("got shop look: \(cell.textLabel?.text)")
+        cell.shopLookURL = checkHTTPHeader(shopLookList[index].urlLink)
         return cell;
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
-        let url = shopLookList[index].urlLink
+        var url = shopLookList[index].urlLink
         NSLog("shop look url: \(url)")
         if url == "" || url.isEmpty {
             return
         }
-        UIApplication.sharedApplication().openURL(NSURL(string: url)!)
+        
+        url = checkHTTPHeader(url)
+        
+        if UIApplication.sharedApplication().openURL(NSURL(string: url)!) == false {
+            NSLog("fail to open url: \(url.debugDescription)")
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
