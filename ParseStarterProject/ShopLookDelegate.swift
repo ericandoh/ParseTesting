@@ -85,7 +85,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().openURL(urlToOpen);
         }
         else {
-            if (!urlString.hasPrefix("http://")) {
+            if (!urlString.hasPrefix("http://") && !urlString.hasPrefix("https://")) {
                 urlString = "http://"+urlString;
                 urlToOpen = NSURL(string: urlString)!;
                 if (UIApplication.sharedApplication().canOpenURL(urlToOpen)) {
