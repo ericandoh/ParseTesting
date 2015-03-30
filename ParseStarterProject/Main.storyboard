@@ -1190,7 +1190,6 @@
                                 </state>
                                 <connections>
                                     <action selector="shopLooks:" destination="pRL-aY-NaV" eventType="touchUpInside" id="KZv-Df-PqZ"/>
-                                    <segue destination="TVV-vv-2bG" kind="push" identifier="ViewShopLookSegue" id="DeT-tf-B4f"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mou-va-zpC">
@@ -1336,6 +1335,7 @@
                         <outlet property="tutorialOverlay" destination="gft-ya-HJd" id="4Nw-Lr-zVu"/>
                         <segue destination="qDB-cd-cme" kind="push" identifier="ViewCommentsSegue" id="OG7-pJ-DB9"/>
                         <segue destination="Ojf-X7-fpp" kind="push" identifier="ViewLikersSegue" id="y7d-Rt-KBx"/>
+                        <segue destination="TVV-vv-2bG" kind="push" identifier="ViewShopLookSegue" id="llw-zL-hX5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="93K-ue-lRf" userLabel="First Responder" sceneMemberID="firstResponder"/>
