@@ -641,21 +641,36 @@ class ImagePostStructure {
         if (myObj.objectId == nil) {
             finishFunction(input: self.myShopLooks)
         } else {
-        var retList: Array<ShopLook> = [];
-        var query = PFQuery(className:"PostShopLook")
-        query.whereKey("postId", equalTo:myObj.objectId)
-        query.findObjectsInBackgroundWithBlock {
-            (shopLooks: [AnyObject]!, error: NSError!) -> Void in
-            if error == nil {
-                for shopLook in shopLooks as Array<PFObject> {
-                    let sl = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
-                    retList.append(sl);
+            var retList: Array<ShopLook> = [];
+            var query = PFQuery(className:"PostShopLook")
+            query.whereKey("postId", equalTo:myObj.objectId)
+            query.findObjectsInBackgroundWithBlock {
+                (shopLooks: [AnyObject]!, error: NSError!) -> Void in
+                if error == nil {
+                    for shopLook in shopLooks as Array<PFObject> {
+                        let sl = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
+                        retList.append(sl);
+                    }
+                } else {
+                    NSLog("Error refetching object for shopLooks");
                 }
-            } else {
-                NSLog("Error refetching object for shopLooks");
             }
-        }
-        finishFunction(input: retList);
+            if retList.count == 0 {
+                query = PFQuery(className: "ImagePost")
+                query.whereKey("objectId", equalTo: myObj.objectId)
+                query.getFirstObjectInBackgroundWithBlock{(imagePost: AnyObject!, error : NSError!) -> Void in
+                    if error == nil {
+                        let imgPost = imagePost as PFObject
+                        for shopLook in imgPost["shopLooks"] as [ShopLook] {
+                            let sl = ShopLook(title: shopLook.title, urlLink: shopLook.urlLink)
+                            retList.append(sl)
+                        }
+                    } else {
+                        NSLog("Error refetching object for shoplooks")
+                    }
+                }
+            }
+            finishFunction(input: retList);
         }
     }
     func addComment(comment: String)->PostComment {

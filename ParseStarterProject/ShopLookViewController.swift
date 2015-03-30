@@ -25,6 +25,18 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.translucent = true;
     }
     
+    override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
+        super.viewWillAppear(animated)
+        getShopLooks()
+        self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
+    }
+    
+    override func viewDidAppear(animated: Bool) { NSLog("viewDidAppear")
+        super.viewDidAppear(animated)
+        getShopLooks()
+        self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
+    }
+    
     @IBAction func backPress(sender: AnyObject) {
         self.navigationController!.popViewControllerAnimated(true);
     }
@@ -71,14 +83,15 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     
-    func getShopLooks() {
+    func getShopLooks() { NSLog("get shop looks")
         self.shopLookList = Array<ShopLook>();
         currentPost!.fetchShopLooks({(slList : Array<ShopLook>) -> Void in
             for index in 0..<slList.count {
-                self.shopLookList.append(slList[index])
+                self.shopLookList.append(slList[index]); NSLog("shop look info: \(slList[index].title)---\(slList[index].urlLink))")
             }
+            
+            self.shopLookTableView.reloadData()
         })
-        self.shopLookTableView.reloadData()
     }
     
     //--------------------TableView delegate methods-------------------------
@@ -91,15 +104,17 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         let cell: UITableViewCell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as UITableViewCell
         
         var index: Int = indexPath.row;
-        cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink
+        cell.textLabel?.text = shopLookList[index].title + " -> " + shopLookList[index].urlLink; NSLog("got shop look: \(cell.textLabel?.text)")
         cell.textLabel?.textColor = UIColor.blackColor()
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         return cell;
     }
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var index: Int = indexPath.row;
         NSLog("shop look url: \(shopLookList[index].urlLink)")
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath)->CGFloat {
         var cellText: NSString?;
         cellText = shopLookList[indexPath.row].title
@@ -112,5 +127,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var maxSize: CGSize = CGSizeMake(cell.width, 9999);
         var expectedSize: CGSize = textCell.sizeThatFits(maxSize);
         return expectedSize.height + 20;
+    }
+
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.backgroundColor = UIColor.blackColor()
     }
 }
