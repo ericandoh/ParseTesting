@@ -1770,10 +1770,6 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="TVV-vv-2bG" id="jYM-XU-bcd"/>
-                                    <outlet property="delegate" destination="TVV-vv-2bG" id="UIa-h9-V4l"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1825,6 +1821,7 @@
                         <outlet property="descriptionTextField" destination="CeZ-v4-0dj" id="Scx-bw-xl3"/>
                         <outlet property="editPostButton" destination="he1-c8-36A" id="GNO-Kr-vGm"/>
                         <outlet property="goToWebpageButton" destination="16Q-Z2-fS5" id="6kE-uY-LIl"/>
+                        <outlet property="shopLookHeightConstraint" destination="Pqy-lM-i1z" id="CuP-MZ-owi"/>
                         <outlet property="shopLookTableView" destination="SoW-Jq-znh" id="5bK-l8-dPe"/>
                     </connections>
                 </viewController>

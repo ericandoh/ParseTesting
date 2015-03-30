@@ -37,7 +37,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         return shopLooks.count;
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell  {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ShopLook", forIndexPath: indexPath) as UITableViewCell;
+        let cell = tableView.dequeueReusableCellWithIdentifier("ShopLookCell", forIndexPath: indexPath) as UITableViewCell;
 
         cell.textLabel!.text = shopLooks[indexPath.row].title;
         cell.selectionStyle = UITableViewCellSelectionStyle.None;

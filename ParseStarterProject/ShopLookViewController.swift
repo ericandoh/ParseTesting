@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate {
+class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate { //, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var backImage: UIImageView!
     @IBOutlet var editPostButton: UIButton!
     @IBOutlet var goToWebpageButton: UIButton!
@@ -16,10 +16,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBOutlet var descriptionTextField: LinkFilledTextView!
     
     @IBOutlet var descTextFieldConstraint: NSLayoutConstraint!
+    @IBOutlet var shopLookHeightConstraint: NSLayoutConstraint!
     
     var currentPost : ImagePostStructure?
     var alerter : CompatibleAlertViews?
     var shopLookList : Array<ShopLook> = []
+    var currentShopDelegate: ShopLookDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,6 +151,17 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             self.shopLookTableView.reloadData()
         })
+        
+        currentPost!.fetchShopLooks({(input: Array<ShopLook>) in
+            self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
+            self.currentShopDelegate!.initialSetup(self.shopLookTableView);
+            var descripPreferredHeight = self.descriptionTextField.sizeThatFits(CGSizeMake(self.descriptionTextField.frame.size.width, CGFloat.max)).height;
+            var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
+            
+            var preferredTableHeight = self.shopLookTableView.contentSize.height;
+            var tableHeightToSet = min(preferredTableHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - descripHeightToSet);       //343->300->333
+            self.shopLookHeightConstraint.constant = tableHeightToSet;
+        })
     }
     
     func checkHTTPHeader(url : String) -> String {
@@ -162,7 +175,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     //--------------------TableView delegate methods-------------------------
-    
+ /*
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.shopLookList.count
     }
@@ -209,4 +222,5 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         cell.backgroundColor = UIColor.blackColor()
         cell.textLabel?.textColor = UIColor.whiteColor()
     }
+*/
 }
