@@ -1714,6 +1714,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="goToWebpage:" destination="TVV-vv-2bG" eventType="touchUpInside" id="sAW-7n-gFV"/>
+                                </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Today's outfit is my favorite #LBD paired with #prada heels #ootd #loveshoes" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-v4-0dj" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
                                 <rect key="frame" x="11" y="113" width="298" height="68"/>

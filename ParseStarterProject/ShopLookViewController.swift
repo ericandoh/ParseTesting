@@ -87,6 +87,17 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
     }
     
+    
+    @IBAction func goToWebpage(sender: AnyObject) {
+        currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
+            if webURL == nil {
+                NSLog("post author has no web url")
+            } else {
+                UIApplication.sharedApplication().openURL(NSURL(string: self.checkHTTPHeader(webURL!))!)
+            }
+        })
+    }
+    
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
         self.currentPost = post;
 //        if (backgroundImg != nil) { TODO: figure it out why nil
