@@ -110,6 +110,7 @@ let BACK_ICON = UIImage(named: "arrow_left.png")!;
 
 //icon to show forward button (referenced in homefeed - shoplook delegate - for shoplook URL forwards)
 let FORWARD_ICON = UIImage(named: "arrow_right.png")!;
+let GREEN_FORWARD_ICON = UIImage(named: "greenArrow.png")
 
 let SETTINGS_ICON = UIImage(named: "settings.png")!;
 

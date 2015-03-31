@@ -1722,6 +1722,7 @@
                                     <constraint firstAttribute="width" constant="160" id="N9Y-LA-iI5"/>
                                     <constraint firstAttribute="height" constant="30" id="RMD-nG-BCp"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
                                 <state key="normal" title="Shop the Look">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1743,26 +1744,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gAw-7M-7ht" id="94W-ak-Fv5">
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htM-gf-0MI">
-                                                    <rect key="frame" x="237" y="7" width="30" height="30"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="1HN-FO-VlP"/>
-                                                        <constraint firstAttribute="width" constant="30" id="vbw-jC-KKu"/>
-                                                    </constraints>
-                                                    <state key="normal" image="arrow_right.png"/>
-                                                    <connections>
-                                                        <action selector="goToShopLook:" destination="gAw-7M-7ht" eventType="touchUpInside" id="hw3-If-Bbv"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="htM-gf-0MI" secondAttribute="trailing" constant="13" id="JLc-RP-Jj4"/>
-                                                <constraint firstItem="htM-gf-0MI" firstAttribute="top" secondItem="94W-ak-Fv5" secondAttribute="top" constant="7" id="QKP-E4-v8n"/>
-                                                <constraint firstAttribute="bottom" secondItem="htM-gf-0MI" secondAttribute="bottom" constant="6" id="m82-Lf-KTb"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

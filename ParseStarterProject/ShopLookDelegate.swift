@@ -43,7 +43,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
         cell.textLabel!.textColor = UIColor.whiteColor()
         //cell.textLabel.font = TABLE_CELL_FONT;
-        cell.textLabel!.font = UIFont(name: "System", size: 16.0);
+        cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 14.0);
 
         //BELOW IS A BUG! >:(
         //cell.separatorInset = UIEdgeInsetsZero;
@@ -63,9 +63,9 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
             cell.contentView.addSubview(view);
         }
         
-        var forwardImg = UIImageView(image: FORWARD_ICON);
+        var forwardImg = UIImageView(image: GREEN_FORWARD_ICON);
         
-        forwardImg.frame = CGRectMake(0, 0, 20, 20)
+        forwardImg.frame = CGRectMake(0, 0, 30, 20)
         
         cell.accessoryView = forwardImg;
         

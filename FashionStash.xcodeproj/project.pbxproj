@@ -40,7 +40,8 @@
 		8A052D311AC46E670039D074 /* infoBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2D1AC46E670039D074 /* infoBar@2x.png */; };
 		8A052D321AC46E670039D074 /* topBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2E1AC46E670039D074 /* topBox.png */; };
 		8A052D331AC46E670039D074 /* topBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2F1AC46E670039D074 /* topBox@2x.png */; };
-		8A8F41201AC9C59E008AA80F /* ShopLookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8F411F1AC9C59E008AA80F /* ShopLookTableViewCell.swift */; };
+		8A8F41231ACB1B2E008AA80F /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41211ACB1B2E008AA80F /* greenArrow.png */; };
+		8A8F41241ACB1B2E008AA80F /* greenArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */; };
 		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
@@ -235,7 +236,8 @@
 		8A052D2D1AC46E670039D074 /* infoBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "infoBar@2x.png"; sourceTree = "<group>"; };
 		8A052D2E1AC46E670039D074 /* topBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topBox.png; sourceTree = "<group>"; };
 		8A052D2F1AC46E670039D074 /* topBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBox@2x.png"; sourceTree = "<group>"; };
-		8A8F411F1AC9C59E008AA80F /* ShopLookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookTableViewCell.swift; sourceTree = "<group>"; };
+		8A8F41211ACB1B2E008AA80F /* greenArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenArrow.png; sourceTree = "<group>"; };
+		8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenArrow@2x.png"; sourceTree = "<group>"; };
 		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
@@ -513,6 +515,8 @@
 				D9DEE643199F18FC00F08CC5 /* backcolorsolid.png */,
 				D93CD467199540E4001F0253 /* arrow_right.png */,
 				D93CD464199540CA001F0253 /* backcolor.png */,
+				8A8F41211ACB1B2E008AA80F /* greenArrow.png */,
+				8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */,
 			);
 			name = buttons;
 			sourceTree = "<group>";
@@ -554,7 +558,6 @@
 				D9F9201019A2B29600E63FE8 /* BlurringDarkView.swift */,
 				D907218F19A3C6EA00EE53B8 /* CompatibleAlertViews.swift */,
 				07CF20BC1A5F271800354ABE /* UITextFieldWithInsets.swift */,
-				8A8F411F1AC9C59E008AA80F /* ShopLookTableViewCell.swift */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -823,6 +826,7 @@
 				07CF20CB1A5F39DE00354ABE /* share@2x.png in Resources */,
 				D9DEE62C199EB3EB00F08CC5 /* followed.png in Resources */,
 				D9BB596D199A844100367408 /* HelveticaNeueLTPro-Cn.otf in Resources */,
+				8A8F41241ACB1B2E008AA80F /* greenArrow@2x.png in Resources */,
 				D9201BFD199A7B4D004018A1 /* home.png in Resources */,
 				D93CD465199540CA001F0253 /* backcolor.png in Resources */,
 				D9BB5966199A844100367408 /* HelveticaNeueLTPro-BdOu.otf in Resources */,
@@ -903,6 +907,7 @@
 				07CF20CA1A5F39DE00354ABE /* edit@2x.png in Resources */,
 				D9BB5961199A844100367408 /* HelveticaNeueLTPro-BdCn.otf in Resources */,
 				D9BB597B199A844100367408 /* HelveticaNeueLTPro-LtEx.otf in Resources */,
+				8A8F41231ACB1B2E008AA80F /* greenArrow.png in Resources */,
 				D9F9200919A272C900E63FE8 /* hearted.png in Resources */,
 				D9BB596C199A844100367408 /* HelveticaNeueLTPro-BlkIt.otf in Resources */,
 				07CF20C51A5F356400354ABE /* share.png in Resources */,
@@ -1010,7 +1015,6 @@
 				D95EA0191986D2DA000A3037 /* SideTableViewCell.swift in Sources */,
 				D9F89B1F195CF70300849B1D /* ImagePostStruct.swift in Sources */,
 				D98EA8571965CE180004BF43 /* FriendSingleViewController.swift in Sources */,
-				8A8F41201AC9C59E008AA80F /* ShopLookTableViewCell.swift in Sources */,
 				D95301C919774A0E00FFC5F8 /* SearchResultsController.swift in Sources */,
 				D996F6B2195C9A0E009E97B0 /* Constants.swift in Sources */,
 				D95469C9198AF69700F105C5 /* UserTextTableViewCell.swift in Sources */,
