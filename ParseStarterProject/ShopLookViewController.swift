@@ -57,7 +57,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
         super.viewWillAppear(animated)
         getShopLooks()
-        self.navigationController?.navigationBar.topItem?.title = "Shop The Look"
+        self.navigationController?.navigationBar.topItem?.title = "Info"
     }
     
     override func viewDidAppear(animated: Bool) { NSLog("viewDidAppear")
@@ -65,6 +65,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
         configEditPostButton()
         configGoToWebButton()
+        self.navigationController?.navigationBar.topItem?.title = "Info"
     }
     
     @IBAction func backPress(sender: AnyObject) {
@@ -173,6 +174,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         else {
             editPostButton.titleLabel?.textColor = UIColor.grayColor()
             editPostButton.layer.borderColor = UIColor.grayColor().CGColor
+            editPostButton.hidden = true
         }
     }
     

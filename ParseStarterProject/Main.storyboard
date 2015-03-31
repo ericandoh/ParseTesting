@@ -1691,13 +1691,13 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="he1-c8-36A">
-                                <rect key="frame" x="239" y="75" width="66" height="30"/>
+                                <rect key="frame" x="269" y="75" width="36" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="66" id="Ouk-Nx-Nto"/>
-                                    <constraint firstAttribute="height" constant="30" id="g36-di-DKt"/>
+                                    <constraint firstAttribute="width" constant="36" id="Ouk-Nx-Nto"/>
+                                    <constraint firstAttribute="height" constant="20" id="g36-di-DKt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="Edit Post">
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title="Edit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1705,8 +1705,18 @@
                                     <action selector="editPostAction:" destination="TVV-vv-2bG" eventType="touchUpInside" id="O6f-xe-hCj"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Today's outfit is my favorite #LBD paired with #prada heels #ootd #loveshoes" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-v4-0dj" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
+                                <rect key="frame" x="11" y="103" width="298" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="J3P-zj-Hck"/>
+                                    <constraint firstAttribute="width" constant="298" id="x8n-4r-Tcx"/>
+                                </constraints>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="16Q-Z2-fS5">
-                                <rect key="frame" x="80" y="189" width="160" height="30"/>
+                                <rect key="frame" x="80" y="179" width="160" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="160" id="N9Y-LA-iI5"/>
                                     <constraint firstAttribute="height" constant="30" id="RMD-nG-BCp"/>
@@ -1719,22 +1729,12 @@
                                     <action selector="goToWebpage:" destination="TVV-vv-2bG" eventType="touchUpInside" id="sAW-7n-gFV"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Today's outfit is my favorite #LBD paired with #prada heels #ootd #loveshoes" translatesAutoresizingMaskIntoConstraints="NO" id="CeZ-v4-0dj" customClass="LinkFilledTextView" customModule="FashionStash" customModuleProvider="target">
-                                <rect key="frame" x="11" y="113" width="298" height="68"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="J3P-zj-Hck"/>
-                                    <constraint firstAttribute="width" constant="298" id="x8n-4r-Tcx"/>
-                                </constraints>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="SoW-Jq-znh">
-                                <rect key="frame" x="20" y="234" width="280" height="334"/>
+                                <rect key="frame" x="20" y="224" width="280" height="344"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="334" id="Pqy-lM-i1z"/>
+                                    <constraint firstAttribute="height" constant="344" id="cwB-He-Nsm"/>
                                     <constraint firstAttribute="width" constant="280" id="tEu-AU-5Rr"/>
                                 </constraints>
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1821,7 +1821,6 @@
                         <outlet property="descriptionTextField" destination="CeZ-v4-0dj" id="Scx-bw-xl3"/>
                         <outlet property="editPostButton" destination="he1-c8-36A" id="GNO-Kr-vGm"/>
                         <outlet property="goToWebpageButton" destination="16Q-Z2-fS5" id="6kE-uY-LIl"/>
-                        <outlet property="shopLookHeightConstraint" destination="Pqy-lM-i1z" id="CuP-MZ-owi"/>
                         <outlet property="shopLookTableView" destination="SoW-Jq-znh" id="5bK-l8-dPe"/>
                     </connections>
                 </viewController>
