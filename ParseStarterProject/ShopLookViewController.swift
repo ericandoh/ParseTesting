@@ -11,7 +11,7 @@ import UIKit
 class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate { //, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet var backImage: UIImageView!
     @IBOutlet var editPostButton: UIButton!
-    @IBOutlet var goToWebpageButton: UIButton!
+    @IBOutlet var shopLookButton: UIButton!
     @IBOutlet var shopLookTableView: UITableView!
     @IBOutlet var descriptionTextField: LinkFilledTextView!
     
@@ -29,8 +29,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
         
-//        editPostButton.hidden = true;
-//        editPostButton.enabled = false
         editPostButton.titleLabel?.textColor = UIColor.grayColor()
         editPostButton.layer.borderWidth = CGFloat(1.0)
         editPostButton.layer.borderColor = UIColor.grayColor().CGColor
@@ -49,9 +47,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
         self.descTextFieldConstraint.constant = descripHeightToSet;
         descriptionTextField.layoutIfNeeded();
-        
-        goToWebpageButton.layer.borderWidth = CGFloat(1.0)
-        goToWebpageButton.layer.borderColor = UIColor.grayColor().CGColor
     }
     
     override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
@@ -64,7 +59,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         super.viewDidAppear(animated)
 
         configEditPostButton()
-        configGoToWebButton()
+        configShopLookButton()
         self.navigationController?.navigationBar.topItem?.title = "Info"
     }
     
@@ -84,7 +79,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         } else {
             CompatibleAlertViews.makeNotice("Invalid Edit", message: "you can not edit others' post", presenter: self)
             self.configEditPostButton()
-            self.configGoToWebButton(); NSLog("pass edit")
         }
     }
     
@@ -110,20 +104,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         default:
             break;
         }
-    }
-    
-    
-    @IBAction func goToWebpage(sender: AnyObject) {
-        currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
-            if webURL == nil {
-                NSLog("post author has no web url")
-                CompatibleAlertViews.makeNotice("No URL", message: "post author has no web url", presenter: self)
-                self.configEditPostButton()
-                self.configGoToWebButton(); NSLog("pass web")
-            } else {
-                UIApplication.sharedApplication().openURL(NSURL(string: self.checkHTTPHeader(webURL!))!)
-            }
-        })
     }
     
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
@@ -178,16 +158,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
     }
     
-    func configGoToWebButton() {
-        currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
-            if webURL == nil {
-                self.goToWebpageButton.titleLabel?.textColor = UIColor.grayColor()
-                self.goToWebpageButton.layer.borderColor = UIColor.grayColor().CGColor
-            } else {
-                self.goToWebpageButton.titleLabel?.textColor = UIColor.whiteColor()
-                self.goToWebpageButton.layer.borderColor = UIColor.whiteColor().CGColor
-            }
-        })
+    func configShopLookButton() {
+        if self.shopLookList.count == 0 {
+            self.shopLookButton.hidden = true
+        } else {
+            self.shopLookButton.hidden = false
+        }
     }
     
     //--------------------TableView delegate methods-------------------------
