@@ -728,7 +728,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }, completion: {(success: Bool) in
                 self.descriptionPage.hidden = true;
         });
-        self.topRightButton.setBackgroundImage(INFO_ICON, forState: UIControlState.Normal);
+        self.topRightButton.setBackgroundImage(SIDE_MENU_ICON, forState: UIControlState.Normal);
         self.navigationItem.titleView = UIView();
     }
     
@@ -907,7 +907,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func sideMenu(sender: UIButton) {
-        if ((self.navigationController) != nil) {
+/*        if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
                 (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
@@ -916,6 +916,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 if (topLeftButton.currentBackgroundImage != BACK_ICON) {
                     (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
                 } else {
+                    self.navigationController!.popViewControllerAnimated(true);
+                }
+            }
+        }
+*/
+        if ((self.navigationController) != nil) {
+            if (self.navigationController!.viewControllers.count > 1) {
+                if (topLeftButton.currentBackgroundImage == BACK_ICON) {
                     self.navigationController!.popViewControllerAnimated(true);
                 }
             }
@@ -963,8 +971,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
         }
         else {
-            postCounter = currentPost.getImagesCount() + 1;
-            configureCurrent(viewCounter, fromDirection: CompassDirection.WEST);
+//            postCounter = currentPost.getImagesCount() + 1;
+//            configureCurrent(viewCounter, fromDirection: CompassDirection.WEST);
+            (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
+
         }
     }
     

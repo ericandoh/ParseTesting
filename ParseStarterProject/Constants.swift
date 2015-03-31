@@ -116,6 +116,8 @@ let SETTINGS_ICON = UIImage(named: "settings.png")!;
 
 let DEFAULT_BUTTON_SOLID_BACKGROUND = UIImage(named: "backcolorsolid.png")!;
 
+let SIDE_MENU_ICON = UIImage(named: "logo_menu.png")
+
 //side menu images
 let HOME_ICON = UIImage(named: "home.png")!;
 let EXPLORE_ICON = UIImage(named: "map.png")!;
