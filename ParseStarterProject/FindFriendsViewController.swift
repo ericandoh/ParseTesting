@@ -273,6 +273,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     func finishFunction(userIndex: Int, post: ImagePostStructure, index: Int) {
+        if self.suggestedUsers.count == 0 {
+            return
+        }
+
         var friend = self.suggestedUsers[userIndex]!; // need to check suggestedUsers is empty or not, then access, otherwise will throw an indexing-empty-buffer exception
         
         self.suggestedUserImgs[friend.username]!.append(post);
