@@ -67,7 +67,9 @@ class SuggestedHeaderView: UICollectionReusableView {
         nameLabel.text = involvedUser!.username;
         self.backgroundColor = UIColor.clearColor();
         
-        if (!gestureSet) {
+        let defaults = NSUserDefaults()
+        // disable user icon clicked to profile page link
+        if (!gestureSet && defaults.boolForKey(SHOW_INSTRUCTION_OR_NOT) == false) {
             var tapRecognizer = UITapGestureRecognizer(target: self, action: "isTapped");
             self.addGestureRecognizer(tapRecognizer);
             gestureSet = true;
