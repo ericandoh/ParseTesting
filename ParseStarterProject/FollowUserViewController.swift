@@ -26,16 +26,9 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         super.viewDidLoad()
         self.navigationController?.navigationBar.translucent = false
         self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
-/*
-        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
-        navTitleLabel.text = "Follow your favorite fashionistas!"
-        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
-        navTitleLabel.textColor = UIColor.whiteColor()
-        self.navigationItem.titleView = navTitleLabel
-*/
+
         self.navigationController?.navigationItem.hidesBackButton = true
-//        hideAndDisableRightNavigationItem()
-//        showAndEnableRightNavigationItem()
+
         self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
         if (iOS8) {
             self.navigationItem.rightBarButtonItem?.enabled = false
@@ -43,10 +36,6 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
         } else { // iOS 7 and earlier
             configNavBarTitle("Choose at least \(MIN_NUM_USER_TO_FOLLOW)")
         }
-
-//        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
-
-//        PFUser.logInWithUsernameInBackground("123", password: "123")
         
         resetAndFetchSuggested();
     }
@@ -112,43 +101,13 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     func hideAndDisableRightNavigationItem() { // hide top right next page button
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.blackColor()
         self.navigationItem.rightBarButtonItem?.enabled = false
-        
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationItem.setRightBarButtonItem(nil, animated: true)
-//        self.navigationController?.navigationItem.title = "foo"
-//        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
-//        navTitleLabel.text = "Foo"
-//        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
-//        navTitleLabel.textColor = UIColor.whiteColor()
-//        self.navigationItem.titleView = navTitleLabel//        self.navigationItem.setRightBarButtonItem(nil, animated: true)
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        nextPageButton.hidden = true
-//        nextPageButton.enabled = false
-//        self.navigationController?.navigationBar.setNeedsDisplay();
-        NSLog("hide next page button")
-        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
     }
     
     func showAndEnableRightNavigationItem() { // show top right next page button
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        let nextPageBtn : UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "arrow_right.png"), style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
-//        self.navigationItem.setRightBarButtonItem(nextPageBtn, animated: true)
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.whiteColor()
         self.navigationItem.rightBarButtonItem?.enabled = true
         self.navigationItem.setRightBarButtonItem(nextPageButtonItem, animated: true)
-//        self.navigationController?.navigationItem.setRightBarButtonItem(nextPageBtn, animated: true)
-//        self.navigationController?.navigationItem.title = "bar"
-//        var navTitleLabel : UILabel = UILabel(frame: CGRectMake(0, 0, 200, 40))
-//        navTitleLabel.text = "Bar"
-//        navTitleLabel.font = UIFont.boldSystemFontOfSize(14.0)
-//        navTitleLabel.textColor = UIColor.whiteColor()
-//        self.navigationItem.titleView = navTitleLabel
-//        self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        nextPageButton.hidden = false
-//        nextPageButton.enabled = true
-//        self.navigationController?.navigationBar.setNeedsDisplay();
-        NSLog("show next page button")
-        NSLog("\(self.navigationItem.title)-\(self.navigationItem.rightBarButtonItem?.enabled)-\(self.navigationItem.rightBarButtonItem?.tintColor.description)")
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int { 
@@ -194,7 +153,7 @@ class FollowUserViewController : UIViewController, UICollectionViewDelegate, UIC
     }
     
     func followUnfollowUser(controller: SuggestedHeaderView, counter: Int) {
-        friendsFollowed += counter; NSLog("[followUnfollowUser]followed friends num :\(friendsFollowed)")
+        friendsFollowed += counter
         if (iOS8) {
             if (friendsFollowed <= MIN_NUM_USER_TO_FOLLOW) {
                 if (friendsFollowed == MIN_NUM_USER_TO_FOLLOW) {
