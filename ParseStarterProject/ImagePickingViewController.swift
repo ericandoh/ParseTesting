@@ -137,7 +137,7 @@ struct AssetItem {
 //        self.assetLibrary!.enumerateGroupsWithTypes(0xFFFFFFFF, usingBlock: libraryGroupEnumeration, failureBlock: failure)
         
         // pick multiple photos after tapping nav title, uncomment the above lines if restore to pick from albums in circular buffer way
-        self.navigationTitle.setTitle("Pick Photos", forState: UIControlState.Normal)
+        self.navigationTitle.setTitle("Choose order of photos", forState: UIControlState.Normal)
         self.groupSelected = 0
         for arrayAllIndex in 0..<photosPerPage {
             self.currentAssets[arrayAllIndex].highlighted = -1;
