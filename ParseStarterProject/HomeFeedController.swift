@@ -481,7 +481,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titleTime.backgroundColor = UIColor.clearColor()
         
-        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 2);
+        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 1);
         titlePage.textColor = UIColor.whiteColor()
         titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
         titlePage.backgroundColor = UIColor.clearColor()
@@ -567,10 +567,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             //stupid nonprogrammers and their 1-based counting system
         }
         else if (postCounter >= currentPost.getImagesCount() + 1) { NSLog("[configureCurrent]---startViewingComments and postCounter: \(postCounter)")
-            postCounter = currentPost.getImagesCount() + 1;
-            self.viewingComments = true;
+            postCounter = currentPost.getImagesCount() - 1;
+//            self.viewingComments = true;
             //self.frontImageView!.image = oldImg;
-            self.startViewingComments(currentPost);
+//            self.startViewingComments(currentPost);
         }
         else { NSLog("[configureCurrent]---postCounter: \(postCounter)")
             if (currentPost.isRestLoaded()) {
@@ -579,7 +579,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     NSLog("This should not run; block above handles me");
                     self.viewingComments = true;
                     //self.frontImageView!.image = oldImg;
-                    self.startViewingComments(currentPost);
+//                    self.startViewingComments(currentPost);
                 }
                 else { NSLog("[configureCurrent]---switchImage and postCounter: \(postCounter)")
                     self.switchImage(currentPost.getImageAt(postCounter), fromDirection: fromDirection);
@@ -606,7 +606,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
         }
     }
-    func startViewingComments(currentPost: ImagePostStructure) {
+    func startViewingComments(currentPost: ImagePostStructure) { // TODO: recall it when necessary in future version
         
         if (loadingSpinner!.hidden == false) {
             self.view.sendSubviewToBack(loadingSpinner!);
@@ -757,6 +757,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (viewingComments) {
             return;
         }
+        
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
+        if (postCounter >= currentPost.getImagesCount()) {
+            return
+        }
+        
         swipingRight = true;
         postCounter++;
         swipeSideAction(CompassDirection.SOUTH);
