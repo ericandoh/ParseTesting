@@ -652,7 +652,11 @@ struct AssetItem {
     
     @IBAction func previousButton(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+            if ((self.navigationController!.parentViewController) != nil) {
+                var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
+                overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
+                overlord.openHome();
+            }
         }
         else {
             NSLog("If this is logging, somehow this imagepicker lost its navigation controller. Uh oh!")
