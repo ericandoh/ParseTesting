@@ -163,6 +163,18 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             self.shopLookButton.hidden = true
         } else {
             self.shopLookButton.hidden = false
+            
+            // add a top separator in shop look table
+            let tableFrame : CGRect = self.shopLookTableView.bounds
+            let headerHeight : CGFloat = 2
+            let headerView : UIView = UIView(frame: CGRectMake(0,0,tableFrame.size.width, headerHeight))
+            
+            // Create separator
+            let lineView : UIView = UIView(frame:CGRectMake(0, headerHeight-1, tableFrame.size.width, 1))
+            lineView.backgroundColor = UIColor(red: 103/255.0, green: 103/255.0, blue: 103/255.0, alpha: 1.0)
+            headerView.addSubview(lineView)
+            
+            self.shopLookTableView.tableHeaderView = headerView;
         }
     }
     
