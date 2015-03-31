@@ -74,9 +74,13 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
     @IBAction func editPostAction(sender: AnyObject) {
         if currentPost!.isOwnedByMe() {
-            var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Edit Post", "Delete Post");
+            var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: nil, destructiveButtonTitle: nil)
+            actionSheet.addButtonWithTitle("Edit Post")
+            actionSheet.addButtonWithTitle("Delete Post")
+            actionSheet.addButtonWithTitle("Cancel")
+            actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1
             actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
-        } else {
+        } else { // TODO: necessary when disable rather than hide the button
             CompatibleAlertViews.makeNotice("Invalid Edit", message: "you can not edit others' post", presenter: self)
             self.configEditPostButton()
         }
@@ -84,25 +88,27 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
         switch buttonIndex {
-        case 0:
-            NSLog("Cancelled");
-        case 1:
-            //edit this post, segue to imagepreviewcontroller with right specs
-            currentPost!.loadAllImages({(result: Array<UIImage>) in
-                var imageEditingControl = self.storyboard!.instantiateViewControllerWithIdentifier("ImagePreview") as ImagePreviewController;
-                imageEditingControl.receiveImage(result, post: self.currentPost!)
-                self.navigationController!.pushViewController(imageEditingControl, animated: true);
-            })
-        case 2:
-            alerter = CompatibleAlertViews(presenter: self);
-            alerter!.makeNoticeWithAction("Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", actionName: "Delete", buttonAction: {
-                () in
-                //delete this post!
-                ServerInteractor.removePost(self.currentPost!);
-            });
+            case 0:
+                //edit this post, segue to imagepreviewcontroller with right specs
+                currentPost!.loadAllImages({(result: Array<UIImage>) in
+                    var imageEditingControl = self.storyboard!.instantiateViewControllerWithIdentifier("ImagePreview") as ImagePreviewController;
+                    imageEditingControl.receiveImage(result, post: self.currentPost!)
+                    self.navigationController!.pushViewController(imageEditingControl, animated: true);
+                })
+                
+            case 1:
+                alerter = CompatibleAlertViews(presenter: self);
+                alerter!.makeNoticeWithAction("Confirm Delete", message: "Deleting this post will delete all images in this post's gallery. Are you sure you want to delete this post?", actionName: "Delete", buttonAction: {
+                    () in
+                    //delete this post!
+                    ServerInteractor.removePost(self.currentPost!);
+                });
+                
+            case 2:
+                NSLog("Cancelled");
             
-        default:
-            break;
+            default:
+                break;
         }
     }
     
