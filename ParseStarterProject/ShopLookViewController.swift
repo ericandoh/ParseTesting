@@ -95,8 +95,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
 
     @IBAction func editPostAction(sender: AnyObject) {
-        var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Edit Post", "Delete Post");
-        actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
+        if currentPost!.isOwnedByMe() {
+            var actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Edit Post", "Delete Post");
+            actionSheet.showInView(UIApplication.sharedApplication().keyWindow)
+        } else {
+            CompatibleAlertViews.makeNotice("Invalid Edit", message: "you can not edit others' post", presenter: self)
+        }
     }
     
     func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
@@ -128,6 +132,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         currentPost?.getAuthorFriend().getWebURL({(webURL : String?) -> Void in
             if webURL == nil {
                 NSLog("post author has no web url")
+                CompatibleAlertViews.makeNotice("No URL", message: "post author has no web url", presenter: self)
             } else {
                 UIApplication.sharedApplication().openURL(NSURL(string: self.checkHTTPHeader(webURL!))!)
             }
