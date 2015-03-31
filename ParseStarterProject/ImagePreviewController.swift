@@ -513,7 +513,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     
     @IBAction func whatIsShopTheLook(sender: UIButton) {
-        CompatibleAlertViews.makeNotice("What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", presenter: self);
+        CompatibleAlertViews.makeNotice("What is Shop the Look?", message: "Let your friends know where they can buy your outfit!\nExample\nTitle: Gucci Sunglasses\nURL: http://shop.nordstrom.com/s/gucci-57mm-oversized-sunglasses/3957134", presenter: self);
         
         /*let alert: UIAlertController = UIAlertController(title: "What is Shop the Look?", message: "Simply add a title to the items in your collection, and optionally a url where you can get it!\n\nExample Title: Women Retro Fashion Square Glasses\nExample URL: https://shoplately.com/product/362632/women_retro_fashion_square_sunglasses_black_lens_black_frame", preferredStyle: UIAlertControllerStyle.Alert);
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action: UIAlertAction!) -> Void in
