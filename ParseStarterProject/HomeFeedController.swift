@@ -766,18 +766,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
-        // left swipe in the 1st post image and go to side menu
-/*
-        if (postCounter == 0) {
-            if ((self.navigationController) != nil) {
-                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
-            }
-            else {
-                (self.parentViewController as SideMenuManagingViewController).openMenu();
-            }
-            return;
-        }
-*/
+
         if postCounter == 0 {
             return
         }
