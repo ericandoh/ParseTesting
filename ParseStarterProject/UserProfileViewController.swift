@@ -291,13 +291,13 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         }
         self.userInfoBackImageView.setImageAndLightBlur(backImg)
         self.userInfoBackImageView.alpha = CGFloat(0.8)
-        var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: USER_ICON_BUTTON_WIDTH, height: USER_ICON_BUTTON_HEIGHT))
-        self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal)
+//        var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: USER_ICON_BUTTON_WIDTH, height: USER_ICON_BUTTON_HEIGHT))
+        self.userIconButton.setImage(image, forState: UIControlState.Normal)
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
         self.userIconButton.layer.masksToBounds = true
         self.userIconButton.layer.borderWidth = CGFloat(1.5)
         self.userIconButton.layer.borderColor = UIColor.whiteColor().CGColor
-        self.userIconButton.contentMode = UIViewContentMode.ScaleAspectFill
+        self.userIconButton.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         self.userInfoBottomBar.alpha = CGFloat(0.6)
     }
     
