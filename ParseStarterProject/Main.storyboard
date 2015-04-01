@@ -1051,9 +1051,6 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient.png" translatesAutoresizingMaskIntoConstraints="NO" id="des-15-BaF">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
-                            </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcL-Em-b9e">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="508"/>
                                 <subviews>
@@ -1240,8 +1237,6 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="v8x-6Y-FYl" firstAttribute="top" secondItem="mou-va-zpC" secondAttribute="bottom" constant="10" id="0eZ-Tn-3rJ"/>
-                            <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="des-15-BaF" secondAttribute="bottom" constant="10" id="1fG-tj-lxA"/>
-                            <constraint firstItem="des-15-BaF" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="29n-jA-t5o"/>
                             <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="gft-ya-HJd" secondAttribute="bottom" constant="10" id="5ci-kT-CYQ"/>
                             <constraint firstItem="BN6-Yf-BWR" firstAttribute="leading" secondItem="mou-va-zpC" secondAttribute="trailing" constant="40" id="5su-LQ-vi5"/>
                             <constraint firstItem="skp-OY-eru" firstAttribute="leading" secondItem="BN6-Yf-BWR" secondAttribute="trailing" constant="40" id="8Q2-45-dei"/>
@@ -1257,7 +1252,6 @@
                             <constraint firstItem="zEM-c4-tHz" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" constant="85" id="bZq-zc-cUl"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="cgl-wc-12J"/>
                             <constraint firstItem="RcL-Em-b9e" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="g0Z-rQ-7tn"/>
-                            <constraint firstAttribute="trailing" secondItem="des-15-BaF" secondAttribute="trailing" id="gU9-O0-cra"/>
                             <constraint firstItem="BN6-Yf-BWR" firstAttribute="top" secondItem="skp-OY-eru" secondAttribute="top" id="gsA-Wv-8Lw"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" constant="64" id="hDq-g7-kfP"/>
                             <constraint firstItem="v8x-6Y-FYl" firstAttribute="top" secondItem="s1V-MZ-bqM" secondAttribute="bottom" constant="10" id="hGz-DI-w0O"/>
@@ -1268,7 +1262,6 @@
                             <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="mou-va-zpC" secondAttribute="top" id="l5U-cP-cel"/>
                             <constraint firstAttribute="bottom" secondItem="JEl-EV-uT7" secondAttribute="bottom" constant="60" id="lYV-tN-yfu"/>
                             <constraint firstItem="zEM-c4-tHz" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" constant="40" id="mGd-Fi-dn7"/>
-                            <constraint firstItem="des-15-BaF" firstAttribute="top" secondItem="pI2-mo-dPH" secondAttribute="top" id="oeO-tU-3Oc"/>
                             <constraint firstAttribute="trailing" secondItem="JEl-EV-uT7" secondAttribute="trailing" id="qc0-ea-Yet"/>
                             <constraint firstItem="JEl-EV-uT7" firstAttribute="leading" secondItem="pI2-mo-dPH" secondAttribute="leading" id="qmO-7s-xSY"/>
                             <constraint firstItem="skp-OY-eru" firstAttribute="top" secondItem="RcL-Em-b9e" secondAttribute="bottom" constant="10" id="rMe-Ra-nza"/>
