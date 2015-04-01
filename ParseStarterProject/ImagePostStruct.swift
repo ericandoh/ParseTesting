@@ -749,7 +749,7 @@ class ImagePostStructure {
             looksArray.addObject(look.toDictionary())
             // add shopLooks in PostShopLooks
             var sl = PFObject(className: "PostShopLook")
-            sl["tile"] = look.title
+            sl["title"] = look.title
             sl["urlLink"] = look.urlLink
             sl["postId"] = myObj.objectId
             sl.saveInBackground()
