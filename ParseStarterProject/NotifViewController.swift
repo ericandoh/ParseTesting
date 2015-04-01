@@ -102,17 +102,20 @@ class NotifViewController: UITableViewController {
     
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController!.viewControllers.count == 1) {
-                //this is the only vc on the stack - move to menu
-                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
-            }
-            else {
-                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+            if (self.navigationController!.viewControllers.count > 1) {
                 self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
     
+    @IBAction func sideMenuButtonPressed(sender: AnyObject) {
+        if ((self.navigationController) != nil) {
+            if (self.navigationController!.viewControllers.count >= 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+        }
+    }
     
     func populateNotifs() {
        
