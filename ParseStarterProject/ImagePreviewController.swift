@@ -45,6 +45,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     
     @IBOutlet weak var tapBackgroundOutlet: UIButton!
     
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
     var movingWindow: Bool = false;
     
     var receivedImages: Array<UIImage> = [];
@@ -122,7 +125,10 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             backImageView.image = receivedImages[0];
         }*/
         tapBackgroundOutlet.hidden = true;
-
+        self.shareButton.layer.borderWidth = CGFloat(1.0)
+        self.shareButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.cancelButton.layer.borderWidth = CGFloat(1.0)
+        self.cancelButton.layer.borderColor = UIColor.whiteColor().CGColor
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);

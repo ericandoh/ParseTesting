@@ -2830,12 +2830,13 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0U5-gw-bxJ">
                                                         <rect key="frame" x="30" y="111" width="220" height="40"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="C2H-wN-xoF"/>
                                                             <constraint firstAttribute="width" constant="220" id="EO1-Qo-CJd"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="15"/>
-                                                        <state key="normal" title="Cancel" backgroundImage="backcolor.png">
+                                                        <state key="normal" title="Cancel">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -2845,12 +2846,13 @@
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhQ-HB-9IY">
                                                         <rect key="frame" x="30" y="61" width="220" height="40"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Yyf-El-YL2"/>
                                                             <constraint firstAttribute="width" constant="220" id="uJG-8f-ke6"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="15"/>
-                                                        <state key="normal" title="Share" backgroundImage="backcolor.png">
+                                                        <state key="normal" title="Share">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
@@ -3031,10 +3033,12 @@
                     <connections>
                         <outlet property="backDirectionImage" destination="XYF-s5-5sl" id="iqq-YV-eZ6"/>
                         <outlet property="backImageView" destination="c1X-dw-Ore" id="Q2c-zZ-X8G"/>
+                        <outlet property="cancelButton" destination="0U5-gw-bxJ" id="YnX-6V-WFE"/>
                         <outlet property="labelBar" destination="QDt-YK-rqw" id="avE-8q-fcY"/>
                         <outlet property="mainView" destination="v8i-6h-3i3" id="Ihv-7T-0NU"/>
                         <outlet property="navigationTitle" destination="Muk-yJ-gNs" id="1bC-oA-Tn5"/>
                         <outlet property="scrollView" destination="3uk-HZ-4aK" id="3AU-to-HIy"/>
+                        <outlet property="shareButton" destination="JhQ-HB-9IY" id="pIz-Ih-8Lk"/>
                         <outlet property="shopTheLookConstraint" destination="pcf-ZO-HEJ" id="KHt-II-bdN"/>
                         <outlet property="shopTheLookView" destination="Lbc-TH-R0A" id="hVz-Od-SO1"/>
                         <outlet property="sideTableView" destination="JvP-R4-WaX" id="A1p-TO-35F"/>
