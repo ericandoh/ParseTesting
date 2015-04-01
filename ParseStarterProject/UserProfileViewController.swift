@@ -287,7 +287,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             backImg = DEFAULT_USER_ICON_BACK
         }
         self.userInfoBackImageView.setImageAndLightBlur(backImg)
-        self.userInfoBackImageView.alpha = CGFloat(0.6)
+        self.userInfoBackImageView.alpha = CGFloat(0.8)
         var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: USER_ICON_BUTTON_WIDTH, height: USER_ICON_BUTTON_HEIGHT))
         self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal)
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
