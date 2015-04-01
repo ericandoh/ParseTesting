@@ -106,7 +106,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
             mainUser.fetchImage({(image: UIImage)->Void in
                 //self.backImage.image = image;
-                self.backImage.setImageAndBlur(image);
+                var backImg = image
+                if backImg == DEFAULT_USER_ICON {
+                    backImg = DEFAULT_USER_ICON_BACK
+                }
+                self.backImage.setImageAndBlur(backImg);
             });
         }
     }

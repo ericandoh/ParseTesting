@@ -180,7 +180,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 var tempImage: UIImage = DEFAULT_USER_ICON;
                 //self.backImageView.image = tempImage;
-                self.backImageView.setImageAndBlur(tempImage);
+                self.backImageView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
                 AnonText.hidden = true  //<---cringe (damit bala)
                 
                 self.settingButton.setBackgroundImage(UIImage(), forState: UIControlState.Normal);
@@ -282,7 +282,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setUserIconBubble(image: UIImage) {
 //        self.userInfoBackImageView.setImageAndBlur(image);
-        self.userInfoBackImageView.setImageAndLightBlur(image)
+        var backImg = image
+        if backImg == DEFAULT_USER_ICON {
+            backImg = DEFAULT_USER_ICON_BACK
+        }
+        self.userInfoBackImageView.setImageAndLightBlur(backImg)
         self.userInfoBackImageView.alpha = CGFloat(0.6)
         var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: USER_ICON_BUTTON_WIDTH, height: USER_ICON_BUTTON_HEIGHT))
         self.userIconButton.setImage(newUserIcon, forState: UIControlState.Normal)

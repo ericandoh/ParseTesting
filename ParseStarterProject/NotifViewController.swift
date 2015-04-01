@@ -56,7 +56,7 @@ class NotifViewController: UITableViewController {
         
         if (ServerInteractor.isAnonLogged()) {
             var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
-            imageView.setImageAndBlur(DEFAULT_USER_ICON);
+            imageView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
             //imageView.image = DEFAULT_USER_ICON;
             custView.insertSubview(imageView, atIndex: 0)
         }
@@ -64,7 +64,11 @@ class NotifViewController: UITableViewController {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
             mainUser.fetchImage({(image: UIImage)->Void in
                 var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
-                imageView.setImageAndBlur(image);
+                var backImg = image
+                if backImg == DEFAULT_USER_ICON {
+                    backImg = DEFAULT_USER_ICON_BACK
+                }
+                imageView.setImageAndBlur(backImg);
                 //imageView.image = image
                 custView.insertSubview(imageView, atIndex: 0)
             });

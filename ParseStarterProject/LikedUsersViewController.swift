@@ -41,7 +41,11 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
                 likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(likeId));
             }
             myTableView.reloadData();
-            backImage.setImageAndBlur(backImg!);
+            if backImg! == DEFAULT_USER_ICON {
+                backImage.setImageAndBlur(DEFAULT_USER_ICON_BACK)
+            } else {
+                backImage.setImageAndBlur(backImg!);
+            }
         }
         self.navigationController!.navigationBar.topItem!.title = "Liked By"
     }

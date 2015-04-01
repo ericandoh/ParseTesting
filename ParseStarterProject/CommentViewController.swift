@@ -126,7 +126,11 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 hideCommentBar()
             }
             //backImgView.image = backImg!;
-            backImgView.setImageAndBlur(backImg!);
+            if backImg! == DEFAULT_USER_ICON {
+                backImgView.setImageAndBlur(backImg!);
+            } else {
+                backImgView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
+            }
         }
 //        self.navigationController!.navigationBar.topItem!.title = "Comments"
         self.commentTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)

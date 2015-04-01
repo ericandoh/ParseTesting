@@ -42,6 +42,7 @@
 		8A052D331AC46E670039D074 /* topBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A052D2F1AC46E670039D074 /* topBox@2x.png */; };
 		8A8F41231ACB1B2E008AA80F /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41211ACB1B2E008AA80F /* greenArrow.png */; };
 		8A8F41241ACB1B2E008AA80F /* greenArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */; };
+		8A8F41261ACB636E008AA80F /* dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41251ACB636E008AA80F /* dress.png */; };
 		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
 		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
@@ -238,6 +239,7 @@
 		8A052D2F1AC46E670039D074 /* topBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "topBox@2x.png"; sourceTree = "<group>"; };
 		8A8F41211ACB1B2E008AA80F /* greenArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenArrow.png; sourceTree = "<group>"; };
 		8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenArrow@2x.png"; sourceTree = "<group>"; };
+		8A8F41251ACB636E008AA80F /* dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dress.png; sourceTree = "<group>"; };
 		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
 		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				8A052D2D1AC46E670039D074 /* infoBar@2x.png */,
 				8A052D2E1AC46E670039D074 /* topBox.png */,
 				8A052D2F1AC46E670039D074 /* topBox@2x.png */,
+				8A8F41251ACB636E008AA80F /* dress.png */,
 			);
 			name = backgrounds;
 			sourceTree = "<group>";
@@ -858,6 +861,7 @@
 				D93CD4891995419B001F0253 /* sidemenuback.png in Resources */,
 				D9BB5981199A844100367408 /* HelveticaNeueLTPro-MdEx.otf in Resources */,
 				D9BB5986199A844100367408 /* HelveticaNeueLTPro-ThCn.otf in Resources */,
+				8A8F41261ACB636E008AA80F /* dress.png in Resources */,
 				D9BB596B199A844100367408 /* HelveticaNeueLTPro-BlkExO.otf in Resources */,
 				D9BB5982199A844100367408 /* HelveticaNeueLTPro-MdExO.otf in Resources */,
 				09144A7313C2997E00388B00 /* Entitlements.plist in Resources */,

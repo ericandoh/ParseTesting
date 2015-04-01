@@ -571,7 +571,11 @@ struct AssetItem {
             if (mediaType == kUTTypeImage) {//kUTTypeImage) {
                 var image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage;
                 //self.backImageView.image = image;
-                self.backImageView.setImageAndBlur(image);
+                var backImg = image
+                if backImg == DEFAULT_USER_ICON {
+                    backImg = DEFAULT_USER_ICON_BACK
+                }
+                self.backImageView.setImageAndBlur(backImg);
                 //add code here to do something with image I just picked
                 if (self.usingCamera) {
                     /*UIImageWriteToSavedPhotosAlbum(image,

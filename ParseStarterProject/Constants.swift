@@ -86,6 +86,8 @@ let CAMERA_ICON = UIImage(named: "f_camera_roll.png")!
 
 //default images
 let DEFAULT_USER_ICON = UIImage(named: "unknown_user.png")!;
+// background image for default user
+let DEFAULT_USER_ICON_BACK = UIImage(named: "dress.png")!;
 
 //close button image for Shop The Look while uploading
 //let CLOSE_SHOP_EDIT_ICON = UIImage(named: "horned-logo.png")!;
