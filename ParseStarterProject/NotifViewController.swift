@@ -162,10 +162,10 @@ class NotifViewController: UITableViewController {
         }
         
         if (member.type == NotificationType.IMAGE_POST_LIKE.rawValue) {
-            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: false, sender: self)
         }
         else if (member.type == NotificationType.IMAGE_POST_COMMENT.rawValue) {
-            cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
+            cell.extraConfigurations(member.getSender(), message: member.messageString, enableFriending: false, sender: self)
         }
         else if (member.type == "ImagePost") {
             cell.extraConfigurations(nil, message: member.messageString, enableFriending: false, sender: self)
