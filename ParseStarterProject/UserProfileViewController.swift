@@ -297,6 +297,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         self.userIconButton.layer.masksToBounds = true
         self.userIconButton.layer.borderWidth = CGFloat(1.5)
         self.userIconButton.layer.borderColor = UIColor.whiteColor().CGColor
+        self.userIconButton.contentMode = UIViewContentMode.ScaleAspectFill
         self.userInfoBottomBar.alpha = CGFloat(0.6)
     }
     

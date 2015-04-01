@@ -113,7 +113,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="144"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFC-iS-o6z">
+                                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFC-iS-o6z">
                                         <rect key="frame" x="103" y="8" width="115" height="115"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="115" id="GbR-F7-WDf"/>
