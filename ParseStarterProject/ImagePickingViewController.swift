@@ -106,7 +106,7 @@ struct AssetItem {
         //AssetItem(asset: nil, highlighted: -1)
         currentAssets = Array(count: GALLERY_LOAD_LIMIT, repeatedValue: AssetItem(highlighted: -1, assetImg: nil, thumbnail: nil));
         
-        // load saved photos when click upload tab in side menu
+        // load user local saved photos when click upload tab in side menu
         self.loadPhotos()
         
         var failure: ALAssetsLibraryAccessFailureBlock = {
@@ -159,9 +159,6 @@ struct AssetItem {
     }
     
     override func viewWillAppear(animated: Bool) {
-        // load saved photos when click upload tab in side menu
-        self.loadPhotos()
-        
         self.rehighlightCells2()
     }
     
@@ -649,8 +646,8 @@ struct AssetItem {
 //        self.showingOptions = true;
         
         // pick multiple photos, uncomment the above lines if restore to pick from albums in circular buffer way
-        self.loadPhotos()
-        myPickerView.reloadAllComponents();
+//        self.loadPhotos()
+//        myPickerView.reloadAllComponents();
     }
     
     
