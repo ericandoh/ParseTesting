@@ -143,16 +143,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         })
     }
     
-    func checkHTTPHeader(url : String) -> String {
-        var retURL = url
-        let rangeOfHTTP = Range(start: url.startIndex, end: advance(url.startIndex, 4))
-        let rangeOfHTTPS = Range(start: url.startIndex, end: advance(url.startIndex, 5))
-        if url.substringWithRange(rangeOfHTTP) != "http" || url.substringWithRange(rangeOfHTTPS) != "https" {
-            retURL = "http://" + url
-        }
-        return retURL
-    }
-    
     func configEditPostButton() {
         if (currentPost!.isOwnedByMe()) {
             editPostButton.titleLabel?.textColor = UIColor.whiteColor()
