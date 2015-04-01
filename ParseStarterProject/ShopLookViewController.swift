@@ -50,6 +50,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.descTextFieldConstraint.constant = descripHeightToSet;
         descriptionTextField.layoutIfNeeded();
         
+        shopLookButton.hidden = true
+        shopLookTableView.hidden = true
+        
         getShopLooks()
     }
     
@@ -117,11 +120,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 self.shopLookList.append(slList[index]); NSLog("shop look info: \(slList[index].title)---\(slList[index].urlLink))")
             }
             
-            self.shopLookTableView.reloadData()
-        })
-        
-        currentPost!.fetchShopLooks({(input: Array<ShopLook>) in
-            self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
+            self.currentShopDelegate = ShopLookDelegate(looks: slList, owner: self);
             self.currentShopDelegate!.initialSetup(self.shopLookTableView);
 /*            var descripPreferredHeight = self.descriptionTextField.sizeThatFits(CGSizeMake(self.descriptionTextField.frame.size.width, CGFloat.max)).height;
             var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
@@ -130,7 +129,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             var tableHeightToSet = min(preferredTableHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - descripHeightToSet);       //343->300->333
             self.shopLookHeightConstraint.constant = tableHeightToSet;
 */          
-            self.configShopLookButton(input.count)
+            self.configShopLookButton(slList.count)
+            
+            self.shopLookTableView.reloadData()
         })
     }
     
@@ -163,6 +164,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             headerView.addSubview(lineView)
             
             self.shopLookTableView.tableHeaderView = headerView;
+            
+            shopLookButton.hidden = false
+            shopLookTableView.hidden = false
         }
     }
 }
