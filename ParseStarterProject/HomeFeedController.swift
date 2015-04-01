@@ -348,7 +348,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     func switchImage(toImage: UIImage, fromDirection: CompassDirection) { NSLog("-----switching image-----")
         
-        var toImage = ServerInteractor.cropImageSoWidthIs(toImage, targetWidth: FULLSCREEN_WIDTH);
+//        var toImage = ServerInteractor.cropImageSoWidthIs(toImage, targetWidth: FULLSCREEN_WIDTH);
         
         if (loadingSpinner!.hidden == false) {
             self.view.sendSubviewToBack(loadingSpinner!);
