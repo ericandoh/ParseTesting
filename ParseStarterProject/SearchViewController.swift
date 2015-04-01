@@ -15,6 +15,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
+    
+    
+    
+    
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
     
@@ -119,17 +123,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
 
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController!.viewControllers.count == 1) {
-                //this is the only vc on the stack - move to menu
-                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
-            }
-            else {
+            if (self.navigationController!.viewControllers.count > 1) {
                 //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
                 self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }
     
+    @IBAction func sideMenuButtonPress(sender: AnyObject) {
+        if ((self.navigationController) != nil) {
+            if (self.navigationController!.viewControllers.count >= 1) {
+                //this is the only vc on the stack - move to menu
+                (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
+            }
+        }
+    }
     /*func searchBar(searchBar: UISearchBar!, textDidChange searchText: String!) {
         /*if([searchText length] == 0) {
             [searchBar performSelector: ""(resignFirstResponder)
