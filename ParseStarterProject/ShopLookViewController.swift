@@ -132,13 +132,13 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         currentPost!.fetchShopLooks({(input: Array<ShopLook>) in
             self.currentShopDelegate = ShopLookDelegate(looks: input, owner: self);
             self.currentShopDelegate!.initialSetup(self.shopLookTableView);
-            var descripPreferredHeight = self.descriptionTextField.sizeThatFits(CGSizeMake(self.descriptionTextField.frame.size.width, CGFloat.max)).height;
+/*            var descripPreferredHeight = self.descriptionTextField.sizeThatFits(CGSizeMake(self.descriptionTextField.frame.size.width, CGFloat.max)).height;
             var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
             
             var preferredTableHeight = self.shopLookTableView.contentSize.height;
             var tableHeightToSet = min(preferredTableHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - descripHeightToSet);       //343->300->333
             self.shopLookHeightConstraint.constant = tableHeightToSet;
-            
+*/          
             self.configShopLookButton(input.count)
         })
     }
