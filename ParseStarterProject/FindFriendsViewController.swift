@@ -127,13 +127,18 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
-            if (self.navigationController!.viewControllers.count == 1) {
+            if (self.navigationController!.viewControllers.count > 1) {
+                self.navigationController!.popViewControllerAnimated(true);
+            }
+        }
+    }
+    
+    
+    @IBAction func sideMenuButtonPress(sender: AnyObject) {
+        if ((self.navigationController) != nil) {
+            if (self.navigationController!.viewControllers.count >= 1) {
                 //this is the only vc on the stack - move to menu
                 (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
-            }
-            else {
-                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
-                self.navigationController!.popViewControllerAnimated(true);
             }
         }
     }

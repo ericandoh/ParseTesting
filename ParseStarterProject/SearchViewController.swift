@@ -124,7 +124,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @IBAction func backPress(sender: UIButton) {
         if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count > 1) {
-                //(self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
                 self.navigationController!.popViewControllerAnimated(true);
             }
         }
