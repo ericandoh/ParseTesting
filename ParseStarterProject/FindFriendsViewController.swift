@@ -279,6 +279,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         })
     }
     func receiveFinish(userIndex: Int, number: Int) {
+        if self.suggestedUsers.isEmpty {
+            return
+        }
         var friend = self.suggestedUsers[userIndex]!;
         self.suggestedUserImgs[friend.username] = [];
         self.suggestedUserCounts[friend.username] = number;
