@@ -80,7 +80,9 @@
                                                     UIRemoteNotificationTypeAlert|
                                                     UIRemoteNotificationTypeSound];*/
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlackTranslucent];
     
     //if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_0) {
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTextColor:[UIColor whiteColor] ];
