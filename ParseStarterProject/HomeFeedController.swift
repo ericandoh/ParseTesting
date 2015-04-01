@@ -925,9 +925,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func rightSideClicked(sender: UIButton) {
-        if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
-            return;
-        }
+        (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+/*
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
         if (postCounter == currentPost.getImagesCount() + 1 && !(ServerInteractor.isAnonLogged())) {
             var userFrdEnc = currentPost.getAuthorFriend();
@@ -970,9 +969,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu();
 
         }
+*/
     }
     
     @IBAction func likePost(sender: UIButton) {
+        if (self.imgBuffer!.numItems() == 0) {
+            CompatibleAlertViews.makeNotice("Cannot like empty post", message: "Please follow several friends first", presenter: self)
+            return
+        }
+        
         if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
             return;
         }
@@ -996,6 +1001,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func viewComments(sender: UIButton) {
+        if (self.imgBuffer!.numItems() == 0) {
+            CompatibleAlertViews.makeNotice("Cannot comment on empty post", message: "Please follow several friends first", presenter: self)
+            return
+        }
+        
         //initialize tableview with right arguments
         //load latest 20 comments, load more if requested in cellForRowAtIndexPath        
         if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
@@ -1025,6 +1035,11 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func shareAction(sender: UIButton) {
+        if (self.imgBuffer!.numItems() == 0) {
+            CompatibleAlertViews.makeNotice("Cannot share empty post", message: "Please follow several friends first", presenter: self)
+            return
+        }
+        
         if (imgBuffer!.numItems() == 0 || self.viewCounter >= imgBuffer!.numItems() || (!self.imgBuffer!.isLoadedAt(self.viewCounter))) {
             return;
         }
@@ -1049,6 +1064,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func shopLooks(sender: AnyObject) {
         NSLog("Go to shop look page")
+        if (self.imgBuffer!.numItems() == 0) {
+            CompatibleAlertViews.makeNotice("No Shop Look", message: "Please follow several friends first", presenter: self)
+            return
+        }
         self.performSegueWithIdentifier("ViewShopLookSegue", sender: self);
     }
     

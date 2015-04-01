@@ -923,7 +923,7 @@ import UIKit
         
         query.orderByDescending("likes");
         
-        var oneWeekAgo = currentDate.dateByAddingTimeInterval(-7*24*60*60);
+        var oneWeekAgo = currentDate.dateByAddingTimeInterval(-14*24*60*60);
         query.whereKey("createdAt", greaterThan: oneWeekAgo);
         //query.orderByDescending("createdAt");
         

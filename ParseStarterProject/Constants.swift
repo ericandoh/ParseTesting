@@ -31,7 +31,7 @@ let NOTIF_COUNT = 10
 //number of post-images to load at once
 //more posts to load = slower start time, faster flip time consistency
 //less posts to load = faster start time, increased inconsistency in page loads
-let POST_LOAD_COUNT = 15    //used to be 10
+let POST_LOAD_COUNT = 30    //used to be 10
 
 //number of posts to have before buffering next set of images
 let POST_LOAD_LIMIT = 20
