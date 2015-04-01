@@ -132,8 +132,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 backImgView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
             }
         }
-//        self.navigationController!.navigationBar.topItem!.title = "Comments"
         self.commentTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+        self.sendButton.layer.borderWidth = CGFloat(1.0)
+        self.sendButton.layer.borderColor = UIColor.whiteColor().CGColor
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
