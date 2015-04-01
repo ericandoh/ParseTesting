@@ -46,6 +46,7 @@ class SuggestedHeaderView: UICollectionReusableView {
                 self.iconImage!.layer.masksToBounds = true
                 //self.userImage!.layer.borderWidth = 0
                 //self.userImage!.clipsToBounds = true;
+                self.iconImage.contentMode = UIViewContentMode.ScaleAspectFill
             });
             friend = involvedUser;
             ServerInteractor.amFollowingUser(involvedUser!, retFunction: {(amFollowing: Bool) in
