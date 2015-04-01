@@ -28,10 +28,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController?.view.backgroundColor = UIColor.blackColor()
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
+        self.navigationController?.navigationBar.topItem?.title = "Info"
         
         editPostButton.titleLabel?.textColor = UIColor.grayColor()
         editPostButton.layer.borderWidth = CGFloat(1.0)
         editPostButton.layer.borderColor = UIColor.grayColor().CGColor
+        configEditPostButton()
         
         descriptionTextField.owner = self;
         self.descriptionTextField.scrollEnabled = true;
@@ -47,19 +49,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var descripHeightToSet = min(descripPreferredHeight, MIN_SHOPLOOK_DESCRIP_CONSTRAINT);
         self.descTextFieldConstraint.constant = descripHeightToSet;
         descriptionTextField.layoutIfNeeded();
-    }
-    
-    override func viewWillAppear(animated: Bool) { NSLog("viewWillAppear")
-        super.viewWillAppear(animated)
+        
         getShopLooks()
-        self.navigationController?.navigationBar.topItem?.title = "Info"
-    }
-    
-    override func viewDidAppear(animated: Bool) { NSLog("viewDidAppear")
-        super.viewDidAppear(animated)
-
-        configEditPostButton()
-        self.navigationController?.navigationBar.topItem?.title = "Info"
     }
     
     @IBAction func backPress(sender: AnyObject) {
