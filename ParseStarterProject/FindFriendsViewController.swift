@@ -26,6 +26,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     //@IBOutlet weak var backBlur: UIVisualEffectView!
     
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var findFrindsFromFBBtn: UIButton!
+    @IBOutlet weak var findFriendsFromContactsBtn: UIButton!
+    
     var isSearching: Bool = false;
     var searchTermList: Array<FriendEncapsulator?> = [];
     var currentTerm: String = "";
@@ -113,6 +116,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.backImage.setImageAndBlur(backImg);
             });
         }
+        
+        self.findFrindsFromFBBtn.layer.borderWidth = CGFloat(1.0)
+        self.findFrindsFromFBBtn.layer.borderColor = UIColor.whiteColor().CGColor
+        self.findFriendsFromContactsBtn.layer.borderWidth = CGFloat(1.0)
+        self.findFriendsFromContactsBtn.layer.borderColor = UIColor.whiteColor().CGColor
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);

@@ -2196,11 +2196,12 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPT-wc-Nnf">
                                 <rect key="frame" x="42" y="126" width="236" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="JNe-NO-Jad"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
-                                <state key="normal" title="Find Friends from Facebook" backgroundImage="backcolor.png">
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
+                                <state key="normal" title="Find Friends from Facebook">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2210,11 +2211,12 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lc-mW-qNE">
                                 <rect key="frame" x="42" y="174" width="236" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="2FL-tm-DdX"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="16"/>
-                                <state key="normal" title="Find Friends from Contacts" backgroundImage="backcolor.png">
+                                <fontDescription key="fontDescription" name="HelveticaNeueLTPro-Lt" family="Helvetica Neue LT Pro" pointSize="18"/>
+                                <state key="normal" title="Find Friends from Contacts">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2447,6 +2449,8 @@
                     <connections>
                         <outlet property="backButton" destination="DXu-qP-H1M" id="8Xg-Rc-QIP"/>
                         <outlet property="backImage" destination="gjj-23-bPA" id="OYZ-ew-9i7"/>
+                        <outlet property="findFriendsFromContactsBtn" destination="8lc-mW-qNE" id="WK1-zi-Tge"/>
+                        <outlet property="findFrindsFromFBBtn" destination="BPT-wc-Nnf" id="cxq-I9-Aa6"/>
                         <outlet property="searchBar" destination="4Io-YJ-blA" id="Jo7-I4-C8X"/>
                         <outlet property="searchFriendsTableView" destination="WG2-oN-ILX" id="8WX-EY-mqd"/>
                         <outlet property="suggestedCollectionView" destination="Jaq-B4-KCF" id="KEd-kg-SBh"/>
