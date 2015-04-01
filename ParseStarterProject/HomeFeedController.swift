@@ -974,7 +974,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func likePost(sender: UIButton) {
         if (self.imgBuffer!.numItems() == 0) {
-            CompatibleAlertViews.makeNotice("Cannot like empty post", message: "Please follow several friends first", presenter: self)
+            CompatibleAlertViews.makeNotice("Please follow friends first", message: "", presenter: self)
             return
         }
         
@@ -1002,7 +1002,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func viewComments(sender: UIButton) {
         if (self.imgBuffer!.numItems() == 0) {
-            CompatibleAlertViews.makeNotice("Cannot comment on empty post", message: "Please follow several friends first", presenter: self)
+            CompatibleAlertViews.makeNotice("Please follow friends first", message: "", presenter: self)
             return
         }
         
@@ -1036,7 +1036,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     @IBAction func shareAction(sender: UIButton) {
         if (self.imgBuffer!.numItems() == 0) {
-            CompatibleAlertViews.makeNotice("Cannot share empty post", message: "Please follow several friends first", presenter: self)
+            CompatibleAlertViews.makeNotice("Please follow friends first", message: "", presenter: self)
             return
         }
         
@@ -1065,7 +1065,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     @IBAction func shopLooks(sender: AnyObject) {
         NSLog("Go to shop look page")
         if (self.imgBuffer!.numItems() == 0) {
-            CompatibleAlertViews.makeNotice("No Shop Look", message: "Please follow several friends first", presenter: self)
+            CompatibleAlertViews.makeNotice("Please follow friends first", message: "", presenter: self)
             return
         }
         self.performSegueWithIdentifier("ViewShopLookSegue", sender: self);
