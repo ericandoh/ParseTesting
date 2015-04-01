@@ -59,7 +59,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         super.viewDidAppear(animated)
 
         configEditPostButton()
-        configShopLookButton()
         self.navigationController?.navigationBar.topItem?.title = "Info"
     }
     
@@ -139,6 +138,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             var preferredTableHeight = self.shopLookTableView.contentSize.height;
             var tableHeightToSet = min(preferredTableHeight, MIN_SHOPLOOK_TOTAL_FLEXIBLE_CONSTRAINT - descripHeightToSet);       //343->300->333
             self.shopLookHeightConstraint.constant = tableHeightToSet;
+            
+            self.configShopLookButton(input.count)
         })
     }
     
@@ -164,8 +165,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
     }
     
-    func configShopLookButton() {
-        if self.shopLookList.count == 0 {
+    func configShopLookButton(shopLookCount : Int) {
+        if shopLookCount == 0 {
             self.shopLookButton.hidden = true
         } else {
             self.shopLookButton.hidden = false
