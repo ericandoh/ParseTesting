@@ -285,14 +285,14 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setUserIconBubble(image: UIImage) {
 //        self.userInfoBackImageView.setImageAndBlur(image);
-        var backImg = image
+        var backImg : UIImage = image
         if backImg == DEFAULT_USER_ICON {
             backImg = DEFAULT_USER_ICON_BACK
         }
         self.userInfoBackImageView.setImageAndLightBlur(backImg)
         self.userInfoBackImageView.alpha = CGFloat(0.8)
 //        var newUserIcon: UIImage = ServerInteractor.imageWithImage(image, scaledToSize: CGSize(width: USER_ICON_BUTTON_WIDTH, height: USER_ICON_BUTTON_HEIGHT))
-        self.userIconButton.setImage(image, forState: UIControlState.Normal)
+        self.userIconButton.setImage(backImg, forState: UIControlState.Normal) // TODO: change backImg if needed
         self.userIconButton.layer.cornerRadius = (self.userIconButton.frame.size.width) / 2
         self.userIconButton.layer.masksToBounds = true
         self.userIconButton.layer.borderWidth = CGFloat(1.5)
