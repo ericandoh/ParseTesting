@@ -227,7 +227,10 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 })
             }
         }
-        
+
+        self.userWebURL.userInteractionEnabled = true
+        let tapGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "webLabelTap")
+        userWebURL.addGestureRecognizer(tapGesture)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -647,6 +650,27 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         ServerInteractor.postDefaultNotif("Test submission post");
         //lets also try adding to user field
     }
+    
+    func webLabelTap() {
+        var urlString = self.userWebURL.text!
+        var urlToOpen = NSURL(string: urlString)!;
+        if (UIApplication.sharedApplication().canOpenURL(urlToOpen)) {
+            UIApplication.sharedApplication().openURL(urlToOpen);
+        }
+        else {
+            if (!urlString.hasPrefix("http://") && !urlString.hasPrefix("https://")) {
+                urlString = "http://"+urlString;
+                urlToOpen = NSURL(string: urlString)!;
+                if (UIApplication.sharedApplication().canOpenURL(urlToOpen)) {
+                    UIApplication.sharedApplication().openURL(urlToOpen);
+                }
+                else {
+                    CompatibleAlertViews.makeNotice("URL Invalid", message: "URL for this post author's website is invalid!\n\nURL: "+urlString, presenter: self)
+                }
+            }
+        }
+    }
+    
     //--------------------------TableView Functions-------------------------
     
     
