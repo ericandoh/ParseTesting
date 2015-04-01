@@ -221,7 +221,12 @@ class ImagePostStructure {
         
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
-        return (query.countObjects() - 1) // imgFile(cover) and imgFiles are seperated in original db
+        let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
+        if count >= 0 {
+            return count
+        } else {
+            return 0
+        }
     }
     func getCommentsCount()->Int {
         if (myObj.objectId == nil) {

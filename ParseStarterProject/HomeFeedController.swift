@@ -111,7 +111,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         super.viewDidLoad()
         
 //        frontImageView.contentMode = UIViewContentMode.Center;
-        frontImageView.contentMode = UIViewContentMode.ScaleAspectFill
         
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
@@ -606,7 +605,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             }
         }
     }
-    func startViewingComments(currentPost: ImagePostStructure) { // TODO: recall it when necessary in future version
+    func startViewingComments(currentPost: ImagePostStructure) { // TODO: unused now, recall it when necessary in future version
         
         if (loadingSpinner!.hidden == false) {
             self.view.sendSubviewToBack(loadingSpinner!);
