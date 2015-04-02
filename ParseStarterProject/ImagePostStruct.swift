@@ -162,7 +162,11 @@ class ImagePostStructure {
             myObj.removeObject(ServerInteractor.getUserName(), forKey: "likers");
             myObj.removeObject(ServerInteractor.getUserID(), forKey: "likerIds");
             myObj.incrementKey("likes", byAmount: -1);
-            ServerInteractor.removeFromLikedPosts(myObj.objectId);
+            if myObj.objectId != nil {
+                ServerInteractor.removeFromLikedPosts(myObj.objectId);
+            } else {
+                ServerInteractor.removeFromLikedPosts("") // empty string as temp id
+            }
         }
         else {
             if (PFUser.currentUser().objectId == getAuthorID()) {
@@ -178,8 +182,10 @@ class ImagePostStructure {
             
             if myObj.objectId != nil {
                 ServerInteractor.appendToLikedPosts(myObj.objectId)
-            } else { // for the just uploaded post in memory, no myObj.objectId yet
-                ServerInteractor.appendToLikedPosts(PFUser.currentUser().objectId)
+            } else {
+                // empty string as id for the just uploaded post in memory, no myObj.objectId yet
+                // set actual liked post id in ServerInteractor.uploadImage() later after post created in parse database asynchronously
+                ServerInteractor.appendToLikedPosts("")
             }
         }
         myObj.saveInBackground()
@@ -270,11 +276,11 @@ class ImagePostStructure {
         return ret;
     }
     func isLikedByUser()->Bool {
-        if (myObj.objectId == nil) {
-            return false
+        if myObj.objectId != nil {
+            return ServerInteractor.likedBefore(myObj.objectId);
+        } else {
+            return ServerInteractor.likedBefore("") // empty str as temp post id
         }
-        
-        return ServerInteractor.likedBefore(myObj.objectId);
     }
     func isOwnedByMe()->Bool {
         if (myObj.objectId == nil) {
@@ -706,7 +712,7 @@ class ImagePostStructure {
         var cmt = PFObject(className: "PostComment");
         cmt["content"] = comment;
         cmt["authorId"] = PFUser.currentUser().objectId;
-        cmt["postId"] = myObj.objectId != nil ? myObj.objectId : ""; // if empty like "", set in ServerInteractor.uploadImage() later
+        cmt["postId"] = myObj.objectId != nil ? myObj.objectId : ""; // if empty like "", set actual post id in ServerInteractor.uploadImage() later after post created in parse database
         cmt["postAuthorId"] = myObj["authorId"];
         cmt.saveInBackground();
         

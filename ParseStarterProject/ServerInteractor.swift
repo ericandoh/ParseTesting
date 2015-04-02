@@ -657,7 +657,7 @@ import UIKit
                     // add post id for potential comments (might created before post stored in parse database due to async way) in the uploaded post
                     var query = PFQuery(className:"PostComment")
                     query.whereKey("postAuthorId", equalTo: newPost.myObj["authorId"])
-                    query.whereKey("postId", equalTo: "")
+                    query.whereKey("postId", equalTo: "") // empty str as temp post id
                     query.findObjectsInBackgroundWithBlock {
                         (postCmts: [AnyObject]!, error: NSError!) -> Void in
                         if error == nil {
@@ -670,6 +670,11 @@ import UIKit
                         } else {
                             NSLog("Error: \(error.description)")
                         }
+                    }
+                    // update like as the above comment, empty string as temp liked post id
+                    if self.likedBefore("") {
+                        self.removeFromLikedPosts("")
+                        self.appendToLikedPosts(newPost.myObj.objectId)
                     }
                 }
                 else {
