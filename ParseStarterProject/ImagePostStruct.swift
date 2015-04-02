@@ -284,7 +284,11 @@ class ImagePostStructure {
     }
     func getAgeAsString()->String {
         var date = (myObj.objectId != nil) ? myObj.createdAt : NSDate() ;
-        return ServerInteractor.timeNumberer(date);
+        if date != nil {
+            return ServerInteractor.timeNumberer(date)
+        } else {
+            return ServerInteractor.timeNumberer(NSDate())
+        }
     }
     func loadImage() {
         NSLog("loadImage() - this function seems unused");

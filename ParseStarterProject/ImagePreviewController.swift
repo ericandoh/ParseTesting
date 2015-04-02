@@ -244,7 +244,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                     // initialize a new CustomImageBuffer with uploaded photos in memory
                     let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: FriendEncapsulator(friend: PFUser.currentUser()), owner: "COLLECTION")
                     imgBuffer.loadedPosts.append(ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook))
-                    
+                    imgBuffer.loadedPostCount = receivedImages.count
+                    imgBuffer.getImagePostAt(0).myObj.objectId = PFUser.currentUser().objectId
                     // direct to the latest uploaded photo post
                     var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                     newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);

@@ -95,6 +95,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     () in
                     //delete this post!
                     ServerInteractor.removePost(self.currentPost!);
+                    // return to last page
+                    (self.navigationController!.parentViewController as SideMenuManagingViewController).openProfile()
                 });
                 
             case 2:
