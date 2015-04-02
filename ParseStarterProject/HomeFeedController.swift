@@ -990,7 +990,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         if (imgBuffer!.isLoadedAt(viewCounter)) {
             var post = imgBuffer!.getImagePostAt(viewCounter);
-            post.like();
+            post.like(); NSLog("pass like")
             var shortenedNumLikeString = ServerInteractor.wordNumberer(post.getLikes());
             likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
             if (post.isLikedByUser()) {

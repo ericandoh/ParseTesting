@@ -176,7 +176,11 @@ class ImagePostStructure {
             myObj.addUniqueObject(ServerInteractor.getUserID(), forKey: "likerIds")
             myObj.incrementKey("likes")
             
-            ServerInteractor.appendToLikedPosts(myObj.objectId)
+            if myObj.objectId != nil {
+                ServerInteractor.appendToLikedPosts(myObj.objectId)
+            } else { // for the just uploaded post in memory, no myObj.objectId yet
+                ServerInteractor.appendToLikedPosts(PFUser.currentUser().objectId)
+            }
         }
         myObj.saveInBackground()
     }
@@ -556,7 +560,7 @@ class ImagePostStructure {
         }
     }
     func fetchComments(finishFunction: (authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void) {
-        if (myObj.objectId == nil) {
+        if (myObj.objectId == nil) { NSLog("new post comment 1")
             finishFunction(authorInput: [], authorIdInput: [], input: [])
         }
         //refresh comments by refetching object from server
