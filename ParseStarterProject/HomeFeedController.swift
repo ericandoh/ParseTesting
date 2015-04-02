@@ -184,13 +184,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             // objectId is nil when current post is just uploaded and in memory instead of parse db
             // we don't want to go back to upload page in that case, so keep logo menu
 
-            // uncomment following lines if need to show back button
-/*           if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
+            // for posts in explore, profile page
+           if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
                 if self.navigationController?.parentViewController != ImagePreviewController() {
                     topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
                 }
+           } else {
+                topLeftButton.hidden = true
+                topLeftButton.enabled = false
             }
-*/
         }
         
         self.tutorialOverlay.hidden = true
@@ -755,6 +757,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         // Dispose of any resources that can be recreated.
     }
     @IBAction func swipeUp(sender: UISwipeGestureRecognizer) { NSLog("swipe up")
+        if (self.imgBuffer!.getImagePostAt(viewCounter).myObj.createdAt == nil) {
+            pannerNoPan = false
+            bottomPullToRefresh.hidden = true
+        }
         if (swiperNoSwipe || pannerNoPan) { NSLog("pass 1: \(swiperNoSwipe.description)---\(pannerNoPan.description)")
             return;
         }
@@ -773,6 +779,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) { NSLog("swipe down")
+        if (self.imgBuffer!.getImagePostAt(viewCounter).myObj.createdAt == nil) {
+            pannerNoPan = false
+            bottomPullToRefresh.hidden = true
+        }
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
@@ -906,7 +916,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func sideMenu(sender: UIButton) {
-        // uncomment following line if need to show back button
 /*        if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
@@ -920,7 +929,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 }
             }
         }
-
+*/
         if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count > 1) {
                 if (topLeftButton.currentBackgroundImage == BACK_ICON) {
@@ -928,7 +937,6 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 }
             }
         }
-*/
     }
     
     @IBAction func rightSideClicked(sender: UIButton) {
