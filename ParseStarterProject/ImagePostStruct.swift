@@ -562,6 +562,7 @@ class ImagePostStructure {
     func fetchComments(finishFunction: (authorInput: NSArray, authorIdInput: NSArray, input: NSArray)->Void) {
         if (myObj.objectId == nil) { NSLog("new post comment 1")
             finishFunction(authorInput: [], authorIdInput: [], input: [])
+            return
         }
         //refresh comments by refetching object from server
         var query = PFQuery(className:"PostComment")
@@ -677,11 +678,11 @@ class ImagePostStructure {
         }
     }
     func addComment(comment: String)->PostComment {
-        var commentAuthorArray: NSMutableArray = [];
-        var commentArray: NSMutableArray = [];
+        var commentAuthorArray: Array<String> = [];
+        var commentArray: Array<String> = [];
         if (myObj["commentAuthor"] != nil) {
-            commentAuthorArray = myObj["commentAuthor"] as NSMutableArray
-            commentArray = myObj["comments"] as NSMutableArray;
+            commentAuthorArray = myObj["commentAuthor"] as Array<String>
+            commentArray = myObj["comments"] as Array<String>;
         }
         if (PFUser.currentUser().objectId == getAuthorID()) {
             //do NOT send a notification
@@ -695,18 +696,18 @@ class ImagePostStructure {
         //ServerInteractor.sendCommentNotif(self);
         //}
         var author = PFUser.currentUser().username;
-        commentAuthorArray.insertObject(author, atIndex: commentAuthorArray.count)
-        commentArray.insertObject(comment, atIndex: commentArray.count);
+        commentAuthorArray.append(author)
+        commentArray.append(comment)
         myObj["commentAuthor"] = commentAuthorArray
         myObj["comments"] = commentArray;
         //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
         
-        var cmt = PFObject(className: "PostComment");
-        cmt["content"] = comment
-        cmt["authorId"] = PFUser.currentUser().objectId;
-        cmt["postId"] = myObj.objectId;
-        cmt["postAuthorId"] = myObj["authorId"];
+        var cmt = PFObject(className: "PostComment"); if myObj.objectId == nil { NSLog("nil now")}
+        cmt["content"] = comment; NSLog("pass comment: \(comment)")
+        cmt["authorId"] = PFUser.currentUser().objectId; NSLog("pass author Id: \(PFUser.currentUser().objectId)")
+        cmt["postId"] = myObj.objectId != nil ? myObj.objectId : ""; NSLog("pass post id: \(myObj.objectId)") // if nil, set in ServerInteractor.uploadImage() later. NSNull()
+        cmt["postAuthorId"] = myObj["authorId"]; NSLog("pass post author id: \(PFUser.currentUser().objectId)")
         cmt.saveInBackground();
         
         return PostComment(author: author, authorId: PFUser.currentUser().objectId, content: comment);

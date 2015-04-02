@@ -654,6 +654,23 @@ import UIKit
                         slObj["postId"] = newPost.myObj.objectId;
                         slObj.saveInBackground()
                     }
+                    // add post id for potential comments (might created before post stored in parse database due to async way) in the uploaded post
+                    var query = PFQuery(className:"PostComment")
+                    query.whereKey("postAuthorId", equalTo: newPost.myObj["authorId"])
+                    query.whereKey("postId", equalTo: "")
+                    query.findObjectsInBackgroundWithBlock {
+                        (postCmts: [AnyObject]!, error: NSError!) -> Void in
+                        if error == nil {
+                            if let postCmts = postCmts as? [PFObject] {
+                                for postCmt in postCmts {
+                                    postCmt["postId"] = newPost.myObj.objectId
+                                    postCmt.saveInBackground()
+                                }
+                            }
+                        } else {
+                            NSLog("Error: \(error.description)")
+                        }
+                    }
                 }
                 else {
                     NSLog("Soem error of some sort");
