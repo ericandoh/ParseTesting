@@ -95,8 +95,12 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     () in
                     //delete this post!
                     ServerInteractor.removePost(self.currentPost!);
-                    // return to last page
-                    (self.navigationController!.parentViewController as SideMenuManagingViewController).openProfile()
+                    // return to profile page
+                    if (self.navigationController != nil) {  //to avoid race conditions
+                        var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController
+                        (nextBoard as UserProfileViewController).receiveUserInfo(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()))
+                        self.navigationController!.pushViewController(nextBoard, animated: true)
+                    }
                 });
                 
             case 2:

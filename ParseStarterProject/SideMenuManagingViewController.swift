@@ -116,10 +116,6 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         displayContentController(SIDE_MENU_ITEMS[0]);
     }
     
-    func openProfile() {
-        displayContentController(SIDE_MENU_ITEMS[2]);
-    }
-    
     func setSuppressed(suppressed: Bool) {
         suppressMenu = suppressed;
     }
