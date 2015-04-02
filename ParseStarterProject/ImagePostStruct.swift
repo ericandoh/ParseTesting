@@ -703,11 +703,11 @@ class ImagePostStructure {
         //myObj["commentAuthor"] = commentAuthorArray
         myObj.saveInBackground();
         
-        var cmt = PFObject(className: "PostComment"); if myObj.objectId == nil { NSLog("nil now")}
-        cmt["content"] = comment; NSLog("pass comment: \(comment)")
-        cmt["authorId"] = PFUser.currentUser().objectId; NSLog("pass author Id: \(PFUser.currentUser().objectId)")
-        cmt["postId"] = myObj.objectId != nil ? myObj.objectId : ""; NSLog("pass post id: \(myObj.objectId)") // if nil, set in ServerInteractor.uploadImage() later. NSNull()
-        cmt["postAuthorId"] = myObj["authorId"]; NSLog("pass post author id: \(PFUser.currentUser().objectId)")
+        var cmt = PFObject(className: "PostComment");
+        cmt["content"] = comment;
+        cmt["authorId"] = PFUser.currentUser().objectId;
+        cmt["postId"] = myObj.objectId != nil ? myObj.objectId : ""; // if empty like "", set in ServerInteractor.uploadImage() later
+        cmt["postAuthorId"] = myObj["authorId"];
         cmt.saveInBackground();
         
         return PostComment(author: author, authorId: PFUser.currentUser().objectId, content: comment);
