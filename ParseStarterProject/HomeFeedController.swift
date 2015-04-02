@@ -65,10 +65,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     var pannerNoPan: Bool = false;
     var swipingRight: Bool = false;
     
-    //which image we are viewing currently in firstSet
+    //which image we are viewing currently in firstSet (set sequence num)
     var viewCounter = 0;
     
-    //which pic in the set of pics of a post I am looking at
+    //which pic in the set of pics of a post I am looking at (picture sequence num)
     var postCounter = 0;
     
     var refreshNeeded: Bool = false;
@@ -183,9 +183,14 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             // objectId is nil when current post is just uploaded and in memory instead of parse db
             // we don't want to go back to upload page in that case, so keep logo menu
-            if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
-                topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+
+            // uncomment following lines if need to show back button
+/*           if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
+                if self.navigationController?.parentViewController != ImagePreviewController() {
+                    topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+                }
             }
+*/
         }
         
         self.tutorialOverlay.hidden = true
@@ -455,7 +460,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     func configureCurrent(index: Int) {
         configureCurrent(index, fromDirection: CompassDirection.STAY);
     }
-    func configureCurrent(index: Int, fromDirection: CompassDirection) {
+    func configureCurrent(index: Int, fromDirection: CompassDirection) { NSLog("configure current")
         if (index != viewCounter) {
             return;
         }
@@ -749,16 +754,16 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func swipeUp(sender: UISwipeGestureRecognizer) {
-        if (swiperNoSwipe || pannerNoPan) {
+    @IBAction func swipeUp(sender: UISwipeGestureRecognizer) { NSLog("swipe up")
+        if (swiperNoSwipe || pannerNoPan) { NSLog("pass 1: \(swiperNoSwipe.description)---\(pannerNoPan.description)")
             return;
         }
-        if (viewingComments) {
+        if (viewingComments) { NSLog("pass 2")
             return;
         }
         
-        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
-        if (postCounter >= currentPost.getImagesCount()) {
+        var currentPost = self.imgBuffer!.getImagePostAt(viewCounter); NSLog("view counter: \(viewCounter)")
+        if (postCounter >= currentPost.getImagesCount()) { NSLog("\(postCounter) --- \(currentPost.getImagesCount())")
             return
         }
         
@@ -767,7 +772,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         swipeSideAction(CompassDirection.SOUTH);
     }
     
-    @IBAction func swipeDown(sender: UISwipeGestureRecognizer) {
+    @IBAction func swipeDown(sender: UISwipeGestureRecognizer) { NSLog("swipe down")
         if (swiperNoSwipe || pannerNoPan) {
             return;
         }
@@ -869,7 +874,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
     }
     func swipeSideAction(direction: CompassDirection) {
-        if (refreshNeeded) {
+        if (refreshNeeded) { NSLog("need to refresh")
             //we are at eof
             postCounter = 0;
             return;
@@ -901,6 +906,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func sideMenu(sender: UIButton) {
+        // uncomment following line if need to show back button
 /*        if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count == 1) {
                 //this is the only vc on the stack - move to menu
@@ -914,7 +920,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 }
             }
         }
-*/
+
         if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count > 1) {
                 if (topLeftButton.currentBackgroundImage == BACK_ICON) {
@@ -922,6 +928,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 }
             }
         }
+*/
     }
     
     @IBAction func rightSideClicked(sender: UIButton) {

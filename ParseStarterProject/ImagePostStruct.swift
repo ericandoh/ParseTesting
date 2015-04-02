@@ -215,7 +215,7 @@ class ImagePostStructure {
         return myObj["passes"] as Int
     }
     func getImagesCount()->Int {
-        if (myObj.objectId == nil) {
+        if (myObj.objectId == nil || myObj.createdAt == nil) { NSLog("new uploaded post")
             return self.images.count
         }
         
@@ -238,7 +238,7 @@ class ImagePostStructure {
         return query.countObjects()
     }
     func getShopLooksCount(finishFunction: (Int?, NSError?)->Void) {
-        if (myObj.objectId == nil) {
+        if (myObj.objectId == nil || myObj.createdAt == nil) {
             finishFunction(self.myShopLooks.count, nil)
             return
         }
