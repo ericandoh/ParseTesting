@@ -232,7 +232,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.navigationController!.popViewControllerAnimated(true);
         }
         else {
-            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook)//, { (uploadedPost : ImagePostStructure?) in
+            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook, { (uploadedPost : ImagePostStructure?) in
                 //reset submission page
                 if ((self.navigationController) != nil) {
                     if ((self.navigationController!.parentViewController) != nil) {
@@ -247,15 +247,15 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                         //                    imgBuffer.hitEnd = true
                         
                         let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: nil, owner: "UPLOADED")
-                        var uploadedPost = ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook)
-                        imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [uploadedPost]);
+//                        var uploadedPost = ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook)
+                        imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [uploadedPost!]);
                         // direct to the latest uploaded photo post
                         var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                         newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
                         self.navigationController!.pushViewController(newHome, animated: true);
                     }
                 }
-            //});
+            });
         }
     }
     @IBAction func tapBackground(sender: AnyObject) {

@@ -590,10 +590,10 @@ import UIKit
         var images = preprocessImages(imgs);
         post.updatePost(imgs, description: description, labels: labels, looks: looks);
     }
-    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) { //, finishFunction: (imgStruct: ImagePostStructure?)->Void) {
+    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>, finishFunction: (imgStruct: ImagePostStructure?)->Void) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
-//            finishFunction(imgStruct: nil)
+            finishFunction(imgStruct: nil)
             return;
         }
         else {
@@ -678,11 +678,11 @@ import UIKit
                         self.appendToLikedPosts(newPost.myObj.objectId)
                     }
 */
-//                    finishFunction(imgStruct: newPost)
+                    finishFunction(imgStruct: newPost)
                 }
                 else {
                     NSLog("Soem error of some sort");
-//                    finishFunction(imgStruct: nil)
+                    finishFunction(imgStruct: nil)
                 }
             });
         }

@@ -232,7 +232,11 @@ class ImagePostStructure {
         query.whereKey("postId", equalTo:myObj.objectId)
         let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
         if count >= 0 {
-            return count
+            if self.images.count > count { // post images in memory, not in parse db yet
+                return self.images.count
+            } else {
+                return count
+            }
         } else {
             return 0
         }
@@ -255,7 +259,11 @@ class ImagePostStructure {
         query.whereKey("postId", equalTo:myObj.objectId)
         query.countObjectsInBackgroundWithBlock{(count: Int32, error: NSError!) -> Void in
             if error == nil {
-                finishFunction(Int(count), nil)
+                if self.myShopLooks.count > Int(count) { // shopLooks in memory, not in parse db yet
+                    finishFunction(self.myShopLooks.count, nil)
+                } else {
+                    finishFunction(Int(count), nil)
+                }
             } else {
                 NSLog("Errror when getting shopLook num: \(error.description)")
                 finishFunction(nil, error)
@@ -666,6 +674,10 @@ class ImagePostStructure {
             query.findObjectsInBackgroundWithBlock {
                 (shopLooks: [AnyObject]!, error: NSError!) -> Void in
                 if error == nil {
+                    if self.myShopLooks.count > shopLooks.count { // shopLooks in memory, not in parse db yet
+                        finishFunction(input: self.myShopLooks)
+                        return
+                    }
                     for i in 0..<shopLooks.count {
                         let shopLook = shopLooks[i] as PFObject
                         let sl : ShopLook = ShopLook(title: shopLook["title"] as String, urlLink: shopLook["urlLink"] as String);
