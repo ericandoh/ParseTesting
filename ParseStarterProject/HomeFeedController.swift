@@ -188,6 +188,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
            if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
                 if self.imgBuffer!.owner != "UPLOADED" {
                     topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
+                } else {
+                    topLeftButton.hidden = true
+                    topLeftButton.enabled = false
                 }
            } else {
                 topLeftButton.hidden = true
