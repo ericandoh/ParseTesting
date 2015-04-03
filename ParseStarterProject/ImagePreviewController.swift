@@ -232,30 +232,29 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             self.navigationController!.popViewControllerAnimated(true);
         }
         else {
-            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
-            
-            //reset submission page
-            if ((self.navigationController) != nil) {
-                if ((self.navigationController!.parentViewController) != nil) {
-                    var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
-//                    overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
-//                    overlord.openHome();
-                    
-                    // initialize a new CustomImageBuffer with uploaded photos in memory
-//                    let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: FriendEncapsulator(friend: PFUser.currentUser()), owner: "COLLECTION")
-//                    imgBuffer.loadedPosts.append(ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook))
-//                    imgBuffer.loadedPostCount = 1
-//                    imgBuffer.hitEnd = true
-                    
-                    let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: nil, owner: "UPLOADED")
-                    var uploadedPost = ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook)
-                    imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [uploadedPost]);
-                    // direct to the latest uploaded photo post
-                    var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
-                    newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
-                    self.navigationController!.pushViewController(newHome, animated: true);
+            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook, { (uploadedPost : ImagePostStructure?) in
+                //reset submission page
+                if ((self.navigationController) != nil) {
+                    if ((self.navigationController!.parentViewController) != nil) {
+                        var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
+                        //                    overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
+                        //                    overlord.openHome();
+                        
+                        // initialize a new CustomImageBuffer with uploaded photos in memory
+                        //                    let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: FriendEncapsulator(friend: PFUser.currentUser()), owner: "COLLECTION")
+                        //                    imgBuffer.loadedPosts.append(ImagePostStructure(images: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook))
+                        //                    imgBuffer.loadedPostCount = 1
+                        //                    imgBuffer.hitEnd = true
+                        
+                        let imgBuffer = CustomImageBuffer(disableOnAnon: true, user: nil, owner: "UPLOADED")
+                        imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [uploadedPost!]);
+                        // direct to the latest uploaded photo post
+                        var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
+                        newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
+                        self.navigationController!.pushViewController(newHome, animated: true);
+                    }
                 }
-            }
+            });
         }
     }
     @IBAction func tapBackground(sender: AnyObject) {

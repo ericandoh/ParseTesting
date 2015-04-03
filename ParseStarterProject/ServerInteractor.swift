@@ -590,9 +590,10 @@ import UIKit
         var images = preprocessImages(imgs);
         post.updatePost(imgs, description: description, labels: labels, looks: looks);
     }
-    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
+    class func uploadImage(imgs: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>, finishFunction: (imgStruct: ImagePostStructure?)->Void) {
         var exclusivity = PostExclusivity.EVERYONE;
         if (isAnonLogged()) {
+            finishFunction(imgStruct: nil)
             return;
         }
         else {
@@ -655,7 +656,7 @@ import UIKit
                         slObj.saveInBackground()
                     }
                     // add post id for potential comments (might created before post stored in parse database due to async way) in the uploaded post
-                    var query = PFQuery(className:"PostComment")
+/*                    var query = PFQuery(className:"PostComment")
                     query.whereKey("postAuthorId", equalTo: newPost.myObj["authorId"])
                     query.whereKey("postId", equalTo: "") // empty str as temp post id
                     query.findObjectsInBackgroundWithBlock {
@@ -676,9 +677,12 @@ import UIKit
                         self.removeFromLikedPosts("")
                         self.appendToLikedPosts(newPost.myObj.objectId)
                     }
+*/
+                    finishFunction(imgStruct: newPost)
                 }
                 else {
                     NSLog("Soem error of some sort");
+                    finishFunction(imgStruct: nil)
                 }
             });
         }
