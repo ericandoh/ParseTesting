@@ -225,7 +225,7 @@ class ImagePostStructure {
         if (myObj.objectId == nil) { NSLog("get images count new uploaded post")
             return self.images.count
         }
-        
+/*
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
         let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
@@ -234,6 +234,8 @@ class ImagePostStructure {
         } else {
             return 0
         }
+*/
+        return myObj["imageFiles"].count
     }
     func getCommentsCount()->Int {
         var query = PFQuery(className:"PostComment")
