@@ -197,9 +197,6 @@ class ImagePostStructure {
         myObj.saveInBackground()
     }
     func getLikes()->Int {
-        if (myObj.objectId == nil) {
-            return 0
-        }
         return myObj["likes"] as Int
     }
     func getLikerIds()->Array<String> {
@@ -225,7 +222,7 @@ class ImagePostStructure {
         return myObj["passes"] as Int
     }
     func getImagesCount()->Int {
-        if (myObj.objectId == nil || myObj.createdAt == nil) { NSLog("new uploaded post")
+        if (myObj.objectId == nil) {
             return self.images.count
         }
         
@@ -239,16 +236,16 @@ class ImagePostStructure {
         }
     }
     func getCommentsCount()->Int {
-        if (myObj.objectId == nil) {
-            return 0
-        }
-        
         var query = PFQuery(className:"PostComment")
-        query.whereKey("postId", equalTo:myObj.objectId)
+        if (myObj.objectId == nil) {
+            query.whereKey("postId", equalTo: "")
+        } else {
+            query.whereKey("postId", equalTo:myObj.objectId)
+        }
         return query.countObjects()
     }
     func getShopLooksCount(finishFunction: (Int?, NSError?)->Void) {
-        if (myObj.objectId == nil || myObj.createdAt == nil) {
+        if (myObj.objectId == nil) {
             finishFunction(self.myShopLooks.count, nil)
             return
         }
