@@ -757,7 +757,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         // Dispose of any resources that can be recreated.
     }
     @IBAction func swipeUp(sender: UISwipeGestureRecognizer) { NSLog("swipe up")
-        if (self.imgBuffer!.getImagePostAt(viewCounter).myObj.createdAt == nil) {
+        if (self.imgBuffer!.getImagePostAt(viewCounter).myObj.objectId == nil) {
             pannerNoPan = false
             bottomPullToRefresh.hidden = true
         }
