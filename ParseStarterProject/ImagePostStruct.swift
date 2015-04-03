@@ -222,7 +222,7 @@ class ImagePostStructure {
         return myObj["passes"] as Int
     }
     func getImagesCount()->Int {
-        if (myObj.objectId == nil) {
+        if (myObj.objectId == nil) { NSLog("get images count new uploaded post")
             return self.images.count
         }
         
