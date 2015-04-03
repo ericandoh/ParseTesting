@@ -56,7 +56,8 @@ class ImagePostStructure {
         var imgId : Int = 0
         var curScale : Float = 0.9
         var imgArray: Array<PFFile> = [];
-        for image: UIImage in self.images {
+        // save individually in table PostImageFile, uncomment when need imageFiles in ImagePost table
+/*        for image: UIImage in self.images {
             NSLog("Making PF")
             var data = UIImageJPEGRepresentation(image, CGFloat(compressRatio)); NSLog("image size: \(data.length)")
             while (data.length >= PARSE_PFFILE_LIMIT) {
@@ -68,6 +69,7 @@ class ImagePostStructure {
              NSLog("add image: \(imgId) with size: \(data.length) and scale: \(curScale)")
             imgId += 1
         }
+*/
         //upload - relational data is saved as well
         myObj = PFObject(className:"ImagePost");
         myObj["imageFile"] = singleFile;     //separating this for sake of faster loading (since most ppl only see first img then move on)
@@ -225,7 +227,7 @@ class ImagePostStructure {
         if (myObj.objectId == nil) { NSLog("get images count new uploaded post")
             return self.images.count
         }
-/*
+
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
         let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
@@ -234,8 +236,6 @@ class ImagePostStructure {
         } else {
             return 0
         }
-*/
-        return myObj["imageFiles"].count
     }
     func getCommentsCount()->Int {
         var query = PFQuery(className:"PostComment")
@@ -722,6 +722,7 @@ class ImagePostStructure {
         //myObj must be saved by caller
         deletePostImageFile()
         var compressRatio = 1.0
+ /*
         image = images[0];
         let singleData = UIImageJPEGRepresentation(images[0], CGFloat(compressRatio));
         let singleFile = PFFile(name:"posted.jpeg",data:singleData);
@@ -756,6 +757,21 @@ class ImagePostStructure {
         var descriptionLabels: Array<String> = ServerInteractor.extractStrings(description);
         var labelArr: Array<String> = ServerInteractor.separateLabels(labels, labelsFromDescription: descriptionLabels);
         myObj["labels"] = labelArr;
+        myObj["shopLooks"] = looksArray;
+        myObj.saveInBackground();
+*/
+        // create post image file objects in table PostImageFile
+        for image: UIImage in images {
+            let data = UIImageJPEGRepresentation(image, CGFloat(compressRatio));
+            let file = PFFile(name:"posted.jpeg",data:data);
+            
+            var pifObj : PFObject = PFObject(className: "PostImageFile")
+            pifObj["name"] = "posted.jpeg";
+            pifObj["url"] = "";
+            pifObj["data"] = file;
+            pifObj["postId"] = self.myObj.objectId;
+            pifObj.saveInBackground()
+        }
         
         deletePostShopLook()
         var looksArray = NSMutableArray();
@@ -768,8 +784,7 @@ class ImagePostStructure {
             sl["postId"] = myObj.objectId
             sl.saveInBackground()
         }
-        myObj["shopLooks"] = looksArray;
-        myObj.saveInBackground();
+        
     }
     
     func deletePostImageFile() {
