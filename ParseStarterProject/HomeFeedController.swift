@@ -184,7 +184,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             // objectId is nil when current post is just uploaded and in memory instead of parse db
             // we don't want to go back to upload page in that case, so keep logo menu
            if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
-                if self.imgBuffer!.user != nil { // for posts in explore, profile page
+                if self.imgBuffer!.owner != HOME_OWNER { // for posts in explore, profile page
                     topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
                 } else { // for just uploaded post
                     topLeftButton.hidden = true
