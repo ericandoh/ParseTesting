@@ -231,12 +231,11 @@ class ImagePostStructure {
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
         let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
-        if count >= 0 {
-            if self.images.count > count { // post images in memory, not in parse db yet
-                return self.images.count
-            } else {
-                return count
-            }
+        
+        if self.images.count > count { // post images in memory, not in parse db yet
+            return self.images.count
+        } else if count >= 0 {
+            return count
         } else {
             return 0
         }
