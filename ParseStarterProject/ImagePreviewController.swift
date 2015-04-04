@@ -251,7 +251,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                         imgBuffer.initialSetup4(nil, configureCellFunction: {(Int)->Void in }, alreadyLoadedPosts: [uploadedPost!]);
                         // direct to the latest uploaded photo post
                         var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
-                        newHome.syncWithImagePostDelegate(imgBuffer, selectedAt: 0);
+                        newHome.syncForUploadedPost(imgBuffer, selectedAt: 0);
                         self.navigationController!.pushViewController(newHome, animated: true);
                     }
                 }

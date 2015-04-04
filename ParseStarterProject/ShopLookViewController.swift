@@ -29,6 +29,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
         self.navigationController?.navigationBar.topItem?.title = "Info"
+        self.navigationController?.navigationBar.topItem?.titleView?.tintColor = UIColor.whiteColor()
         
         editPostButton.titleLabel?.textColor = UIColor.grayColor()
         editPostButton.layer.borderWidth = CGFloat(1.0)
