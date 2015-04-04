@@ -1680,7 +1680,7 @@
             </objects>
             <point key="canvasLocation" x="-240" y="3087"/>
         </scene>
-        <!--Shop Look Controller-->
+        <!--Info-->
         <scene sceneID="750-Zy-jlg">
             <objects>
                 <viewController id="TVV-vv-2bG" customClass="ShopLookController" customModule="FashionStash" customModuleProvider="target" sceneMemberID="viewController">
@@ -1774,7 +1774,7 @@
                             <constraint firstAttribute="centerX" secondItem="SoW-Jq-znh" secondAttribute="centerX" id="vy1-Io-heS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="pbq-2W-Noi">
+                    <navigationItem key="navigationItem" title="Info" id="pbq-2W-Noi">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="49a-13-oLG">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3zH-n0-0kC">
                                 <rect key="frame" x="16" y="-3" width="30" height="30"/>
