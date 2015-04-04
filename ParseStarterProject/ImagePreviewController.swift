@@ -236,7 +236,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                 //reset submission page
                 if ((self.navigationController) != nil) {
                     if ((self.navigationController!.parentViewController) != nil) {
-                        var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
+                        // var overlord = self.navigationController!.parentViewController as SideMenuManagingViewController;
                         //                    overlord.resetWindow(SIDE_MENU_ITEMS[INDEX_OF_UPLOAD]);
                         //                    overlord.openHome();
                         
