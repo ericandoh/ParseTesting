@@ -204,7 +204,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideTableView.reloadData();
         var refreshingHome: Bool = false;
         if (contentString == previouslyShowing) {
-            if (SIDE_MENU_ITEMS[INDEX_OF_HOME] == contentString) {
+            // the 2nd condition is to refresh upload when clicked in just uploaded post
+            if (SIDE_MENU_ITEMS[INDEX_OF_HOME] == contentString || SIDE_MENU_ITEMS[INDEX_OF_UPLOAD] == contentString) {
                 refreshingHome = true;
             }
             else {
