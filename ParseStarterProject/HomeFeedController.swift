@@ -764,6 +764,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             pannerNoPan = false
             bottomPullToRefresh.hidden = true
         }
+        if self.imgBuffer?.getImagePostAt(viewCounter).images.count > 0 && pannerNoPan { // post in memory, not in parse db yet
+            pannerNoPan = false
+            if postCounter <= self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount() && !bottomPullToRefresh.hidden {
+                bottomPullToRefresh.hidden = true
+            }
+        }
         if (swiperNoSwipe || pannerNoPan) { NSLog("pass 1: \(swiperNoSwipe.description)---\(pannerNoPan.description)")
             return;
         }
@@ -785,6 +791,12 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         if (self.imgBuffer!.getImagePostAt(viewCounter).myObj.createdAt == nil) {
             pannerNoPan = false
             bottomPullToRefresh.hidden = true
+        }
+        if self.imgBuffer?.getImagePostAt(viewCounter).images.count > 0 && pannerNoPan { // post in memory, not in parse db yet
+            pannerNoPan = false
+            if postCounter <= self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount() && !bottomPullToRefresh.hidden {
+                bottomPullToRefresh.hidden = true
+            }
         }
         if (swiperNoSwipe || pannerNoPan) {
             return;
