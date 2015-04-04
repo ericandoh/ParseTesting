@@ -183,8 +183,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             // objectId is nil when current post is just uploaded and in memory instead of parse db
             // we don't want to go back to upload page in that case, so keep logo menu
-           if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) {
-                if self.imgBuffer!.owner != HOME_OWNER { // for posts in explore, profile page
+           if (imgBuffer!.getImagePostAt(viewCounter).myObj.objectId != nil) { NSLog("owner: \(self.imgBuffer!.owner)")
+                if self.imgBuffer!.owner == "SUGGEST" || self.imgBuffer!.owner == "COLLECTION" { // for posts in explore, profile page
                     topLeftButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
                 } else { // for just uploaded post
                     topLeftButton.hidden = true
@@ -282,6 +282,15 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         viewingComments = false;
         imgBuffer = theirBuffer;
         imgBuffer!.switchContext(HOME_OWNER, nil, configureCellFunction: configureCurrent);
+    }
+    func syncForUploadedPost(theirBuffer: CustomImageBuffer, selectedAt: Int) {
+        NSLog("Syncing to home at \(selectedAt)")
+        viewCounter = selectedAt;
+        postCounter = 0;
+        refreshNeeded = false;
+        viewingComments = false;
+        imgBuffer = theirBuffer;
+        imgBuffer!.switchContext(theirBuffer.owner, nil, configureCellFunction: configureCurrent);
     }
     //to refresh all images in feed
     func refresh() {
