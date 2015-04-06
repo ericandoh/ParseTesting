@@ -2209,7 +2209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gjj-23-bPA" customClass="BlurringDarkView" customModule="FashionStash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPT-wc-Nnf">
                                 <rect key="frame" x="42" y="126" width="236" height="40"/>
@@ -2408,10 +2408,10 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BPT-wc-Nnf" firstAttribute="top" secondItem="4Io-YJ-blA" secondAttribute="bottom" constant="26" id="2fK-Gh-pdM"/>
-                            <constraint firstItem="gjj-23-bPA" firstAttribute="top" secondItem="Fst-GP-2aj" secondAttribute="top" id="4ck-UN-O9b"/>
+                            <constraint firstItem="gjj-23-bPA" firstAttribute="top" secondItem="Fst-GP-2aj" secondAttribute="top" constant="64" id="4ck-UN-O9b"/>
                             <constraint firstAttribute="bottom" secondItem="Jaq-B4-KCF" secondAttribute="bottom" id="5Ug-dm-EIY"/>
                             <constraint firstAttribute="trailing" secondItem="WG2-oN-ILX" secondAttribute="trailing" id="6iT-68-WCn"/>
                             <constraint firstItem="M0E-qP-LrZ" firstAttribute="width" secondItem="8lc-mW-qNE" secondAttribute="width" id="7k9-M8-lZ8"/>
