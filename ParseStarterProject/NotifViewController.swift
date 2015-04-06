@@ -63,7 +63,7 @@ class NotifViewController: UITableViewController {
         else {
             var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
             mainUser.fetchImage({(image: UIImage)->Void in
-                var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 0, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT));
+                var imageView: BlurringDarkView = BlurringDarkView(frame: CGRectMake(0, 64, FULLSCREEN_WIDTH, TRUE_FULLSCREEN_HEIGHT-64));
                 var backImg = image
                 if backImg == DEFAULT_USER_ICON {
                     backImg = DEFAULT_USER_ICON_BACK
