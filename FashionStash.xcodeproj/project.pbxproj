@@ -45,7 +45,6 @@
 		8A8F41261ACB636E008AA80F /* dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41251ACB636E008AA80F /* dress.png */; };
 		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8ABA86001AB3A66C00B6EC4A /* PhotoDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */; };
-		8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */; };
 		8AC8ADAB1AAF63B00051232C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF551613CC42002132AF /* Social.framework */; };
 		8AC8ADAC1AAF63BF0051232C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF521613CC3C002132AF /* Accounts.framework */; };
 		8ACCD77F1AC5FFF10012D4FE /* FashionStash_Emptynew.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */; };
@@ -242,8 +241,6 @@
 		8A8F41251ACB636E008AA80F /* dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dress.png; sourceTree = "<group>"; };
 		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDisplayViewController.swift; sourceTree = "<group>"; };
-		8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
-		8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
 		8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FashionStash_Emptynew.png; sourceTree = "<group>"; };
 		8ACCD77E1AC5FFF10012D4FE /* swipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe.png; sourceTree = "<group>"; };
 		8ACCD7811AC60C360012D4FE /* ShopLookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookViewController.swift; sourceTree = "<group>"; };
@@ -630,8 +627,6 @@
 				D92D8A9E1999CA5300A41D96 /* RealLoginViewController.swift */,
 				24F51C6B199B05AA004E9C7C /* ReportProblemViewController.swift */,
 				D95E662A19AA8444007ED067 /* LikedUsersViewController.swift */,
-				8AC8ADA81AAF5B8C0051232C /* PhotoPickerViewController.h */,
-				8AC8ADA91AAF5C440051232C /* PhotoPickerViewController.m */,
 				8ABA85FF1AB3A66C00B6EC4A /* PhotoDisplayViewController.swift */,
 				8AF9528F1AC0B7F500C9EA76 /* FollowUserViewController.swift */,
 				8ACCD7811AC60C360012D4FE /* ShopLookViewController.swift */,
@@ -991,7 +986,6 @@
 				D9715D2D1964CD1D00BA3C74 /* SingleNotifViewController.swift in Sources */,
 				D923909C19929107001B5CBE /* SuggestedHeaderView.swift in Sources */,
 				8AF952901AC0B7F500C9EA76 /* FollowUserViewController.swift in Sources */,
-				8AC8ADAA1AAF5C440051232C /* PhotoPickerViewController.m in Sources */,
 				24B90D531982CF2C00AF90FD /* UserProfileViewController.swift in Sources */,
 				D92326DA197833BA00F60B16 /* SearchCollectionViewCell.swift in Sources */,
 				07CF20BD1A5F271800354ABE /* UITextFieldWithInsets.swift in Sources */,
