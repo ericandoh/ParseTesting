@@ -16,9 +16,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @IBOutlet weak var backImageView: BlurringDarkView!
     @IBOutlet weak var backButton: UIButton!
     
-    
-    
-    
     var currentTerm: String = "";
     var searchTermList: Array<String> = [];
     
@@ -174,13 +171,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func setBackImage() {
-        if (collectionDelegateMain!.imgBuffer.numItems() > 0) {
-            var post = collectionDelegateMain!.getPost(0);
-            post.loadImage({(imgStruct: ImagePostStructure, index: Int) in
-                //self.backImageView.image = imgStruct.image!;
-                self.backImageView.setImageAndBlur(imgStruct.image!);
-            }, index: 0)
-        }
+        var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
+        mainUser.fetchImage({(image: UIImage)->Void in
+            //self.backImage.image = image;
+            var backImg = image
+            if backImg == DEFAULT_USER_ICON {
+                backImg = DEFAULT_USER_ICON_BACK
+            }
+            self.backImageView.setImageAndBlur(backImg);
+        })
     }
     
     //------------search bar functions---------------
