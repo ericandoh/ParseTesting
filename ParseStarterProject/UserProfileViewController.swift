@@ -118,7 +118,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
                     userLabel.textColor = TITLE_TEXT_COLOR;
                     userLabel.text = textToPut;
-                    userLabel.font = USER_TITLE_TEXT_FONT;
+                    userLabel.font = TITLE_TEXT_FONT;
                     userLabel.textAlignment = NSTextAlignment.Center
                     view.addSubview(userLabel)
                     self.navigationItem.titleView = view;
@@ -127,7 +127,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                     var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar-6))
                     userLabel.textColor = TITLE_TEXT_COLOR;
                     userLabel.text = textToPut;
-                    userLabel.font = USER_TITLE_TEXT_FONT;
+                    userLabel.font = TITLE_TEXT_FONT
                     userLabel.textAlignment = NSTextAlignment.Center
                     
                     var fpUserLabel: UILabel = UILabel(frame: CGRectMake(0, heightOfBar-6, widthOfTitleBar, 20))
@@ -173,7 +173,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
-                userLabel.font = USER_TITLE_TEXT_FONT;
+                userLabel.font = TITLE_TEXT_FONT;
                 userLabel.textAlignment = NSTextAlignment.Center
 
                 self.userWebURL.text = ""
@@ -196,7 +196,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
                 var userLabel: UILabel = UILabel(frame: CGRectMake(0, 0, widthOfTitleBar, heightOfBar+14))
                 userLabel.textColor = TITLE_TEXT_COLOR;
                 userLabel.text = textToPut;
-                userLabel.font = USER_TITLE_TEXT_FONT;
+                userLabel.font = TITLE_TEXT_FONT;
                 userLabel.textAlignment = NSTextAlignment.Center
                 self.navigationItem.titleView = view;
                 view.addSubview(userLabel);

@@ -120,9 +120,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
         self.currentPost = post;
-//        if (backgroundImg != nil) { TODO: figure it out why nil
-//        self.backImage.image = backgroundImg;
-//        }
+//        self.backImage.image = backgroundImg
     }
     
     
