@@ -41,6 +41,13 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.descriptionTextField.userInteractionEnabled = true;
         self.descTextFieldConstraint.constant = MIN_SHOPLOOK_CONSTRAINT;
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
+        
+        
         var descripTextToSet = currentPost!.getDescriptionWithTag();
         if (descripTextToSet == "") {
             descripTextToSet = "Gallery of images by @"+currentPost!.getAuthor();
@@ -58,11 +65,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         getShopLooks()
         
         self.backImage.setImageAndBlur(backImg!)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
     }
     
     @IBAction func backPress(sender: AnyObject) {
