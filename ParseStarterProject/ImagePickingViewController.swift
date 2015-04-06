@@ -91,9 +91,10 @@ struct AssetItem {
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default);
         self.navigationController!.navigationBar.shadowImage = UIImage();
         self.navigationController!.navigationBar.translucent = true;
-        self.navigationController!.view.backgroundColor = UIColor.clearColor();
+        self.navigationController!.view.backgroundColor = UIColor.blackColor();
         self.navigationTitle.setTitle("", forState: UIControlState.Normal);
         self.navigationController!.navigationBar.titleTextAttributes = TITLE_TEXT_ATTRIBUTES;
+        self.navigationController?.navigationBar.tintColor = UIColor.blackColor()
         
         
         var toolbar = UIToolbar(frame: optionsView.frame);
