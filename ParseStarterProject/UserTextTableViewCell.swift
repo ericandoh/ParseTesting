@@ -237,6 +237,6 @@ class UserTextTableViewCell: UITableViewCell {
     func goToProfile() {
         var nextBoard : UIViewController = owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
         (nextBoard as UserProfileViewController).receiveUserInfo(self.friend!);
-        owner!.navigationController!.pushViewController(nextBoard, animated: true);
+        owner!.navigationController!.pushViewController(nextBoard, animated: false);
     }
 }

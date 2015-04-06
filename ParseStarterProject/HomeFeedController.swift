@@ -1240,7 +1240,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         var currentPostAuthor = self.imgBuffer!.getImagePostAt(viewCounter).getAuthorFriend()
         var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
         (nextBoard as UserProfileViewController).receiveUserInfo(currentPostAuthor);
-        self.navigationController!.pushViewController(nextBoard, animated: true);
+        self.navigationController!.pushViewController(nextBoard, animated: false);
     }
     
     func motionPanned(sender: UIPanGestureRecognizer) {
