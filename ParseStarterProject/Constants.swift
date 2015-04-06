@@ -144,6 +144,7 @@ let SIDE_MENU_BACK_GREEN = CGFloat((GREEN_HEX & 0xFF00) >> 8);
 let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
 
 let SIDE_MENU_BACK_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0);
+let HASH_TAG_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_MENU_BACK_GREEN/255.0, blue: SIDE_MENU_BACK_BLUE/255.0, alpha: 1.0)
 
 let TITLE_TEXT_COLOR = UIColor.whiteColor();
 

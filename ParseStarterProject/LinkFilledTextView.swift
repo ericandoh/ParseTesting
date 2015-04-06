@@ -293,14 +293,14 @@ class LinkFilledTextView: UITextView {
             }
             else if (individualString.hasPrefix("#")) {
                 let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
-                let attrDict = [kTypeTag: ExternalViewLink.TAG.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
+                let attrDict = [kTypeTag: ExternalViewLink.TAG.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: HASH_TAG_COLOR];
                 attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
             }
             else if (individualString.hasPrefix("@")) {
                 let font = UIFont(name: "HelveticaNeueLTPro-Lt", size:14.0)!;
-                let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: SIDE_MENU_BACK_COLOR];
+                let attrDict = [kTypeTag: ExternalViewLink.USER.rawValue, kNSFontAttributeName: font, kNSForegroundColorAttributeName: HASH_TAG_COLOR];
                 attributedStringPiece = NSAttributedString(string: individualString.lowercaseString, attributes: attrDict);
                 canRespond = true;
                 self.userInteractionEnabled = true;
