@@ -483,14 +483,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         // config post authro name, icon, upload creationh time and image page in nav bar
         let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let title : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
+        let titleUserName : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
         let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
         let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
         
-        title.text = currentPost.getAuthor()
-        title.textColor = UIColor.whiteColor()
-        title.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
-        title.backgroundColor = UIColor.clearColor()
+        titleUserName.text = currentPost.getAuthor()
+        titleUserName.textColor = UIColor.whiteColor()
+        titleUserName.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
+        titleUserName.backgroundColor = UIColor.clearColor()
+        titleUserName.userInteractionEnabled = true
+        let tapUserGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+        titleUserName.addGestureRecognizer(tapUserGesture)
         
         titleTime.text = currentPost.getAgeAsString() + " ago • "
         titleTime.textColor = UIColor.whiteColor()
@@ -511,8 +514,10 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             imageView.layer.masksToBounds = true
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageView.layer.borderWidth = 0
+            imageView.userInteractionEnabled = true
+            imageView.addGestureRecognizer(tapUserGesture)
             
-            myView.addSubview(title)
+            myView.addSubview(titleUserName)
             myView.addSubview(titleTime)
             myView.addSubview(titlePage)
             myView.backgroundColor = UIColor.blackColor()
@@ -1230,6 +1235,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         });
     }
 */
+    func goToProfile() {
+        var currentPostAuthor = self.imgBuffer!.getImagePostAt(viewCounter).getAuthorFriend()
+        var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+        (nextBoard as UserProfileViewController).receiveUserInfo(currentPostAuthor);
+        self.navigationController!.pushViewController(nextBoard, animated: true);
+    }
+    
     func motionPanned(sender: UIPanGestureRecognizer) {
         if (swiperNoSwipe) {
             //turn this on as well if I'm redrawing stuff
