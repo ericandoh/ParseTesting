@@ -1170,7 +1170,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var currentPost: ImagePostStructure = imgBuffer!.getImagePostAt(viewCounter)
-        var currentImg = frontImageView.image;
+        var currentImg = currentPost.image
         if (segue.identifier == "ViewCommentsSegue") {
             if (segue.destinationViewController is CommentViewController) {
               //  vc.modalTransitionStyle = UIModalTransitionStyleCoverVertical; // Rises from below

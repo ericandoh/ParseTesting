@@ -126,11 +126,12 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
                 hideCommentBar()
             }
             //backImgView.image = backImg!;
-            if backImg! == DEFAULT_USER_ICON {
-                backImgView.setImageAndBlur(backImg!);
-            } else {
-                backImgView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
-            }
+//            if backImg! == DEFAULT_USER_ICON {
+//                backImgView.setImageAndBlur(backImg!);
+//            } else {
+//                backImgView.setImageAndBlur(DEFAULT_USER_ICON_BACK);
+//            }
+            backImgView.setImageAndBlur(self.backImg!)
         }
         self.commentTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
         self.sendButton.layer.borderWidth = CGFloat(1.0)

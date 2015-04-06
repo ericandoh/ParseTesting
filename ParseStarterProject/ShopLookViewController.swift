@@ -9,7 +9,7 @@
 import UIKit
 
 class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate { //, UITableViewDataSource, UITableViewDelegate {
-    @IBOutlet var backImage: UIImageView!
+    @IBOutlet var backImage: BlurringDarkView!
     @IBOutlet var editPostButton: UIButton!
     @IBOutlet var shopLookButton: UIButton!
     @IBOutlet var shopLookTableView: UITableView!
@@ -22,6 +22,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     var alerter : CompatibleAlertViews?
     var shopLookList : Array<ShopLook> = []
     var currentShopDelegate: ShopLookDelegate?
+    var backImg : UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,9 +54,10 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         shopLookButton.hidden = true
         shopLookTableView.hidden = true
         shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
-
         
         getShopLooks()
+        
+        self.backImage.setImageAndBlur(backImg!)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -120,7 +122,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     func receiveFromPrevious(post: ImagePostStructure, backgroundImg: UIImage) {
         self.currentPost = post;
-//        self.backImage.image = backgroundImg
+        self.backImg = backgroundImg
     }
     
     

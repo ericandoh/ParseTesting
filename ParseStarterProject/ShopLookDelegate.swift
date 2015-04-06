@@ -45,6 +45,8 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         //cell.textLabel.font = TABLE_CELL_FONT;
         cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 14.0);
         cell.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
+        cell.backgroundColor = UIColor.clearColor()
+//        cell.tintColor = UIColor.blackColor()
 
         //BELOW IS A BUG! >:(
         //cell.separatorInset = UIEdgeInsetsZero;
