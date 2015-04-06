@@ -44,6 +44,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel!.textColor = UIColor.whiteColor()
         //cell.textLabel.font = TABLE_CELL_FONT;
         cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 14.0);
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
 
         //BELOW IS A BUG! >:(
         //cell.separatorInset = UIEdgeInsetsZero;
@@ -101,5 +102,8 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
+    }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
     }
 }

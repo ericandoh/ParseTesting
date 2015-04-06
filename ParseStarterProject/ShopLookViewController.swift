@@ -52,8 +52,15 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         shopLookButton.hidden = true
         shopLookTableView.hidden = true
+        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+
         
         getShopLooks()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
     }
     
     @IBAction func backPress(sender: AnyObject) {

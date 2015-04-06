@@ -413,6 +413,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.pressedTableAt(indexPath);
     }
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+    }
     func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
         pressedTableAt(FriendEncapsulator.dequeueFriendEncapsulatorByName(searchBar.text.lowercaseString)!);
     }

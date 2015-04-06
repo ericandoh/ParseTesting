@@ -222,6 +222,11 @@ class NotifViewController: UITableViewController {
         pressedNotifAt(indexPath);
         tableView.deselectRowAtIndexPath(indexPath, animated: true);
     }
+    
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+    }
+
     func pressedNotifAt(indexPath: NSIndexPath) {
         var temp = indexPath.row;
         
