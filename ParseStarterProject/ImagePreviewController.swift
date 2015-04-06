@@ -19,7 +19,7 @@ class ShopTextButton: UIButton {
 
 class ImagePreviewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UINavigationControllerDelegate {
 
-    @IBOutlet var labelBar: UITextField!;
+//    @IBOutlet var labelBar: UITextField!;
     
     @IBOutlet var textView: UITextView!
     
@@ -80,16 +80,16 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         textView.delegate = self;
         if (iOS_VERSION > 7.0) {
             textView.keyboardAppearance = UIKeyboardAppearance.Dark;
-            labelBar.keyboardAppearance = UIKeyboardAppearance.Dark
+//            labelBar.keyboardAppearance = UIKeyboardAppearance.Dark
 
         }
-        labelBar.borderStyle = UITextBorderStyle.None;
-        labelBar.layer.borderWidth = 1;
-        labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
+//        labelBar.borderStyle = UITextBorderStyle.None;
+//        labelBar.layer.borderWidth = 1;
+//        labelBar.layer.borderColor = UIColor.whiteColor().CGColor;
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         
-        labelBar.text = prevLabel;
+//        labelBar.text = prevLabel;
         if (prevDescrip == "") {
             setPlaceholderText();
         }
@@ -230,11 +230,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             description = textView.text;
         }
         if (isEditingExisting) {
-            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook);
+            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: "", looks: shopTheLook);
             self.navigationController!.popViewControllerAnimated(true);
         }
         else {
-            ServerInteractor.uploadImage(receivedImages, description: description, labels: labelBar!.text, looks: shopTheLook, { (uploadedPost : ImagePostStructure?) in
+            ServerInteractor.uploadImage(receivedImages, description: description, labels: "", looks: shopTheLook, { (uploadedPost : ImagePostStructure?) in
                 //reset submission page
                 if ((self.navigationController) != nil) {
                     if ((self.navigationController!.parentViewController) != nil) {
@@ -262,15 +262,15 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     }
     @IBAction func tapBackground(sender: AnyObject) {
         textView.resignFirstResponder()
-        labelBar.resignFirstResponder();
+//        labelBar.resignFirstResponder();
         tapBackgroundOutlet.hidden = true;
     }
-    
+/*
     @IBAction func textFieldReturn(sender: AnyObject) {
         sender.resignFirstResponder()
         tapBackgroundOutlet.hidden = true;
     }
-    
+*/  
     @IBAction func reject(sender: AnyObject) {
         if ((self.navigationController) != nil) {
             if ((self.navigationController!.parentViewController) != nil) {
@@ -586,7 +586,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                     sendBackText = textView.text;
                 }
                 
-                (prevController as ImagePickingViewController).receivePreviousImages(labelBar.text, prevDescrip: sendBackText, prevOrder: highlightOrder, prevShop: shopTheLook);
+                (prevController as ImagePickingViewController).receivePreviousImages("", prevDescrip: sendBackText, prevOrder: highlightOrder, prevShop: shopTheLook);
             }
         }
     }

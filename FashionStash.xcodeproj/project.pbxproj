@@ -43,7 +43,6 @@
 		8A8F41231ACB1B2E008AA80F /* greenArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41211ACB1B2E008AA80F /* greenArrow.png */; };
 		8A8F41241ACB1B2E008AA80F /* greenArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */; };
 		8A8F41261ACB636E008AA80F /* dress.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8F41251ACB636E008AA80F /* dress.png */; };
-		8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */; };
 		8AC8ADAB1AAF63B00051232C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF551613CC42002132AF /* Social.framework */; };
 		8AC8ADAC1AAF63BF0051232C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6372FF521613CC3C002132AF /* Accounts.framework */; };
 		8ACCD77F1AC5FFF10012D4FE /* FashionStash_Emptynew.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */; };
@@ -238,7 +237,6 @@
 		8A8F41211ACB1B2E008AA80F /* greenArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenArrow.png; sourceTree = "<group>"; };
 		8A8F41221ACB1B2E008AA80F /* greenArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "greenArrow@2x.png"; sourceTree = "<group>"; };
 		8A8F41251ACB636E008AA80F /* dress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dress.png; sourceTree = "<group>"; };
-		8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = lib_ratio08.jpeg; path = ../../../../Downloads/lib_ratio08.jpeg; sourceTree = "<group>"; };
 		8ACCD77D1AC5FFF10012D4FE /* FashionStash_Emptynew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FashionStash_Emptynew.png; sourceTree = "<group>"; };
 		8ACCD77E1AC5FFF10012D4FE /* swipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe.png; sourceTree = "<group>"; };
 		8ACCD7811AC60C360012D4FE /* ShopLookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLookViewController.swift; sourceTree = "<group>"; };
@@ -523,7 +521,6 @@
 			children = (
 				D9DEE64D199F1FD800F08CC5 /* fashtitlescreen.png */,
 				24A4812719944DA5001BE688 /* gradient.png */,
-				8ABA85FD1AB365B500B6EC4A /* lib_ratio08.jpeg */,
 				8A052D2C1AC46E670039D074 /* infoBar.png */,
 				8A052D2D1AC46E670039D074 /* infoBar@2x.png */,
 				8A052D2E1AC46E670039D074 /* topBox.png */,
@@ -884,7 +881,6 @@
 				07CF20C21A5F356400354ABE /* comment.png in Resources */,
 				24A4812819944DA5001BE688 /* gradient.png in Resources */,
 				D91E5EA1199BBDA50041CB3F /* logo_menu.png in Resources */,
-				8ABA85FE1AB365B500B6EC4A /* lib_ratio08.jpeg in Resources */,
 				D9BB598F199A844100367408 /* HelveticaNeueLTPro-UltLtExO.otf in Resources */,
 				8AF9528E1ABCD3C300C9EA76 /* swipeGuide.png in Resources */,
 				D9BB595F199A844100367408 /* Didot.ttc in Resources */,
