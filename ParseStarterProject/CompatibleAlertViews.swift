@@ -129,9 +129,12 @@ class CompatibleAlertViews: NSObject, UIAlertViewDelegate {
             alert.addButtonWithTitle(actionName);
             alert.addButtonWithTitle("Cancel");
             alert.title = title;
+            alert.textFieldAtIndex(0)!.text = actionString1;
+            alert.textFieldAtIndex(1)!.text = actionString2;
             alert.textFieldAtIndex(0)!.placeholder = actionHolder1;
             alert.textFieldAtIndex(1)!.placeholder = actionHolder2;
-            alert.textFieldAtIndex(1)!.secureTextEntry = false;
+            alert.textFieldAtIndex(0)!.secureTextEntry = secure1;
+            alert.textFieldAtIndex(1)!.secureTextEntry = secure2;
             alert.show();
             
         }

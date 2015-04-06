@@ -100,10 +100,12 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         
         scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT);   //595;
         
-        if (shopTheLook.count > 0) {
+        if (shopTheLook.count != shopButtons.count) {
+            self.resetShopLookButtons()
             scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(shopTheLook.count) * LABEL_BOX_HEIGHT);
             
             for (index, look) in enumerate(shopTheLook) {
+                NSLog(shopTheLook[index].title)
                 var oldY = BOX_START_Y + CGFloat(index) * LABEL_BOX_HEIGHT;
                 var newButton = ShopButton(frame: CGRectMake(BOX_X, oldY, BOX_WIDTH, LABEL_BOX_HEIGHT));
                 featurizeShopButton(index, shopButton: newButton);
@@ -290,7 +292,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         self.prevLabel = prevLabel;
         self.prevDescrip = prevDescrip;
         self.highlightOrder = hOrder;
-        self.shopTheLook = prevShop;
+        
+        self.shopTheLook = prevShop
     }
     
    /* override func touchesBegan(touches: NSSet!, withEvent event: UIEvent!) {
@@ -306,8 +309,18 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         
         var prevLabel = post.getLabels();
         var prevDescrip = post.getDescription();
-        var prevShop = post.getShopLooks();
-        
+
+
+        post.fetchShopLooks({(input: Array<ShopLook>)->Void in
+            //if not configured from before (i.e. call from edit)
+            //self.shopTheLook = input
+            self.resetShopLookButtons()
+            self.shopTheLook = []
+            for singleLook in input {
+                self.addManualShopTheLook(ShopLook(title: singleLook.title, urlLink: singleLook.urlLink))
+            }
+        })
+
         self.isEditingExisting = true;
         receivedImages = imageValues;
         self.prevLabel = prevLabel;
@@ -317,7 +330,6 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             hOrder.append(ImageIndex(groupNum: -1, index: i, assetImg: nil));
         }
         self.highlightOrder = hOrder;
-        self.shopTheLook = prevShop;
         self.existingPost = post;
     }
 
@@ -439,6 +451,9 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         self.presentViewController(alert, animated: true, completion: nil)*/
     }
     func editShopTheLook(sender: UIButton!) {
+
+        self.alerter = CompatibleAlertViews(presenter: self);
+        
         var thisButton = sender as ShopTextButton;
         let index = thisButton.shopIndex;
         
@@ -522,6 +537,24 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         self.presentViewController(alert, animated: true, completion: nil)*/
     }
     
+    
+    func resetShopLookButtons() {
+        let buttonCount = self.shopButtons.count
+        
+        for button in self.shopButtons {
+            button.removeFromSuperview();
+        }
+        
+        self.shopButtons.removeAll(keepCapacity: false)
+        
+        self.shopTheLookConstraint.constant = self.shopTheLookConstraint.constant - (LABEL_BOX_HEIGHT * CGFloat(buttonCount));
+        
+        self.scrollView.contentSize = CGSize(width: FULLSCREEN_WIDTH, height: SCROLLFIELD_DEFAULT_HEIGHT + CGFloat(self.shopTheLook.count) * LABEL_BOX_HEIGHT);
+        
+        //self.mainWindowConstraint.constant = self.mainWindowConstraint.constant - LABEL_BOX_HEIGHT;
+        
+        
+    }
     
     @IBAction func whatIsShopTheLook(sender: UIButton) {
         CompatibleAlertViews.makeNotice("What is Shop the Look?", message: "Let your friends know where they can buy your outfit!\nExample\nTitle: Gucci Sunglasses\nURL: http://shop.nordstrom.com/s/gucci-57mm-oversized-sunglasses/3957134", presenter: self);
