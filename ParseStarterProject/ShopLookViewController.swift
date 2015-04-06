@@ -106,7 +106,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
                     if (self.navigationController != nil) {  //to avoid race conditions
                         var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController
                         (nextBoard as UserProfileViewController).receiveUserInfo(FriendEncapsulator.dequeueFriendEncapsulator(PFUser.currentUser()))
-                        self.navigationController!.pushViewController(nextBoard, animated: true)
+                        self.navigationController!.pushViewController(nextBoard, animated: false)
                     }
                 });
                 

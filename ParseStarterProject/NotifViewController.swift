@@ -254,7 +254,7 @@ class NotifViewController: UITableViewController {
                 var friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(member.friendId);
                 var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                self.navigationController!.pushViewController(nextBoard, animated: true);
+                self.navigationController!.pushViewController(nextBoard, animated: false);
             }
         }
         else if (member.type == NotificationType.PLAIN_TEXT.rawValue) {

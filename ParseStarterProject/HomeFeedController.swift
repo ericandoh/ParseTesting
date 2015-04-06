@@ -762,7 +762,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
                 if (self.navigationController != nil) {  //to avoid race conditions
                     var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                     (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                    self.navigationController!.pushViewController(nextBoard, animated: true);
+                    self.navigationController!.pushViewController(nextBoard, animated: false);
                 }
             }
         });

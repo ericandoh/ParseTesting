@@ -449,7 +449,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                 self.setNewBackgroundFor(nil);
                 var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
                 (nextBoard as UserProfileViewController).receiveUserInfo(friend);
-                self.navigationController!.pushViewController(nextBoard, animated: true);
+                self.navigationController!.pushViewController(nextBoard, animated: false);
             }
             else {
                 CompatibleAlertViews.makeNotice("No user found!", message: "User \(friend.username) does not exist", presenter: self);

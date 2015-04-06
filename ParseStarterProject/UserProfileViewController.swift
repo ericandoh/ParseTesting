@@ -773,7 +773,7 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
             var temp = indexPath.row
             var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
             (nextBoard as UserProfileViewController).receiveUserInfo(friendList[temp]!);
-            self.navigationController!.pushViewController(nextBoard, animated: true);
+            self.navigationController!.pushViewController(nextBoard, animated: false);
         }
     }
 }

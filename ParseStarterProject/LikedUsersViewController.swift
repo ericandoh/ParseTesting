@@ -94,7 +94,7 @@ class LikedUsersViewController: UIViewController, UITableViewDelegate, UITableVi
             var temp = indexPath.row
             var nextBoard : UIViewController = self.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
             (nextBoard as UserProfileViewController).receiveUserInfo(likingUsers[temp]);
-            self.navigationController!.pushViewController(nextBoard, animated: true);
+            self.navigationController!.pushViewController(nextBoard, animated: false);
         }
     }
     
