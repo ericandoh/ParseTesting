@@ -2763,7 +2763,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c1X-dw-Ore" customClass="BlurringDarkView" customModule="FashionStash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                             </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="delete_swipe_info_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="XYF-s5-5sl">
                                 <rect key="frame" x="15" y="70" width="290" height="35"/>
@@ -3012,7 +3012,7 @@
                             <constraint firstItem="3uk-HZ-4aK" firstAttribute="top" secondItem="SSB-6O-sm9" secondAttribute="top" constant="65" id="4F5-gk-A5M"/>
                             <constraint firstAttribute="bottom" secondItem="c1X-dw-Ore" secondAttribute="bottom" id="8fL-xk-C9S"/>
                             <constraint firstItem="3uk-HZ-4aK" firstAttribute="leading" secondItem="SSB-6O-sm9" secondAttribute="leading" id="HlA-DW-ruO"/>
-                            <constraint firstItem="c1X-dw-Ore" firstAttribute="top" secondItem="SSB-6O-sm9" secondAttribute="top" id="Qoa-gw-bT2"/>
+                            <constraint firstItem="c1X-dw-Ore" firstAttribute="top" secondItem="SSB-6O-sm9" secondAttribute="top" constant="64" id="Qoa-gw-bT2"/>
                             <constraint firstAttribute="bottom" secondItem="3uk-HZ-4aK" secondAttribute="bottom" id="ccd-ND-x02"/>
                             <constraint firstItem="c1X-dw-Ore" firstAttribute="leading" secondItem="SSB-6O-sm9" secondAttribute="leading" id="jUy-Al-GBF"/>
                             <constraint firstAttribute="trailing" secondItem="c1X-dw-Ore" secondAttribute="trailing" id="vKA-UL-5IK"/>
