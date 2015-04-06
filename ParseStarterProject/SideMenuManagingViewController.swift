@@ -61,7 +61,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideView.addConstraint(trailingConstraint);
         self.sideView.addConstraint(bottomConstraint);
         
-        self.sideTableView.alpha = 0.6
+        self.sideTableView.alpha = 0.8
     }
     
     override func didReceiveMemoryWarning() {
@@ -386,7 +386,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         
         var transparentBackgroundView = UIView();
         transparentBackgroundView.backgroundColor = SIDE_MENU_BACK_COLOR;
-        transparentBackgroundView.alpha = CGFloat(SIDE_MENU_OPACITIES[indexPath.row]) / DAMPENING_CONSTANT;
+        transparentBackgroundView.alpha = 0.8 // CGFloat(SIDE_MENU_OPACITIES[indexPath.row]) / DAMPENING_CONSTANT;
         
         //transparentBackgroundView.alpha = 0.1;
         
@@ -397,7 +397,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         
         
         //var label: UILabel = UILabel(frame: CGRectMake(0, 0, 40, 40));
-        
+/*
         if (SIDE_MENU_ITEMS[indexPath.row] == currentlyShowing) {
             cell.titleLabel.textColor = UIColor(white: 1.0, alpha: 0.9);
             cell.iconImageView.alpha = 0.9;
@@ -408,6 +408,11 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             cell.iconImageView.alpha = 0.4;
             cell.numberCounter.textColor = UIColor(white: 1.0, alpha: 0.4);
         }
+*/
+        cell.titleLabel.textColor = UIColor.whiteColor();
+        cell.iconImageView.alpha = 1.0;
+        cell.numberCounter.textColor = UIColor.whiteColor()
+        
         if (indexPath.row == INDEX_OF_NOTIF) {
             cell.numberCounter.textAlignment = NSTextAlignment.Center;
             ServerInteractor.getNumUnreadNotifications({
