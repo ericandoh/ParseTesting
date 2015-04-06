@@ -492,8 +492,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         titleUserName.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
         titleUserName.backgroundColor = UIColor.clearColor()
         titleUserName.userInteractionEnabled = true
-        let tapUserGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
-        titleUserName.addGestureRecognizer(tapUserGesture)
+        let tapUserNameGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+        titleUserName.addGestureRecognizer(tapUserNameGesture)
         
         titleTime.text = currentPost.getAgeAsString() + " ago • "
         titleTime.textColor = UIColor.whiteColor()
@@ -515,7 +515,8 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
             imageView.layer.borderWidth = 0
             imageView.userInteractionEnabled = true
-            imageView.addGestureRecognizer(tapUserGesture)
+            let tapUserIconGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+            imageView.addGestureRecognizer(tapUserIconGesture)
             
             myView.addSubview(titleUserName)
             myView.addSubview(titleTime)
