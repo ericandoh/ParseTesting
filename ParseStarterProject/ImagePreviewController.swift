@@ -270,7 +270,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         sender.resignFirstResponder()
         tapBackgroundOutlet.hidden = true;
     }
-*/  
+*/
     @IBAction func reject(sender: AnyObject) {
         if ((self.navigationController) != nil) {
             if ((self.navigationController!.parentViewController) != nil) {
