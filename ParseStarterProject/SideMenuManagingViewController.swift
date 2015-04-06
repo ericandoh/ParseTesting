@@ -16,10 +16,13 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
     @IBOutlet var sideTableView: UITableView!
     @IBOutlet var outOfMenuButton: UIButton!
     @IBOutlet var sideMenuRightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomSpaceConstraint: NSLayoutConstraint!
+    
     var viewControllerDictionary: Dictionary<String, UIViewController> = [:];
     var currentlyShowing: String = "";
     var menuOpen: Bool = true;
     var hasLaidOut: Bool = false;
+    
     
     var suppressMenu: Bool = false;
     
@@ -120,7 +123,17 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         suppressMenu = suppressed;
     }
     
+    func openMenuFromHome() {
+        bottomSpaceConstraint.constant = HOME_FEED_TOOLBAR_HEIGHT;
+        openMenuWork();
+    }
+
     func openMenu() {
+        bottomSpaceConstraint.constant = 0;
+        openMenuWork();
+    }
+
+    func openMenuWork() {
         if (menuOpen) {
             NSLog("Menu is already open what")
             return;
@@ -129,6 +142,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
             //Opening menu is suppressed;
             return;
         }
+        
         menuOpen = true;
         outOfMenuButton.hidden = false;
         /*
@@ -410,7 +424,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         displayContent(boardName);
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return SIDE_MENU_TABLE_CELL_HEIGHT;
+        
+        let totalHeight = TRUE_FULLSCREEN_HEIGHT - HOME_FEED_HEADER_HEIGHT - bottomSpaceConstraint.constant;
+        
+        return (totalHeight ) / CGFloat(SIDE_MENU_ITEMS.count);
     }
     
     /*

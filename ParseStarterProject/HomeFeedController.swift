@@ -962,7 +962,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     }
     
     @IBAction func rightSideClicked(sender: UIButton) {
-        (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenu()
+        (self.navigationController!.parentViewController as SideMenuManagingViewController).openMenuFromHome()
 /*
         var currentPost = imgBuffer!.getImagePostAt(viewCounter);
         if (postCounter == currentPost.getImagesCount() + 1 && !(ServerInteractor.isAnonLogged())) {
