@@ -249,6 +249,9 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         NSLog("---[viewDidAppear]---backImageView---\(backImageView!.description)---\(backImageView?.hidden)---\(backImageView?.image?.size)---\(backImageView?.contentMode.hashValue)")
         NSLog("----[viewDidAppear]---frontImageView---\(frontImageView.description)---\(frontImageView?.hidden)---\(frontImageView?.image?.size)---\(frontImageView?.contentMode.hashValue)")
         //self.imgBuffer!.loadSet();
+        if (imgBuffer!.isLoadedAt(viewCounter)) {
+            configureCurrent(viewCounter);
+        }
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);

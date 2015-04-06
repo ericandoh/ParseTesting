@@ -111,6 +111,7 @@ class ImagePostStructure {
     class func dequeueImagePost(inputObj: PFObject)->ImagePostStructure {
         var postExist: ImagePostStructure? = imagePostDictionary[inputObj.objectId];
         if (postExist != nil) {
+            postExist!.reset(inputObj)
             return postExist!;
         }
         else {
@@ -119,6 +120,8 @@ class ImagePostStructure {
             return newPostToMake;
         }
     }
+    
+    
     class func unreadAllPosts() {
         for (key, post) in imagePostDictionary {
             post.read = false;
@@ -150,6 +153,15 @@ class ImagePostStructure {
         })
     }
 */
+    
+    func reset(newObj: PFObject) {
+        myObj = newObj;
+        images = [];
+        myLabels = ""
+        myDescription = ""
+        myShopLooks = []
+    }
+    
     func save() {
         myObj.saveInBackground()
     }
