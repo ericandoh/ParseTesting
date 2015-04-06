@@ -28,8 +28,8 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
             tableView.hidden = false;
         }
         tableView.alwaysBounceVertical = false;
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.None;
-        tableView.separatorInset = UIEdgeInsetsZero;
+//        tableView.separatorStyle = UITableViewCellSeparatorStyle.None;
+//        tableView.separatorInset = UIEdgeInsetsZero;
         tableView.reloadData();
     }
     
@@ -44,12 +44,12 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.textLabel!.textColor = UIColor.whiteColor()
         //cell.textLabel.font = TABLE_CELL_FONT;
         cell.textLabel!.font = UIFont(name: "HelveticaNeueLTPro-Lt", size: 14.0);
-        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
+        cell.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
 
         //BELOW IS A BUG! >:(
         //cell.separatorInset = UIEdgeInsetsZero;
         //cell.separatorInset = UIEdgeInsetsMake(0, -10, 0, 0);
-        var needMakeSeparator: Bool = true;
+/*        var needMakeSeparator: Bool = true;
         for smallView in cell.contentView.subviews {
             if ((smallView as UIView).tag == 60253) {
                 needMakeSeparator = false;
@@ -63,7 +63,7 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
             view.tag = 60253;
             cell.contentView.addSubview(view);
         }
-        
+*/
         var forwardImg = UIImageView(image: GREEN_FORWARD_ICON);
         
         forwardImg.frame = CGRectMake(0, 0, 30, 20)
@@ -104,6 +104,6 @@ class ShopLookDelegate: NSObject, UITableViewDelegate, UITableViewDataSource {
         }
     }
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
+        cell.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
     }
 }

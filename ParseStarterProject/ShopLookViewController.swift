@@ -52,7 +52,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         
         shopLookButton.hidden = true
         shopLookTableView.hidden = true
-        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
 
         
         getShopLooks()
@@ -60,7 +60,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0)
+        shopLookTableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 0)
     }
     
     @IBAction func backPress(sender: AnyObject) {
@@ -172,7 +172,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             let headerView : UIView = UIView(frame: CGRectMake(0,0,tableFrame.size.width, headerHeight))
             
             // Create separator
-            let lineView : UIView = UIView(frame:CGRectMake(0, headerHeight-1, tableFrame.size.width, 1))
+            let lineView : UIView = UIView(frame:CGRectMake(10, headerHeight-1, tableFrame.size.width-10, 1))
             lineView.backgroundColor = UIColor(red: 103/255.0, green: 103/255.0, blue: 103/255.0, alpha: 1.0)
             headerView.addSubview(lineView)
             
