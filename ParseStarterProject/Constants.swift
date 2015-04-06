@@ -294,10 +294,10 @@ let SET_PRIVACY_NAME = "Privacy";
 let SET_PRIVACY_OPTIONS = ["Privacy", "Change password", "Connect account with Facebook"]
 
 let SET_SUPPORT_NAME = "Support";
-let SET_SUPPORT_OPTIONS = ["Support", "Terms of service", "Report a problem", "About FashionStash", "FAQ"];
+let SET_SUPPORT_OPTIONS = ["Support", "Terms of service", "Report a problem", "About FashionStash"];
 
 let SET_USAGE_NAME = "Usage";
-let SET_USAGE_OPTIONS = ["Usage", "Notification settings", "Share settings", "Disable account", "Clear search history"];
+let SET_USAGE_OPTIONS = ["Usage", "Notification settings"];
 
 let SETTINGS_HEADER_NAMES: Array<String> = [SET_PRIVACY_NAME, SET_SUPPORT_NAME, SET_USAGE_NAME];
 let SETTINGS_OPTIONS: Array<String> = (SET_PRIVACY_OPTIONS + SET_SUPPORT_OPTIONS) + SET_USAGE_OPTIONS;
