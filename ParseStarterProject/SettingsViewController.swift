@@ -164,6 +164,11 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
         return SETTINGS_TABLEVIEW_HEADER_HEIGHT;
     }*/
     
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
+    }
+    
     //---------------end tableview methods----------------
     
     func changeNotificationSettings(tableView: UITableView, indexPath: NSIndexPath) {
