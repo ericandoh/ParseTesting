@@ -143,7 +143,7 @@ let SIDE_MENU_BACK_RED = CGFloat((GREEN_HEX & 0xFF0000) >> 16);
 let SIDE_MENU_BACK_GREEN = CGFloat((GREEN_HEX & 0xFF00) >> 8);
 let SIDE_MENU_BACK_BLUE = CGFloat((GREEN_HEX & 0xFF));
 
-let SIDE_MENU_BACK_COLOR = UIColor(red: SIDE_MENU_BACK_RED/255.0, green: SIDE_MENU_BACK_GREEN/255.0, blue: SIDE_MENU_BACK_BLUE/255.0, alpha: 1.0);
+let SIDE_MENU_BACK_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0);
 
 let TITLE_TEXT_COLOR = UIColor.whiteColor();
 
@@ -281,7 +281,7 @@ let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICO
 
 //side menu bar item opacities
 //let SIDE_MENU_OPACITIES = [1.0, 0.75, 0.57, 0.37, 0.25, 0.1];
-let SIDE_MENU_OPACITIES = [0.1, 0.25, 0.37, 0.57, 0.75, 1.0];
+let SIDE_MENU_OPACITIES = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6];
 
 //how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
 let DAMPENING_CONSTANT = CGFloat(2.5);

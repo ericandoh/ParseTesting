@@ -60,6 +60,8 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideView.addConstraint(leadingConstraint);
         self.sideView.addConstraint(trailingConstraint);
         self.sideView.addConstraint(bottomConstraint);
+        
+        self.sideTableView.alpha = 0.6
     }
     
     override func didReceiveMemoryWarning() {
