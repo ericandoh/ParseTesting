@@ -2617,7 +2617,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PVL-Gq-SeS" customClass="BlurringDarkView" customModule="FashionStash" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                             </imageView>
                             <searchBar contentMode="redraw" barStyle="black" placeholder="Find tags, brands, trends...                               " translatesAutoresizingMaskIntoConstraints="NO" id="tLh-HH-SRl">
                                 <rect key="frame" x="5" y="65" width="310" height="35"/>
@@ -2693,7 +2693,7 @@
                         <constraints>
                             <constraint firstItem="U2k-kU-9IY" firstAttribute="top" secondItem="tLh-HH-SRl" secondAttribute="bottom" constant="5" id="11j-9b-4OJ"/>
                             <constraint firstAttribute="trailing" secondItem="PVL-Gq-SeS" secondAttribute="trailing" id="9v1-Zv-dA9"/>
-                            <constraint firstItem="PVL-Gq-SeS" firstAttribute="top" secondItem="tOl-9H-a9Q" secondAttribute="top" id="Dh0-ky-HR8"/>
+                            <constraint firstItem="PVL-Gq-SeS" firstAttribute="top" secondItem="tOl-9H-a9Q" secondAttribute="top" constant="64" id="Dh0-ky-HR8"/>
                             <constraint firstItem="i9W-9H-mbV" firstAttribute="leading" secondItem="tOl-9H-a9Q" secondAttribute="leading" id="EcC-w3-bsy"/>
                             <constraint firstAttribute="bottom" secondItem="PVL-Gq-SeS" secondAttribute="bottom" id="F54-pU-hNQ"/>
                             <constraint firstItem="i9W-9H-mbV" firstAttribute="top" secondItem="tLh-HH-SRl" secondAttribute="bottom" constant="5" id="Jsa-Nd-ew3"/>
