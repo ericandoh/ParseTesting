@@ -731,6 +731,7 @@ struct AssetItem {
         picker.showsCancelButton = (UIDevice.currentDevice().userInterfaceIdiom != UIUserInterfaceIdiom.Pad)
         picker.delegate = self
         picker.selectedAssets = NSMutableArray(array: self.photos as NSArray)
+        
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
