@@ -76,6 +76,9 @@ class UserTextTableViewCell: UITableViewCell {
                         self.userImage!.layer.masksToBounds = true
                         //self.userImage!.layer.borderWidth = 0
                         //self.userImage!.clipsToBounds = true;
+                        self.userImage.userInteractionEnabled = true
+                        let tapUserIconGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+                        self.userImage.addGestureRecognizer(tapUserIconGesture)
                     }
                 });
             }
@@ -229,5 +232,11 @@ class UserTextTableViewCell: UITableViewCell {
             //canceled
             }));
         self.owner!.presentViewController(alert, animated: true, completion: nil)*/
+    }
+    
+    func goToProfile() {
+        var nextBoard : UIViewController = owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+        (nextBoard as UserProfileViewController).receiveUserInfo(self.friend!);
+        owner!.navigationController!.pushViewController(nextBoard, animated: true);
     }
 }
