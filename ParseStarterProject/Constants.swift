@@ -282,7 +282,7 @@ let SIDE_MENU_IMAGES = [HOME_ICON, EXPLORE_ICON, USER_ICON, NOTIF_ICON, FIND_ICO
 
 //side menu bar item opacities
 //let SIDE_MENU_OPACITIES = [1.0, 0.75, 0.57, 0.37, 0.25, 0.1];
-let SIDE_MENU_OPACITIES = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6];
+let SIDE_MENU_OPACITIES = [0.8, 0.8, 0.8, 0.8, 0.8, 0.8];
 
 //how much transparent to make the side menu bar items (1 = very solid, more = more transparent)
 let DAMPENING_CONSTANT = CGFloat(2.5);
