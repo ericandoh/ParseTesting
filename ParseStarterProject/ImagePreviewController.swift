@@ -68,6 +68,8 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
     var existingPost: ImagePostStructure?;
     
     var alerter:CompatibleAlertViews?;
+    
+    var loadingSpinner: UIActivityIndicatorView?;
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,6 +121,11 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             //backImageView.image = receivedImages[0];
             self.backImageView.setImageAndBlur(receivedImages[0]);
         }
+        
+        loadingSpinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White);
+        loadingSpinner!.center = CGPointMake(FULLSCREEN_WIDTH / 2.0, TRUE_FULLSCREEN_HEIGHT / 2.0);
+        loadingSpinner!.hidden = true;
+        self.view.insertSubview(loadingSpinner!, atIndex: 0);
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -225,12 +232,13 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
             default:
                 exclusivity = PostExclusivity.EVERYONE;
         }*/
+        showLoadingSpinner()
         var description = "";
         if (!placeholding) {
             description = textView.text;
         }
         if (isEditingExisting) {
-            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: "", looks: shopTheLook);
+            ServerInteractor.updatePost(existingPost!, imgs: receivedImages, description: description, labels: "", looks: shopTheLook);hideLoadingSpinner()
             self.navigationController!.popViewControllerAnimated(true);
         }
         else {
@@ -254,6 +262,7 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
                         // direct to the latest uploaded photo post
                         var newHome = self.storyboard!.instantiateViewControllerWithIdentifier("Home") as HomeFeedController;
                         newHome.syncForUploadedPost(imgBuffer, selectedAt: 0);
+                        self.hideLoadingSpinner()
                         self.navigationController!.pushViewController(newHome, animated: true);
                     }
                 }
@@ -591,6 +600,19 @@ class ImagePreviewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    func showLoadingSpinner() {
+        loadingSpinner!.hidden = false;
+        loadingSpinner!.startAnimating();
+        self.view.bringSubviewToFront(loadingSpinner!);
+    }
+    
+    func hideLoadingSpinner() {
+        if (loadingSpinner!.hidden == false) {
+            self.view.sendSubviewToBack(loadingSpinner!);
+            loadingSpinner!.stopAnimating();
+            loadingSpinner!.hidden = true;
+        }
+    }
     
 /*
     // #pragma mark - Navigation

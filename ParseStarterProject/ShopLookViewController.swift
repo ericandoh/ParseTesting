@@ -44,7 +44,6 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         self.descriptionTextField.scrollEnabled = true;
         self.descriptionTextField.userInteractionEnabled = true;
         self.descTextFieldConstraint.constant = MIN_SHOPLOOK_CONSTRAINT;
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -171,6 +170,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     func configShopLookButton(shopLookCount : Int) {
         if shopLookCount == 0 {
             self.shopLookButton.hidden = true
+            self.shopLookTableView.hidden = true
         } else {
             self.shopLookButton.hidden = false
             
@@ -186,7 +186,7 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
             
             self.shopLookTableView.tableHeaderView = headerView;
             
-            shopLookButton.hidden = false
+//            shopLookButton.hidden = false
             shopLookTableView.hidden = false
         }
     }
