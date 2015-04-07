@@ -56,7 +56,6 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             }
         }
         
-        
         /*someTextField.owner = self;
         
         someTextField.setTextAfterAttributing("spotting the hottest fashion wear of the year #summer #penguin #fun #awesome with my buddies @dog1 @dog2 @asdf @meepmeep #coolbro socool")*/
@@ -97,7 +96,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     }
     override func viewDidAppear(animated: Bool)  {
         super.viewDidAppear(animated);
-        searchBar.resignFirstResponder();
+/*       searchBar.resignFirstResponder();
         searchBar.text = "";
         isSearching = false;
         searchTermList = [];
@@ -121,6 +120,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.findFrindsFromFBBtn.layer.borderColor = UIColor.whiteColor().CGColor
         self.findFriendsFromContactsBtn.layer.borderWidth = CGFloat(1.0)
         self.findFriendsFromContactsBtn.layer.borderColor = UIColor.whiteColor().CGColor
+        self.backButton.hidden = true
+*/
+        showSuggestedFriendsCollection()
     }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated);
@@ -137,6 +139,8 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         if ((self.navigationController) != nil) {
             if (self.navigationController!.viewControllers.count > 1) {
                 self.navigationController!.popViewControllerAnimated(true);
+            } else { // back from Find Friends from FB and Contacts
+                self.showSuggestedFriendsCollection()
             }
         }
     }
@@ -168,6 +172,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchBar.text = self.currentTerm;
         searchingType = SearchUserType.BY_FACEBOOK;
         ServerInteractor.getFBFriendUsers(receiveSizeOfQuery, receiveStringResult, endStringQuery);
+        
+        backButton.hidden = false
+        backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
     }
     
     @IBAction func findFriendsFromContacts(sender: UIButton) {
@@ -182,6 +189,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         self.searchBar.text = self.currentTerm;
         searchingType = SearchUserType.BY_CONTACTS;
         ServerInteractor.getSearchContacts(receiveSizeOfQuery, receiveStringResult, endStringQuery);
+        
+        backButton.hidden = false
+        backButton.setBackgroundImage(BACK_ICON, forState: UIControlState.Normal);
     }
     func setNewBackgroundFor(view: UIView?) {
         //sets the background elements to be right behind this view
@@ -309,6 +319,34 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             }
             //suggestedCollectionView.reloadSections(NSIndexSet(index: userIndex));
         }
+    }
+    
+    func showSuggestedFriendsCollection() {
+        searchBar.resignFirstResponder();
+        searchBar.text = "";
+        isSearching = false;
+        searchTermList = [];
+        searchFriendsTableView.hidden = true;
+        self.setNewBackgroundFor(nil);
+        resetAndFetchSuggested();
+        
+        if (self.backImage.image == nil) {
+            var mainUser = FriendEncapsulator.dequeueFriendEncapsulatorWithID(PFUser.currentUser().objectId)
+            mainUser.fetchImage({(image: UIImage)->Void in
+                //self.backImage.image = image;
+                var backImg = image
+                if backImg == DEFAULT_USER_ICON {
+                    backImg = DEFAULT_USER_ICON_BACK
+                }
+                self.backImage.setImageAndBlur(backImg);
+            });
+        }
+        
+        self.findFrindsFromFBBtn.layer.borderWidth = CGFloat(1.0)
+        self.findFrindsFromFBBtn.layer.borderColor = UIColor.whiteColor().CGColor
+        self.findFriendsFromContactsBtn.layer.borderWidth = CGFloat(1.0)
+        self.findFriendsFromContactsBtn.layer.borderColor = UIColor.whiteColor().CGColor
+        self.backButton.hidden = true
     }
     
 
