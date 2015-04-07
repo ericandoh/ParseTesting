@@ -61,7 +61,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideView.addConstraint(trailingConstraint);
         self.sideView.addConstraint(bottomConstraint);
         
-        self.sideTableView.alpha = 0.8
+        self.sideTableView.alpha = 0.9
     }
     
     override func didReceiveMemoryWarning() {
@@ -386,7 +386,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         
         var transparentBackgroundView = UIView();
         transparentBackgroundView.backgroundColor = SIDE_MENU_BACK_COLOR;
-        transparentBackgroundView.alpha = 0.8 // CGFloat(SIDE_MENU_OPACITIES[indexPath.row]) / DAMPENING_CONSTANT;
+        transparentBackgroundView.alpha = 0.9 // CGFloat(SIDE_MENU_OPACITIES[indexPath.row]) / DAMPENING_CONSTANT;
         
         //transparentBackgroundView.alpha = 0.1;
         
