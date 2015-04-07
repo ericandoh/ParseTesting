@@ -62,6 +62,10 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.sideView.addConstraint(bottomConstraint);
         
         self.sideTableView.alpha = 0.9
+        
+        self.sideMenuRightConstraint.constant = -self.sideView.frame.size.width;
+        
+        self.view.layoutIfNeeded()
     }
     
     override func didReceiveMemoryWarning() {
@@ -158,11 +162,12 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
         self.view.bringSubviewToFront(self.sideView);
         self.sideTableView.userInteractionEnabled = true;
         self.sideTableView.reloadData();
+        self.view.layoutIfNeeded();
         self.sideMenuRightConstraint.constant = 0;
         UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             ()->Void in
 //            self.sideView.center = point;
-            self.view .layoutIfNeeded();
+            self.view.layoutIfNeeded();
             self.outOfMenuButton.alpha = SIDE_MENU_DIM;
             }, completion: {
                 (success: Bool)->Void in
@@ -178,6 +183,7 @@ class SideMenuManagingViewController: UIViewController, UITableViewDelegate, UIT
 //            var y = self.sideView.center.y;
 //            var point = CGPoint(x: x, y: y);
             self.sideTableView.userInteractionEnabled = false;
+            self.view.layoutIfNeeded();
             self.sideMenuRightConstraint.constant = -self.sideView.frame.size.width;
             UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
                 ()->Void in
