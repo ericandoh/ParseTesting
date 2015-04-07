@@ -237,7 +237,9 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         for likeId in likingIds {
             likingUsers.append(FriendEncapsulator.dequeueFriendEncapsulatorWithID(likeId));
         }
-        self.commentTableView.reloadData()
+        FriendEncapsulator.waitTillAll(likingIds, {() in
+            self.commentTableView.reloadData()
+        })
     }
     
     func showCommentBar() { // comment page
@@ -282,11 +284,16 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
         // Configure the cell...
         var index: Int = indexPath.row;
         if pageOption == 0 {
-            var author = commentList[index].author;
             var authorId = commentList[index].authorId;
-            var text = "@" + author + ": " + commentList[index].commentString;
             
-            cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false, sender: self);
+            
+            FriendEncapsulator.waitTill(authorId, {() in
+                var authorFriend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId)
+                var author = authorFriend.username;
+                var text = "@" + author + ": " + self.commentList[index].commentString;
+                cell.extraConfigurations(authorFriend, message: text, enableFriending: false, sender: self);
+            })
+            
             cell.descriptionBox.otherAction = {
                 () in
                 var x = self.commentTextField.resignFirstResponder();
@@ -309,13 +316,16 @@ class CommentViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
-        var recHeight : CGFloat
+        var recHeight : CGFloat = 50
         if pageOption == 0 {
-            var author = commentList[index].author;
             var authorId = commentList[index].authorId;
-            var text = "@" + commentList[index].author + ": " + commentList[index].commentString;
             
-            recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false);
+            FriendEncapsulator.waitTill(authorId, {() in
+                var authorFriend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId)
+                var author = authorFriend.username;
+                var text = "@" + author + ": " + self.commentList[index].commentString;
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorWithID(authorId), message: text, enableFriending: false);
+            })
         } else {
             var text = likingUsers[index].username;
             recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(likingUsers[index], message: text, enableFriending: true);

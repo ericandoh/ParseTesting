@@ -746,8 +746,11 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
         var index: Int = indexPath.row;
         
         if (friendList[index] != nil) {
-            var text = friendList[index]!.username;
-            cell.extraConfigurations(friendList[index], message: text, enableFriending: true, sender: self);
+            
+            FriendEncapsulator.waitTill(friendList[index]!.getID(), {() in
+                var text = self.friendList[index]!.username;
+                cell.extraConfigurations(self.friendList[index], message: text, enableFriending: true, sender: self);
+            })
         }
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None;
@@ -757,10 +760,12 @@ class UserProfileViewController: UIViewController, UITableViewDelegate, UITableV
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var index: Int = indexPath.row;
-        
+        var recHeight: CGFloat = tableView.estimatedRowHeight
         if (friendList[index] != nil) {
-            var text = friendList[index]!.username;
-            var recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friendList[index], message: text, enableFriending: true);
+            FriendEncapsulator.waitTill(friendList[index]!.getID(), {() in
+                var text = self.friendList[index]!.username;
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(self.friendList[index], message: text, enableFriending: true);
+            })
             
             return recHeight;
         }

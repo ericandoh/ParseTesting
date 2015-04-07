@@ -101,14 +101,18 @@ class InAppNotification {
                             var suffix = self.personalObj!["message"] as String
                             var numLikes: Int = object["likes"] as Int
                             if (numLikes <= 1) {
-                                var sender = self.getSender().username
-                                self.messageString = "@" + sender + suffix;
+                                FriendEncapsulator.waitTill(self.getSender().getID(), {() in
+                                    var sender = self.getSender().username
+                                    self.messageString = "@" + sender + suffix;
+                                    listener.tableView.reloadData()
+                                })
                             }
                             else {
                                 var numString = ServerInteractor.wordNumberer(numLikes);
                                 self.messageString = numString + " people" + suffix;
+                                listener.tableView.reloadData()
                             }
-                            listener.tableView.reloadData()
+                            
                         }
                         else {
                             NSLog("Error fetching image post for notification?");
@@ -129,25 +133,32 @@ class InAppNotification {
                                 }
                             }
                             if (numComments <= 1) {
-                                var sender = self.getSender().username
-                                self.messageString = "@" + sender + suffix;
+                                
+                                FriendEncapsulator.waitTill(self.getSender().getID(), {() in
+                                    var sender = self.getSender().username
+                                    self.messageString = "@" + sender + suffix;
+                                    listener.tableView.reloadData()
+                                })
+                                
                             }
                             else {
                                 var numString = ServerInteractor.wordNumberer(numComments);
                                 self.messageString = numString + " people" + suffix;
+                                listener.tableView.reloadData()
                             }
-                            listener.tableView.reloadData()
+                            
                         }
                         else {
                             NSLog("Error fetching image post for notification?");
                         }
                     });
                 case NotificationType.FOLLOWER_NOTIF.rawValue:
-                    self.friendName = self.getSender().username
-                    self.friendId = self.getSender().userID
-                    self.messageString = "@\(self.friendName) started following you!";
-                    listener.tableView.reloadData();
-                    
+                    FriendEncapsulator.waitTill(self.getSender().getID(), {() in
+                        self.friendName = self.getSender().username
+                        self.friendId = self.getSender().userID
+                        self.messageString = "@\(self.friendName) started following you!";
+                        listener.tableView.reloadData();
+                    })
                 default:
                     self.messageString = self.personalObj!["message"] as String
                     listener.tableView.reloadData()

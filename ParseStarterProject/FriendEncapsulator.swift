@@ -114,6 +114,56 @@ class FriendEncapsulator {
         })
     }
     
+    class func waitTill(id: String, endFunction: ()->Void) {
+        let friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(id)
+        if (friend.friendObj == nil) {
+            var qry = PFUser.query()
+            qry.getObjectInBackgroundWithId(id, block: {
+                (result: PFObject!, err: NSError!) in
+                friend.friendObj = result as PFUser?
+                if ((friend.friendObj) != nil) {
+                    friend.username = friend.friendObj!.username
+                } else {
+                    friend.username = "Anonymous" // TODO: empty or anonymous user?
+                }
+                endFunction()
+            })
+        }
+        else {
+            endFunction()
+        }
+    }
+    
+    //will call endFunction once all items with ID have their PFObject loaded in
+    class func waitTillAll(idList: Array<String>, endFunction: ()->Void) {
+        var loaded = 0
+        for index in 0..<idList.count {
+            let friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(idList[index])
+            if (friend.friendObj == nil) {
+                var qry = PFUser.query()
+                qry.getObjectInBackgroundWithId(idList[index], block: {
+                    (result: PFObject!, err: NSError!) in
+                    friend.friendObj = result as PFUser?
+                    if ((friend.friendObj) != nil) {
+                        friend.username = friend.friendObj!.username
+                    } else {
+                        friend.username = "Anonymous" // TODO: empty or anonymous user?
+                    }
+                    loaded += 1
+                    if (loaded == idList.count) {
+                        endFunction()
+                    }
+                })
+            }
+            else {
+                loaded += 1
+                if (loaded == idList.count) {
+                    endFunction()
+                }
+            }
+        }
+    }
+    
     func getID()->String {
         return userID;
     }
