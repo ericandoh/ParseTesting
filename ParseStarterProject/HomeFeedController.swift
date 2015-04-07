@@ -530,8 +530,7 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
     //            myView.backgroundColor = UIColor.blackColor()
                 myView.addSubview(imageView)
                 
-                self.navigationItem.titleView = myView
-            })
+                self.navigationItem.titleView = myView            })
 
             // config shopLook, like, comment, share info in bottom tool bar
             var numLikes = currentPost.getLikes();

@@ -174,6 +174,9 @@ class FriendEncapsulator {
     }
     
     func getNumLiked() -> Int {
+        if (friendObj == nil) {
+            return 0
+        }
         var numLiked: Int = friendObj!["likedPosts"].count
         return numLiked
     }
@@ -236,6 +239,18 @@ class FriendEncapsulator {
             });
         }
         else {
+            var qry = PFUser.query()
+            qry.whereKey("objectId", equalTo: self.userID)
+            qry.getObjectInBackgroundWithId(self.userID, block: {
+                (result: PFObject!, err: NSError!) in
+                self.friendObj = result as PFUser?
+                if ((self.friendObj) != nil) {
+                    self.username = self.friendObj!.username
+                    self.fetchImage(receiveAction)
+                } else {
+                    self.username = "Anonymous" // TODO: empty or anonymous user?
+                }
+            })
         }
     }
     
