@@ -29,7 +29,7 @@ class FBUsernameSetupViewController: UIViewController {
     func setUsername() {
         PFUser.currentUser()["username"] = fbUsernameTextField.text
         PFUser.currentUser().saveEventually()
-        self.performSegueWithIdentifier("JumpIn", sender: self);
+        self.performSegueWithIdentifier("FollowUsers", sender: self);
         ServerInteractor.postDefaultNotif("Welcome to FashionStash! Thank you for signing up for our app!");
     }
     
