@@ -405,6 +405,12 @@ class ImagePostStructure {
             query.orderByAscending("createdAt")
             query.skip = 1
             query.findObjectsInBackgroundWithBlock { (postImgFiles: [AnyObject]!, error: NSError!) in
+                if (postImgFiles == nil || error != nil) {
+                    self.imagesLoaded = true;
+                    self.isLoadingImages = false;
+                    callBack(snapShotViewCounter);
+                    return;
+                }
                 if (postImgFiles.count == 0) {
                     NSLog("No results")
                     self.imagesLoaded = true;
