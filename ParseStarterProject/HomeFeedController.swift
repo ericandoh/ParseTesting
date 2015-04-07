@@ -484,138 +484,147 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         //configures current image view with assumption that it is already loaded (i.e. loadedPosts[viewCounter] should not be nil)
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter);
         
-        // config post authro name, icon, upload creationh time and image page in nav bar
-        let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
-        let titleUserName : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
-        let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
-        let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
         
-        titleUserName.text = currentPost.getAuthor()
-        titleUserName.textColor = UIColor.whiteColor()
-        titleUserName.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
-//        titleUserName.backgroundColor = UIColor.clearColor()
-        titleUserName.userInteractionEnabled = true
-        let tapUserNameGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
-        titleUserName.addGestureRecognizer(tapUserNameGesture)
-        
-        titleTime.text = currentPost.getAgeAsString() + " ago • "
-        titleTime.textColor = UIColor.whiteColor()
-        titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
-//        titleTime.backgroundColor = UIColor.clearColor()
-        
-        titlePage.text = String(postCounter + 1)+"/"+String(currentPost.getImagesCount() + 1);
-        titlePage.textColor = UIColor.whiteColor()
-        titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
-//        titlePage.backgroundColor = UIColor.clearColor()
-        
-        let postAuthor = currentPost.getAuthorFriend()
-        postAuthor.fetchImage({(image: UIImage)->Void in
-            let imageView : UIImageView = UIImageView(image: image)
+        currentPost.getImagesCount({(imageCount: Int) in
             
-            imageView.frame = CGRectMake(20, 0, 30, 30)
-            imageView.layer.cornerRadius = imageView.frame.size.width / 2
-            imageView.layer.masksToBounds = true
-            imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
-            imageView.layer.borderWidth = 0
-            imageView.userInteractionEnabled = true
-            let tapUserIconGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
-            imageView.addGestureRecognizer(tapUserIconGesture)
+            // config post authro name, icon, upload creationh time and image page in nav bar
+            let myView : UIView = UIView(frame: CGRectMake(0, 0, 300, 30))
+            let titleUserName : UILabel = UILabel(frame: CGRectMake(60, 0, 300, 20))
+            let titleTime : UILabel = UILabel(frame: CGRectMake(60, 20, 50, 10))
+            let titlePage : UILabel = UILabel(frame: CGRectMake(115, 20, 50, 10))
             
-            myView.addSubview(titleUserName)
-            myView.addSubview(titleTime)
-            myView.addSubview(titlePage)
-//            myView.backgroundColor = UIColor.blackColor()
-            myView.addSubview(imageView)
+            titleUserName.text = currentPost.getAuthor()
+            titleUserName.textColor = UIColor.whiteColor()
+            titleUserName.font = UIFont.boldSystemFontOfSize(CGFloat(12.0))
+    //        titleUserName.backgroundColor = UIColor.clearColor()
+            titleUserName.userInteractionEnabled = true
+            let tapUserNameGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+            titleUserName.addGestureRecognizer(tapUserNameGesture)
             
-            self.navigationItem.titleView = myView
-        })
+            titleTime.text = currentPost.getAgeAsString() + " ago • "
+            titleTime.textColor = UIColor.whiteColor()
+            titleTime.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+    //        titleTime.backgroundColor = UIColor.clearColor()
+            
+            titlePage.text = String(self.postCounter + 1)+"/"+String(imageCount + 1);
+            titlePage.textColor = UIColor.whiteColor()
+            titlePage.font = UIFont.boldSystemFontOfSize(CGFloat(10.0))
+    //        titlePage.backgroundColor = UIColor.clearColor()
+            
+            let postAuthor = currentPost.getAuthorFriend()
+            postAuthor.fetchImage({(image: UIImage)->Void in
+                let imageView : UIImageView = UIImageView(image: image)
+                
+                imageView.frame = CGRectMake(20, 0, 30, 30)
+                imageView.layer.cornerRadius = imageView.frame.size.width / 2
+                imageView.layer.masksToBounds = true
+                imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+                imageView.layer.borderWidth = 0
+                imageView.userInteractionEnabled = true
+                let tapUserIconGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
+                imageView.addGestureRecognizer(tapUserIconGesture)
+                
+                myView.addSubview(titleUserName)
+                myView.addSubview(titleTime)
+                myView.addSubview(titlePage)
+    //            myView.backgroundColor = UIColor.blackColor()
+                myView.addSubview(imageView)
+                
+                self.navigationItem.titleView = myView
+            })
 
-        // config shopLook, like, comment, share info in bottom tool bar
-        var numLikes = currentPost.getLikes();
-        var numComments = currentPost.getCommentsCount();
-        
-        var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
-        var shortenedNumCommentString = ServerInteractor.wordNumberer(numComments);
-        likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
-        if (currentPost.isLikedByUser()) {
-            //likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
-            likeButton.setBackgroundImage(LIKED_HEART, forState: UIControlState.Normal);
-        }
-        else {
-            likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
-        }
-        commentsButton.setTitle(shortenedNumCommentString, forState: UIControlState.Normal);
-        
-        currentPost.getShopLooksCount() {numShopLooks, error in
-            if error == nil {
-                self.shopLookButton.setTitle(ServerInteractor.wordNumberer(numShopLooks!), forState: UIControlState.Normal)
-            } else {
-                self.shopLookButton.setTitle("0", forState: UIControlState.Normal)
-            }
-        }
-
-        //this loads the images
-        //2. images are being loaded already (prior call is active)
-        //  a. do nothing (callback will get called when needed)
-        //3. images need to be loaded
-        //  a. load images => when done, if postcounter = 0 => callback function ignores
-        //  b. load images => when done, if postcounter != 1 configure
-        if (!currentPost.isRestLoaded()) {
-            //if postCounter = 0, and I'm looking at it for first time I should start preloading next set of images as well!
-            currentPost.loadRestIfNeeded(configureRest, snapShotViewCounter: viewCounter);
-        }
-        
-        if (postCounter == 0) { NSLog("postCounter: 0")
-            //handled ok, post should be loaded on arrival of this page anyhows
-            if (currentPost.image != nil) { NSLog("currentPost image is not nil")
-                //most of time should go here
-                //our image exists!
-                needLoadOnCurrent = false;
-                switchImage(currentPost.image!, fromDirection: fromDirection);
+            // config shopLook, like, comment, share info in bottom tool bar
+            var numLikes = currentPost.getLikes();
+            
+            var shortenedNumLikeString = ServerInteractor.wordNumberer(numLikes);
+            self.likeButton.setTitle(shortenedNumLikeString, forState: UIControlState.Normal);
+            
+            currentPost.getCommentsCount({
+                (numComments: Int)->Void in
+                var shortenedNumCommentString = ServerInteractor.wordNumberer(numComments);
+                self.commentsButton.setTitle(shortenedNumCommentString, forState: UIControlState.Normal);
+            })
+            
+            if (currentPost.isLikedByUser()) {
+                //likeButton.setTitle("+L:"+shortenedNumLikeString, forState: UIControlState.Normal);
+                self.likeButton.setBackgroundImage(LIKED_HEART, forState: UIControlState.Normal);
             }
             else {
-                NSLog("Current Post's image is not loaded despite assumption that it is");
-                needLoadOnCurrent = true;
-                self.switchImageToLoading(fromDirection);
-                var currentVC = self.viewCounter;
-                currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
-                    if (self.needLoadOnCurrent && index == self.postCounter && currentVC == self.viewCounter) {
-                        //this should be 0 (postCounter will be 0)
-                        self.switchImage(currentPost.image!, fromDirection: CompassDirection.STAY);
-                        self.needLoadOnCurrent = false;
-                    }
-                }, index: 0);
+                self.likeButton.setBackgroundImage(NORMAL_HEART, forState: UIControlState.Normal)
             }
-            //start loading the rest of images while user is still looking at first image
             
-            //frontImageView!.image = currentPost.image;
-            //stupid nonprogrammers and their 1-based counting system
-        }
-        else if (postCounter >= currentPost.getImagesCount() + 1) { NSLog("[configureCurrent]---startViewingComments and postCounter: \(postCounter)")
-            postCounter = currentPost.getImagesCount() - 1;
-//            self.viewingComments = true;
-            //self.frontImageView!.image = oldImg;
-//            self.startViewingComments(currentPost);
-        }
-        else { NSLog("[configureCurrent]---postCounter: \(postCounter)")
-            if (currentPost.isRestLoaded()) {
-                //needLoadOnCurrent = false;
-                if (currentPost.isViewingComments(postCounter)) {
-                    NSLog("This should not run; block above handles me");
-                    self.viewingComments = true;
-                    //self.frontImageView!.image = oldImg;
-//                    self.startViewingComments(currentPost);
-                }
-                else { NSLog("[configureCurrent]---switchImage and postCounter: \(postCounter)")
-                    self.switchImage(currentPost.getImageAt(postCounter), fromDirection: fromDirection);
+            currentPost.getShopLooksCount() {numShopLooks, error in
+                if error == nil {
+                    self.shopLookButton.setTitle(ServerInteractor.wordNumberer(numShopLooks!), forState: UIControlState.Normal)
+                } else {
+                    self.shopLookButton.setTitle("0", forState: UIControlState.Normal)
                 }
             }
-            else { NSLog("[configureCurrent]---switchImageToLoading and postCounter: \(postCounter)")
-                //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
-                //trying to configure at comments, but its not loaded yet!
-                self.switchImageToLoading(fromDirection);
+
+            //this loads the images
+            //2. images are being loaded already (prior call is active)
+            //  a. do nothing (callback will get called when needed)
+            //3. images need to be loaded
+            //  a. load images => when done, if postcounter = 0 => callback function ignores
+            //  b. load images => when done, if postcounter != 1 configure
+            if (!currentPost.isRestLoaded()) {
+                //if postCounter = 0, and I'm looking at it for first time I should start preloading next set of images as well!
+                currentPost.loadRestIfNeeded(self.configureRest, snapShotViewCounter: self.viewCounter);
             }
-        }
+            
+            if (self.postCounter == 0) { NSLog("postCounter: 0")
+                //handled ok, post should be loaded on arrival of this page anyhows
+                if (currentPost.image != nil) { NSLog("currentPost image is not nil")
+                    //most of time should go here
+                    //our image exists!
+                    self.needLoadOnCurrent = false;
+                    self.switchImage(currentPost.image!, fromDirection: fromDirection);
+                }
+                else {
+                    NSLog("Current Post's image is not loaded despite assumption that it is");
+                    self.needLoadOnCurrent = true;
+                    self.switchImageToLoading(fromDirection);
+                    var currentVC = self.viewCounter;
+                    currentPost.loadImage({(imgStruct: ImagePostStructure, index: Int) in
+                        if (self.needLoadOnCurrent && index == self.postCounter && currentVC == self.viewCounter) {
+                            //this should be 0 (postCounter will be 0)
+                            self.switchImage(currentPost.image!, fromDirection: CompassDirection.STAY);
+                            self.needLoadOnCurrent = false;
+                        }
+                    }, index: 0);
+                }
+                //start loading the rest of images while user is still looking at first image
+                
+                //frontImageView!.image = currentPost.image;
+                //stupid nonprogrammers and their 1-based counting system
+            }
+            else if (self.postCounter >= imageCount + 1) { NSLog("[configureCurrent]---startViewingComments and postCounter: \(self.postCounter)")
+                self.postCounter = imageCount - 1;
+    //            self.viewingComments = true;
+                //self.frontImageView!.image = oldImg;
+    //            self.startViewingComments(currentPost);
+            }
+            else { NSLog("[configureCurrent]---postCounter: \(self.postCounter)")
+                if (currentPost.isRestLoaded()) {
+                    //needLoadOnCurrent = false;
+                    if (currentPost.isViewingComments(self.postCounter)) {
+                        NSLog("This should not run; block above handles me");
+                        self.viewingComments = true;
+                        //self.frontImageView!.image = oldImg;
+    //                    self.startViewingComments(currentPost);
+                    }
+                    else { NSLog("[configureCurrent]---switchImage and postCounter: \(self.postCounter)")
+                        self.switchImage(currentPost.getImageAt(self.postCounter), fromDirection: fromDirection);
+                    }
+                }
+                else { NSLog("[configureCurrent]---switchImageToLoading and postCounter: \(self.postCounter)")
+                    //switch to a loading image for now, then refresh to the correct image when needed with a transition fade
+                    //trying to configure at comments, but its not loaded yet!
+                    self.switchImageToLoading(fromDirection);
+                }
+            }
+            
+        })
     }
     func configureRest(indexAtTimeOfRequest: Int) { NSLog("configuring rest")
         //if(!needLoadOnCurrent) {
@@ -782,9 +791,13 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         if self.imgBuffer?.getImagePostAt(viewCounter).images.count > 0 && pannerNoPan { // post in memory, not in parse db yet
             pannerNoPan = false
-            if postCounter <= self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount() && !bottomPullToRefresh.hidden {
-                bottomPullToRefresh.hidden = true
-            }
+            
+            self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount({
+                (imgCount: Int)->Void in
+                if self.postCounter <= imgCount && !self.bottomPullToRefresh.hidden {
+                    self.bottomPullToRefresh.hidden = true
+                }
+            })
         }
         if (swiperNoSwipe || pannerNoPan) { NSLog("pass 1: \(swiperNoSwipe.description)---\(pannerNoPan.description)")
             return;
@@ -794,13 +807,20 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
         }
         
         var currentPost = self.imgBuffer!.getImagePostAt(viewCounter); NSLog("view counter: \(viewCounter)")
-        if (postCounter >= currentPost.getImagesCount()) { NSLog("\(postCounter) --- \(currentPost.getImagesCount())")
-            return
-        }
         
-        swipingRight = true;
-        postCounter++;
-        swipeSideAction(CompassDirection.SOUTH);
+        currentPost.getImagesCount({
+            (imgCount: Int)->Void in
+            
+            if (self.postCounter >= imgCount) { NSLog("\(self.postCounter) --- \(imgCount)")
+                return
+            }
+            
+            self.swipingRight = true;
+            self.postCounter++;
+            self.swipeSideAction(CompassDirection.SOUTH);
+        })
+        
+        
     }
     
     @IBAction func swipeDown(sender: UISwipeGestureRecognizer) { NSLog("swipe down")
@@ -808,11 +828,17 @@ class HomeFeedController: UIViewController, UIActionSheetDelegate, UIGestureReco
             pannerNoPan = false
             bottomPullToRefresh.hidden = true
         }
+        
+        
         if self.imgBuffer?.getImagePostAt(viewCounter).images.count > 0 && pannerNoPan { // post in memory, not in parse db yet
             pannerNoPan = false
-            if postCounter <= self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount() && !bottomPullToRefresh.hidden {
-                bottomPullToRefresh.hidden = true
-            }
+            
+            self.imgBuffer?.getImagePostAt(viewCounter).getImagesCount({
+                (imgCount: Int)->Void in
+                if self.postCounter <= imgCount && !self.bottomPullToRefresh.hidden {
+                    self.bottomPullToRefresh.hidden = true
+                }
+            })
         }
         if (swiperNoSwipe || pannerNoPan) {
             return;

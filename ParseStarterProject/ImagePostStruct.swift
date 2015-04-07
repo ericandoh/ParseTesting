@@ -15,7 +15,7 @@ var imagePostDictionary: [String: ImagePostStructure] = [:];
 
 class ImagePostStructure {
     var image: UIImage?
-    var images: Array<UIImage>
+    var images: Array<UIImage?>
     var myObj: PFObject
     var imagesLoaded: Bool = false;
     var isLoadingImages: Bool = false;
@@ -35,6 +35,15 @@ class ImagePostStructure {
         myDescription = ""
         myShopLooks = []
     }
+    
+    func reset(newObj: PFObject) {
+        myObj = newObj;
+        images = [];
+        myLabels = ""
+        myDescription = ""
+        myShopLooks = []
+    }
+    
     init(images: Array<UIImage>, description: String, labels: String, looks: Array<ShopLook>) {
         //called when making a new post
         //myObj must be saved by caller
@@ -43,7 +52,10 @@ class ImagePostStructure {
         let singleData = UIImageJPEGRepresentation(images[0], CGFloat(compressRatio));
         let singleFile = PFFile(name:"posted.jpeg",data:singleData);
         
-        self.images = images;
+        self.images = []
+        for image in images {
+            self.images.append(image)
+        }
         NSLog("\(self.images.count)");
         self.images.removeAtIndex(0);
         NSLog("\(self.images.count)");
@@ -154,14 +166,6 @@ class ImagePostStructure {
     }
 */
     
-    func reset(newObj: PFObject) {
-        myObj = newObj;
-        images = [];
-        myLabels = ""
-        myDescription = ""
-        myShopLooks = []
-    }
-    
     func save() {
         myObj.saveInBackground()
     }
@@ -235,31 +239,39 @@ class ImagePostStructure {
         
         return myObj["passes"] as Int
     }
-    func getImagesCount()->Int {
+    func getImagesCount(finishFunction: (Int)->Void) {
         if (myObj.objectId == nil) { NSLog("get images count new uploaded post")
-            return self.images.count
+            finishFunction(self.images.count)
         }
 
         var query = PFQuery(className:"PostImageFile")
         query.whereKey("postId", equalTo:myObj.objectId)
-        let count = query.countObjects() - 1 // imgFile(cover) and imgFiles are seperated in original db
         
-        if self.images.count > count { // post images in memory, not in parse db yet
-            return self.images.count
-        } else if count >= 0 {
-            return count
-        } else {
-            return 0
-        }
+        query.countObjectsInBackgroundWithBlock({
+            (val: Int32, err: NSError!) in
+            let count: Int = val - 1 // imgFile(cover) and imgFiles are seperated in original db
+            if self.images.count > count { // post images in memory, not in parse db yet
+                finishFunction(self.images.count)
+            }
+            else if count >= 0 {
+                finishFunction(count)
+            }
+            else {
+                finishFunction(count)
+            }
+        })
     }
-    func getCommentsCount()->Int {
+    func getCommentsCount(finishFunction: (Int)->Void) {
         var query = PFQuery(className:"PostComment")
         if (myObj.objectId == nil) {
             query.whereKey("postId", equalTo: "")
         } else {
             query.whereKey("postId", equalTo:myObj.objectId)
         }
-        return query.countObjects()
+        query.countObjectsInBackgroundWithBlock({
+            (val: Int32, err: NSError!) in
+            finishFunction(Int(val))
+        })
     }
     func getShopLooksCount(finishFunction: (Int?, NSError?)->Void) {
         if (myObj.objectId == nil) {
@@ -401,18 +413,23 @@ class ImagePostStructure {
                     return;
                 }
                 NSLog("We have \(postImgFiles.count) files to fetch, lets get on it!");
+                let needed = postImgFiles.count
+                var haveLoaded = 0
+                self.images = [UIImage?](count: needed, repeatedValue: nil)
                 for (index, postImgFile: PFObject) in enumerate(postImgFiles as [PFObject]!) {
                     var imgFile : PFFile = postImgFile["data"] as PFFile
-                    var result = imgFile.getData()
-                    var fImage = UIImage(data: result)!;
-                    self.images.append(fImage);
-                    
-                    if (self.images.count == postImgFiles.count) {
-                        NSLog("Finished fetching for \(snapShotViewCounter)")
-                        self.imagesLoaded = true;
-                        self.isLoadingImages = false;
-                        callBack(snapShotViewCounter);
-                    }
+                    imgFile.getDataInBackgroundWithBlock({(data: NSData!, err: NSError!) in
+                        if (err == nil) {
+                            self.images[index] = UIImage(data: data)!
+                        }
+                        haveLoaded += 1
+                        if (haveLoaded == needed) {
+                            NSLog("Finished fetching for \(snapShotViewCounter)")
+                            self.imagesLoaded = true;
+                            self.isLoadingImages = false;
+                            callBack(snapShotViewCounter);
+                        }
+                    })
                 }
             }
             } else { // current image post is in memory, not in db yet
@@ -438,7 +455,12 @@ class ImagePostStructure {
         }
         else {
             if (index - 1 < self.images.count) {
-                return self.images[index - 1];
+                let img: UIImage? = self.images[index - 1]
+                if (img == nil) {
+                    NSLog("Inconsistency - getImageAt called before all images loaded")
+                    return UIImage();
+                }
+                return img!;
             }
             else {
                 NSLog("Whatever called this is inconsistent!");
@@ -529,7 +551,7 @@ class ImagePostStructure {
         var imgArrayToReturn: Array<UIImage> = [];
         imgArrayToReturn.append(self.image!);
         for restImage in self.images {
-            imgArrayToReturn.append(restImage);
+            imgArrayToReturn.append(restImage!);
         }
         finishFunction(imgArrayToReturn);
     }

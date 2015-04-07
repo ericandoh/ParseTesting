@@ -38,12 +38,16 @@ class FriendEncapsulator {
         userID = friendID
         var qry = PFUser.query()
         qry.whereKey("objectId", equalTo: friendID)
-        self.friendObj = qry.getObjectWithId(friendID) as PFUser?
-        if ((self.friendObj) != nil) {
-            self.username = self.friendObj!.username
-        } else {
-            self.username = "Anonymous" // TODO: empty or anonymous user?
-        }
+        
+        qry.getObjectInBackgroundWithId(friendID, block: {
+            (result: PFObject!, err: NSError!) in
+            self.friendObj = result as PFUser?
+            if ((self.friendObj) != nil) {
+                self.username = self.friendObj!.username
+            } else {
+                self.username = "Anonymous" // TODO: empty or anonymous user?
+            }
+        })
     }
     class func dequeueFriendEncapsulator(friend: PFUser)->FriendEncapsulator {
         if (PFAnonymousUtils.isLinkedWithUser(friend)) {
@@ -90,25 +94,29 @@ class FriendEncapsulator {
         }
     }
     
-    class func dequeueFriendEncapsulatorByName(name: String)->FriendEncapsulator? {
+    class func dequeueFriendEncapsulatorByName(name: String, finishFunction: (FriendEncapsulator?)->Void) {
         //do query by name for a friend
         //if its in dictionary return it
         //else query for it by name, and then save it into dictionary if relevant
         
         var qry = PFUser.query()
         qry.whereKey("username", equalTo: name)
-        let frdObj = qry.getFirstObject() as PFUser?
-        if (frdObj != nil) {
-            return dequeueFriendEncapsulatorWithID(frdObj!.objectId)
-        } else {
-            return nil
-        }
+        
+        qry.getFirstObjectInBackgroundWithBlock({
+            (result: PFObject!, err: NSError!) in
+            if (result != nil) {
+                let friend = FriendEncapsulator.dequeueFriendEncapsulatorWithID(result!.objectId)
+                finishFunction(friend)
+            }
+            else {
+                finishFunction(nil)
+            }
+        })
     }
     
     func getID()->String {
         return userID;
     }
-    
     
     //gets the name of the user, fetches it if needed
     func getName(failFunction: ()->Void)->String {

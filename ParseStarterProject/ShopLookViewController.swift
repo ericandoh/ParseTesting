@@ -26,6 +26,9 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        shopLookTableView.hidden = true
+        
         self.navigationController?.view.backgroundColor = UIColor.blackColor()
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         self.navigationController!.navigationBar.translucent = true;
@@ -65,6 +68,8 @@ class ShopLookController: UIViewController, UIActionSheetDelegate, UIGestureReco
         getShopLooks()
         
         self.backImage.setImageAndBlur(backImg!)
+        
+        shopLookTableView.hidden = false
     }
     
     @IBAction func backPress(sender: AnyObject) {

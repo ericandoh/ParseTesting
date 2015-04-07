@@ -61,13 +61,13 @@ class UserTextTableViewCell: UITableViewCell {
         self.userImage!.image = nil;
         if (involvedUser != nil) {
             leadingConstraint.constant = EXPANDED_TEXT_CELL_VALUE;
+            friend = involvedUser;
             if (!PFAnonymousUtils.isLinkedWithUser(involvedUser!.friendObj)) {
                 var friendAtTimeOfSnapshot = involvedUser;
-                friend = involvedUser;
                 self.userImage!.image = UIImage();
                 involvedUser!.fetchImage({(fetchedImage: UIImage)->Void in
                     //var newUserIcon: UIImage = ServerInteractor.imageWithImage(fetchedImage, scaledToSize: CGSize(width: 40, height: 40))
-                    if (friendAtTimeOfSnapshot!.username == involvedUser!.username) {
+                    if (friendAtTimeOfSnapshot!.username == self.friend!.username) {
                         self.userImage!.image = fetchedImage;
                         //self.userImage!.autoresizingMask = UIViewAutoresizing.None;
                         //self.userImage!.layer.cornerRadius = (self.userImage!.frame.size.width) / 2
@@ -79,6 +79,9 @@ class UserTextTableViewCell: UITableViewCell {
                         self.userImage.userInteractionEnabled = true
                         let tapUserIconGesture : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "goToProfile")
                         self.userImage.addGestureRecognizer(tapUserIconGesture)
+                    }
+                    else {
+                        NSLog("Failed")
                     }
                 });
             }

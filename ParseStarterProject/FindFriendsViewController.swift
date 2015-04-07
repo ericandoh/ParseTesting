@@ -317,7 +317,10 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         if (!isSearching) {
             return 0;
         }
+        NSLog("-----dagw-------")
+        NSLog("%d", searchTermList.count)
         return searchTermList.count;
+        
         //return 1 + searchTermList.count;
     }
     
@@ -325,6 +328,7 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: UserTextTableViewCell = tableView.dequeueReusableCellWithIdentifier("SearchFriendCell", forIndexPath: indexPath) as UserTextTableViewCell;
+        
         
         // Configure the cell...
         var index: Int = indexPath.row;
@@ -334,7 +338,9 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             var friend = searchTermList[index]!;
             var author = searchTermList[index]!.username;
             if (delayedSearchType == SearchUserType.BY_CONTACTS) {
-                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: "\n", enableFriending: true, sender: self);
+                
+                cell.extraConfigurations(friend, message: author, enableFriending: true, sender: self)
+                
                 friend.getNameWithExtras({(text: String) in
                     cell.descriptionBox.setTextAfterAttributing(true, text: text);
                     //cell.layoutIfNeeded();
@@ -343,9 +349,27 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                     () in
                     self.pressedTableAt(indexPath);
                 }
+
+                
+                /*FriendEncapsulator.dequeueFriendEncapsulatorByName(author, {
+                    (friend: FriendEncapsulator?) in
+                    cell.extraConfigurations(friend!, message: author, enableFriending: true, sender: self)
+                    
+                    friend!.getNameWithExtras({(text: String) in
+                        cell.descriptionBox.setTextAfterAttributing(true, text: text);
+                        //cell.layoutIfNeeded();
+                    });
+                    cell.descriptionBox.otherAction = {
+                        () in
+                        self.pressedTableAt(indexPath);
+                    }
+                })*/
+                
             }
             else if (delayedSearchType == SearchUserType.BY_FACEBOOK ) {
-                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: "\n", enableFriending: true, sender: self);
+                
+                cell.extraConfigurations(friend, message: author, enableFriending: true, sender: self)
+                
                 friend.getNameWithExtras({(text: String) in
                     cell.descriptionBox.setTextAfterAttributing(true, text: text);
                     //cell.layoutIfNeeded();
@@ -354,10 +378,32 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
                     () in
                     self.pressedTableAt(indexPath);
                 }
+                
+                /*FriendEncapsulator.dequeueFriendEncapsulatorByName(author, {
+                    (friend: FriendEncapsulator?) in
+                    cell.extraConfigurations(friend!, message: author, enableFriending: true, sender: self)
+                    
+                    friend!.getNameWithExtras({(text: String) in
+                        cell.descriptionBox.setTextAfterAttributing(true, text: text);
+                        //cell.layoutIfNeeded();
+                    });
+                    cell.descriptionBox.otherAction = {
+                        () in
+                        self.pressedTableAt(indexPath);
+                    }
+                })*/
+                
+                
             }
             else {
                 var text = author;
-                cell.extraConfigurations(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: text, enableFriending: true, sender: self);
+                
+                cell.extraConfigurations(friend, message: text, enableFriending: true, sender: self)
+                
+                /*FriendEncapsulator.dequeueFriendEncapsulatorByName(author, {
+                    (friend: FriendEncapsulator?) in
+                    cell.extraConfigurations(friend!, message: text, enableFriending: true, sender: self)
+                })*/
             }
             
         }
@@ -387,15 +433,27 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
             //to avoid race conditions
             var friend = searchTermList[index]!;
             var author = searchTermList[index]!.username;
-            if (delayedSearchType == SearchUserType.BY_CONTACTS) {
-                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: "\n", enableFriending: true)
-            }
-            else if (delayedSearchType == SearchUserType.BY_FACEBOOK ) {
-                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: "\n", enableFriending: true)
+            if (delayedSearchType == SearchUserType.BY_CONTACTS || delayedSearchType == SearchUserType.BY_FACEBOOK ) {
+                
+                //recHeight will remain 0 if this doesn't return immediately (not in queue)
+                //else it'll return immediately with friend name
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friend, message: "\n", enableFriending: true)
+                
+                /*FriendEncapsulator.dequeueFriendEncapsulatorByName(author, {
+                    (friend: FriendEncapsulator?) in
+                    recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friend, message: "\n", enableFriending: true)
+                })*/
+                
             }
             else {
                 var text = author;
-                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(FriendEncapsulator.dequeueFriendEncapsulatorByName(author), message: text, enableFriending: true)
+                
+                recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friend, message: "\n", enableFriending: true)
+                
+                /*FriendEncapsulator.dequeueFriendEncapsulatorByName(author, {
+                    (friend: FriendEncapsulator?) in
+                    recHeight = UserTextTableViewCell.getDesiredHeightForCellWith(friend, message: text, enableFriending: true)
+                })*/
             }
         }
         return recHeight;
@@ -417,7 +475,11 @@ class FindFriendsViewController: UIViewController, UITableViewDataSource, UITabl
         cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 15)
     }
     func searchBarSearchButtonClicked(searchBar: UISearchBar!) {
-        pressedTableAt(FriendEncapsulator.dequeueFriendEncapsulatorByName(searchBar.text.lowercaseString)!);
+        
+        FriendEncapsulator.dequeueFriendEncapsulatorByName(searchBar.text.lowercaseString,
+        {(friend: FriendEncapsulator?) in
+            self.pressedTableAt(friend!)
+        })
     }
     func pressedTableAt(indexPath: NSIndexPath) {
         var index: Int = indexPath.row;

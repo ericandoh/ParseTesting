@@ -124,18 +124,20 @@ class LinkFilledTextView: UITextView {
                 }
                 //var friend = FriendEncapsulator.dequeueFriendEncapsulator(friendName);
                 
-                var friend = FriendEncapsulator.dequeueFriendEncapsulatorByName(friendName);
-                if (friend != nil) {
-                friend!.exists({(result: Bool) in
-                    if (result) {
-                        if (self.owner!.navigationController != nil) {  //to avoid race conditions
-                        var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
-                        (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
-                        self.owner!.navigationController!.pushViewController(nextBoard, animated: false);
-                        }
+                
+                FriendEncapsulator.dequeueFriendEncapsulatorByName(friendName, finishFunction: {(friend: FriendEncapsulator?) in
+                    if (friend != nil) {
+                        friend!.exists({(result: Bool) in
+                            if (result) {
+                                if (self.owner!.navigationController != nil) {  //to avoid race conditions
+                                    var nextBoard : UIViewController = self.owner!.storyboard!.instantiateViewControllerWithIdentifier("UserProfilePage") as UIViewController;
+                                    (nextBoard as UserProfileViewController).receiveUserInfo(friend!);
+                                    self.owner!.navigationController!.pushViewController(nextBoard, animated: false);
+                                }
+                            }
+                        });
                     }
-                });
-                }
+                })
             }
             else {
                 otherAction();
