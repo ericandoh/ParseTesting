@@ -111,7 +111,7 @@ class ImagePostStructure {
             looksArray.addObject(look.toDictionary());
         }
         myObj["shopLooks"] = looksArray;
-        
+        myObj["commentNum"] = 0
         
         //setting permissions to public
         //might want to change this for exclusivity posts?
